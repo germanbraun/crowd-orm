@@ -7,13 +7,13 @@
 	<meta name="author" content="Gimenez, Christian" />
 	<link rel="stylesheet" href="./css/joint.min.css" />
 	<link rel="stylesheet" href="./css/jquery.mobile-1.4.5.min.css" />
-	<script src="./js/jquery.min.js"></script>
-	<script src="./js/jquery.mobile-1.4.5.min.js"></script>
-	<script src="./js/lodash.min.js"></script>
-	<script src="./js/backbone-min.js"></script>
-	<script src="./js/joint.min.js"></script>
-	<!-- script src="./js/joint.shapes.erd.min.js"></script -->
-	<script src="./js/joint.shapes.uml.min.js"></script>
+	<script src="./js/libs/jquery.min.js"></script>
+	<script src="./js/libs/jquery.mobile-1.4.5.min.js"></script>
+	<script src="./js/libs/lodash.min.js"></script>
+	<script src="./js/libs/backbone-min.js"></script>
+	<script src="./js/libs/joint.min.js"></script>
+	<!-- script src="./js/libs/joint.shapes.erd.min.js"></script -->
+	<script src="./js/libs/joint.shapes.uml.min.js"></script>
 	<?php if ($_GET['prueba'] == 1){ ?>
 	    <script src="./js/prueba.js"></script>
 	<?php } ?>
