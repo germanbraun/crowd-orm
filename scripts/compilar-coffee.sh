@@ -20,5 +20,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#######################################################################
+#
+# Uso: scripts/compilar-coffee.sh
+#
 
-coffee web-src/coffee web-src/js
+coffee --output web-src/js --compile web-src/coffee 
