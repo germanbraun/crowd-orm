@@ -25,3 +25,12 @@ Utilizar `scripts/compilar-coffee.sh` bajo el directorio raiz del proyecto.
 1. Install plugin Xtext complete SDK from 
 
 2. Install plugin Coffee script plugin https://github.com/adamschmideg/coffeescript-eclipse
+
+## Generating js code from coffee script Eclipse Mars.1 Release (4.5.1)
+
+1. Create an External Tools Configuration
+2. Location: add path to complile coffee.sh
+3. Working Directory: path to Eclipse project.
+
+
+
