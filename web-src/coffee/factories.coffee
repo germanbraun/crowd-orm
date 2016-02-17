@@ -16,38 +16,39 @@
 
 uml = joint.shapes.uml
 
-css_classes =
+class Factory
+    constructor: () ->
+
+    # Create a class representation.
+    create_class: (name) ->
+                
+class UMLFactory
+
+    css_clases: 
         '.uml-class-name-rect' : 
-        	fill: "#fff"
+            fill: "#fff"
         '.uml-class-attrs-rect' : 
         	fill: "#fff"
         '.uml-class-methods-rect' : 
         	fill: "#fff"
-
-class Factory
-        constructor: () ->
-
-        # Create a class representation.
-        create_class: (name) ->
-                
-class UMLFactory
-        constructor: () ->
-
-        create_class: (name) ->
-                nueva = new uml.Class
-                        position: {x: 20, y: 20}
-                        size: {width: 220, height: 100}
-                        name: name
-                        attributes: []
-                        methods: []
-                        attr: css_clases
-                
-                return nueva
+    
+    constructor: () ->
+    
+    create_class: (class_name) ->
+        nueva = new uml.Class
+            position: {x: 20, y: 20}
+            size: {width: 220, height: 100}
+            name: class_name
+            attributes: []
+            methods: []
+            attr: UMLFactory.css_clases
+            
+        return nueva
 
 class ERDFactory
-        constructor: () ->
-        
-        create_class: () ->
+    constructor: () ->
+    
+    create_class: () ->
         
 
 # If exports doesn't exists, use "this".

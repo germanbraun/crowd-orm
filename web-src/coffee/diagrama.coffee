@@ -14,13 +14,23 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# {UMLFactory} = require './factories'
 
 class Diagrama
+    ##
+    # Params.:
+    # * graph: Una instancia de joint.Graph.
     constructor: (@graph = null) ->
         @clases = []
         @links = []
         @cells_nuevas = []
+        @factory = new UMLFactory()
 
+    get_factory: () ->
+        return @factory
+
+    set_factory: (@factory) ->
+        
     get_graph: () ->
         return @graph
 
@@ -36,12 +46,12 @@ class Diagrama
         
     agregar_clase: (clase) ->
         @clases.push(clase)
-        @cells_nuevas.push(clase.get_joint())
+        @cells_nuevas.push(clase.get_joint(@factory))
         this.actualizar_graph()
     
     agregar_link: (link) ->
         @links.push(link)
-        @cells_nuevas.push(link.get_joint());
+        @cells_nuevas.push(link.get_joint(@factory));
         this.actualizar_graph()
 
     # Actualizar una instancia de joint.Graph con las nuevas celdas.

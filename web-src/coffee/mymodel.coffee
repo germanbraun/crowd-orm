@@ -24,77 +24,77 @@
 # {Factory} = require './factories'
 
 class MyModel
-        # Params.:
-        #
-        # name : A String.
-        constructor: (@name) ->
+    # Params.:
+    #
+    # name : A String.
+    constructor: (@name) ->
 
-        # Return the joint model associated to this object.
-        #
-        # Params.:
-        #
-        # * joint_factory : A Concrete Factory like UMLFactory or ERDFactory instance.
-        get_joint: (joint_factory) ->
+    # Return the joint model associated to this object.
+    #
+    # Params.:
+    #
+    # * joint_factory : A Concrete Factory like UMLFactory or ERDFactory instance.
+    get_joint: (joint_factory) ->
 
 
 # A Class from our model diagram.
 class Class extends MyModel 
-        # Params.: 
-        #
-        # * name : A string.
-        # * attrs : An array of strings representing the attributes names.
-        # * methods : An array of strings representing the methods names.
-        constructor : (@name, @attrs, @methods) ->
-                super.constructor(name)
-        	@joint = null
-    
+    # Params.: 
+    #
+    # * name : A string.
+    # * attrs : An array of strings representing the attributes names.
+    # * methods : An array of strings representing the methods names.
+    constructor : (name, @attrs, @methods) ->
+        super(name)
+        @joint = null
 
-        get_name: () ->
-                return @name    
+    get_name: () ->
+        return @name    
         
-        get_attrs: () ->
-        	return @attrs
+    get_attrs: () ->
+        return @attrs
 
-        get_methods: () ->
-        	return @methods
+    get_methods: () ->
+        return @methods
 
-        # Params.:
-        # 
-        # * factory: A Factory instance
-        get_joint: (factory) ->
-                if @joint == null then @joint = factory.create_class()	
-        	return @joint
+    # Params.:
+    # 
+    # * factory: A Factory instance
+    get_joint: (factory) ->
+        if @joint == null then @joint = factory.create_class(@name)
+        return @joint
 
 # A Link between two classes or more classes.
 #
 # This give support for two (using from() or to()) or
 # more classes.
 class Link extends MyModel 
-        # Params.:
-        #
-        # * classes: An array of Class objects, the first class is the "from"
-        # and the second is the "to" class in a two-linked relation.
-        constructor: (@classes) ->
-        	super.constructor "" 
+    # Params.:
+    #
+    # * classes: An array of Class objects, the first class is the "from"
+    # and the second is the "to" class in a two-linked relation.
+    constructor: (@classes) ->
+        super.constructor "" 
 
-        get_from : () ->
-                return @classes[0]
+    get_from : () ->
+        return @classes[0]
             
-        get_to: () ->
-                return @classes[1]
+    get_to: () ->
+        return @classes[1]
     
-        get_classes: () ->
-        	return @classes
+    get_classes: () ->
+        return @classes
 
-        # True if a two-linked relation. False otherwise.
-        is_two_linked: () ->
-                return @classes.length == 2
+    # True if a two-linked relation. False otherwise.
+    is_two_linked: () ->
+        return @classes.length == 2
 
 class Generalization extends Link     
     constructor: (@parent_class, @classes) ->
 
+
 exports = exports ? this
-        
+       
 exports.MyModel = MyModel
 exports.Class = Class
 exports.Link = Link

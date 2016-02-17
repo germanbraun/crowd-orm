@@ -60,11 +60,8 @@ CrearClaseView = Backbone.View.extend(
 
         crear_clase: (event) ->
             alert("Creando: " + $("#crearclase_input").val() + "...")
-        	nueva = new Class(                
-                $("#crearclase_input").val(),
-                [],
-                [])
-            diag.agrega_clase(nueva)
+            nueva = new Class($("#crearclase_input").val(), [], [])
+            diag.agregar_clase(nueva)
 );
 
 
@@ -74,3 +71,6 @@ crearclase = new CrearClaseView({el: $("#crearclase")});
 
 exports = exports ? this
 
+exports.graph = graph
+exports.diag = diag
+exports.paper = paper
