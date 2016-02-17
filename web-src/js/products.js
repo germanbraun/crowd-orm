@@ -12,10 +12,12 @@
 
   Product = (function() {
 
-    function Product() {}
+    function Product() {return ""}
 
     return Product;
 
   })();
+  
+  this.Product = Product;
 
 }).call(this);
