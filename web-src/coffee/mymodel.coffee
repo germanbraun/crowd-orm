@@ -21,10 +21,7 @@
 # Each element from our diagram should be represented
 # extending this class.
 
-# If exports doesn't exists, use "this".
-exports ? this
-
-{Factory} = require './factories'
+# {Factory} = require './factories'
 
 class MyModel
         # Params.:
@@ -96,8 +93,12 @@ class Link extends MyModel
 class Generalization extends Link     
     constructor: (@parent_class, @classes) ->
 
-
+exports = exports ? this
+        
 exports.MyModel = MyModel
 exports.Class = Class
 exports.Link = Link
 exports.Generalization = Generalization
+
+
+

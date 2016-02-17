@@ -14,9 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# If exports doesn't exists, use "this".
-exports ? this 
-
 uml = joint.shapes.uml
 
 css_classes =
@@ -53,6 +50,10 @@ class ERDFactory
         create_class: () ->
         
 
+# If exports doesn't exists, use "this".
+exports = exports ? this
+
 exports.Factory = Factory
 exports.UMLFactory = UMLFactory
 exports.ERDFactory = ERDFactory
+

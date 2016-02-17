@@ -14,9 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# If exports doesn't exists, use "this".
-exports ? this 
-
 class Product
         constructor: () ->
                 
+# If exports doesn't exists, use "this".
+exports = exports ? this

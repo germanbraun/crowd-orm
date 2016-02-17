@@ -66,4 +66,7 @@ prueba = (cantclases) ->
         graph.addCells(lst_clases)
         graph.addCells(lst_rels)
 
+# If exports doesn't exists, use "this".
+exports = exports ? this
+
 exports.prueba = prueba

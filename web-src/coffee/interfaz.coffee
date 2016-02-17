@@ -15,10 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-exports ? this
-
-{Diagrama} = require './diagrama'
-{Class} = require './mymodel'
+# {Diagrama} = require './diagrama'
+# {Class} = require './mymodel'
 
 # Un poco de aliasing para acortar el código.
 uml = joint.shapes.uml;
@@ -73,3 +71,6 @@ CrearClaseView = Backbone.View.extend(
 # Instancia de CrearClaseView.
 # 
 crearclase = new CrearClaseView({el: $("#crearclase")});
+
+exports = exports ? this
+

@@ -15,8 +15,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-exports ? this
-
 class Diagrama
     constructor: (@graph = null) ->
         @clases = []
@@ -51,4 +49,9 @@ class Diagrama
         @graph.addCell(@cells_nuevas)
         @cells_nuevas = []
         
+exports = exports ? this
+
 exports.Diagrama = Diagrama
+
+
+
