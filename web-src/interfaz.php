@@ -6,6 +6,8 @@
 	?>
 	<title>Interfaz</title>
 
+	<script src="./js/interfaz.js"></script>
+	
 	<?php if ($_GET['prueba'] == 1){ ?>
 	    <script src="./js/prueba.js"></script>
 	<?php } ?>

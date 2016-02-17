@@ -36,5 +36,5 @@ if ($environment == 'production'){
 <script src="./js/factories.js"></script>
 <script src="./js/mymodel.js"></script>
 <script src="./js/products.js"></script>
-<script src="./js/interfaz.js"></script>
+
 
