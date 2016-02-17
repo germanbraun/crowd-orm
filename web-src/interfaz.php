@@ -1,19 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
     <head>
-	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<?php
+	include '_headincludes.php';
+	?>
 	<title>Interfaz</title>
-	<meta name="author" content="Gimenez, Christian" />
-	<link rel="stylesheet" href="./css/joint.min.css" />
-	<link rel="stylesheet" href="./css/jquery.mobile-1.4.5.min.css" />
-	<script src="./js/libs/jquery.min.js"></script>
-	<script src="./js/libs/jquery.mobile-1.4.5.min.js"></script>
-	<script src="./js/libs/lodash.min.js"></script>
-	<script src="./js/libs/backbone-min.js"></script>
-	<script src="./js/libs/joint.min.js"></script>
-	<!-- script src="./js/libs/joint.shapes.erd.min.js"></script -->
-	<script src="./js/libs/joint.shapes.uml.min.js"></script>
+
 	<?php if ($_GET['prueba'] == 1){ ?>
 	    <script src="./js/prueba.js"></script>
 	<?php } ?>

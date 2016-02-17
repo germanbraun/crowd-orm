@@ -1,14 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
     <head>
-	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<?php
+	include '_headincludes.php'
+	?>
 	<title>Inicio</title>
-	<meta name="author" content="Giménez, Christian">
-	<link rel="stylesheet" href="./css/joint.min.css" />
-	<link rel="stylesheet" href="./css/jquery.mobile-1.4.5.min.css" />
-	<script src="./js/libs/jquery.min.js"></script>
-	<script src="./js/libs/jquery.mobile-1.4.5.min.js"></script>
     </head>
 
     <body>
