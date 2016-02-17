@@ -18,10 +18,10 @@
 Utilizar `scripts/compilar-coffee.sh` bajo el directorio raiz del proyecto.
 
 
-# Installing Coffee script on Eclipse Mars.1 Release (4.5.1)
+## Installing Coffee script on Eclipse Mars.1 Release (4.5.1)
 
 * From Eclipse -> Help -> Install New Software... install
 
-** Install plugin Xtext complete SDK from 
+1. Install plugin Xtext complete SDK from 
 
-** Install plugin Coffee script plugin https://github.com/adamschmideg/coffeescript-eclipse
+2. Install plugin Coffee script plugin https://github.com/adamschmideg/coffeescript-eclipse
