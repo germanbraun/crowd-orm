@@ -17,7 +17,8 @@
 
 exports ? this
 
-
+{Diagrama} = require './diagrama'
+{Class} = require './mymodel'
 
 # Un poco de aliasing para acortar el código.
 uml = joint.shapes.uml;
@@ -25,6 +26,7 @@ uml = joint.shapes.uml;
 # ---------------------------------------------------------------------- 
 
 graph = new joint.dia.Graph
+diag = new Diagrama(graph)
 
 paper = new joint.dia.Paper(
         el: $('#container')
@@ -36,7 +38,7 @@ paper = new joint.dia.Paper(
 
 css_clase = 
         '.uml-class-name-rect' : 
-                fill: "#fff"
+            fill: "#fff"
         '.uml-class-attrs-rect' : 
         	fill: "#fff"
         '.uml-class-methods-rect' : 
@@ -57,19 +59,14 @@ CrearClaseView = Backbone.View.extend(
 
         events: 
         	"click a#crearclase_button" : "crear_clase"
-        
-        crear_clase: (event) ->
-        	alert("Creando: " + $("#crearclase_input").val() + "...")
-        	nueva = new uml.Class(
-        	    position: {x: 20, y:20}
-        	    size: {width: 220, height: 100}
-        	    name: $("#crearclase_input").val()
-        	    attributes: []
-        	    methods: []
-        	    attrs: css_clase
-        	)
 
-        	graph.addCells([nueva])
+        crear_clase: (event) ->
+            alert("Creando: " + $("#crearclase_input").val() + "...")
+        	nueva = new Class(                
+                $("#crearclase_input").val(),
+                [],
+                [])
+            diag.agrega_clase(nueva)
 );
 
 

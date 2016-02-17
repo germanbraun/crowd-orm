@@ -18,9 +18,15 @@
 exports ? this
 
 class Diagrama
-    constructor: () ->
+    constructor: (@graph = null) ->
         @clases = []
         @links = []
+        @cells_nuevas = []
+
+    get_graph: () ->
+        return @graph
+
+    set_graph: (@graph) ->
 
     get_clases: () ->
         return @clases
@@ -30,3 +36,19 @@ class Diagrama
 
     get_clase: (nombre) ->
         
+    agregar_clase: (clase) ->
+        @clases.push(clase)
+        @cells_nuevas.push(clase.get_joint())
+        this.actualizar_graph()
+    
+    agregar_link: (link) ->
+        @links.push(link)
+        @cells_nuevas.push(link.get_joint());
+        this.actualizar_graph()
+
+    # Actualizar una instancia de joint.Graph con las nuevas celdas.
+    actualizar_graph: () ->
+        @graph.addCell(@cells_nuevas)
+        @cells_nuevas = []
+        
+exports.Diagrama = Diagrama
