@@ -8,7 +8,7 @@
 
 	<script src="./js/interfaz.js"></script>
 	
-	<?php if ($_GET['prueba'] == 1){ ?>
+	<?php if (array_key_exists('prueba', $_GET) && $_GET['prueba'] == 1){ ?>
 	    <script src="./js/prueba.js"></script>
 	<?php } ?>
     </head>
