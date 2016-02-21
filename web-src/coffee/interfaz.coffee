@@ -39,7 +39,12 @@ paper = new joint.dia.Paper(
 # A Cell was clicked: select it.
 paper.on("cell:pointerclick",
     (cellView, evt, x, y) ->
-        
+        if (cellView.highlighted == undefined or cellView.highlighted == false) 
+            cellView.highlight()
+            cellView.highlighted = true
+        else
+            cellView.unhighlight()
+            cellView.highlighted = false
 )
 
 editclass = null
