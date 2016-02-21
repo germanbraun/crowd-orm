@@ -37,8 +37,17 @@
 			<a class="ui-btn ui-icon-plus ui-btn-icon-left" type="button" id="crearclase_button">Crear</a>
 		    </div>
 		</script>
+		<script type="text/template" id="template_editclass">
+		    <div class="editClassName" style="visible:false, z-index:1, position:absolute ">
+			<input type="hidden" id="editclass_classid" name="classid" value="<%= classid %>" />
+			<input data-mini="true" placeholder="ClassName" type="text" id="editclass_input"  />
+			<a class="ui-btn ui-icon-pencil ui-btn-icon-left" type="button" id="editclass_button">Accept</a>
+		    </div>
+		</script>
 		
 		<script src="./js/interfaz.js" type="text/javascript"></script>
+		
+		<div id="editclass"></div>
  	    </div> <!-- /main ui-content -->
 
 	    <!-- ---------------------------------------------------------------------- -->

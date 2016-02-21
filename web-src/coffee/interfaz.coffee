@@ -34,6 +34,23 @@ paper = new joint.dia.Paper(
         gridSize: 1
 )
 
+# Events for the Paper
+
+# A Cell was clicked: select it.
+paper.on("cell:pointerclick",
+    (cellView, evt, x, y) ->
+        
+)
+
+editclass = null
+
+paper.on("cell:pointerdblclick",
+    (cellView, evt, x, y) ->
+        editclass = new EditClassView({el: $("#editclass")})
+        editclass.set_classid(cellView.model.id)
+
+)
+
 css_clase = 
         '.uml-class-name-rect' : 
             fill: "#fff"
@@ -52,8 +69,8 @@ CrearClaseView = Backbone.View.extend(
         	this.render()
     
         render: () ->
-                template = _.template( $("#template_crearclase").html(), {} )
-                this.$el.html(template)
+            template = _.template( $("#template_crearclase").html(), {} )
+            this.$el.html(template)
 
         events: 
         	"click a#crearclase_button" : "crear_clase"
@@ -64,6 +81,47 @@ CrearClaseView = Backbone.View.extend(
             diag.agregar_clase(nueva)
 );
 
+EditClassView = Backbone.View.extend(
+    initialize: () ->
+        this.render()
+
+    render: () ->
+        template = _.template( $("#template_editclass").html())
+        this.$el.html(template({classid: @classid}))
+
+    events:
+        "click a#editclass_button" : "edit_class"
+
+    # Set this class ID and position the form onto the
+    # 
+    # Class diagram.
+    set_classid : (@classid) ->
+        modelpos = graph.getCell(@classid).position()
+        containerpos = $("#container").position()
+
+        this.$el.css(
+            top: modelpos.x + containerpos.top,
+            left: modelpos.y + containerpos.left,
+            position: 'absolute',
+            'z-index': 1
+            )
+        this.$el.show()
+
+    get_classid : () ->
+        return @classid
+    
+    edit_class: (event) ->
+        # Set the model name
+        cell = graph.getCell(@classid)
+        cell.set("name", $("#editclass_input").val())
+        
+        # Update the view
+        v = cell.findView(paper)
+        v.update()
+
+        # Hide the form.
+        this.$el.hide()
+)
 
 # Instancia de CrearClaseView.
 # 
@@ -74,3 +132,6 @@ exports = exports ? this
 exports.graph = graph
 exports.diag = diag
 exports.paper = paper
+exports.CrearClaseView = CrearClaseView
+exports.EditClassView = EditClassView
+exports.editclass = editclass
