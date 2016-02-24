@@ -26,7 +26,7 @@
 
 	    <!-- ---------------------------------------------------------------------- -->
 	    
-	    <div role="main" class="ui-content">
+	    <div role="main" class="ui-content">		
 		<div id="container"></div>
 		
 		<!-- Templates -->
@@ -38,16 +38,26 @@
 		    </div>
 		</script>
 		<script type="text/template" id="template_editclass">
-		    <div class="editClassName" style="visible:false, z-index:1, position:absolute ">
+		    <form>
 			<input type="hidden" id="editclass_classid" name="classid" value="<%= classid %>" />
 			<input data-mini="true" placeholder="ClassName" type="text" id="editclass_input"  />
-			<a class="ui-btn ui-icon-pencil ui-btn-icon-left" type="button" id="editclass_button">Accept</a>
+			<div data-role="controlgroup" data-mini="true" data-type="horizontal">
+			    <a class="ui-btn ui-corner-all ui-icon-check ui-btn-icon-notext" type="button" id="editclass_button">Accept</a>
+			    <a class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext" type="button" id="close_button">Close</a>
+			</div>
+		    </form>
+		</script>
+		<script type="text/template" id="template_classoptions">
+		    <div class="classOptions" data-role="controlgroup" data-mini="true" data-type="vertical" style="visible:false, z-index:1, position:absolute" >
+			<input type="hidden" id="cassoptions_classid" name="classid" value="<%= classid %>" />
+			<a class="ui-btn ui-icon-delete ui-btn-icon-left" type="button" id="deleteclass_button">Delete</a>
 		    </div>
 		</script>
 		
 		<script src="./js/interfaz.js" type="text/javascript"></script>
 		
 		<div id="editclass"></div>
+		<div id="classoptions"></div>
  	    </div> <!-- /main ui-content -->
 
 	    <!-- ---------------------------------------------------------------------- -->

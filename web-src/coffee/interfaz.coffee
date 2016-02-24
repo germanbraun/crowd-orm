@@ -36,21 +36,27 @@ paper = new joint.dia.Paper(
 
 # Events for the Paper
 
+editclass = null
+classoptions = null
+
 # A Cell was clicked: select it.
 paper.on("cell:pointerclick",
     (cellView, evt, x, y) ->
         if (cellView.highlighted == undefined or cellView.highlighted == false) 
             cellView.highlight()
             cellView.highlighted = true
+
+            classoptions = new ClassOptionsView({el: $("#classoptions")})
+            classoptions.set_classid(cellView.model.id)
         else
             cellView.unhighlight()
             cellView.highlighted = false
+            classoptions.hide()
 )
-
-editclass = null
 
 paper.on("cell:pointerdblclick",
     (cellView, evt, x, y) ->
+        if classoptions != null then classoptions.hide()
         editclass = new EditClassView({el: $("#editclass")})
         editclass.set_classid(cellView.model.id)
 
@@ -128,6 +134,38 @@ EditClassView = Backbone.View.extend(
         this.$el.hide()
 )
 
+ClassOptionsView = Backbone.View.extend(
+    initialize: () ->
+        this.render()
+
+    render: () ->
+        template = _.template( $("#template_classoptions").html() )
+        this.$el.html(template({classid: @classid}))
+
+    events:
+        "click a#deleteclass_button" : "delete_class"
+
+    set_classid: (@classid) ->
+        modelpos = graph.getCell(@classid).position()
+        containerpos = $("#container").position()
+
+        this.$el.css(
+            top: modelpos.x + containerpos.top,
+            left: modelpos.y + containerpos.left,
+            position: 'absolute',
+            'z-index': 1
+            )
+        this.$el.show()
+
+    get_classid: () ->
+        return @classid
+        
+    delete_class: (event) ->
+
+    hide: () ->
+        this.$el.hide()
+)
+        
 # Instancia de CrearClaseView.
 # 
 crearclase = new CrearClaseView({el: $("#crearclase")});
@@ -139,4 +177,6 @@ exports.diag = diag
 exports.paper = paper
 exports.CrearClaseView = CrearClaseView
 exports.EditClassView = EditClassView
+exports.ClassOptionsView = ClassOptionsView
 exports.editclass = editclass
+exports.classoptions = classoptions
