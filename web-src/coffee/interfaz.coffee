@@ -160,7 +160,9 @@ ClassOptionsView = Backbone.View.extend(
         return @classid
         
     delete_class: (event) ->
-        console.log("TODO: Delete class...")
+        model = graph.getCell(@classid)
+        model.remove()
+        this.hide()
 
     edit_class: (event) ->
         editclassview = new EditClassView({el: $("#editclass")})
