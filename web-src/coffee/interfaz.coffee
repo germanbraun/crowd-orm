@@ -54,13 +54,13 @@ paper.on("cell:pointerclick",
             classoptions.hide()
 )
 
-paper.on("cell:pointerdblclick",
-    (cellView, evt, x, y) ->
-        if classoptions != null then classoptions.hide()
-        editclass = new EditClassView({el: $("#editclass")})
-        editclass.set_classid(cellView.model.id)
+# paper.on("cell:pointerdblclick",
+#     (cellView, evt, x, y) ->
+#         if classoptions != null then classoptions.hide()
+#         editclass = new EditClassView({el: $("#editclass")})
+#         editclass.set_classid(cellView.model.id)
 
-)
+# )
 
 css_clase = 
         '.uml-class-name-rect' : 
@@ -143,7 +143,8 @@ ClassOptionsView = Backbone.View.extend(
         this.$el.html(template({classid: @classid}))
 
     events:
-        "click a#deleteclass_button" : "delete_class"
+        "click a#deleteclass_button" : "delete_class",
+        "click a#editclass_button" : "edit_class"
 
     set_classid: (@classid) ->
         modelpos = graph.getCell(@classid).position()
@@ -162,6 +163,11 @@ ClassOptionsView = Backbone.View.extend(
         
     delete_class: (event) ->
 
+    edit_class: (event) ->
+        editclassview = new EditClassView({el: $("#editclass")})
+        editclassview.set_classid(@classid)        
+        this.hide()
+
     hide: () ->
         this.$el.hide()
 )
@@ -169,6 +175,8 @@ ClassOptionsView = Backbone.View.extend(
 # Instancia de CrearClaseView.
 # 
 crearclase = new CrearClaseView({el: $("#crearclase")});
+
+classoptions = new ClassOptionsView({el: $("#classoptions")})
 
 exports = exports ? this
 
@@ -180,3 +188,7 @@ exports.EditClassView = EditClassView
 exports.ClassOptionsView = ClassOptionsView
 exports.editclass = editclass
 exports.classoptions = classoptions
+
+# Presentamos una inicial clase de ejemplo
+nueva = new Class("Test Class", [], [])
+diag.agregar_clase(nueva)

@@ -50,7 +50,8 @@
 		<script type="text/template" id="template_classoptions">
 		    <div class="classOptions" data-role="controlgroup" data-mini="true" data-type="vertical" style="visible:false, z-index:1, position:absolute" >
 			<input type="hidden" id="cassoptions_classid" name="classid" value="<%= classid %>" />
-			<a class="ui-btn ui-icon-delete ui-btn-icon-left" type="button" id="deleteclass_button">Delete</a>
+			<a class="ui-btn ui-corner-all ui-icon-edit ui-btn-icon-notext" type="button" id="editclass_button">Edit</a>
+			<a class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext" type="button" id="deleteclass_button">Delete</a>
 		    </div>
 		</script>
 		
