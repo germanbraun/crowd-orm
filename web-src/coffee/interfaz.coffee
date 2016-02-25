@@ -107,12 +107,11 @@ EditClassView = Backbone.View.extend(
     # 
     # Class diagram.
     set_classid : (@classid) ->
-        modelpos = graph.getCell(@classid).position()
-        containerpos = $("#container").position()
+        viewpos = graph.getCell(@classid).findView(paper).getBBox()
 
         this.$el.css(
-            top: modelpos.x + containerpos.top,
-            left: modelpos.y + containerpos.left,
+            top: viewpos.y,
+            left: viewpos.x,
             position: 'absolute',
             'z-index': 1
             )
@@ -147,12 +146,11 @@ ClassOptionsView = Backbone.View.extend(
         "click a#editclass_button" : "edit_class"
 
     set_classid: (@classid) ->
-        modelpos = graph.getCell(@classid).position()
-        containerpos = $("#container").position()
+        viewpos = graph.getCell(@classid).findView(paper).getBBox()
 
         this.$el.css(
-            top: modelpos.x + containerpos.top,
-            left: modelpos.y + containerpos.left,
+            top: viewpos.y,
+            left: viewpos.x,
             position: 'absolute',
             'z-index': 1
             )
@@ -162,6 +160,7 @@ ClassOptionsView = Backbone.View.extend(
         return @classid
         
     delete_class: (event) ->
+        console.log("TODO: Delete class...")
 
     edit_class: (event) ->
         editclassview = new EditClassView({el: $("#editclass")})
