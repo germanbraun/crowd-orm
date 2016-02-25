@@ -34,34 +34,6 @@ paper = new joint.dia.Paper(
         gridSize: 1
 )
 
-# Events for the Paper
-
-editclass = null
-classoptions = null
-
-# A Cell was clicked: select it.
-paper.on("cell:pointerclick",
-    (cellView, evt, x, y) ->
-        if (cellView.highlighted == undefined or cellView.highlighted == false) 
-            cellView.highlight()
-            cellView.highlighted = true
-
-            classoptions = new ClassOptionsView({el: $("#classoptions")})
-            classoptions.set_classid(cellView.model.id)
-        else
-            cellView.unhighlight()
-            cellView.highlighted = false
-            classoptions.hide()
-)
-
-# paper.on("cell:pointerdblclick",
-#     (cellView, evt, x, y) ->
-#         if classoptions != null then classoptions.hide()
-#         editclass = new EditClassView({el: $("#editclass")})
-#         editclass.set_classid(cellView.model.id)
-
-# )
-
 css_clase = 
         '.uml-class-name-rect' : 
             fill: "#fff"
@@ -165,18 +137,43 @@ ClassOptionsView = Backbone.View.extend(
         this.hide()
 
     edit_class: (event) ->
-        editclassview = new EditClassView({el: $("#editclass")})
-        editclassview.set_classid(@classid)        
+        # editclass = new EditClassView({el: $("#editclass")})
+        editclass.set_classid(@classid)        
         this.hide()
 
     hide: () ->
         this.$el.hide()
 )
+
+# Events for the Paper
+
+# A Cell was clicked: select it.
+paper.on("cell:pointerclick",
+    (cellView, evt, x, y) ->
+        if (cellView.highlighted == undefined or cellView.highlighted == false) 
+            cellView.highlight()
+            cellView.highlighted = true
+
+            # classoptions = new ClassOptionsView({el: $("#classoptions")})
+            classoptions.set_classid(cellView.model.id)
+        else
+            cellView.unhighlight()
+            cellView.highlighted = false
+            classoptions.hide()
+)
+
+# paper.on("cell:pointerdblclick",
+#     (cellView, evt, x, y) ->
+#         if classoptions != null then classoptions.hide()
+#         editclass = new EditClassView({el: $("#editclass")})
+#         editclass.set_classid(cellView.model.id)
+
+# )
         
 # Instancia de CrearClaseView.
 # 
 crearclase = new CrearClaseView({el: $("#crearclase")});
-
+editclass = new EditClassView({el: $("#editclass")})
 classoptions = new ClassOptionsView({el: $("#classoptions")})
 
 exports = exports ? this
@@ -185,7 +182,7 @@ exports.graph = graph
 exports.diag = diag
 exports.paper = paper
 exports.CrearClaseView = CrearClaseView
-exports.EditClassView = EditClassView
+exports.editclass = editclass
 exports.ClassOptionsView = ClassOptionsView
 exports.editclass = editclass
 exports.classoptions = classoptions

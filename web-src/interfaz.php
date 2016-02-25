@@ -55,10 +55,11 @@
 		    </div>
 		</script>
 		
-		<script src="./js/interfaz.js" type="text/javascript"></script>
-		
+   		
 		<div id="editclass"></div>
 		<div id="classoptions"></div>
+		
+		<script src="./js/interfaz.js" type="text/javascript"></script>
  	    </div> <!-- /main ui-content -->
 
 	    <!-- ---------------------------------------------------------------------- -->
