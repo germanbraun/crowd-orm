@@ -32,5 +32,14 @@ Utilizar `scripts/compilar-coffee.sh` bajo el directorio raiz del proyecto.
 2. Location: add path to complile coffee.sh
 3. Working Directory: path to Eclipse project.
 
+# Test
+## PHP
+Use [PHPUnit](https://phpunit.de/getting-started.html) for testing. 
 
+    phpunit --bootstrap src/autoload.php tests/MoneyTest
 
+Or:
+
+    php phpunit.phar --bootstrap src/autoload.php tests/MoneyTest
+	
+See instalation instruction at https://phpunit.de/getting-started.html
