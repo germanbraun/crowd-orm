@@ -6,7 +6,10 @@
 				    http://www.owllink.org/owllink-20091116.xsd">
   <CreateKB kb="http://localhost/kb1" />
   <Tell kb="http://localhost/kb1">
-    <owl:Class IRI="Persona" />
+    <owl:SubClassOf>
+      <owl:Class IRI="Persona" />
+      <owl:Class abbreviatedIRI="owl:Thing" />
+    </owl:SubClassOf>
   </Tell>
-  <ReleaseKB kb="http://localhost/kb1" />
+  <!-- <ReleaseKB kb="http://localhost/kb1" /> -->
 </RequestMessage>
