@@ -16,6 +16,10 @@
       <owl:Class IRI="Person" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
+    <owl:DisjointClasses>
+      <owl:Class IRI="Person" />
+      <owl:Class IRI="Person" />
+    </owl:DisjointClasses>
   </Tell>
   <!-- <ReleaseKB kb="http://localhost/kb1" /> -->
 </RequestMessage>
