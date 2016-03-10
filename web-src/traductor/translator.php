@@ -20,6 +20,12 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+   I translate a JSON formatted diagram into something else depending on the Builder instance given.
+   
+   1. Give a Strategy translator instance for specifying the algorithm for translating the diagram.
+   2. Give a Builder for specifying the output format.
+ */
 class Translator{
     protected $strategy = null;
     protected $builder = null;

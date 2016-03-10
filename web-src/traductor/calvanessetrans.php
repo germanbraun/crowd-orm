@@ -4,7 +4,7 @@
    
    Author: Giménez, Christian   
 
-   strategy.php
+   calvanessetrans.php
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -20,16 +20,15 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-abstract class Strategy{
-    function __constructor(){
-    }
+require_once('strategy');
 
-    /**
-       Translate the given JSON String into the OWLlink XML string.
-       
-       @param json The JSON string
-       @param build The Builder instance.
-       @return An XML String.
-     */
-    abstract function translate($json, $build);
+class Calvanesse extends Strategy{
+    function translate($json_str, $build){
+        $json = json_decode($json_str, true);
+
+        $js_clases = $json["classes"];
+        foreach ($js_clases as $class){
+            
+        }
+    }
 }
