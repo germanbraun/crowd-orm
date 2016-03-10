@@ -12,6 +12,15 @@ You can send the files using the send.fish file or:
 
 The XML files doesn't tell Racer to forget the KB, for that you have to send the `ReleaseKB` (see forget.xml).
 
+## Executing Racer not as a Service
+
+Execute: 
+
+```
+./Racer -- -protocol OWLlink -owllink PATH-TO-wicom/owllink-examples/example.xml
+```
+This will execute Racer without opening ports, and stoping as the OWLlink file is parsed. 
+
 # OWL and OWLlink
 
 Standards for consulting:
