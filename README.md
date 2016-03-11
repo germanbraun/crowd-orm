@@ -17,7 +17,6 @@
 
 Utilizar `scripts/compilar-coffee.sh` bajo el directorio raiz del proyecto.
 
-
 ## Installing Coffee script on Eclipse Mars.1 Release (4.5.1)
 
 * From Eclipse -> Help -> Install New Software... install
@@ -43,3 +42,9 @@ Or:
     php phpunit.phar --bootstrap src/autoload.php tests/MoneyTest
 	
 See instalation instruction at https://phpunit.de/getting-started.html
+
+# Documentation
+Use `doxygen` or `doxywizard` (the Doxygen GUI) for compiling the PHP documentation on `docs/doxygen`. 
+
+* Execute `doxygen` command on the main directory, or
+* Execute `doxywizard` and open the Doxyfile on the main directory; then click on the "run doxygen" button in the "run" tab.
