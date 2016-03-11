@@ -1,10 +1,11 @@
+<?php 
 /* 
 
    Copyright 2016 Giménez, Christian
    
    Author: Giménez, Christian   
 
-   calvanessetrans.php
+   OWLlinkBuilder.php
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -20,15 +21,22 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once('strategy');
+require_once('owllinkdocument');
 
-class Calvanesse extends Strategy{
-    function translate($json_str, $build){
-        $json = json_decode($json_str, true);
+class OWLlinkBuilder extends DocumentBuilder{
+    function __constructor(){
+        $this->product = new OWLlinkDocument;
+    }
+    
+    public function insert_header(){
+        
+    }
 
-        $js_clases = $json["classes"];
-        foreach ($js_clases as $class){
-            
-        }
+    public function insert_class($name, $col_attrs = []){
+        
+    }
+
+    public function insert_footer(){
     }
 }
+?>
