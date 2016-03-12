@@ -43,8 +43,10 @@ class OWLlinkBuilder extends DocumentBuilder{
     }
 
     public function insert_subclassof($child, $father){
-        // Namespace Regexp.
-        $ns_regexp = '/.*:.*/';
+        $ns_regexp = '/.*:.*/';        // Namespace Regexp.
+        $child_abbrv = false;
+        $father_abbrv = false;
+        
         if (preg_match($ns_regexp, $child) > 0){
             $child_abbrv = true;
         }

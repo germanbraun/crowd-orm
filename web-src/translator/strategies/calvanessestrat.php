@@ -34,19 +34,26 @@ class Calvanesse extends Strategy{
        Calvanesse strategy do:
        
        - Each UML Class is a Class concept in DL.       
+
+       @param json_str A String with a diagram representation in 
+       JSON format.
+       @param builder A Wicom\Translator\Builders\DocumentBuilder subclass instance.
+       @return Wicom\Translator\Documents\Document subclass instance acording to the Builder given.
     */
     function translate($json_str, $builder){
         $json = json_decode($json_str, true);
 
-	$builder->insert_header();
-	
-	// Classes
+        $builder->insert_header();
+        
+        // Classes
         $js_clases = $json["classes"];
         foreach ($js_clases as $class){
-            $builder->insert_class($class["name"]);
+            $builder->insert_subclassof($class["name"], "owl:Thing");
         }
+        
+        $builder->insert_footer();
 
-	$builder->insert_footer();
+        return $builder->get_product();
     }
 }
 

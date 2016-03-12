@@ -37,4 +37,13 @@ class Translator{
         $this->$strategy = $strategy;
         $this->$builder = $builder;
     }
+
+    /**
+       @param json A String.
+       @return an XML OWLlink String.
+     */
+    function to_owllink($json){
+        $document = $strategy->translate($json, $builder);
+        return $document->to_string();
+    }
 }
