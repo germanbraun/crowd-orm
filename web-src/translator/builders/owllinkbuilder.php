@@ -24,7 +24,7 @@
 namespace Wicom\Translator\Builders;
 
 require_once 'documentbuilder.php';
-require_once 'traductor/documents/owllinkdocument.php';
+require_once 'translator/documents/owllinkdocument.php';
 
 use Wicom\Translator\Documents\OWLlinkDocument;
 
