@@ -23,5 +23,8 @@
 cd php
 
 for testfile in (find -name '*.php')
-	phpunit --include ../../web-src $testfile
+	echo "----------------------------------------------------------------------------------------------------"
+	set_color -o  ;	echo $testfile
+	set_color normal
+	phpunit --colors=always --include ../../web-src $testfile
 end
