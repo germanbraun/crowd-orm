@@ -21,4 +21,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 cd php
-phpunit --include ../../web-src ./translator/owllinkdocumenttest.php
+
+for testfile in (find -name '*.php')
+	phpunit --include ../../web-src $testfile
+end
