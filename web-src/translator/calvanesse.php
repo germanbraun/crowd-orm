@@ -21,7 +21,13 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once("translator.php");
+
+require_once '../common/import_functions.php';
+
+load('translator.php');
+load('owllinkdocument.php', 'documents/');
+load('calvanessestrat.php','strategies/');
+load('owllinkbuilder.php', 'builders/');
 
 use Wicom\Translator\Translator;
 use Wicom\Translator\Strategies\Calvanesse;
@@ -40,8 +46,8 @@ Use, for example:
     url -d 'json={\"classes\": [{\"attrs\":[], \"methods\":[], \"name\": \"Hi World\"}]}' http://host.com/translator/calvanesse.php";
 }else{
     $trans = new Translator(new Calvanesse(), new OWLlinkBuilder());
-    
-    echo ($trans->to_owllink($_POST['json']));
+    $res = $trans->to_owllink($_POST['json']);
+    print_r($res);
 }
 
 ?>

@@ -23,8 +23,9 @@
 
 namespace Wicom\Translator\Builders;
 
-require_once 'documentbuilder.php';
-require_once 'translator/documents/owllinkdocument.php';
+use function \load;
+load("documentbuilder.php");
+load("owllinkdocument.php", "../documents/");
 
 use Wicom\Translator\Documents\OWLlinkDocument;
 

@@ -21,8 +21,10 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once("translator/documents/owllinkdocument.php");
 require_once("common.php");
+use function \load;
+load("owllinkdocument.php","translator/documents/");
+
 
 use Wicom\Translator\Documents\OWLlinkDocument;
 

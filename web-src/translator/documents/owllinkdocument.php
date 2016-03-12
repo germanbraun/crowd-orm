@@ -23,7 +23,8 @@
 
 namespace Wicom\Translator\Documents;
 
-require_once('document.php');
+use function \load;
+load('document.php');
 
 use \XMLWriter;
 

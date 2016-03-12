@@ -23,7 +23,8 @@
 
 namespace Wicom\Translator\Strategies;
 
-require_once('strategy.php');
+use function \load;
+load('strategy.php');
 
 class Calvanesse extends Strategy{
 

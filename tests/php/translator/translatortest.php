@@ -22,9 +22,11 @@
  */
 
 require_once("common.php");
-require_once("translator/strategies/calvanessestrat.php");
-require_once("translator/builders/owllinkbuilder.php");
-require_once("translator/translator.php");
+
+use function \load;
+load("calvanessestrat.php", "translator/strategies/");
+load("owllinkbuilder.php", "translator/builders/");
+load("translator.php", "translator/");
 
 use Wicom\Translator\Strategies\Calvanesse;
 use Wicom\Translator\Builders\OWLlinkBuilder;

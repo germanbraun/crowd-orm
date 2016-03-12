@@ -5,7 +5,7 @@
    
    Author: Giménez, Christian   
 
-   common.php
+   documents.php
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -21,29 +21,5 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once("../../web-src/common/import_functions.php");
-
-/**
-   Remove multiple spaces (tabs and spaces) and newlines replacing it with only one space.
-
-   @param str String with or without multiple spaces to process.
-   @return The same given string but with one spaces per multiple spaces/newlines.
- */
-function multiplespaces_to_one($str){
-    return preg_replace('/[[:blank:][:space:]]+/im', " ", $str);
-}
-
-/**
-   Process XML for testing with PHPUnit.
-
-   @param XML String.
-   @return A DOMDocument for using with assertEqualXMLStructure()
- */
-function process_xmlspaces($xmlstr){
-    $out = new DOMDocument;
-    $out->loadXML($xmlstr);
-    
-    return $out->firstChild;
-}
 
 ?>
