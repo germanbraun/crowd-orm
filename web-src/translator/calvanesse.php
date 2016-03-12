@@ -22,6 +22,18 @@
  */
 
 
+/**
+   Translate to OWLlink using Calvanesse strategy. 
+
+   Try this command:
+   
+   @code
+   curl -d 'json={\"classes\": [{\"attrs\":[], \"methods\":[], \"name\": \"Hi World\"}]}' http://host.com/translator/calvanesse.php";
+   @endcode
+
+   @return An XML web page.
+ */
+
 require_once '../common/import_functions.php';
 
 load('translator.php');
@@ -43,7 +55,7 @@ if ( ! array_key_exists('json', $_POST)){
 There's no \"json\" parameter :-(
 Use, for example:
 
-    url -d 'json={\"classes\": [{\"attrs\":[], \"methods\":[], \"name\": \"Hi World\"}]}' http://host.com/translator/calvanesse.php";
+    curl -d 'json={\"classes\": [{\"attrs\":[], \"methods\":[], \"name\": \"Hi World\"}]}' http://host.com/translator/calvanesse.php";
 }else{
     $trans = new Translator(new Calvanesse(), new OWLlinkBuilder());
     $res = $trans->to_owllink($_POST['json']);
