@@ -21,17 +21,21 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// require_once("translator/translator.php");
-// require_once("translator/strategies/calvanessestrat.php");
+require_once("common.php");
+require_once("translator/strategies/calvanessestrat.php");
+require_once("translator/builders/owllinkbuilder.php");
+
+use Wicom\Translator\Strategies\Calvanesse;
+use Wicom\Translator\Builders\OWLlinkBuilder;
 
 class CalvanesseTest extends PHPUnit_Framework_TestCase
 {
 
-    /* public function testTranslate(){
-       //TODO: Complete JSON!
-       $a = json_decode('{"clases": [{"attrs":[], "methods":[], "name": "Hi World"}]}');
-       //TODO: Complete XML!
-       $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+    public function testTranslate(){
+        //TODO: Complete JSON!
+        $json = '{"classes": [{"attrs":[], "methods":[], "name": "Hi World"}]}';
+        //TODO: Complete XML!
+        $expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
        <RequestMessage xmlns=\"http://www.owllink.org/owllink#\"
        xmlns:owl=\"http://www.w3.org/2002/07/owl#\" 
        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
@@ -44,14 +48,16 @@ class CalvanesseTest extends PHPUnit_Framework_TestCase
        <owl:Class abbreviatedIRI=\"owl:Thing\" />
        </owl:SubClassOf>
        </Tell>
-       <ReleaseKB kb=\"http://localhost/kb1\" />
        </RequestMessage>";
 
-       $t = new Translator(new CalvanesseStrat(), new XMLOwlBuilder());
-       $res = $t->translate($a);
+        $strategy = new Calvanesse();
+        $builder = new OWLlinkBuilder();
+    
+        $actual = $strategy->translate($json, $builder);
+        $actual = $actual->to_string();
 
-       
-       $this->assertEquals($xml, $res);
-       }
-     */
+        $expected = process_xmlspaces($expected);
+        $actual = process_xmlspaces($actual);
+        $this->assertEqualXMLStructure($expected, $actual, true);
+    }
 }
