@@ -21,28 +21,105 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once("web-src/traductor/owllinkdocument");
+require_once("traductor/owllinkdocument.php");
+require_once("common.php");
 
-class CalvanesseTest extends PHPUnit_Framework_TestCase{
+class OWLlinkDocumentTest extends PHPUnit_Framework_TestCase{
 
     public function testConstructor(){
-	$xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+        $expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <RequestMessage xmlns=\"http://www.owllink.org/owllink#\"
 		xmlns:owl=\"http://www.w3.org/2002/07/owl#\" 
 		xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
-		xsi:schemaLocation=\"http://www.owllink.org/owllink# 
-				    http://www.owllink.org/owllink-20091116.xsd\">
+		xsi:schemaLocation=\"http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd\">
 </RequestMessage>";
 	
-	$d = new OWLlinkDocument();
-	$d->end_document();
-	$res = $d->to_string();
-
-	$this->assertEquals($xml, $res);
+        $d = new OWLlinkDocument();
+        $d->end_document();
+        $actual = $d->to_string();
+        
+        $expected = process_xmlspaces($expected);
+        $actual = process_xmlspaces($actual);
+        $this->assertEqualXMLStructure($expected, $actual, true);
     }
     
-    public function testInsertCreateKB(){	
-	$this->assertEquals($xml, $res);
+    public function testInsertCreateKB(){
+        $expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<RequestMessage xmlns=\"http://www.owllink.org/owllink#\"
+		xmlns:owl=\"http://www.w3.org/2002/07/owl#\" 
+		xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
+		xsi:schemaLocation=\"http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd\">
+  <CreateKB kb=\"http://localhost/kb1\" />
+</RequestMessage>";
+	
+        $d = new OWLlinkDocument();
+        $d->insert_create_kb("http://localhost/kb1");
+        $d->end_document();
+        
+        $actual = $d->to_string();
+
+        $expected = process_xmlspaces($expected);
+        $actual = process_xmlspaces($actual);
+        $this->assertEqualXMLStructure($expected, $actual, true);
+    }
+
+    public function testClasses(){
+        $expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<RequestMessage xmlns=\"http://www.owllink.org/owllink#\"
+		xmlns:owl=\"http://www.w3.org/2002/07/owl#\" 
+		xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
+		xsi:schemaLocation=\"http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd\">
+    <CreateKB kb=\"http://localhost/kb1\" />
+    <Tell kb=\"http://localhost/kb1\">
+        <owl:Class IRI=\"Hi World\" />
+    </Tell>
+    <ReleaseKB kb=\"http://localhost/kb1\" />
+</RequestMessage>";
+	
+        $d = new OWLlinkDocument();
+        $d->insert_create_kb("http://localhost/kb1");
+        $d->start_tell();
+        $d->insert_class("Hi World");
+        $d->end_tell();
+        $d->insert_release_kb("http://localhost/kb1");
+        $d->end_document();
+        
+        $actual = $d->to_string();
+        
+        $expected = process_xmlspaces($expected);
+        $actual = process_xmlspaces($actual);
+        $this->assertEqualXMLStructure($expected, $actual, true);
+    }
+
+    public function testSubclass(){
+        $expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<RequestMessage xmlns=\"http://www.owllink.org/owllink#\"
+		xmlns:owl=\"http://www.w3.org/2002/07/owl#\" 
+		xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
+		xsi:schemaLocation=\"http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd\">
+    <CreateKB kb=\"http://localhost/kb1\" />
+    <Tell kb=\"http://localhost/kb1\">
+       <owl:SubClassOf>
+       <owl:Class IRI=\"Hi World\" />
+       <owl:Class abbreviatedIRI=\"owl:Thing\" />
+       </owl:SubClassOf>
+    </Tell>
+    <ReleaseKB kb=\"http://localhost/kb1\" />
+</RequestMessage>";
+	
+        $d = new OWLlinkDocument();
+        $d->insert_create_kb("http://localhost/kb1");
+        $d->start_tell();
+        $d->insert_subclassof("Hi World", "owl:Thing", false, true);
+        $d->end_tell();
+        $d->insert_release_kb("http://localhost/kb1");
+        $d->end_document();
+        
+        $actual = $d->to_string();
+        
+        $expected = process_xmlspaces($expected);
+        $actual = process_xmlspaces($actual);
+        $this->assertEqualXMLStructure($expected, $actual, true);
     }
 }
 

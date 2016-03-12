@@ -32,16 +32,19 @@ Utilizar `scripts/compilar-coffee.sh` bajo el directorio raiz del proyecto.
 3. Working Directory: path to Eclipse project.
 
 # Test
+At the `./test/` directory you'll find proper fish scripts for runing tests.
+
+## Javascript
+
 ## PHP
-Use [PHPUnit](https://phpunit.de/getting-started.html) for testing. 
+Install [PHPUnit](https://phpunit.de/getting-started.html) for testing. 
 
-    phpunit --bootstrap src/autoload.php tests/MoneyTest
+Execute:
 
-Or:
-
-    php phpunit.phar --bootstrap src/autoload.php tests/MoneyTest
-	
-See instalation instruction at https://phpunit.de/getting-started.html
+```bash
+cd tests
+./test_php.fish
+```
 
 # Documentation
 Use `doxygen` or `doxywizard` (the Doxygen GUI) for compiling the PHP documentation on `docs/doxygen`. 
