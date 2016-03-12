@@ -24,7 +24,7 @@
 require_once('owllinkdocument');
 
 class OWLlinkBuilder extends DocumentBuilder{
-    function __constructor(){
+    function __construct(){
         $this->product = new OWLlinkDocument;
     }
     

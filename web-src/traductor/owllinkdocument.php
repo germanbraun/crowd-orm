@@ -50,7 +50,7 @@ class OWLlinkDocument extends Document{
         $this->actual_kb = $kb_uri;
     }
 
-    function __constructor(){
+    function __construct(){
         $this->content = new XMLWriter();
         $this->content->openMemory();
         $this->content->startDocument("1.0", "UTF-8");
@@ -59,8 +59,7 @@ class OWLlinkDocument extends Document{
         $this->content->writeAttribute("xmlns", "http://www.owllink.org/owllink#");
         $this->content->writeAttribute("xmlns:owl", "http://www.w3.org/2002/07/owl#" );
 		$this->content->writeAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-		$this->content->writeAttribute("xsi:schemaLocation", "http://www.owllink.org/owllink# 
-                                       http://www.owllink.org/owllink-20091116.xsd");
+		$this->content->writeAttribute("xsi:schemaLocation", "http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd");
 
         $this->in_tell = false;
     }
@@ -89,7 +88,7 @@ class OWLlinkDocument extends Document{
      */
     public function insert_create_kb($uri){
         $this->content->startElement("CreateKB");
-        $this->content->startAttribute("kb=\"$uri\"");
+        $this->content->writeAttribute("kb",$uri);
         //$this->content->text("");
         $this->content->endElement();
         
@@ -155,7 +154,7 @@ class OWLlinkDocument extends Document{
         $this->content->startElement("Tell");
         $this->content->writeAttribute("kb", $this->actual_kb);
         $this->in_tell = true;
-    };
+    }
     
     public function end_tell(){
         $this->content->endElement();
@@ -190,8 +189,8 @@ class OWLlinkDocument extends Document{
             return false;
         }
         $this->content->startElement("owl:SubClassOf");
-        $this->insert_concept($child_class, $child_abrev);
-        $this->insert_concept($father_class, $father_abrev);
+        $this->insert_class($child_class, $child_abbrev);
+        $this->insert_class($father_class, $father_abbrev);
         $this->content->endElement();
     }
 
