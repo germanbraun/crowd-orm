@@ -21,8 +21,10 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once("traductor/owllinkdocument.php");
+require_once("translator/documents/owllinkdocument.php");
 require_once("common.php");
+
+use Wicom\Translator\Documents\OWLlinkDocument;
 
 class OWLlinkDocumentTest extends PHPUnit_Framework_TestCase{
 

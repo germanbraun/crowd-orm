@@ -21,8 +21,8 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// require_once("traductor/translator.php");
-// require_once("traductor/strategies/calvanessestrat.php");
+// require_once("translator/translator.php");
+// require_once("translator/strategies/calvanessestrat.php");
 
 class CalvanesseTest extends PHPUnit_Framework_TestCase
 {
