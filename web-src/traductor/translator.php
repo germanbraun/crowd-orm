@@ -21,6 +21,8 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Wicom\Translator;
+
 /**
    I translate a JSON formatted diagram into something else depending on the Builder instance given.
    

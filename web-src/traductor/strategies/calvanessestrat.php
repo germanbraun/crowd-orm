@@ -21,7 +21,9 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once('strategy');
+namespace Wicom\Translator\Strategies;
+
+require_once('strategy.php');
 
 class Calvanesse extends Strategy{
 

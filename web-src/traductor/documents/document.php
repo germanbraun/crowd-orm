@@ -5,7 +5,7 @@
    
    Author: Giménez, Christian   
 
-   documentbuilder.php
+   document.php
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -21,18 +21,30 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
-   I set the common behaviour for every DocumentBuilder subclass.
- */
-abstract class DocumentBuilder{
-    protected $product = null;
-       
-    abstract public function insert_header();
-    abstract public function insert_class($name, $col_attrs = []);
-    abstract public function insert_footer();
+namespace Wicom\Translator\Documents;
 
-    public function get_product(){
-        return $this->product;
-    }
+/**
+   I'm a document representation.
+
+   Use like this:
+
+   @code{.php}
+   $d = new XDocument();
+
+   $d->insert_something();
+   ...
+   $d->insert_something_else();
+
+   $d->end_document();
+   @endcode
+ */
+abstract class Document{
+    abstract function to_string();
+    
+    /**
+       I finish writing the document, any insert after using this 
+       message can make errors.
+     */
+    abstract function end_document();
 }
 ?>

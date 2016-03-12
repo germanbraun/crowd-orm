@@ -19,9 +19,14 @@
    
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+*/
 
-require_once('owllinkdocument');
+namespace Wicom\Translator\Builders;
+
+require_once 'documentbuilder.php';
+require_once 'traductor/documents/owllinkdocument.php';
+
+use Wicom\Translator\Documents\OWLlinkDocument;
 
 class OWLlinkBuilder extends DocumentBuilder{
     function __construct(){
@@ -29,14 +34,30 @@ class OWLlinkBuilder extends DocumentBuilder{
     }
     
     public function insert_header(){
-        
+        $this->product->insert_create_kb("http://localhost/kb1");
+        $this->product->start_tell();
     }
 
     public function insert_class($name, $col_attrs = []){
-        
+        $this->product->insert_class($name);
+    }
+
+    public function insert_subclassof($child, $father){
+        // Namespace Regexp.
+        $ns_regexp = '/.*:.*/';
+        if (preg_match($ns_regexp, $child) > 0){
+            $child_abbrv = true;
+        }
+        if (preg_match($ns_regexp, $father) > 0){
+            $father_abbrv = true;
+        }
+	
+        $this->product->insert_subclassof($child, $father, $child_abbrv, $father_abbrv);
     }
 
     public function insert_footer(){
+        $this->product->end_tell();
+        $this->product->end_document();
     }
 }
 ?>
