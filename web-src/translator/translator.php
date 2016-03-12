@@ -34,8 +34,8 @@ class Translator{
     protected $builder = null;
 
     function __construct($strategy, $builder){
-        $this->$strategy = $strategy;
-        $this->$builder = $builder;
+        $this->strategy = $strategy;
+        $this->builder = $builder;
     }
 
     /**
@@ -43,7 +43,7 @@ class Translator{
        @return an XML OWLlink String.
      */
     function to_owllink($json){
-        $document = $strategy->translate($json, $builder);
+        $document = $this->strategy->translate($json, $this->builder);
         return $document->to_string();
     }
 }

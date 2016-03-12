@@ -32,9 +32,17 @@ if (array_key_exists('format',$_GET)){
     $format = $_GET['format'];
 }
 
-$trans = new Translator(new Calvanesse(), new OWLlinkBuilder());
+if ( ! array_key_exists('json', $_POST)){
+    echo "
+There's no \"json\" parameter :-(
+Use, for example:
 
-echo $trans->to_owllink($_POST['json']);
+    url -d 'json={\"classes\": [{\"attrs\":[], \"methods\":[], \"name\": \"Hi World\"}]}' http://host.com/translator/calvanesse.php";
+}else{
+    $trans = new Translator(new Calvanesse(), new OWLlinkBuilder());
+    
+    echo ($trans->to_owllink($_POST['json']));
+}
 
 ?>
 
