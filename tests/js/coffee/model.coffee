@@ -21,10 +21,13 @@ QUnit.test( "diag.to_json", ( assert ) ->
             name: "hi world"
             ]
         links: []
+
+    # expected = JSON.stringify(expected)
         
     diag = new Diagrama();
     diag.agregar_clase(new Class("hi world"))
     
+    # actual = JSON.stringify(diag.to_json())
     actual = diag.to_json()
-    assert.equal(actual , expected, "Passed!" )
+    assert.propEqual(actual , expected, "dia.to_json" )
 )
