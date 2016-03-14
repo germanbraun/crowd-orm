@@ -10,8 +10,8 @@ code a test for each module function.
   <meta charset="utf-8">
   <title>Tests suite</title>
  
-  <link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.21.0.css">
-  <script src="//code.jquery.com/qunit/qunit-1.21.0.js"></script>
+  <link rel="stylesheet" href="./qunit-1.22.0.css">
+  <script src="./qunit-1.22.0.js"></script>
   <script src="../web-src/js/{ModuleName}.js"></script>
  
   <script>
