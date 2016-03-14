@@ -24,4 +24,22 @@
 /**
    Return if the given diagram is satisfiable.
  */
+
+require_once("../common/import_functions.php");
+
+use function \load;
+
+load("translator.php", "../translator/");
+load("calvanessestrat.php", "../translator/strategies/");
+load("owllinkbuilder.php", "../translator/builders/");
+
+use Wicom\Translator\Translator;
+use Wicom\Translator\Strategies\Calvanesse;
+use Wicom\Translator\Builders\OWLlinkBuilder;
+
+$trans = new Translator(new Calvanesse(), new OWLlinkBuilder());
+$res = $trans->to_owllink($_POST['json']);
+
+//TODO: Runner HERE!
+
 ?>

@@ -40,20 +40,24 @@ class TranslatorTest extends PHPUnit_Framework_TestCase
         $json = '{"classes": [{"attrs":[], "methods":[], "name": "Hi World"}]}';
         //TODO: Complete XML!
         $expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-       <RequestMessage xmlns=\"http://www.owllink.org/owllink#\"
-       xmlns:owl=\"http://www.w3.org/2002/07/owl#\" 
-       xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
-       xsi:schemaLocation=\"http://www.owllink.org/owllink# 
-       http://www.owllink.org/owllink-20091116.xsd\">
-       <CreateKB kb=\"http://localhost/kb1\" />
-       <Tell kb=\"http://localhost/kb1\">   
-       <owl:SubClassOf>
-       <owl:Class IRI=\"Hi World\" />
-       <owl:Class abbreviatedIRI=\"owl:Thing\" />
-       </owl:SubClassOf>
-       </Tell>
-       </RequestMessage>";
-
+<RequestMessage xmlns=\"http://www.owllink.org/owllink#\"
+xmlns:owl=\"http://www.w3.org/2002/07/owl#\" 
+xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
+xsi:schemaLocation=\"http://www.owllink.org/owllink# 
+http://www.owllink.org/owllink-20091116.xsd\">
+<CreateKB kb=\"http://localhost/kb1\" />
+<Tell kb=\"http://localhost/kb1\">   
+  <owl:SubClassOf>
+    <owl:Class IRI=\"Hi World\" />
+    <owl:Class abbreviatedIRI=\"owl:Thing\" />
+  </owl:SubClassOf>
+</Tell>
+<IsKBSatisfiable kb=\"http://localhost/kb1\" />
+<IsClassSatisfiable kb=\"http://localhost/kb1\">
+  <owl:Class IRI=\"Hi World\" />
+</IsClassSatisfiable>
+</RequestMessage>";
+        
         $strategy = new Calvanesse();
         $builder = new OWLlinkBuilder();
         $translator = new Translator($strategy, $builder);
