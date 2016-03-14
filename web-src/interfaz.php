@@ -16,8 +16,8 @@
     <body>
 	<div data-role="page">
 	    <div data-role="panel" data-display="overlay" data-position="left" id="tools-panel" class="comandos" id="comandos">
-		<div style="direction: rtl">
-		    <a href="#comandos" data-rel="close" class="ui-btn ui-icon-bars ui-btn-icon-notext">Close</a>
+		<div style="text-align: right">
+		    <a href="#comandos" data-rel="close" class="ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all ui-btn-inline ui-mini">Close</a>
 		</div>
 		<div id="crearclase"></div>
 	    </div><!-- /panel -->
@@ -42,7 +42,7 @@
 		<script type="text/template" id="template_crearclase">
 		    <div data-role="navbar">
 			<label>Traducir a OWLlink</label>
-			<a class="ui-btn ui-icon-pluss ui-btn-icon-left" type="button" id="translate_button">Traducir</a>
+			<a class="ui-btn ui-icon-edit ui-btn-icon-left" type="button" id="translate_button">Traducir</a>
 						
 			<label>Crear Clase</label>
 			<input data-mini="true" placeholder="ClassName" type="text" id="crearclase_input"/>
