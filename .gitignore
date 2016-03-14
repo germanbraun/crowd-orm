@@ -1,3 +1,4 @@
 *~
 docs/doxygen/**
 web-src/js/*.js
+tests/js/js/*.js
