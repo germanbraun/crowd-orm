@@ -54,8 +54,9 @@ class CalvanesseTest extends PHPUnit_Framework_TestCase
 
         $strategy = new Calvanesse();
         $builder = new OWLlinkBuilder();
-    
-        $actual = $strategy->translate($json, $builder);
+
+        $strategy->translate($json, $builder);
+        $actual = $builder->get_product();
         $actual = $actual->to_string();
 
         $expected = process_xmlspaces($expected);

@@ -23,6 +23,13 @@
 
 namespace Wicom\Translator;
 
+require_once("../common/import_functions.php");
+
+use function \load;
+load("queriesgenerator.php", "../querying/queries/");
+
+use Wicom\QueriesGen\QueriesGenerator;
+
 /**
    I translate a JSON formatted diagram into something else depending on the Builder instance given.
    
@@ -32,10 +39,25 @@ namespace Wicom\Translator;
 class Translator{
     protected $strategy = null;
     protected $builder = null;
+    
+    /**
+       The translator should add queries?
+     */
+    protected $with_queries = true;
 
     function __construct($strategy, $builder){
         $this->strategy = $strategy;
         $this->builder = $builder;
+        $this->queriesgen = new QueriesGenerator();
+        $this->with_queries = true;
+    }
+
+    function set_with_queries($bool){
+        $this->with_queries = $bool;
+    }
+
+    function get_with_queries(){
+        return $this->with_queries;
     }
 
     /**
@@ -43,7 +65,14 @@ class Translator{
        @return an XML OWLlink String.
      */
     function to_owllink($json){
-        $document = $this->strategy->translate($json, $this->builder);
+        $this->strategy->translate($json, $this->builder);
+
+        if ($this->with_queries){
+            $this->queriesgen->gen_satisfiable($this->builder);
+            $this->queriesgen->gen_satisfiable_class($json, $this->builder);
+        }
+        
+        $document = $this->builder->get_product();
         return $document->to_string();
     }
 }

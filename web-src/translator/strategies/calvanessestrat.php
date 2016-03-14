@@ -54,7 +54,7 @@ class Calvanesse extends Strategy{
         
         $builder->insert_footer();
 
-        return $builder->get_product();
+        // return $builder->get_product();
     }
 }
 
