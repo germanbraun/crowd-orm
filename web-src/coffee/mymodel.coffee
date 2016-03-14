@@ -47,7 +47,7 @@ class Class extends MyModel
     # * name : A string.
     # * attrs : An array of strings representing the attributes names.
     # * methods : An array of strings representing the methods names.
-    constructor : (name, @attrs, @methods) ->
+    constructor : (name, @attrs = null , @methods = null) ->
         super(name)
         @joint = null
 
@@ -69,8 +69,9 @@ class Class extends MyModel
 
     to_json: () ->
         json = super()
-        json.attrs = @attrs
-        json.methods = @methods
+        json.attrs = @attrs.toSource() if @attrs != null     
+        json.methods = @methods.toSource() if @methods != null
+        return json
                
 
 # A Link between two classes or more classes.
@@ -99,8 +100,10 @@ class Link extends MyModel
         return @classes.length == 2
 
     to_json: () ->
-        json = super()
-        json.classes = @classes
+        json = super()        
+        json.classes = $.map @classes, (myclass) ->
+            myclass.to_json()
+        return json
 
 class Generalization extends Link     
     constructor: (@parent_class, @classes) ->

@@ -56,7 +56,8 @@ class Diagrama
 
     # Actualizar una instancia de joint.Graph con las nuevas celdas.
     actualizar_graph: () ->
-        @graph.addCell(@cells_nuevas)
+        if @graph != null
+            @graph.addCell(@cells_nuevas)
         @cells_nuevas = []
 
     ##
@@ -68,13 +69,11 @@ class Diagrama
     # Use JSON.stringify(json_object) to translate a JSON object to
     # string.
     to_json : () ->
-        classes_json = []
-        $.each @clases, (myclass) ->
-            classes_json.push(myclass.to_json())
+        classes_json = $.map @clases, (myclass) ->
+            myclass.to_json()
 
-        links_json = []
-        $.each @links, (mylink) ->
-            links_json.push( mylink.to_json())
+        links_json = $.map @links, (mylink) ->
+            mylink.to_json()
 
         classes: classes_json
         links: links_json
