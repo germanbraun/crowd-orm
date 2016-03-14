@@ -58,6 +58,27 @@ class Diagrama
     actualizar_graph: () ->
         @graph.addCell(@cells_nuevas)
         @cells_nuevas = []
+
+    ##
+    # Return a JSON representing the Diagram.
+    #
+    # We want to send only some things not all the JSON the object
+    # has. So, we drop some things, like JointJS graph objects.
+    #
+    # Use JSON.stringify(json_object) to translate a JSON object to
+    # string.
+    to_json : () ->
+        classes_json = []
+        $.each @clases, (myclass) ->
+            classes_json.push(myclass.to_json())
+
+        links_json = []
+        $.each @links, (mylink) ->
+            links_json.push( mylink.to_json())
+
+        classes: classes_json
+        links: links_json
+                
         
 exports = exports ? this
 

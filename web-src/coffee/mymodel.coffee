@@ -36,6 +36,9 @@ class MyModel
     # * joint_factory : A Concrete Factory like UMLFactory or ERDFactory instance.
     get_joint: (joint_factory) ->
 
+    to_json: () ->
+        name: @name
+
 
 # A Class from our model diagram.
 class Class extends MyModel 
@@ -64,6 +67,12 @@ class Class extends MyModel
         if @joint == null then @joint = factory.create_class(@name)
         return @joint
 
+    to_json: () ->
+        json = super()
+        json.attrs = @attrs
+        json.methods = @methods
+               
+
 # A Link between two classes or more classes.
 #
 # This give support for two (using from() or to()) or
@@ -88,6 +97,10 @@ class Link extends MyModel
     # True if a two-linked relation. False otherwise.
     is_two_linked: () ->
         return @classes.length == 2
+
+    to_json: () ->
+        json = super()
+        json.classes = @classes
 
 class Generalization extends Link     
     constructor: (@parent_class, @classes) ->
