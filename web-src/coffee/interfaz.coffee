@@ -85,6 +85,7 @@ CrearClaseView = Backbone.View.extend(
 EditClassView = Backbone.View.extend(
     initialize: () ->
         this.render()
+        this.$el.hide()
 
     render: () ->
         template = _.template( $("#template_editclass").html())
@@ -126,6 +127,7 @@ EditClassView = Backbone.View.extend(
 ClassOptionsView = Backbone.View.extend(
     initialize: () ->
         this.render()
+        this.$el.hide()
 
     render: () ->
         template = _.template( $("#template_classoptions").html() )
