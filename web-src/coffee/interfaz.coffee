@@ -56,12 +56,30 @@ CrearClaseView = Backbone.View.extend(
             this.$el.html(template)
 
         events: 
-        	"click a#crearclase_button" : "crear_clase"
+        	"click a#crearclase_button" :
+                        "crear_clase"
+                "click a#translate_button" :
+                        "translate_owllink"
 
         crear_clase: (event) ->
             alert("Creando: " + $("#crearclase_input").val() + "...")
             nueva = new Class($("#crearclase_input").val(), [], [])
             diag.agregar_clase(nueva)
+
+        ##
+        # Event handler for translate diagram to OWLlink using Ajax
+        # and the translator/calvanesse.php translator URL.
+        translate_owllink: (event) ->
+                json = diag.toSource()
+                $.post(
+                        "translator/calvanesse.php",
+                        "json":
+                                json
+                        (data) ->
+                                $("#owllink_source").text(data)
+                                console.log(data)
+                )
+                
 );
 
 EditClassView = Backbone.View.extend(

@@ -28,10 +28,14 @@
 	    
 	    <div role="main" class="ui-content">		
 		<div id="container"></div>
-		
+		<textarea id="owllink_source"></textarea>
+
 		<!-- Templates -->
 		<script type="text/template" id="template_crearclase">
 		    <div data-role="navbar">
+			<label>Traducir a OWLlink</label>
+			<a class="ui-btn ui-icon-pluss ui-btn-icon-left" type="button" id="translate_button">Traducir</a>
+						
 			<label>Crear Clase</label>
 			<input data-mini="true" placeholder="ClassName" type="text" id="crearclase_input"/>
 			<a class="ui-btn ui-icon-plus ui-btn-icon-left" type="button" id="crearclase_button">Crear</a>
