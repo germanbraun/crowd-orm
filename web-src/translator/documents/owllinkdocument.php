@@ -70,7 +70,10 @@ class OWLlinkDocument extends Document{
     }
 
     
-    public function end_document(){        
+    public function end_document(){
+        if ($this->in_tell) {
+            $this->end_tell();
+        }
         $this->content->endElement();
     }
 
@@ -230,7 +233,7 @@ class OWLlinkDocument extends Document{
     // Ask group.
 
     public function to_string(){
-        return $this->content->outputMemory();
+        return $copy->outputMemory();
     }
 }
 
