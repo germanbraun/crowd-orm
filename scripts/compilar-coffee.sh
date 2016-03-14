@@ -26,3 +26,7 @@
 #
 
 coffee --output web-src/js --compile web-src/coffee 
+
+# Compile tests coffee scripts
+
+coffee --output tests/js/js --compile tests/js/coffee
