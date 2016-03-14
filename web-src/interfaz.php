@@ -31,7 +31,12 @@
 	    
 	    <div role="main" class="ui-content">		
 		<div id="container"></div>
-		<textarea id="owllink_source"></textarea>
+		<div id="output">
+		    <h3 class="ui-bar ui-bar-a ui-corner-all">OWLlink output</h3>
+		    <div class="ui-body">
+			<textarea cols="10" id="owllink_source"></textarea>
+		    </div>
+		</div>
 
 		<!-- Templates -->
 		<script type="text/template" id="template_crearclase">
