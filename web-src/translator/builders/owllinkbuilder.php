@@ -58,6 +58,21 @@ class OWLlinkBuilder extends DocumentBuilder{
         $this->product->insert_subclassof($child, $father, $child_abbrv, $father_abbrv);
     }
 
+    /**
+       @name Queries
+    */
+    ///@{
+
+    /**
+       Insert "is diagram/KB satisfiable" query.
+     */
+    public function insert_satisfiable(){
+        $this->product->insert_satisfiable();
+    }
+
+    ///@}
+    // Queries
+
     public function insert_footer(){
         $this->product->end_tell();
         $this->product->end_document();
