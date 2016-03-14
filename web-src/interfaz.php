@@ -15,7 +15,10 @@
 
     <body>
 	<div data-role="page">
-	    <div data-role="panel" data-position="left" id="tools-panel" class="comandos" id="comandos">
+	    <div data-role="panel" data-display="overlay" data-position="left" id="tools-panel" class="comandos" id="comandos">
+		<div style="direction: rtl">
+		    <a href="#comandos" data-rel="close" class="ui-btn ui-icon-bars ui-btn-icon-notext">Close</a>
+		</div>
 		<div id="crearclase"></div>
 	    </div><!-- /panel -->
 
