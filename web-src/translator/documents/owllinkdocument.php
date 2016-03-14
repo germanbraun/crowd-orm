@@ -202,6 +202,33 @@ class OWLlinkDocument extends Document{
     ///@}
     // Tell group.
 
+    /**
+       @name Ask 
+
+       Messages for the Ask section.
+     */
+    ///@{
+    
+    public function insert_satisfiable(){
+        $this->content->startElement("IsKBSatisfiable");
+        $this->content->writeAttribute("kb", $this->actual_kb);
+        $this->content->endElement();
+    }
+
+    public function insert_satisfiable_class($classname){
+        $this->content->startElement("IsClassSatisfiable");        
+        $this->content->writeAttribute("kb", $this->actual_kb);
+        
+        $this->content->startElement("owl:Class");
+        $this->content->writeAttribute("IRI", $classname);
+        $this->content->endElement();
+        
+        $this->content->endElement();
+    }
+    
+    ///@}
+    // Ask group.
+
     public function to_string(){
         return $this->content->outputMemory();
     }

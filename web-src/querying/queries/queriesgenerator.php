@@ -21,9 +21,9 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Wicom\QueryGen;
+namespace Wicom\QueriesGen;
 
-class QueryGenerator{
+class QueriesGenerator{
     function __construct(){
     }
 
@@ -46,7 +46,12 @@ class QueryGenerator{
        instance.
     */
     function gen_class_satisfiable($json_diagram, $builder){
-        //TODO: Create this method.
+        $json = json_decode($json_diagram, true);
+        $json_classes = $json["classes"];
+
+        foreach ($json_classes as $jelem) {
+            $builder->insert_satisfiable_class($jelem["name"]);
+        }
     }
 }
     

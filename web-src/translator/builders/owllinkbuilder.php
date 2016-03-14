@@ -70,6 +70,10 @@ class OWLlinkBuilder extends DocumentBuilder{
         $this->product->insert_satisfiable();
     }
 
+    public function insert_satisfiable_class($classname){
+        $this->product->insert_satisfiable_class($classname);
+    }
+
     ///@}
     // Queries
 
