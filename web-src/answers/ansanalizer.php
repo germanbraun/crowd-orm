@@ -30,31 +30,36 @@
  */
 namespace Wicom\Answers;
 
-load("answer.php");
-
 /**
    Analize the reasoner answer.
  */
 abstract class AnsAnalizer{
 
     /**
-       The answer String I should analize.
+       An instance of Wicom\Answers\Answer.
+       
+       The answer created with analize().
      */
-    protected $answer_str = null;
-    /**
-       The query String I should use to help analize the answer.
-     */
-    protected $query_str = null;
+    protected $answer = null;
 
     /**
-       A JSON as expected by the GUI.       
-       
-       Read the AnsAnalizer documentation.
-    */
-    protected $json = null;
-    
-    function __constructor($query, $answer){
+       @param query The input query String given to the reasoner.
+       @param answer The output given by the reasoner.
+     */
+    function __construct($query, $answer){
+        $this->answer = new Answer();
+        $this->answer->set_reasoner_input($query);
+        $this->answer->set_reasoner_output($answer);
     }
 
-    protected function analize();
+    function get_answer(){
+        return $this->answer;
+    }
+
+    /**
+       Analize and create the answer.
+
+       Set the $answer attribute. 
+     */
+    abstract function analize();
 }
