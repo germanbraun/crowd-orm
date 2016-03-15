@@ -54,3 +54,9 @@ Use `doxygen` or `doxywizard` (the Doxygen GUI) for compiling the PHP documentat
 
 * Execute `doxygen` command on the main directory, or
 * Execute `doxywizard` and open the Doxyfile on the main directory; then click on the "run doxygen" button in the "run" tab.
+
+# Licence
+
+Images :
+
+* Traffic Lights downloaded from OpenClipart at: https://openclipart.org/detail/195669/green-traffic-light

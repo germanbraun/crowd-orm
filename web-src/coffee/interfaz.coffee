@@ -44,6 +44,22 @@ css_clase =
         
 # Interfaz
 
+TrafficLightsView = Backbone.View.extend(
+    initialize: () ->
+        this.render()
+
+    render: () ->
+        template = _.template($("#template_trafficlight").html(), {})
+        this.$el.html(template)
+
+    events:
+        "click a#traffic_btn" : "check_satisfiable"
+        
+    check_satisfiable: (event) ->
+        
+        
+)
+
 ##
 # CrearClaseView proporciona los elementos y eventos necesarios
 #   para mostra una interfaz para crear una clase.
@@ -58,7 +74,7 @@ CrearClaseView = Backbone.View.extend(
         events: 
         	"click a#crearclase_button" :
                         "crear_clase"
-                "click a#translate_button" :
+            "click a#translate_button" :
                         "translate_owllink"
 
         crear_clase: (event) ->
@@ -195,6 +211,7 @@ paper.on("cell:pointerclick",
 crearclase = new CrearClaseView({el: $("#crearclase")});
 editclass = new EditClassView({el: $("#editclass")})
 classoptions = new ClassOptionsView({el: $("#classoptions")})
+trafficlight = new TrafficLightsView({el: $("#trafficlight")})
 
 exports = exports ? this
 
@@ -206,6 +223,9 @@ exports.editclass = editclass
 exports.ClassOptionsView = ClassOptionsView
 exports.editclass = editclass
 exports.classoptions = classoptions
+
+exports.TrafficLightsView = TrafficLightsView
+exports.trafficlight = trafficlight
 
 # Presentamos una inicial clase de ejemplo
 nueva = new Class("Test Class", [], [])

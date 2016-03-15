@@ -25,6 +25,7 @@
 	    <div data-role="header">
 		<h1>Interfaz</h1>
 		<a href="#tools-panel" class="ui-btn ui-icon-bars ui-btn-icon-left">Herramientas</a>
+		<div id="trafficlight"></div>	    
 	    </div> <!-- /header -->
 
 	    <!-- ---------------------------------------------------------------------- -->
@@ -65,6 +66,11 @@
 			<a class="ui-btn ui-corner-all ui-icon-edit ui-btn-icon-notext" type="button" id="editclass_button">Edit</a>
 			<a class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext" type="button" id="deleteclass_button">Delete</a>
 		    </div>
+		</script>
+		<script type="text/template" id="template_trafficlight">
+		    <a class="ui-btn ui-btn-right ui-corner-all" id="traffic_btn">
+			<img width="25px" src="imgs/traffic-light.png" alt="Reasoner answer..."/>
+		    </a>			
 		</script>
 		
    		
