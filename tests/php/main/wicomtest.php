@@ -53,9 +53,13 @@ EOT;
 
 
         $wicom = new Wicom();
-        $GLOBALS['config']['temporal_path'] = "../../../temp";
+        $GLOBALS['config']['temporal_path'] = "../../temp/";
         $answer = $wicom->is_satisfiable($input);
 
+        print("\n\$answer = ");
+        print_r($answer);
+        print("\n");        
+        
         $answer->set_reasoner_input("");
         $answer->set_reasoner_output("");
         $actual = $answer->to_json();
