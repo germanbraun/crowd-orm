@@ -57,7 +57,8 @@ update_satisfiable = (data) ->
         traffic_light_green()
     else
         traffic_light_red()
-    $("#owllink_source").text(obj.reasoner.input)
+    $("#reasoner_input").html(obj.reasoner.input)
+    $("#reasoner_output").html(obj.reasoner.output)
     
 TrafficLightsView = Backbone.View.extend(
     initialize: () ->

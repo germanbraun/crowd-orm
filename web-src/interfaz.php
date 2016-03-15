@@ -33,9 +33,14 @@
 	    <div role="main" class="ui-content">		
 		<div id="container"></div>
 		<div id="output">
-		    <h3 class="ui-bar ui-bar-a ui-corner-all">OWLlink output</h3>
+		    <h3 class="ui-bar ui-bar-a ui-corner-all">OWLlink Output</h3>
 		    <div class="ui-body">
 			<textarea cols="10" id="owllink_source"></textarea>
+		    </div>
+		    <h3 class="ui-bar ui-bar-a ui-corner-all">Reasoner Input</h3>
+		    <textarea cols="40" class="ui-body" id="reasoner_input"></textarea>
+		    <h3 class="ui-bar ui-bar-a ui-corner-all">Reasoner Output</h3>
+		    <textarea cols="40" class="ui-body" id="reasoner_output"></textarea>
 		    </div>
 		</div>
 
