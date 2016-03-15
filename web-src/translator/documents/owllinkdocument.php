@@ -29,6 +29,20 @@ load('document.php');
 use \XMLWriter;
 
 /**
+
+   # Example
+
+   @code{.php}
+   $d = new OWLlinkDocument();
+   $d->insert_startdocument();
+   $d->insert_request();
+   
+   // ...
+
+   $d->end_document();
+
+   $d->to_string();
+   @endcode
    
  */
 class OWLlinkDocument extends Document{
@@ -58,17 +72,39 @@ class OWLlinkDocument extends Document{
     function __construct(){
         $this->content = new XMLWriter();
         $this->content->openMemory();
-        $this->content->startDocument("1.0", "UTF-8");
 
+        $this->in_tell = false;
+    }
+
+    /**
+       @name Starting and Ending the document
+    */
+    ///@{
+    
+    public function insert_startdocument(){
+        $this->content->startDocument("1.0", "UTF-8");
+    }
+
+    public function insert_request(){        
         $this->content->startElement("RequestMessage");
         $this->content->writeAttribute("xmlns", "http://www.owllink.org/owllink#");
         $this->content->writeAttribute("xmlns:owl", "http://www.w3.org/2002/07/owl#" );
 		$this->content->writeAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
 		$this->content->writeAttribute("xsi:schemaLocation", "http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd");
-
-        $this->in_tell = false;
     }
 
+    /**
+       Abbreviation of:
+
+       @code{.php}
+       $d->insert_startdocument();
+       $d->insert_request();
+       @endcode
+     */
+    public function start_document(){
+        $this->insert_startdocument();
+        $this->insert_request();
+    }
     
     public function end_document(){
         if ($this->in_tell) {
@@ -76,6 +112,9 @@ class OWLlinkDocument extends Document{
         }
         $this->content->endElement();
     }
+
+    ///@}
+    // Starting and ending the document 
 
     public function insert_prefix($uri){
     }
@@ -233,7 +272,7 @@ class OWLlinkDocument extends Document{
     // Ask group.
 
     public function to_string(){
-        return $copy->outputMemory();
+        return $this->content->outputMemory();
     }
 }
 
