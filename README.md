@@ -6,6 +6,9 @@
 
 * Usar Apache o Nginx con PHP5.
 * Copiar `web-src` al directorio web de apache (usualmente /var/www/html), o al directorio configurado con Nginx.
+* Create the directory `/home/wicom/racer` and copy (or symlink) the Racer-2.0 program there. 
+    * Ensure it has write permissions for PHP and/or the web server process: `chmod a+rwx /home/wicom/racer`
+    * If you want to use another directory, check `web-src/reasoner/racerconnector.php` file and change its constants. Ensure it is not a web accessible directory (i.e. it is not `/var/www/html/` or you cannot access it using your web server on http://localhost/...).
 
 ## Instalar Compilador de CoffeeScript
 
