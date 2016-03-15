@@ -204,8 +204,10 @@ class OWLlinkDocument extends Document{
     }
     
     public function end_tell(){
-        $this->content->endElement();
-        $this->in_tell = false;
+        if ($this->in_tell){
+            $this->content->endElement();
+            $this->in_tell = false;
+        }
     }
     
 

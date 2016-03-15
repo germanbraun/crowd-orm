@@ -35,6 +35,7 @@ class OWLlinkBuilder extends DocumentBuilder{
     }
     
     public function insert_header(){
+        $this->product->start_document();
         $this->product->insert_create_kb("http://localhost/kb1");
         $this->product->start_tell();
     }
@@ -80,6 +81,17 @@ class OWLlinkBuilder extends DocumentBuilder{
     public function insert_footer(){
         $this->product->end_tell();
         $this->product->end_document();
+    }
+
+    /**
+       Reimplementation because we have to finish the product 
+       before getting it.
+     */
+    public function get_product($finish=false){
+        if ($finish){
+            $this->product->end_document();
+        }
+        return $this->product;
     }
 }
 ?>
