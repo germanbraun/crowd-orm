@@ -5,7 +5,7 @@
    
    Author: Giménez, Christian   
 
-   reasonertest.php
+   runnertest.php
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -25,13 +25,15 @@ require_once("common.php");
 
 // use function \load;
 load("racerconnector.php", "reasoner/");
+load("runner.php", "reasoner/");
 
 use Wicom\Reasoner\RacerConnector;
+use Wicom\Reasoner\Runner;
 
-class ReasonerTest extends PHPUnit_Framework_TestCase
+class RunnerTest extends PHPUnit_Framework_TestCase
 {
 
-    public function testReasoner(){
+    public function testRunner(){
         $input = <<<'EOT'
 <?xml version="1.0" encoding="UTF-8"?>
 <RequestMessage xmlns="http://www.owllink.org/owllink#"
@@ -66,10 +68,10 @@ EOT;
 </ResponseMessage>
 EOT;
 
-        $racer = new RacerConnector();
-        $racer->run($input);
-        $actual = $racer->get_col_answers()[0];
-        
+        $runner = new Runner(new RacerConnector());
+        $runner->run($input);
+        $actual = $runner->get_last_answer();
+                
         $expected = process_xmlspaces($expected);
         $actual = process_xmlspaces($actual);
         $this->assertEqualXMLStructure($expected, $actual, true);

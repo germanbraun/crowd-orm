@@ -41,11 +41,15 @@ class Runner {
     }
 
     function run($document){
-        $this->connection->send($document);
+        $this->connection->run($document);
     }
 
+    function get_last_answer(){
+        return $this->connection->get_col_answers()[0];
+    }
+    
     function get_answers(){
-        $this->connection->get_answers();
+        return $this->connection->get_col_answers();
     }
 }
 
