@@ -22,7 +22,18 @@
 
 cd php
 
-function execute_test
+##
+# Files that are not unit tests.
+#
+# Add here (separate with spaces, not "," nor ":") files that you
+# don't want to execute as test.
+set exceptions "./common.php"
+
+function execute_test --description "execute_test [TESTNAME]
+
+Execute all the test if no parameter is given.
+If TESTNAME is present, then execute the first test founded at the subdirectories called TESTNAMEtest.php.
+"
 	echo "----------------------------------------------------------------------------------------------------"
 	set_color -o  ;	echo $argv[1]
 	set_color normal
@@ -32,7 +43,9 @@ end
 
 if test -z "$argv[1]" 
 	for testfile in (find -name '*.php')
-		execute_test $testfile
+		if not contains $testfile $exceptions
+			execute_test $testfile
+		end
 	end
 else
 	set testfile (find -name  "$argv[1]test.php")
