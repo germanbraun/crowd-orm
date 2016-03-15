@@ -33,6 +33,7 @@ load("owllinkbuilder.php", "../translator/builders/");
 
 load("runner.php", "../reasoner/");
 load("racerconnector.php", "../reasoner/");
+load("owllinkanalizer.php", "../answers/");
 
 use Wicom\Translator\Translator;
 use Wicom\Translator\Strategies\Calvanesse;
@@ -41,12 +42,17 @@ use Wicom\Translator\Builders\OWLlinkBuilder;
 use Wicom\Reasoner\Runner;
 use Wicom\Reasoner\RacerConnector;
 
+use Wicom\Answers\OWLlinkAnalizer;
+
 $trans = new Translator(new Calvanesse(), new OWLlinkBuilder());
 $owllink_str = $trans->to_owllink($_POST['json']);
 
 $runner = new Runner(new RacerConnector());
 $runner->run($owllink_str);
-$answer = $runner->get_last_answer();
+$owllink_answer = $runner->get_last_answer();
 
-$answer->to_json();
+$owllink_analizer = new OWLlinkAnalizer($owllink_str, $owllink_answer);
+$owllink_analizer->analize();
+echo $owllink_analizer->get_answer()->to_json();
+
 ?>
