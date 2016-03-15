@@ -28,7 +28,7 @@ load("racerconnector.php", "reasoner/");
 
 use Wicom\Reasoner\RacerConnector;
 
-class ReasonerTest extends PHPUnit_Framework_TestCase
+class RacerConnectorTest extends PHPUnit_Framework_TestCase
 {
 
     public function testReasoner(){
@@ -67,6 +67,9 @@ EOT;
 EOT;
 
         $racer = new RacerConnector();
+        
+        $GLOBALS['config']['temporal_path'] = "../../../temp";
+        
         $racer->run($input);
         $actual = $racer->get_col_answers()[0];
         

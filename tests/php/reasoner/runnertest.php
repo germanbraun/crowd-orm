@@ -69,6 +69,7 @@ EOT;
 EOT;
 
         $runner = new Runner(new RacerConnector());
+        $GLOBALS['config']['temporal_path'] = "../../../temp";
         $runner->run($input);
         $actual = $runner->get_last_answer();
                 
