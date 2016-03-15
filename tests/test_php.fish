@@ -37,7 +37,10 @@ If TESTNAME is present, then execute the first test founded at the subdirectorie
 	echo "----------------------------------------------------------------------------------------------------"
 	set_color -o  ;	echo $argv[1]
 	set_color normal
-	rm ../temp/*.owllink
+	if test -f ../temp/input-file.owllink
+		echo "found ../temp/input-file.owllink, changing its name..."
+		mv ../temp/input-file.owllink ../temp/input-file.(date +%F-%T).owllink
+	end
 	phpunit --colors=always --include ../../web-src $argv[1]
 end
 
