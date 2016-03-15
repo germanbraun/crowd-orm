@@ -22,9 +22,21 @@
 
 cd php
 
-for testfile in (find -name '*.php')
+function execute_test
 	echo "----------------------------------------------------------------------------------------------------"
-	set_color -o  ;	echo $testfile
+	set_color -o  ;	echo $argv[1]
 	set_color normal
-	phpunit --colors=always --include ../../web-src $testfile
+	rm ../temp/*.owllink
+	phpunit --colors=always --include ../../web-src $argv[1]
+end
+
+if test -z "$argv[1]" 
+	for testfile in (find -name '*.php')
+		execute_test $testfile
+	end
+else
+	set testfile (find -name  "$argv[1]test.php")
+	if test ! -z "$testfile"
+		execute_test $testfile
+	end
 end
