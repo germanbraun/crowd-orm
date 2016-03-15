@@ -69,7 +69,7 @@
 		</script>
 		<script type="text/template" id="template_trafficlight">
 		    <a class="ui-btn ui-btn-right ui-corner-all" id="traffic_btn">
-			<img width="25px" src="imgs/traffic-light.png" alt="Reasoner answer..."/>
+			<img id="traffic_img" width="25px" src="imgs/traffic-light.png" alt="Reasoner answer..."/>
 		    </a>			
 		</script>
 		

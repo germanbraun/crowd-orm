@@ -44,6 +44,21 @@ css_clase =
         
 # Interfaz
 
+traffic_light_green = () ->
+    $("#traffic_img").attr("src", "imgs/traffic-light-green.png")
+
+traffic_light_red = () ->
+    $("#traffic_img").attr("src", "imgs/traffic-light-red.png")
+
+update_satisfiable = (data) ->
+    console.log(data)
+    obj = JSON.parse(data);
+    if obj.satisfiable.kb
+        traffic_light_green()
+    else
+        traffic_light_red()
+    $("#owllink_source").text(obj.reasoner.input)
+    
 TrafficLightsView = Backbone.View.extend(
     initialize: () ->
         this.render()
@@ -56,7 +71,9 @@ TrafficLightsView = Backbone.View.extend(
         "click a#traffic_btn" : "check_satisfiable"
         
     check_satisfiable: (event) ->
-        
+        json = diag.to_json()
+        postdata = "json=" + JSON.stringify(json)
+        $.post("querying/satisfiable.php", postdata, update_satisfiable);
         
 )
 
