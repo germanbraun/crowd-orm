@@ -36,22 +36,25 @@ class RacerConnector extends Connector{
        The Racer command to execute.
      */
     const PROGRAM_CMD = "/home/wicom/racer/Racer -- -owllink";
-    
-    /**
-       Here we store some temporary files for executing with Racer.
-     */
-    const FILES_PATH = "/home/wicom/racer/";
-    
+      
     /**
        Execute Racer with the given $document as input.
      */
     function run($input_string){
-        $owllink_file = fopen(RacerConnector::FILES_PATH . "input-file.owllink", "w");
+        global $temporal_path;
+        
+        $owllink_file = fopen($temporal_path . "input-file.owllink", "w");
+        if ($owllink_file == false){
+            throw new \Exception("Temporal file couldn't be opened... 
+Is $temporal_path correct?");
+        }
         fwrite($owllink_file, $input_string);
         fclose($owllink_file);
+
+        print($temporal_path . "input-file.owllink");
         
         exec(
-            RacerConnector::PROGRAM_CMD . " " . RacerConnector::FILES_PATH . "input-file.owllink",
+            RacerConnector::PROGRAM_CMD . " " . $temporal_path . "input-file.owllink",
             $answer);
         array_push($this->col_answers, join($answer));
     }
