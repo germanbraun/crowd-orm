@@ -27,32 +27,13 @@
 
 require_once("../common/import_functions.php");
 
-load("translator.php", "../translator/");
-load("calvanessestrat.php", "../translator/strategies/");
-load("owllinkbuilder.php", "../translator/builders/");
+load("wicom.php", "../common/");
 
-load("runner.php", "../reasoner/");
-load("racerconnector.php", "../reasoner/");
-load("owllinkanalizer.php", "../answers/");
+$wicom = new Wicom\Wicom();
 
-use Wicom\Translator\Translator;
-use Wicom\Translator\Strategies\Calvanesse;
-use Wicom\Translator\Builders\OWLlinkBuilder;
-
-use Wicom\Reasoner\Runner;
-use Wicom\Reasoner\RacerConnector;
-
-use Wicom\Answers\OWLlinkAnalizer;
-
-$trans = new Translator(new Calvanesse(), new OWLlinkBuilder());
-$owllink_str = $trans->to_owllink($_POST['json']);
-
-$runner = new Runner(new RacerConnector());
-$runner->run($owllink_str);
-$owllink_answer = $runner->get_last_answer();
-
-$owllink_analizer = new OWLlinkAnalizer($owllink_str, $owllink_answer);
-$owllink_analizer->analize();
-echo $owllink_analizer->get_answer()->to_json();
-
+if (array_key_exists('json', $_POST)){
+    echo $wicom->is_satisfiable($_POST['json']);
+}else{
+    echo "Error, json parameter not founded.";
+}
 ?>
