@@ -24,6 +24,7 @@
 namespace Wicom\Reasoner;
 
 load("connector.php");
+load("config.php", "../config/");
 
 use Wicom\Reasoner\Connector;
 
@@ -41,17 +42,15 @@ class RacerConnector extends Connector{
        Execute Racer with the given $document as input.
      */
     function run($input_string){
-        global $temporal_path;
+        $temporal_path = $GLOBALS['config']['temporal_path'];
         
         $owllink_file = fopen($temporal_path . "input-file.owllink", "w");
-        if ($owllink_file == false){
-            throw new \Exception("Temporal file couldn't be opened... 
-Is $temporal_path correct?");
+        if (! $owllink_file){
+            throw new \Exception("Temporal file couldn't be opened for writing... 
+Is the path \"$temporal_path\" correct?");
         }
         fwrite($owllink_file, $input_string);
         fclose($owllink_file);
-
-        print($temporal_path . "input-file.owllink");
         
         exec(
             RacerConnector::PROGRAM_CMD . " " . $temporal_path . "input-file.owllink",

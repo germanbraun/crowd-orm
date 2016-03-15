@@ -27,19 +27,26 @@
 
 require_once("../common/import_functions.php");
 
-use function \load;
-
 load("translator.php", "../translator/");
 load("calvanessestrat.php", "../translator/strategies/");
 load("owllinkbuilder.php", "../translator/builders/");
+
+load("runner.php", "../reasoner/");
+load("racerconnector.php", "../reasoner/");
 
 use Wicom\Translator\Translator;
 use Wicom\Translator\Strategies\Calvanesse;
 use Wicom\Translator\Builders\OWLlinkBuilder;
 
+use Wicom\Reasoner\Runner;
+use Wicom\Reasoner\RacerConnector;
+
 $trans = new Translator(new Calvanesse(), new OWLlinkBuilder());
-$res = $trans->to_owllink($_POST['json']);
+$owllink_str = $trans->to_owllink($_POST['json']);
 
-//TODO: Runner HERE!
+$runner = new Runner(new RacerConnector());
+$runner->run($owllink_str);
+$answer = $runner->get_last_answer();
 
+$answer->to_json();
 ?>
