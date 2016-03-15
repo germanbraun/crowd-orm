@@ -43,6 +43,20 @@ class RacerConnector extends Connector{
      */
     function run($input_string){
         $temporal_path = $GLOBALS['config']['temporal_path'];
+
+        /*
+        print("\n\nWriting on $temporal_path/input-file.owllink\n");
+        print("Directory Realpath: \"" . realpath($temporal_path) . "\" ");
+        print("if blank, then path doesn't exists!\n\n");
+        */
+
+        $temporal_path = realpath($temporal_path) . "/";
+        
+        if (! is_dir($temporal_path)){
+            throw new \Exception("Temporal path desn't exists!
+Are you sure about this path? 
+temporal_path = \"$temporal_path\"");
+        }
         
         $owllink_file = fopen($temporal_path . "input-file.owllink", "w");
         if (! $owllink_file){
