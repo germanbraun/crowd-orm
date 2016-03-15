@@ -22,7 +22,8 @@
  */
 
 require_once("common.php");
-use function \load;
+
+//use function \load;
 load("owllinkdocument.php","translator/documents/");
 
 
@@ -39,6 +40,7 @@ class OWLlinkDocumentTest extends PHPUnit_Framework_TestCase{
 </RequestMessage>";
 	
         $d = new OWLlinkDocument();
+        $d->start_document();
         $d->end_document();
         $actual = $d->to_string();
         
@@ -57,6 +59,7 @@ class OWLlinkDocumentTest extends PHPUnit_Framework_TestCase{
 </RequestMessage>";
 	
         $d = new OWLlinkDocument();
+        $d->start_document();
         $d->insert_create_kb("http://localhost/kb1");
         $d->end_document();
         
@@ -81,6 +84,7 @@ class OWLlinkDocumentTest extends PHPUnit_Framework_TestCase{
 </RequestMessage>";
 	
         $d = new OWLlinkDocument();
+        $d->start_document();
         $d->insert_create_kb("http://localhost/kb1");
         $d->start_tell();
         $d->insert_class("Hi World");
@@ -112,6 +116,7 @@ class OWLlinkDocumentTest extends PHPUnit_Framework_TestCase{
 </RequestMessage>";
 	
         $d = new OWLlinkDocument();
+        $d->start_document();                                       
         $d->insert_create_kb("http://localhost/kb1");
         $d->start_tell();
         $d->insert_subclassof("Hi World", "owl:Thing", false, true);

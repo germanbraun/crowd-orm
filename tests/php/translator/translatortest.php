@@ -23,7 +23,7 @@
 
 require_once("common.php");
 
-use function \load;
+//use function \load;
 load("calvanessestrat.php", "translator/strategies/");
 load("owllinkbuilder.php", "translator/builders/");
 load("translator.php", "translator/");

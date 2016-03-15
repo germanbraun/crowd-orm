@@ -23,7 +23,7 @@
 
 require_once("common.php");
 
-use function \load;
+// use function \load;
 load("calvanessestrat.php", "translator/strategies/");
 load("owllinkbuilder.php", "translator/builders/");
 
@@ -38,11 +38,11 @@ class CalvanesseTest extends PHPUnit_Framework_TestCase
         $json = '{"classes": [{"attrs":[], "methods":[], "name": "Hi World"}]}';
         //TODO: Complete XML!
         $expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-       <RequestMessage xmlns=\"http://www.owllink.org/owllink#\"
-       xmlns:owl=\"http://www.w3.org/2002/07/owl#\" 
-       xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
-       xsi:schemaLocation=\"http://www.owllink.org/owllink# 
-       http://www.owllink.org/owllink-20091116.xsd\">
+<RequestMessage xmlns=\"http://www.owllink.org/owllink#\"
+xmlns:owl=\"http://www.w3.org/2002/07/owl#\" 
+xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
+xsi:schemaLocation=\"http://www.owllink.org/owllink# 
+http://www.owllink.org/owllink-20091116.xsd\">
        <CreateKB kb=\"http://localhost/kb1\" />
        <Tell kb=\"http://localhost/kb1\">   
        <owl:SubClassOf>
@@ -50,12 +50,16 @@ class CalvanesseTest extends PHPUnit_Framework_TestCase
        <owl:Class abbreviatedIRI=\"owl:Thing\" />
        </owl:SubClassOf>
        </Tell>
-       </RequestMessage>";
-
+</RequestMessage>";
+        
         $strategy = new Calvanesse();
         $builder = new OWLlinkBuilder();
 
+        $builder->insert_header(); // Without this, loading the DOMDocument
+        // will throw error for the owl namespace
         $strategy->translate($json, $builder);
+        $builder->insert_footer();
+        
         $actual = $builder->get_product();
         $actual = $actual->to_string();
 

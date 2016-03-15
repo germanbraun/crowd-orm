@@ -23,8 +23,7 @@
 
 require_once("common.php");
 
-use function \load;
-
+//use function \load;
 load("owllinkdocument.php", "translator/documents/");
 load("owllinkbuilder.php", "translator/builders/");
 load("queriesgenerator.php", "querying/queries/");
@@ -46,6 +45,7 @@ class QueryGenTest extends PHPUnit_Framework_TestCase{
         
         $doc = new OWLlinkDocument();
         $doc->set_actual_kb("http://localhost/kb1");
+        $doc->start_document();
         $doc->insert_satisfiable();
         $doc->end_document();
 
@@ -68,7 +68,8 @@ class QueryGenTest extends PHPUnit_Framework_TestCase{
 </RequestMessage>";
         
         $doc = new OWLlinkDocument();
-        $doc->set_actual_kb("http://localhost/kb1");        
+        $doc->set_actual_kb("http://localhost/kb1");
+        $doc->start_document();
         $doc->insert_satisfiable();
         $doc->insert_satisfiable_class("Person");
         $doc->end_document();
@@ -85,6 +86,7 @@ class QueryGenTest extends PHPUnit_Framework_TestCase{
 		xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
 		xsi:schemaLocation=\"http://www.owllink.org/owllink# 
 				    http://www.owllink.org/owllink-20091116.xsd\">
+  <CreateKB kb=\"http://localhost/kb1\" />
   <IsKBSatisfiable kb=\"http://localhost/kb1\" />
   <IsClassSatisfiable kb=\"http://localhost/kb1\">
     <owl:Class IRI=\"Person\" />
@@ -102,6 +104,7 @@ class QueryGenTest extends PHPUnit_Framework_TestCase{
         $builder = new OWLlinkBuilder();
         $gen  = new QueriesGenerator();
 
+        $builder->insert_header(true,false);
         $gen->gen_satisfiable($builder);
         $gen->gen_class_satisfiable($json, $builder);
         $builder->insert_footer();
