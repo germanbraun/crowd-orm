@@ -34,10 +34,14 @@ class OWLlinkBuilder extends DocumentBuilder{
         $this->product = new OWLlinkDocument;
     }
     
-    public function insert_header(){
+    public function insert_header($createkb=true, $starttell=true){
         $this->product->start_document();
-        $this->product->insert_create_kb("http://localhost/kb1");
-        $this->product->start_tell();
+        if ($createkb){
+            $this->product->insert_create_kb("http://localhost/kb1");
+        }
+        if ($starttell){
+            $this->product->start_tell();
+        }
     }
 
     public function insert_class($name, $col_attrs = []){
@@ -59,6 +63,10 @@ class OWLlinkBuilder extends DocumentBuilder{
         $this->product->insert_subclassof($child, $father, $child_abbrv, $father_abbrv);
     }
 
+    protected function ensure_end_tell(){
+        $this->product->end_tell();
+    }
+    
     /**
        @name Queries
     */
@@ -68,10 +76,12 @@ class OWLlinkBuilder extends DocumentBuilder{
        Insert "is diagram/KB satisfiable" query.
      */
     public function insert_satisfiable(){
+        $this->ensure_end_tell();
         $this->product->insert_satisfiable();
     }
 
     public function insert_satisfiable_class($classname){
+        $this->ensure_end_tell();
         $this->product->insert_satisfiable_class($classname);
     }
 

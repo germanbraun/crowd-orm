@@ -23,8 +23,6 @@
 
 namespace Wicom\Translator;
 
-require_once("../common/import_functions.php");
-
 use function \load;
 load("queriesgenerator.php", "../querying/queries/");
 
@@ -65,14 +63,18 @@ class Translator{
        @return an XML OWLlink String.
      */
     function to_owllink($json){
+        $this->builder->insert_header();
+        
         $this->strategy->translate($json, $this->builder);
 
         if ($this->with_queries){
             $this->queriesgen->gen_satisfiable($this->builder);
-            $this->queriesgen->gen_satisfiable_class($json, $this->builder);
+            $this->queriesgen->gen_class_satisfiable($json, $this->builder);
         }
-        
-        $document = $this->builder->get_product();
+
+        $this->builder->insert_footer();
+        // return $builder->get_product();
+        $document = $this->builder->get_product();        
         return $document->to_string();
     }
 }
