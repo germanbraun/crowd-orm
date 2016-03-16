@@ -68,7 +68,7 @@ EOT;
 
         $racer = new RacerConnector();
         
-        $GLOBALS['config']['temporal_path'] = "../../../temp";
+        $GLOBALS['config']['temporal_path'] = "../../temp";
         
         $racer->run($input);
         $actual = $racer->get_col_answers()[0];
