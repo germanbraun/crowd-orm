@@ -6,9 +6,14 @@
 
 * Usar Apache o Nginx con PHP5.
 * Copiar `web-src` al directorio web de apache (usualmente /var/www/html), o al directorio configurado con Nginx.
-* Create the directory `/home/wicom/racer` and copy (or symlink) the Racer-2.0 program there. 
-    * Ensure it has write permissions for PHP and/or the web server process: `chmod a+rwx /home/wicom/racer`
-    * If you want to use another directory, check `web-src/reasoner/racerconnector.php` file and change its constants. Ensure it is not a web accessible directory (i.e. it is not `/var/www/html/` or you cannot access it using your web server on http://localhost/...).
+* Ensure that the web server can access the temp directory here. It needs to write ./temp/input-file.owllink file. 
+  You can execute (suppose "www-data" is the username associated to the web server):
+  ```
+  sudo chgrp -R www-data temp
+  sudo chown -R g+rwx temp
+  ```
+  On some systems, you may have to check SELinux to enable Apache writing.
+  You can use the `./tests/test-satisf-json.sh` for checking if it is correctly setted.
 
 ## Instalar Compilador de CoffeeScript
 
