@@ -5,7 +5,7 @@
    
    Author: Giménez, Christian   
 
-   documentbuilder.php
+   htmldocument.php
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -21,23 +21,31 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Wicom\Translator\Builders;
+namespace Wicom\Translator\Documents;
 
-/**
-   I set the common behaviour for every DocumentBuilder subclass.
- */
-abstract class DocumentBuilder{
-    protected $product = null;
-       
-    abstract public function insert_header();
-    abstract public function insert_class($name, $col_attrs = []);
-    abstract public function insert_footer();
+use function \load;
+load('document.php');
 
-    abstract public function insert_satisfiable();
-    abstract public function insert_satisfiable_class($classname);
+class HTMLDocument extends Document{
+    protected $content = null;
+
+    function __construct(){
+        $this->content = "";
+    }
+
+    public function insert_class($name){
+        $this->content .= "$name";
+    }
+
+    public function insert_subclassof($child_class, $father_class){
+        $this->content .= "$child_class &8849; $father_class";
+    }
+
+    public function end_document(){
+    }
     
-    public function get_product(){
-        return $this->product;
+    public function to_string(){
+        return $this->content;
     }
 }
 ?>

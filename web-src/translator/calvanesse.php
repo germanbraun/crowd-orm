@@ -40,14 +40,16 @@ load('translator.php');
 load('owllinkdocument.php', 'documents/');
 load('calvanessestrat.php','strategies/');
 load('owllinkbuilder.php', 'builders/');
+load('htmlbuilder.php', 'builders/');
 
 use Wicom\Translator\Translator;
 use Wicom\Translator\Strategies\Calvanesse;
 use Wicom\Translator\Builders\OWLlinkBuilder;
+use Wicom\Translator\Builders\HTMLBuilder;
 
 $format = 'owllink';
 if (array_key_exists('format',$_GET)){
-    $format = $_GET['format'];
+    $format = $_REQUEST['format'];
 }
 
 if ( ! array_key_exists('json', $_POST)){
@@ -57,7 +59,20 @@ Use, for example:
 
     curl -d 'json={\"classes\": [{\"attrs\":[], \"methods\":[], \"name\": \"Hi World\"}]}' http://host.com/translator/calvanesse.php";
 }else{
-    $trans = new Translator(new Calvanesse(), new OWLlinkBuilder());
+    $builder = null;
+    
+    switch ($format){
+    case "owllink" :
+        $builder = new OWLlinkBuilder();
+        break;
+    case "html" :
+        $builder = new HTMLBuilder();
+        break;
+    default:
+        die("Format not recognized");
+    }
+        
+    $trans = new Translator(new Calvanesse(), $builder);
     $res = $trans->to_owllink($_POST['json']);
     print_r($res);
 }
