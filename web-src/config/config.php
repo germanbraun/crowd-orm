@@ -19,6 +19,6 @@ $GLOBALS['environment']='devel';
    Remember: Apache (represented as httpd, apache or www-data user in 
    some systems) should have write perms there.
  */
-$GLOBALS['config']['temporal_path'] = '/var/www/html/wicom/temp/';
+$GLOBALS['config']['temporal_path'] = '/var/www/html/wicom/run/';
 
 ?>

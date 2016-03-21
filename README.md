@@ -6,11 +6,11 @@
 
 * Usar Apache o Nginx con PHP5.
 * Copiar `web-src` al directorio web de apache (usualmente /var/www/html), o al directorio configurado con Nginx.
-* Ensure that the web server can access the temp directory here. It needs to write ./temp/input-file.owllink file. 
+* Ensure that the web server can access the "run" directory here. It needs to write ./run/input-file.owllink file. 
   You can execute (suppose "www-data" is the username associated to the web server):
   ```
-  sudo chgrp -R www-data temp
-  sudo chown -R g+rwx temp
+  sudo chgrp -R www-data run
+  sudo chown -R g+rwx run
   ```
   On some systems, you may have to check SELinux to enable Apache writing.
   You can use the `./tests/test-satisf-json.sh` for checking if it is correctly setted.
