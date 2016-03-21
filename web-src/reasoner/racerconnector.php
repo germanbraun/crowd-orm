@@ -34,15 +34,16 @@ class RacerConnector extends Connector{
     //TODO: Change PROGRAM_CMD and FILES_PATH into configuration variables.
     
     /**
-       The Racer command to execute.
+       The Racer command to execute with all its parameters.
      */
-    const PROGRAM_CMD = "/home/wicom/racer/Racer -- -owllink";
+    const PROGRAM_CMD = "Racer -- -owllink";
       
     /**
        Execute Racer with the given $document as input.
      */
     function run($input_string){
         $temporal_path = $GLOBALS['config']['temporal_path'];
+        $racer_path = $GLOBALS['config']['racer_path'];
 
         /*
         print("\n\nWriting on $temporal_path/input-file.owllink\n");
@@ -67,7 +68,7 @@ Is the path \"$temporal_path\" correct?");
         fclose($owllink_file);
         
         exec(
-            RacerConnector::PROGRAM_CMD . " " . $temporal_path . "input-file.owllink",
+            $racer_path . RacerConnector::PROGRAM_CMD . " " . $temporal_path . "input-file.owllink",
             $answer);
         array_push($this->col_answers, join($answer));
     }

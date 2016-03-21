@@ -21,4 +21,13 @@ $GLOBALS['environment']='devel';
  */
 $GLOBALS['config']['temporal_path'] = '/var/www/html/wicom/run/';
 
+/**
+   Where is the Racer program?
+
+   By default we provide a Racer program inside the temporal_path 
+   (at wicom/run/Racer), but if you want to use another program you 
+   have to set this value with the path.
+ */
+$GLOBALS['config']['racer_path'] = $GLOBALS['config']['temporal_path'];
+
 ?>
