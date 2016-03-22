@@ -48,7 +48,7 @@ use Wicom\Translator\Builders\OWLlinkBuilder;
 use Wicom\Translator\Builders\HTMLBuilder;
 
 $format = 'owllink';
-if (array_key_exists('format',$_GET)){
+if (array_key_exists('format',$_REQUEST)){
     $format = $_REQUEST['format'];
 }
 

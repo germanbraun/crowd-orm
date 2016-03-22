@@ -33,8 +33,9 @@
 	    <div role="main" class="ui-content">		
 		<div id="container"></div>
 		<div id="output">
-		    <h3 class="ui-bar ui-bar-a ui-corner-all">OWLlink Output</h3>
+		    <h3 class="ui-bar ui-bar-a ui-corner-all">Translation Output</h3>
 		    <div class="ui-body">
+			<div id="html-output"></div>
 			<textarea cols="10" id="owllink_source"></textarea>
 		    </div>
 		    <h3 class="ui-bar ui-bar-a ui-corner-all">Reasoner Input</h3>
@@ -47,7 +48,11 @@
 		<!-- Templates -->
 		<script type="text/template" id="template_crearclase">
 		    <div data-role="navbar">
-			<label>Traducir a OWLlink</label>
+			<label>Traducir</label>
+			<select data-mini="true" data-inline="true" id="format_select">
+			    <option value="owllink" selcted="true">OWLlink</option>
+			    <option value="html">HTML</option>
+			</select>
 			<a class="ui-btn ui-icon-edit ui-btn-icon-left" type="button" id="translate_button">Traducir</a>
 						
 			<label>Crear Clase</label>

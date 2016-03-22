@@ -104,13 +104,27 @@ CrearClaseView = Backbone.View.extend(
         # Event handler for translate diagram to OWLlink using Ajax
         # and the translator/calvanesse.php translator URL.
         translate_owllink: (event) ->
+                format = $("#format_select")[0].value
                 json = JSON.stringify(diag.to_json())
                 $.post(
                         "translator/calvanesse.php",
+                        "format":
+                                format
                         "json":
                                 json
                         (data) ->
-                                $("#owllink_source").text(data)
+                                if format == "html" 
+                                        $("#html-output").html(data)
+                                        $("#html-output").show()
+                                        $("#owllink_source").hide()
+                                else
+                                        $("#owllink_source").text(data)
+                                        $("#owllink_source").show()
+                                        $("#html-output").hide()
+                                offset = $("#output").offset()
+                                window.scrollTo(offset.left,
+                                offset.top)
+                                
                                 console.log(data)
                 )
                 

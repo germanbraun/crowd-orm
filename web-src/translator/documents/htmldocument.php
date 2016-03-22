@@ -38,7 +38,10 @@ class HTMLDocument extends Document{
     }
 
     public function insert_subclassof($child_class, $father_class){
-        $this->content .= "$child_class &8849; $father_class";
+        // replace spaces
+        $child_class = str_replace(" ", "_", $child_class);
+        $father_class = str_replace(" ", "_", $father_class);
+        $this->content .= "<p>$child_class &#8849; $father_class</p>";
     }
 
     public function end_document(){
