@@ -33,14 +33,14 @@ QUnit.test( "diag.to_json", ( assert ) ->
     actual = diag.to_json()
 
     # Comparing
-    assert.propEqual(actual , expected, "dia.to_json" )
-    # assert.equal(actual, expected, "dia.to_json")
-    # assert.deepEqual(actual, expected, "dia.to_json")
-    # assert.strictEqual(actual, expected, "dia.to_json")
-    # assert.ok( actual == expected, "dia.to_json")
-    # assert.notEqual(actual, expected, "dia.to_json")
-    # assert.notOk( actual == expected, "dia.to_json")
-    # assert.notDeepEqual(actual, expected, "dia.to_json")
-    # assert.notStrictEqual(actual, expected, "dia.to_json")
+    assert.propEqual(actual , expected, "Passed!" )
+    # assert.equal(actual, expected, "Passed!")
+    # assert.deepEqual(actual, expected, "Passed!")
+    # assert.strictEqual(actual, expected, "Passed!")
+    # assert.ok( actual == expected, "Passed!")
+    # assert.notEqual(actual, expected, "Passed!")
+    # assert.notOk( actual == expected, "Passed!")
+    # assert.notDeepEqual(actual, expected, "Passed!")
+    # assert.notStrictEqual(actual, expected, "Passed!")
 
 )

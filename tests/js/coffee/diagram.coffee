@@ -31,7 +31,7 @@ QUnit.test("diag.delete_class", (assert) ->
     # actual = JSON.stringify(diag.to_json())
     actual = diag.get_clases().length
     
-    assert.equal(actual , expected, "dia.to_json" )
+    assert.equal(actual , expected, "Passed!" )
     
 )
 
@@ -51,7 +51,7 @@ QUnit.test("diag.delete_by_name", (assert) ->
     # actual = JSON.stringify(diag.to_json())
     actual = diag.get_clases().length
     
-    assert.equal(actual , expected, "dia.to_json" )
+    assert.equal(actual , expected, "Passed!" )
     
 )
 
@@ -81,6 +81,6 @@ QUnit.test("diag.delete_by_classid", (assert) ->
     # actual = JSON.stringify(diag.to_json())
     actual = diag.get_clases().length
     
-    assert.equal(actual , expected, "dia.to_json" )
+    assert.equal(actual , expected, "Passed!" )
     
 )
