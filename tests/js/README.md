@@ -1,10 +1,17 @@
 # QUnit: A JavaScript Unit Testing framework
 
-## Usage
+# Usage (Executing Tests)
 
-1. Create a new `{ModuleName}TestSuite.html` in `test` folder and
+Make available all the wicom directory (root directory of this project). Then, compile CoffeeScripts into Javascript using `scripts/compile-coffee.sh`.
+
+Open your browser at this directory and visit the index.html file (http://localhost/wicom/tests/js/index.html if you configured the Apache/Nginx server with http://localhost/wicom virtual path at the wicom main directory).
+
+# Writing Test Units
+
+1. Create a new `{ModuleName}TestSuite.html` in this folder and
 code a test for each module function.
 
+```html
 <html>
 <head>
   <meta charset="utf-8">
@@ -29,4 +36,7 @@ code a test for each module function.
 </body>
 </html>
 
+```
 
+## CoffeeScript Template
+A template is provided at `./coffee/template.coffee`.
