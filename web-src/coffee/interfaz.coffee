@@ -185,6 +185,10 @@ ClassOptionsView = Backbone.View.extend(
         "click a#deleteclass_button" : "delete_class",
         "click a#editclass_button" : "edit_class"
 
+    ##
+    # Set the classid of the Joint Model associated to this EditClass
+    # instance, then set the position of the template to where is the
+    # class Joint Model.
     set_classid: (@classid) ->
         viewpos = graph.getCell(@classid).findView(paper).getBBox()
 
@@ -196,12 +200,14 @@ ClassOptionsView = Backbone.View.extend(
             )
         this.$el.show()
 
+    ##
+    # Return the ClassID of the Joint.Model element associated to
+    # this EditClass instance. 
     get_classid: () ->
         return @classid
         
     delete_class: (event) ->
-        model = graph.getCell(@classid)
-        model.remove()
+        diag.delete_class_by_classid(@classid)
         this.hide()
 
     edit_class: (event) ->

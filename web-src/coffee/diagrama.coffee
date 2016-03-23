@@ -23,7 +23,12 @@ class Diagrama
     constructor: (@graph = null) ->
         @clases = []
         @links = []
+        
         @cells_nuevas = []
+        # Cells that are listed for deletion, you have to update
+        # diagram for apply.
+        @cells_deleted = []
+        
         @factory = new UMLFactory()
 
     get_factory: () ->
@@ -43,11 +48,42 @@ class Diagrama
         return @links
 
     get_clase: (nombre) ->
+
+    find_class_by_name: (name) ->
+        return @clases.find( (elt, index, arr) ->
+            elt.get_name() == name
+        )
+        
+
+    find_class_by_classid: (classid) ->
+        return @clases.find( (elt,index,arr) ->
+            elt.has_classid(classid)
+        )
         
     agregar_clase: (clase) ->
         @clases.push(clase)
         @cells_nuevas.push(clase.get_joint(@factory))
         this.actualizar_graph()
+
+    delete_class: (c) ->
+        @clases = @clases.filter( (elt, index, arr) ->
+            elt != c
+        )
+        @cells_deleted.push(c.get_joint())
+        this.actualizar_graph()
+
+    ##
+    # Remove the class from the diagram.
+    delete_class_by_name: (name) ->
+        c = this.find_class_by_name(name)
+        if c != undefined then this.delete_class(c)
+
+    ##
+    # Delete a class selecting by using its Joint Model
+    # classid string. 
+    delete_class_by_classid: (classid) ->
+        c = this.find_class_by_classid(classid)
+        if c != undefined then this.delete_class(c)
     
     agregar_link: (link) ->
         @links.push(link)
@@ -58,7 +94,14 @@ class Diagrama
     actualizar_graph: () ->
         if @graph != null
             @graph.addCell(@cells_nuevas)
+            # remove the removed cells
+            @cells_deleted.forEach(
+                (elt,index,arr) ->
+                    elt.remove()
+            )                    
+        @cells_deleted = []
         @cells_nuevas = []
+        
 
     ##
     # Return a JSON representing the Diagram.

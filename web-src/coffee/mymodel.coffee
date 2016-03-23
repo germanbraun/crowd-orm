@@ -36,6 +36,11 @@ class MyModel
     # * joint_factory : A Concrete Factory like UMLFactory or ERDFactory instance.
     get_joint: (joint_factory) ->
 
+    ##
+    # Return true if this Joint Model has the given classid string.
+    has_classid: (classid) ->
+        return false
+
     to_json: () ->
         name: @name
 
@@ -60,12 +65,32 @@ class Class extends MyModel
     get_methods: () ->
         return @methods
 
-    # Params.:
+    ##
+    # Return the joint model. Create it if it is null and a factory
+    # is provided.
     # 
-    # * factory: A Factory instance
-    get_joint: (factory) ->
-        if @joint == null then @joint = factory.create_class(@name)
+    # Params.:
+    # * factory: A Factory subclass instance.
+    get_joint: (factory = null) ->
+        if factory != null then this.create_joint(factory)
         return @joint
+
+    ##
+    # If the joint model wasn't created, make it.
+    #
+    # Parameters:
+    # * factory : a Factory subclass instance.
+    create_joint: (factory) ->
+        if @joint == null then @joint = factory.create_class(@name)
+
+    has_classid: (classid) ->
+        this.get_classid() == classid
+
+    get_classid: () ->
+        if @joint == null
+            return false
+        else
+            return @joint.id
 
     to_json: () ->
         json = super()
