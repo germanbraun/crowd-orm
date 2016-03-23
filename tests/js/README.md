@@ -1,6 +1,6 @@
 # QUnit: A JavaScript Unit Testing framework
 
-# Usage (Executing Tests)
+Usage (Executing Tests)
 
 Make available all the wicom directory (root directory of this project). Then, compile CoffeeScripts into Javascript using `scripts/compile-coffee.sh`.
 
