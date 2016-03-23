@@ -48,6 +48,31 @@ class Calvanesse extends Strategy{
         foreach ($js_clases as $class){
             $builder->insert_subclassof($class["name"], "owl:Thing");
         }
+
+        $this->translate_links($json, $builder);        
+    }
+
+    /**
+       Translate only the links from a JSON string with links using
+       the given builder.
+       @param json A JSON object, the result from a decoded JSON 
+       String.
+     */
+    protected function translate_links($json, $builder){
+        $js_links = $json["links"];
+        foreach ($js_links as $link){
+            $builder->translate_DL(["subclass" =>
+                                    ["exists" =>
+                                     ["role" => $link["name"]]],
+                                    ["class" => $link["classes"][0]]]);
+            // $builder->translate_DL(["subclass" =>
+            //                         ["exists" =>
+            //                          ["inverse" =>
+            //                           [$link["name"],
+            //                            $link["owl:Thing"]]],
+            //                          ["class" => $link["classes"][0]]]);
+                                  
+        }
         
     }
 }

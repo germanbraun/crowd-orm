@@ -211,6 +211,20 @@ class OWLlinkDocument extends Document{
     }
     
 
+/**
+       Insert a DL subclass-of operator. 
+     */
+    public function insert_subclassof($child_class, $father_class, $child_abbrev=false, $father_abbrev=false){
+        if (! $this->in_tell){
+            return false;
+        }
+        $this->content->startElement("owl:SubClassOf");
+        $this->insert_class($child_class, $child_abbrev);
+        $this->insert_class($father_class, $father_abbrev);
+        $this->content->endElement();
+    }
+
+  
     /**
        Add a class DL element.
 
@@ -230,19 +244,45 @@ class OWLlinkDocument extends Document{
         $this->content->endElement();
     }
 
-    /**
-       Insert a DL subclass-of operator. 
-     */
-    public function insert_subclassof($child_class, $father_class, $child_abbrev=false, $father_abbrev=false){
-        if (! $this->in_tell){
-            return false;
-        }
-        $this->content->startElement("owl:SubClassOf");
-        $this->insert_class($child_class, $child_abbrev);
-        $this->insert_class($father_class, $father_abbrev);
+    public function insert_objectproperty($name){
+        $this->content->startElement("owl:ObjectProperty");        
+        $this->content->writeAttribute("IRI", $name);
         $this->content->endElement();
     }
-
+    public function begin_subclassof(){
+        $this->content->startElement("owl:SubClassOf");
+    }
+    public function end_subclassof(){
+        $this->content->EndElement();
+    }
+    public function begin_intersectionof(){
+        $this->content->startElement("owl:ObjectIntersectionOf");
+    }
+    public function end_intersectionof(){
+        $this->content->EndElement();
+    }
+    public function begin_somevaluesfrom(){
+        $this->content->startElement("owl:ObjectSomeValuesFrom");
+    }
+    public function end_somevaluesfrom(){
+        $this->content->EndElement();
+    }
+    public function begin_mincardinality($cardinality){
+        $this->content->startElement("owl:ObjectMinCardinality");
+        $this->content->writeAttribute("cardinality", $cardinality);
+    }
+    public function end_mincardinality($cardinality){
+        $this->content->EndElement();
+    }
+    public function begin_maxcardinality($cardinality){
+        $this->content->startElement("owl:ObjectMaxCardinality");
+        $this->content->writeAttribute("cardinality", $cardinality);
+    }
+    public function end_maxcardinality($cardinality){
+        $this->content->EndElement();
+    }
+        
+    
     ///@}
     // Tell group.
 
