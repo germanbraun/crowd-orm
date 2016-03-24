@@ -61,10 +61,12 @@ class Calvanesse extends Strategy{
     protected function translate_links($json, $builder){
         $js_links = $json["links"];
         foreach ($js_links as $link){
-            $builder->translate_DL(["subclass" =>
-                                    ["exists" =>
-                                     ["role" => $link["name"]]],
-                                    ["class" => $link["classes"][0]]]);
+            $builder->translate_DL([
+                ["subclass" =>
+                 ["exists" =>
+                  ["role" => $link["name"]]],
+                 ["class" => $link["classes"][0]]]
+            ]);
             // $builder->translate_DL(["subclass" =>
             //                         ["exists" =>
             //                          ["inverse" =>
