@@ -26,6 +26,7 @@ namespace Wicom\Translator\Documents;
 use function \load;
 load('document.php');
 
+use function \preg_match;
 use \XMLWriter;
 
 /**
@@ -213,6 +214,17 @@ class OWLlinkDocument extends Document{
 
     /**
        Insert a DL subclass-of operator. 
+       
+       Abbreviated IRIs are recognized automatically.
+
+       @param child_class A String with the child's name class.
+       @param father_class Same as $child_class parameter but for 
+       the $father_class.
+       @param child_abbrev If true, force the abbreviated IRI for the
+       child class; if false, force the (not abbreviated) IRI; if 
+       null check it automatically.
+       @param father_abbrev same as $child_abbrev but for the 
+       $father_class. 
      */
     public function insert_subclassof($child_class, $father_class, $child_abbrev=false, $father_abbrev=false){
         if (! $this->in_tell){
@@ -224,17 +236,45 @@ class OWLlinkDocument extends Document{
         $this->content->endElement();
     }
 
+    /**
+       Check if this IRI has a namespace, (i.e.: is an
+       abbreviated IRI).
+
+       Like in "owl:Thing" which its namespace is "owl" here.
+
+       @param name a String with the IRI.
+       @return True if the name has an XML Namespace. False otherwise.
+    */
+    protected function name_has_namespace($name){
+        $ns_regexp = '/.*:.*/';        // Namespace Regexp.
+        
+        if (preg_match($ns_regexp, $name) > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
   
     /**
        Add a class DL element.
 
+       Abbreviated IRI's are recognized automatically by name_has_namespace() function.
+
        @param name String the name or IRI of the new concept.
-       @param is_abbreviated Boolean (Optional) if the given IRI is an abreviated like <tt>owl:class</tt>.
+       @param is_abbreviated Boolean (Optional) force that the given IRI is or is not an abreviated like <tt>owl:class</tt>.
      */
-    public function insert_class($name, $is_abbreviated=false){
+    public function insert_class($name, $is_abbreviated=null){
         if (! $this->in_tell){
+            // We're not in tell mode!!!
             return false;
         }
+
+        if ($is_abbreviated == null){
+            // Is abbreviated is not forced, so check namepsace
+            // presence...
+            $is_abbreviated = $this->name_has_namespace($name);
+        }
+        
         $this->content->startElement("owl:Class");
         if ($is_abbreviated){
             $this->content->writeAttribute("abbreviatedIRI", $name);

@@ -49,18 +49,7 @@ class OWLlinkBuilder extends DocumentBuilder{
     }
 
     public function insert_subclassof($child, $father){
-        $ns_regexp = '/.*:.*/';        // Namespace Regexp.
-        $child_abbrv = false;
-        $father_abbrv = false;
-        
-        if (preg_match($ns_regexp, $child) > 0){
-            $child_abbrv = true;
-        }
-        if (preg_match($ns_regexp, $father) > 0){
-            $father_abbrv = true;
-        }
-	
-        $this->product->insert_subclassof($child, $father, $child_abbrv, $father_abbrv);
+        $this->product->insert_subclassof($child, $father);
     }
 
     protected function ensure_end_tell(){
@@ -154,6 +143,7 @@ You passed a " . gettype($elt) . " on: " . print_r($elt, true) );
         case "exists" :
             $this->product->begin_somevaluesfrom();
             $this->DL_element($elt["exists"]);
+            $this->product->insert_class("owl:Thing");
             $this->product->end_somevaluesfrom();
             break;
         case "mincard" :
