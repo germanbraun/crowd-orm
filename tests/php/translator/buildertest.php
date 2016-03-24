@@ -142,7 +142,7 @@ EOT;
         $builder->insert_footer();
         $actual = $builder->get_product();
         $actual = $actual->to_string();
-
+       
         $expected = process_xmlspaces($expected);
         $actual = process_xmlspaces($actual);
         $this->assertEqualXMLStructure($expected, $actual, true);
