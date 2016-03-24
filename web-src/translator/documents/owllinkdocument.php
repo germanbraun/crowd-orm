@@ -211,7 +211,7 @@ class OWLlinkDocument extends Document{
     }
     
 
-/**
+    /**
        Insert a DL subclass-of operator. 
      */
     public function insert_subclassof($child_class, $father_class, $child_abbrev=false, $father_abbrev=false){
@@ -249,6 +249,13 @@ class OWLlinkDocument extends Document{
         $this->content->writeAttribute("IRI", $name);
         $this->content->endElement();
     }
+
+    public function begin_inverseof(){
+        $this->content->startElement("owl:ObjectInverseOf");
+    }
+    public function end_inverseof(){
+        $this->content->EndElement();
+    }
     public function begin_subclassof(){
         $this->content->startElement("owl:SubClassOf");
     }
@@ -271,14 +278,14 @@ class OWLlinkDocument extends Document{
         $this->content->startElement("owl:ObjectMinCardinality");
         $this->content->writeAttribute("cardinality", $cardinality);
     }
-    public function end_mincardinality($cardinality){
+    public function end_mincardinality(){
         $this->content->EndElement();
     }
     public function begin_maxcardinality($cardinality){
         $this->content->startElement("owl:ObjectMaxCardinality");
         $this->content->writeAttribute("cardinality", $cardinality);
     }
-    public function end_maxcardinality($cardinality){
+    public function end_maxcardinality(){
         $this->content->EndElement();
     }
         

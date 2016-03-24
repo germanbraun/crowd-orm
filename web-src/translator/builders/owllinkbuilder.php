@@ -115,7 +115,15 @@ class OWLlinkBuilder extends DocumentBuilder{
     }
 
     protected function DL_element($elt){
+        if (! \is_array($elt)){
+            // Is not an array! something wrong has been passed!
+            throw new \Exception("DL_element receives only hashed arrays, 
+check your Descriptive Logic array if is correctly formatted. 
+You passed a " . gettype($elt) . " on: " . print_r($elt, true) );
+        }
+        
         $key = array_keys($elt)[0];
+
         switch ($key){
         case "class" :
             $this->product->insert_class($elt["class"]);
@@ -125,6 +133,8 @@ class OWLlinkBuilder extends DocumentBuilder{
             break;
         case "subclass" :
             $this->product->begin_subclassof();
+            // We expect various consecutives DL cexpressions 
+            // (two classes for example)
             $this->translate_DL($elt["subclass"]);
             $this->product->end_subclassof();
             break;
@@ -135,24 +145,29 @@ class OWLlinkBuilder extends DocumentBuilder{
             break;
         case "inverse" :
             $this->product->begin_inverseof();
-            $this->translate_DL($elt["inverse"]);
+            // We expect one DL expression
+            // (the inverse of the inverse of the role for example,
+            // but not one role, and one inverse of another role).
+            $this->DL_element($elt["inverse"]);
             $this->product->end_inverseof();
             break;
         case "exists" :
             $this->product->begin_somevaluesfrom();
-            $this->translate_DL($elt["exists"]);
+            $this->DL_element($elt["exists"]);
             $this->product->end_somevaluesfrom();
             break;
         case "mincard" :
             $this->product->begin_mincardinality($elt["mincard"][0]);
-            $this->translate_DL($elt["mincard"][1]);
+            $this->DL_element($elt["mincard"][1]);
             $this->product->end_mincardinality();
             break;
         case "maxcard" :
             $this->product->begin_maxcardinality($elt["maxcard"][0]);
-            $this->translate_DL($elt["maxcard"][1]);
+            $this->DL_element($elt["maxcard"][1]);
             $this->product->end_maxcardinality();
             break;
+        default:
+            throw new \Exception("I don't know $key DL operand");
         }
     }
     ///@}
