@@ -53,6 +53,52 @@ class Calvanesse extends Strategy{
     }
 
     /**
+       Depending on $mult translate it into DL.
+
+       @param $from True if we have to represent the "from" side (left one).
+       @return A DL list part that represent the multiplicity restriction.
+     */
+    protected function translate_multiplicity($mult, $role, $from = true){
+        if ($from){
+            $sub1_DL = [1,
+                        ["role" => $role]];
+            $sub1_DL = [0,
+                        ["role" => $role]];
+        }else{
+            $sub1_DL = [1,
+                        ["inverse" => 
+                         ["role" => $role]]];
+            $subo_DL = [0,
+                        ["inverse" => 
+                         ["role" => $role]]];
+                        
+        }
+        
+        $ret = null;
+        switch($mult){
+        case "1..1":
+            $ret = ["intersection" => [
+                ["mincard" => $sub1_DL],
+                ["maxcard" => $sub1_DL]]];
+            break;
+        case "0..1":
+            $ret = ["intersection" => [
+                ["mincard" => $sub0_DL],
+                ["maxcard" => $sub1_DL]]];
+            break;            
+        case "1..*":
+        case "1..n":
+            $ret = ["mincard" => $sub1_DL];
+            break;
+        case "0..*":
+        case "0..n":
+            $ret = ["mincard" => $sub0_DL];
+            break;
+        }
+        return $ret;
+    }
+    
+    /**
        Translate only the links from a JSON string with links using
        the given builder.
        @param json A JSON object, the result from a decoded JSON 
@@ -61,19 +107,39 @@ class Calvanesse extends Strategy{
     protected function translate_links($json, $builder){
         $js_links = $json["links"];
         foreach ($js_links as $link){
+            $classes = $link["classes"];
+            $mult = $link["multiplicity"];
+            
             $builder->translate_DL([
-                ["subclass" =>
-                 ["exists" =>
-                  ["role" => $link["name"]]],
-                 ["class" => $link["classes"][0]]]
+                ["subclass" => [
+                    ["exists" =>
+                     ["role" => $link["name"]]],
+                    ["class" => $link["classes"][0]]]],                
+                ["subclass" => [
+                    ["exists" =>
+                     ["inverse" =>
+                      ["role" => $link["name"]]]],
+                    ["class" => $classes[0]]]]
             ]);
-            // $builder->translate_DL(["subclass" =>
-            //                         ["exists" =>
-            //                          ["inverse" =>
-            //                           [$link["name"],
-            //                            $link["owl:Thing"]]],
-            //                          ["class" => $link["classes"][0]]]);
-                                  
+
+            $rest = $this->translate_multiplicity($mult[1], $link["name"]);
+            print_r($rest);
+            $lst = [
+                ["subclass" => [
+                    ["class" => $classes[0]],
+                    $rest
+                ]]
+            ];
+            print_r($lst);
+            $builder->translate_DL($lst);
+
+            // $rest = $this->translate_multiplicity($mult[0], $link["name"]);
+            // $builder->translate_DL([
+            //     ["subclass" => [
+            //         ["class" => $classes[1]],
+            //         $rest
+            //     ]]
+            // ]);
         }
         
     }
