@@ -35,7 +35,12 @@ class CalvanesseTest extends PHPUnit_Framework_TestCase
 
     public function testTranslate(){
         //TODO: Complete JSON!
-        $json = '{"classes": [{"attrs":[], "methods":[], "name": "Hi World"}]}';
+        $json = <<<'EOT'
+{
+"classes": [{"attrs":[], "methods":[], "name": "Hi World"}],
+"links": []
+}
+EOT;
         //TODO: Complete XML!
         $expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <RequestMessage xmlns=\"http://www.owllink.org/owllink#\"
@@ -76,83 +81,83 @@ http://www.owllink.org/owllink-20091116.xsd\">
 {"classes": [
     {"attrs":[], "methods":[], "name": "Person"},
     {"attrs":[], "methods":[], "name": "Cellphones"}],
- links: [
-     {classes: ["Person", "Cellphones"],
-      multiplicity: ["1..1", "1..*"],
-      name: "hasCellphone",
-      type: "association"}
+ "links": [
+     {"classes": ["Person", "Cellphones"],
+      "multiplicity": ["1..1", "1..*"],
+      "name": "hasCellphone",
+      "type": "association"}
 	]
 }
 EOT;
         //TODO: Complete XML!
         $expected = <<<'EOT'
-<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-<RequestMessage xmlns=\"http://www.owllink.org/owllink#\"
-		xmlns:owl=\"http://www.w3.org/2002/07/owl#\" 
-		xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
-		xsi:schemaLocation=\"http://www.owllink.org/owllink# 
-				    http://www.owllink.org/owllink-20091116.xsd\">
-  <CreateKB kb=\"http://localhost/kb1\" />
-  <Tell kb=\"http://localhost/kb1\">
+<?xml version="1.0" encoding="UTF-8"?>
+<RequestMessage xmlns="http://www.owllink.org/owllink#"
+		xmlns:owl="http://www.w3.org/2002/07/owl#" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.owllink.org/owllink# 
+				    http://www.owllink.org/owllink-20091116.xsd">
+  <CreateKB kb="http://localhost/kb1" />
+  <Tell kb="http://localhost/kb1">
     <!-- <owl:ClassAssertion>
-      <owl:Class IRI=\"Person\" />
-      <owl:NamedIndividual IRI=\"Mary\" />
+      <owl:Class IRI="Person" />
+      <owl:NamedIndividual IRI="Mary" />
       </owl:ClassAssertion>
       -->
     
     <owl:SubClassOf>
-      <owl:Class IRI=\"Person\" />
-      <owl:Class abbreviatedIRI=\"owl:Thing\" />
+      <owl:Class IRI="Person" />
+      <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     <owl:SubClassOf>
-      <owl:Class IRI=\"Cellphone\" />
-      <owl:Class abbreviatedIRI=\"owl:Thing\" />
+      <owl:Class IRI="Cellphone" />
+      <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     <!-- One person can has lots of cellphones -->
 
     <owl:SubClassOf>
 	<owl:ObjectSomeValuesFrom>
-	    <owl:ObjectProperty IRI=\"hasCellphone\" />
-	    <owl:Class abbreviatedIRI=\"owl:Thing\" />
+	    <owl:ObjectProperty IRI="hasCellphone" />
+	    <owl:Class abbreviatedIRI="owl:Thing" />
 	</owl:ObjectSomeValuesFrom>
-	<owl:Class IRI=\"Person\" />
+	<owl:Class IRI="Person" />
     </owl:SubClassOf>
    
     <owl:SubClassOf>
 	<owl:ObjectSomeValuesFrom>
 	    <owl:ObjectInverseOf>
-		<owl:ObjectProperty IRI=\"hasCellphone\" />
+		<owl:ObjectProperty IRI="hasCellphone" />
 	    </owl:ObjectInverseOf>
-	    <owl:Class abbreviatedIRI=\"owl:Thing\" />
+	    <owl:Class abbreviatedIRI="owl:Thing" />
 	</owl:ObjectSomeValuesFrom>
-	<owl:Class IRI=\"Cellphone\" />
+	<owl:Class IRI="Cellphone" />
     </owl:SubClassOf>
 
     <owl:SubClassOf>
-	<owl:Class IRI=\"Person\" />
-	<owl:ObjectMinCardinality cardinality=\"1\">
-	    <owl:ObjectProperty IRI=\"hasCellphone\" />
+	<owl:Class IRI="Person" />
+	<owl:ObjectMinCardinality cardinality="1">
+	    <owl:ObjectProperty IRI="hasCellphone" />
 	</owl:ObjectMinCardinality>
     </owl:SubClassOf>
 
     <owl:SubClassOf>
-	<owl:Class IRI=\"Cellphone\" />
+	<owl:Class IRI="Cellphone" />
 	<owl:ObjectIntersectionOf>
-	    <owl:ObjectMinCardinality cardinality=\"1\">
+	    <owl:ObjectMinCardinality cardinality="1">
 		<owl:ObjectInverseOf>
-		    <owl:ObjectProperty IRI=\"hasCellphone\" />
+		    <owl:ObjectProperty IRI="hasCellphone" />
 		</owl:ObjectInverseOf>
 	    </owl:ObjectMinCardinality>
-	    <owl:ObjectMaxCardinality cardinality=\"1\">
+	    <owl:ObjectMaxCardinality cardinality="1">
 		<owl:ObjectInverseOf>
-		    <owl:ObjectProperty IRI=\"hasCellphone\" />
+		    <owl:ObjectProperty IRI="hasCellphone" />
 		</owl:ObjectInverseOf>
 	    </owl:ObjectMaxCardinality>
 	</owl:ObjectIntersectionOf>
     </owl:SubClassOf>
 
   </Tell>
-  <!-- <ReleaseKB kb=\"http://localhost/kb1\" /> -->
+  <!-- <ReleaseKB kb="http://localhost/kb1" /> -->
 </RequestMessage>
 EOT;
         
