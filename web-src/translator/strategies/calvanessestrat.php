@@ -103,8 +103,12 @@ class Calvanesse extends Strategy{
        the given builder.
        @param json A JSON object, the result from a decoded JSON 
        String.
+       @return false if no "links" part has been provided.
      */
     protected function translate_links($json, $builder){
+        if (! array_key_exists("links", $json)){
+            return false;
+        }
         $js_links = $json["links"];
         foreach ($js_links as $link){
             $classes = $link["classes"];
