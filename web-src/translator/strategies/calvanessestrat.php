@@ -123,23 +123,24 @@ class Calvanesse extends Strategy{
             ]);
 
             $rest = $this->translate_multiplicity($mult[1], $link["name"]);
-            print_r($rest);
             $lst = [
                 ["subclass" => [
                     ["class" => $classes[0]],
                     $rest
                 ]]
             ];
-            print_r($lst);
             $builder->translate_DL($lst);
 
-            // $rest = $this->translate_multiplicity($mult[0], $link["name"]);
-            // $builder->translate_DL([
-            //     ["subclass" => [
-            //         ["class" => $classes[1]],
-            //         $rest
-            //     ]]
-            // ]);
+            $rest = $this->translate_multiplicity($mult[0], $link["name"], false);
+            $lst = [
+                ["subclass" => [
+                    ["class" => $classes[1]],
+                    $rest
+                ]]
+            ];
+            $builder->translate_DL($lst);
+            
+
         }
         
     }
