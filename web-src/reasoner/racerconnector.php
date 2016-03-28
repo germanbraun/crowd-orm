@@ -50,7 +50,7 @@ class RacerConnector extends Connector{
         print("Directory Realpath: \"" . realpath($temporal_path) . "\" ");
         print("if blank, then path doesn't exists!\n\n");
         */
-
+        
         $temporal_path = realpath($temporal_path) . "/";
         
         if (! is_dir($temporal_path)){
