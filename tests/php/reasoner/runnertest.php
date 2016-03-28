@@ -24,6 +24,7 @@
 require_once("common.php");
 
 // use function \load;
+load("config.php", "config/");
 load("racerconnector.php", "reasoner/");
 load("runner.php", "reasoner/");
 
@@ -69,7 +70,7 @@ EOT;
 EOT;
 
         $runner = new Runner(new RacerConnector());
-        $GLOBALS['config']['temporal_path'] = "../../temp";
+        //$GLOBALS['config']['temporal_path'] = "../../temp";
         $runner->run($input);
         $actual = $runner->get_last_answer();
                 

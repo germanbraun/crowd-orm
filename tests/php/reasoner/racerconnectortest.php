@@ -24,6 +24,7 @@
 require_once("common.php");
 
 // use function \load;
+load("config.php", "config/");
 load("racerconnector.php", "reasoner/");
 
 use Wicom\Reasoner\RacerConnector;
@@ -68,7 +69,7 @@ EOT;
 
         $racer = new RacerConnector();
         
-        $GLOBALS['config']['temporal_path'] = "../../temp";
+        //$GLOBALS['config']['temporal_path'] = "../../temp";
         
         $racer->run($input);
         $actual = $racer->get_col_answers()[0];

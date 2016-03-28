@@ -25,6 +25,7 @@ require_once("common.php");
 
 // use function \load;
 load("wicom.php", "common/");
+load("config.php", "config/");
 
 use Wicom\Wicom;
 
@@ -53,7 +54,7 @@ EOT;
 
 
         $wicom = new Wicom();
-        $GLOBALS['config']['temporal_path'] = "../../temp/";
+        // $GLOBALS['config']['temporal_path'] = "../../temp/";
         $answer = $wicom->is_satisfiable($input);
 
         print("\n\$answer = ");
