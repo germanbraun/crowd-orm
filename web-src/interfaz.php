@@ -6,6 +6,9 @@
 	?>
 	<title>Interfaz</title>
 
+	<script src="./js/backbone_views.js"></script>
+	<script src="./js/GUIState.js"></script>
+	<script src="./js/gui.js"></script>
 	<script src="./js/interfaz.js"></script>
 	
 	<?php if (array_key_exists('prueba', $_GET) && $_GET['prueba'] == 1){ ?>
@@ -77,6 +80,13 @@
 			<a class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext" type="button" id="deleteclass_button">Delete</a>
 		    </div>
 		</script>
+		<script type="text/template" id="template_relationoptions">
+		    <div class="relationOptions" data-role="controlgroup"  data-mini="true" data-type="vertical"  style="visible:false, z-index:1, position:absolute">
+			<input type="hidden" id="relationoptions_classid"  name="classid"  value="<%= classid %>" />
+			<a class="ui-btn ui-corner-all ui-icon-arrow-r ui-btn-icon-notext" type="button" id="asociation_button">Asociation</a>
+			<a class="ui-btn ui-corner-all ui-icon-arrow-u ui-btn-icon-notext" type="button" id="isa_button">Is A</a>			
+		    </div>
+		</script>
 		<script type="text/template" id="template_trafficlight">
 		    <a class="ui-btn ui-btn-right ui-corner-all" id="traffic_btn">
 			<img id="traffic_img" width="25px" src="imgs/traffic-light.png" alt="Reasoner answer..."/>
@@ -86,6 +96,7 @@
    		
 		<div id="editclass"></div>
 		<div id="classoptions"></div>
+		<div id="relationoptions"></div>
 		
 		<script src="./js/interfaz.js" type="text/javascript"></script>
  	    </div> <!-- /main ui-content -->
