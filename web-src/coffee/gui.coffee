@@ -18,7 +18,7 @@
 class GUI
     constructor: (@graph, @paper) ->
         @diag = new Diagrama(@graph)
-        @state = State.selectionstate
+        @state = gui.State.selectionstate
         @crearclase = new CrearClaseView({el: $("#crearclase")});
         @editclass = new EditClassView({el: $("#editclass")})
         @classoptions = new ClassOptionsView({el: $("#classoptions")})
@@ -42,6 +42,16 @@ class GUI
         @classoptions.hide()
         @relationoptions.hide()
 
+    ##
+    # Add a class to the diagram.
+    #
+    # Params.:
+    #  class_inst = A Class instance.
+    add_class: (class_inst) ->
+        @diag.agregar_clase(class_inst)
+
 exports = exports ? this
+if exports.gui == undefined
+    exports.gui = {}
 exports.gui.GUI = GUI
 

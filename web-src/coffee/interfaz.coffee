@@ -32,7 +32,7 @@ paper = new joint.dia.Paper(
         gridSize: 1
 )
 
-guiinst = new GUI(graph, paper)
+guiinst = new gui.GUI(graph, paper)
 
 css_clase = 
         '.uml-class-name-rect' : 
@@ -87,4 +87,4 @@ exports.guiinst = guiinst
 
 # Presentamos una inicial clase de ejemplo
 nueva = new Class("Test Class", [], [])
-diag.agregar_clase(nueva)
+guiinst.add_class(nueva)

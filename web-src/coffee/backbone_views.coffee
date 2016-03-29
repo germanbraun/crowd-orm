@@ -206,6 +206,7 @@ ClassOptionsView = Backbone.View.extend(
 
 exports = exports ? this
 exports.CrearClaseView = CrearClaseView
+exports.EditClassView = EditClassView
 exports.ClassOptionsView = ClassOptionsView
 exports.RelationOptionsView = RelationOptionsView
 exports.TrafficLightsView = TrafficLightsView

@@ -21,18 +21,24 @@
 # state.
 class State
     constructor: () ->
+        @selection_state = new SelectionState()
+        @asociation_state = new AsociationState()
 
     ## 
     # What to do when the user clicked on a cell.
     on_cell_clicked: (cellView, event, x, y, gui) ->
 
-    selectionstate: new SelectionState()
-    asociationstate: new AsociationState()
+    selectionstate: () ->
+        return @selection_state
+        
+    asociationstate: () ->
+        return @asociation_state
 
 ##
 # Selection state, the user can select some classes.
-class SelectionState
+class SelectionState extends State
     constructor: () ->
+        
     on_cell_clicked: (cellView, event, x, y, gui) ->
         if (cellView.highlighted == undefined or cellView.highlighted == false) 
             cellView.highlight()
@@ -51,12 +57,15 @@ class SelectionState
 ##
 # Asociation state, the user can select another class for
 # create an asociation between them.
-class AsociationState
+class AsociationState extends State
     constructor: () ->
+        
     on_cell_clicked: (cellView, event, x, y, gui) ->
         
         
 exports = exports ? this
+if exports.gui == undefined
+    exports.gui = {}
 exports.gui.State = State
 exports.gui.SelectionState = SelectionState
 exports.gui.AsociationState = AsociationState
