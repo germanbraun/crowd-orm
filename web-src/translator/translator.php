@@ -28,6 +28,8 @@ load("queriesgenerator.php", "../querying/queries/");
 
 use Wicom\QueriesGen\QueriesGenerator;
 
+use function \json_decode;
+
 /**
    I translate a JSON formatted diagram into something else depending on the Builder instance given.
    
@@ -63,6 +65,7 @@ class Translator{
        @return an XML OWLlink String.
      */
     function to_owllink($json){
+        $json_obj = json_decode($json, true);
         $this->builder->insert_header();
         
         $this->strategy->translate($json, $this->builder);
@@ -71,7 +74,11 @@ class Translator{
             $this->queriesgen->gen_satisfiable($this->builder);
             $this->queriesgen->gen_class_satisfiable($json, $this->builder);
         }
-
+        
+        if (array_key_exists("owllink", $json_obj)){
+            
+            $this->builder->insert_owllink($json_obj["owllink"]);
+        }
         $this->builder->insert_footer();
         // return $builder->get_product();
         $document = $this->builder->get_product();        

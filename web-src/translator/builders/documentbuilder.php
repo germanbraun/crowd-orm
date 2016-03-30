@@ -31,6 +31,11 @@ abstract class DocumentBuilder{
        
     abstract public function insert_header();
     abstract public function insert_class($name, $col_attrs = []);
+    /**
+       Depending on the subclass, add an OWLlink text directly. 
+     */
+    public function insert_owllink($text){
+    }
     abstract public function insert_footer();
 
     abstract public function insert_satisfiable();
