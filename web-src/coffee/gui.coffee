@@ -23,7 +23,9 @@ class GUI
         @editclass = new EditClassView({el: $("#editclass")})
         @classoptions = new ClassOptionsView({el: $("#classoptions")})
         @relationoptions = new RelationOptionsView({el: $("#relationoptions")})
-        @trafficlight = new TrafficLightsView({el: $("#trafficlight")})
+        @trafficlight = new TrafficLightsView({el:
+            $("#trafficlight")})
+        gui.set_current_instance(this);
 
     ##
     # What to do when the user clicked on a cellView.
@@ -75,14 +77,12 @@ class GUI
     ##
     # Put the traffic light on green.
     traffic_light_green: () ->
-        # TODO: This has to be done by the TrafficLightView instance!
-        $("#traffic_img").attr("src", "imgs/traffic-light-green.png")
+        @trafficlight.turn_green()
 
     ##
     # Put the traffic light on red.
     traffic_light_red: () ->
-        # TODO: This has to be done by the TrafficLightView instance!
-        $("#traffic_img").attr("src", "imgs/traffic-light-red.png")
+        @trafficlight.turn_red()
 
     ##
     # Update the interface with satisfiable information.
@@ -93,9 +93,9 @@ class GUI
         console.log(data)
         obj = JSON.parse(data);
         if obj.satisfiable.kb
-            this.traffic_light_green()
+            @trafficlight.turn_green()
         else
-            this.traffic_light_red()
+            @trafficlight.turn_red()
         $("#reasoner_input").html(obj.reasoner.input)
         $("#reasoner_output").html(obj.reasoner.output)
 
@@ -107,7 +107,9 @@ class GUI
         postdata = "json=" + JSON.stringify(json)
         $.post("querying/satisfiable.php",
             postdata,
-            this.update_satisfiable);
+            gui.update_satisfiable # Be careful with the context
+            # change! this will have another object...
+            );
 
     ##
     # Event handler for translate diagram to OWLlink using Ajax
@@ -139,10 +141,23 @@ class GUI
                 console.log(data)
         )
 
-        
 
 exports = exports ? this
+
 if exports.gui == undefined
     exports.gui = {}
+
+
+exports.gui.set_current_instance = (gui_instance) ->
+    exports.gui.gui_instance = gui_instance
+
+##
+# This is sooo bad, but the context of a $.post callback function
+# differs from the source caller class.
+#
+# We need to set a global guiinst variable with one GUI.gui instance.
+exports.gui.update_satisfiable = (data) ->
+    exports.gui.gui_instance.update_satisfiable(data)
+
 exports.gui.GUI = GUI
 
