@@ -69,7 +69,7 @@
 			<input data-mini="true" placeholder="ClassName" type="text" id="editclass_input"  />
 			<div data-role="controlgroup" data-mini="true" data-type="horizontal">
 			    <a class="ui-btn ui-corner-all ui-icon-check ui-btn-icon-notext" type="button" id="editclass_button">Accept</a>
-			    <a class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext" type="button" id="close_button">Close</a>
+			    <a class="ui-btn ui-corner-all ui-icon-back ui-btn-icon-notext" type="button" id="close_button">Close</a>
 			</div>
 		    </form>
 		</script>
