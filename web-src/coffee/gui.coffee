@@ -25,7 +25,7 @@ class GUI
         @relationoptions = new RelationOptionsView({el: $("#relationoptions")})
         @trafficlight = new TrafficLightsView({el:
             $("#trafficlight")})
-        @owlinkinsert = new OWLlinkInsertView({el: $("#owllink_placer")})
+        @owllinkinsert = new OWLlinkInsertView({el: $("#owllink_placer")})
         gui.set_current_instance(this);
 
     ##
@@ -107,8 +107,7 @@ class GUI
     # Send a POST to the server for checking if the diagram is
     # satisfiable.
     check_satisfiable: () ->
-        json = @diag.to_json()
-        postdata = "json=" + JSON.stringify(json)
+        postdata = "json=" + this.diag_to_json()
         $.mobile.loading("show", 
             text: "Consulting server...",
             textVisible: true,
@@ -142,7 +141,7 @@ class GUI
     # and the translator/calvanesse.php translator URL.
     translate_owllink: () ->
         format = @crearclase.get_translation_format()
-        json = JSON.stringify(@diag.to_json())
+        json = this.diag_to_json()
         $.mobile.loading("show", 
             text: "Consulting server...",
             textVisible: true,
@@ -174,6 +173,12 @@ class GUI
     # Set the OWLlink addon at the "Insert OWLlink" section.
     set_insert_owllink: (str) ->
         @owllinkinsert.set_owllink(str)
+
+    diag_to_json: () ->
+        json = @diag.to_json()
+        json.owllink = @owllinkinsert.get_owllink()
+        return JSON.stringify(json)
+        
         
 
 

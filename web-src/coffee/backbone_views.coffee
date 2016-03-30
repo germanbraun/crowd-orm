@@ -241,7 +241,7 @@ OWLlinkInsertView = Backbone.View.extend(
         @textarea.text(@textarea.text() + str)
 
     insert_class: () ->
-        this.append_owllink("<owl:Class IRI=\"CLASNAME\" />")
+        this.append_owllink("<owl:Class IRI=\"CLASSNAME\" />")
 )
 
 
