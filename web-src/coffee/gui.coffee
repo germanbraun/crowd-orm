@@ -18,7 +18,7 @@
 class GUI
     constructor: (@graph, @paper) ->
         @diag = new Diagrama(@graph)
-        @state = gui.State.selectionstate
+        @state = gui.State.selectionstate()
         @crearclase = new CrearClaseView({el: $("#crearclase")});
         @editclass = new EditClassView({el: $("#editclass")})
         @classoptions = new ClassOptionsView({el: $("#classoptions")})
@@ -41,6 +41,11 @@ class GUI
     hide_options: () ->
         @classoptions.hide()
         @relationoptions.hide()
+        @editclass.hide()
+
+    set_editclass_classid: (model_id) ->
+        # editclass = new EditClassView({el: $("#editclass")})
+        @editclass.set_classid(model_id)        
 
     ##
     # Add a class to the diagram.
@@ -49,6 +54,92 @@ class GUI
     #  class_inst = A Class instance.
     add_class: (class_inst) ->
         @diag.agregar_clase(class_inst)
+
+    ##
+    # Delete a class from the diagram.
+    #
+    # Params.:
+    # class_id a String with the class Id.
+    delete_class: (class_id) ->
+        @diag.delete_class_by_classid(class_id)
+
+    edit_class: (class_id) ->
+        # Set the model name
+        cell = @graph.getCell(class_id)
+        cell.set("name", $("#editclass_input").val())
+        
+        # Update the view
+        v = cell.findView(paper)
+        v.update()
+
+    ##
+    # Put the traffic light on green.
+    traffic_light_green: () ->
+        # TODO: This has to be done by the TrafficLightView instance!
+        $("#traffic_img").attr("src", "imgs/traffic-light-green.png")
+
+    ##
+    # Put the traffic light on red.
+    traffic_light_red: () ->
+        # TODO: This has to be done by the TrafficLightView instance!
+        $("#traffic_img").attr("src", "imgs/traffic-light-red.png")
+
+    ##
+    # Update the interface with satisfiable information.
+    #
+    # Params.:
+    # data is a JSON string with the server response.
+    update_satisfiable: (data) ->
+        console.log(data)
+        obj = JSON.parse(data);
+        if obj.satisfiable.kb
+            this.traffic_light_green()
+        else
+            this.traffic_light_red()
+        $("#reasoner_input").html(obj.reasoner.input)
+        $("#reasoner_output").html(obj.reasoner.output)
+
+    ##
+    # Send a POST to the server for checking if the diagram is
+    # satisfiable.
+    check_satisfiable: () ->
+        json = @diag.to_json()
+        postdata = "json=" + JSON.stringify(json)
+        $.post("querying/satisfiable.php",
+            postdata,
+            this.update_satisfiable);
+
+    ##
+    # Event handler for translate diagram to OWLlink using Ajax
+    # and the translator/calvanesse.php translator URL.
+    translate_owllink: () ->
+        format = $("#format_select")[0].value
+        json = JSON.stringify(@diag.to_json())
+        $.post(
+            "translator/calvanesse.php",
+            "format":
+                format
+            "json":
+                json
+            (data) ->
+                if format == "html" 
+                    $("#html-output").html(data)
+                    $("#html-output").show()
+                    $("#owllink_source").hide()
+                else
+                    $("#owllink_source").text(data)
+                    $("#owllink_source").show()
+                    $("#html-output").hide()
+                offset = $("#output").offset()
+                window.scrollTo(
+                    offset.left,
+                    offset.top
+                )
+
+                console.log(data)
+        )
+
+        
 
 exports = exports ? this
 if exports.gui == undefined

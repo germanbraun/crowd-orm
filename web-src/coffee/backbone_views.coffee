@@ -27,9 +27,7 @@ TrafficLightsView = Backbone.View.extend(
         "click a#traffic_btn" : "check_satisfiable"
         
     check_satisfiable: (event) ->
-        json = diag.to_json()
-        postdata = "json=" + JSON.stringify(json)
-        $.post("querying/satisfiable.php", postdata, update_satisfiable);
+        guiinst.check_satisfiable()
         
 )
 
@@ -53,35 +51,15 @@ CrearClaseView = Backbone.View.extend(
         crear_clase: (event) ->
             alert("Creando: " + $("#crearclase_input").val() + "...")
             nueva = new Class($("#crearclase_input").val(), [], [])
-            diag.agregar_clase(nueva)
+            guiinst.add_class(nueva)
 
         ##
         # Event handler for translate diagram to OWLlink using Ajax
         # and the translator/calvanesse.php translator URL.
         translate_owllink: (event) ->
-                format = $("#format_select")[0].value
-                json = JSON.stringify(diag.to_json())
-                $.post(
-                        "translator/calvanesse.php",
-                        "format":
-                                format
-                        "json":
-                                json
-                        (data) ->
-                                if format == "html" 
-                                        $("#html-output").html(data)
-                                        $("#html-output").show()
-                                        $("#owllink_source").hide()
-                                else
-                                        $("#owllink_source").text(data)
-                                        $("#owllink_source").show()
-                                        $("#html-output").hide()
-                                offset = $("#output").offset()
-                                window.scrollTo(offset.left,
-                                offset.top)
-                                
-                                console.log(data)
-                )
+            guiinst.translate_owllink()
+
+
                 
 );
 
@@ -115,16 +93,13 @@ EditClassView = Backbone.View.extend(
         return @classid
     
     edit_class: (event) ->
-        # Set the model name
-        cell = graph.getCell(@classid)
-        cell.set("name", $("#editclass_input").val())
-        
-        # Update the view
-        v = cell.findView(paper)
-        v.update()
-
+        guiinst.edit_class(@classid)
         # Hide the form.
+        guiinst.hide_options()
+
+    hide: () ->
         this.$el.hide()
+
 )
 
 RelationOptionsView = Backbone.View.extend(
@@ -191,12 +166,11 @@ ClassOptionsView = Backbone.View.extend(
         return @classid
         
     delete_class: (event) ->
-        diag.delete_class_by_classid(@classid)
+        guiinst.delete_class(@classid)
         this.hide()
 
     edit_class: (event) ->
-        # editclass = new EditClassView({el: $("#editclass")})
-        editclass.set_classid(@classid)        
+        guiinst.set_editclass_classid(@classid)
         this.hide()
 
     hide: () ->

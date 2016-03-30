@@ -66,6 +66,6 @@ class AsociationState extends State
 exports = exports ? this
 if exports.gui == undefined
     exports.gui = {}
-exports.gui.State = State
+exports.gui.State = new State()
 exports.gui.SelectionState = SelectionState
 exports.gui.AsociationState = AsociationState

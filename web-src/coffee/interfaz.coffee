@@ -43,22 +43,6 @@ css_clase =
         	fill: "#fff"
         
 # Interfaz
-
-traffic_light_green = () ->
-    $("#traffic_img").attr("src", "imgs/traffic-light-green.png")
-
-traffic_light_red = () ->
-    $("#traffic_img").attr("src", "imgs/traffic-light-red.png")
-
-update_satisfiable = (data) ->
-    console.log(data)
-    obj = JSON.parse(data);
-    if obj.satisfiable.kb
-        traffic_light_green()
-    else
-        traffic_light_red()
-    $("#reasoner_input").html(obj.reasoner.input)
-    $("#reasoner_output").html(obj.reasoner.output)
     
 # Events for the Paper
 
