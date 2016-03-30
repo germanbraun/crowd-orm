@@ -84,6 +84,14 @@ CrearClaseView = Backbone.View.extend(
         translate_owllink: (event) ->
             guiinst.translate_owllink()
 
+        ##
+        # Which is the current translation format selected by the
+        # user?
+        #
+        # Returns:
+        # A String: "html", "owllink", etc.
+        get_translation_format: () ->
+            $("#format_select")[0].value
 
                 
 );

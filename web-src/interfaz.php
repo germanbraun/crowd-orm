@@ -17,7 +17,7 @@
     </head>
 
     <body>
-	<div data-role="page">
+	<div data-role="page" id="diagram-page">
 	    <div data-role="panel" data-display="overlay" data-position="left" id="tools-panel" class="comandos" id="comandos">
 		<div style="text-align: right">
 		    <a href="#comandos" data-rel="close" class="ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all ui-btn-inline ui-mini">Close</a>

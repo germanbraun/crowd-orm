@@ -98,6 +98,9 @@ class GUI
             @trafficlight.turn_red()
         $("#reasoner_input").html(obj.reasoner.input)
         $("#reasoner_output").html(obj.reasoner.output)
+        $.mobile.loader("hide")
+        this.change_to_details_page()
+        
 
     ##
     # Send a POST to the server for checking if the diagram is
@@ -105,41 +108,61 @@ class GUI
     check_satisfiable: () ->
         json = @diag.to_json()
         postdata = "json=" + JSON.stringify(json)
+        $.mobile.loading("show", 
+            text: "Consulting server...",
+            textVisible: true,
+            textonly: false
+        )
         $.post("querying/satisfiable.php",
             postdata,
             gui.update_satisfiable # Be careful with the context
             # change! this will have another object...
             );
 
+    update_translation: (data) ->
+        format = @crearclase.get_translation_format()
+        if format == "html" 
+            $("#html-output").html(data)
+            $("#html-output").show()
+            $("#owllink_source").hide()
+        else
+            $("#owllink_source").text(data)
+            $("#owllink_source").show()
+            $("#html-output").hide()
+        
+        # Goto the Translation text
+        $.mobile.loader("hide")
+        this.change_to_details_page()
+        
+        console.log(data)
+
     ##
     # Event handler for translate diagram to OWLlink using Ajax
     # and the translator/calvanesse.php translator URL.
     translate_owllink: () ->
-        format = $("#format_select")[0].value
+        format = @crearclase.get_translation_format()
         json = JSON.stringify(@diag.to_json())
+        $.mobile.loading("show", 
+            text: "Consulting server...",
+            textVisible: true,
+            textonly: false
+        )
         $.post(
             "translator/calvanesse.php",
             "format":
                 format
             "json":
                 json
-            (data) ->
-                if format == "html" 
-                    $("#html-output").html(data)
-                    $("#html-output").show()
-                    $("#owllink_source").hide()
-                else
-                    $("#owllink_source").text(data)
-                    $("#owllink_source").show()
-                    $("#html-output").hide()
-                offset = $("#translation_details").offset()
-                window.scrollTo(
-                    offset.left,
-                    offset.top
-                )
-
-                console.log(data)
+            gui.update_translation
         )
+
+    change_to_details_page: () ->
+        $.mobile.changePage("#details-page",
+            transition: "slide")
+    change_to_diagram_page: () ->
+        $.mobile.changePage("#diagram-page",
+            transition: "slide",
+            reverse: true)
 
 
 exports = exports ? this
@@ -158,6 +181,9 @@ exports.gui.set_current_instance = (gui_instance) ->
 # We need to set a global guiinst variable with one GUI.gui instance.
 exports.gui.update_satisfiable = (data) ->
     exports.gui.gui_instance.update_satisfiable(data)
+
+exports.gui.update_translation = (data) ->
+    exports.gui.gui_instance.update_translation(data)
 
 exports.gui.GUI = GUI
 
