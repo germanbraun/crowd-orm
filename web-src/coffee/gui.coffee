@@ -25,6 +25,7 @@ class GUI
         @relationoptions = new RelationOptionsView({el: $("#relationoptions")})
         @trafficlight = new TrafficLightsView({el:
             $("#trafficlight")})
+        @owlinkinsert = new OWLlinkInsertView({el: $("#owllink_placer")})
         gui.set_current_instance(this);
 
     ##
@@ -163,9 +164,17 @@ class GUI
         $.mobile.changePage("#diagram-page",
             transition: "slide",
             reverse: true)
-    
+
+    ##
+    # Show the "Insert OWLlink" section.
     show_insert_owllink: () ->
         this.change_to_details_page()
+
+    ##
+    # Set the OWLlink addon at the "Insert OWLlink" section.
+    set_insert_owllink: (str) ->
+        @owllinkinsert.set_owllink(str)
+        
 
 
 exports = exports ? this

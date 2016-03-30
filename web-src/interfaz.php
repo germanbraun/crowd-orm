@@ -43,8 +43,9 @@
 	    	    
 		
 		<!-- ---------------------------------------------------------------------- -->
-
 		<!-- Templates -->
+
+		<!-- Tools Navbar -->
 		<script type="text/template" id="template_tools_navbar">
 		    <div data-role="navbar">
 			<label>Traducir</label>
@@ -62,6 +63,7 @@
 			<a class="ui-btn ui-icon-edit ui-btn-icon-left" type="button" id="insertowllink_button">Insert OWLlink</a>			
 		    </div>
 		</script>
+		<!-- EditClass -->
 		<script type="text/template" id="template_editclass">
 		    <form>
 			<input type="hidden" id="editclass_classid" name="classid" value="<%= classid %>" />
@@ -72,6 +74,7 @@
 			</div>
 		    </form>
 		</script>
+		<!-- ClassOptions -->
 		<script type="text/template" id="template_classoptions">
 		    <div class="classOptions" data-role="controlgroup" data-mini="true" data-type="vertical" style="visible:false, z-index:1, position:absolute" >
 			<input type="hidden" id="cassoptions_classid" name="classid" value="<%= classid %>" />
@@ -79,6 +82,7 @@
 			<a class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext" type="button" id="deleteclass_button">Delete</a>
 		    </div>
 		</script>
+		<!-- RelationOptions -->
 		<script type="text/template" id="template_relationoptions">
 		    <div class="relationOptions" data-role="controlgroup"  data-mini="true" data-type="vertical"  style="visible:false, z-index:1, position:absolute">
 			<input type="hidden" id="relationoptions_classid"  name="classid"  value="<%= classid %>" />
@@ -86,10 +90,20 @@
 			<a class="ui-btn ui-corner-all ui-icon-arrow-u ui-btn-icon-notext" type="button" id="isa_button">Is A</a>			
 		    </div>
 		</script>
+		<!-- TrafficLights -->
 		<script type="text/template" id="template_trafficlight">
 		    <a class="ui-btn ui-btn-right ui-corner-all" id="traffic_btn">
 			<img id="traffic_img" width="25px" src="imgs/traffic-light.png" alt="Reasoner answer..."/>
 		    </a>			
+		</script>
+		<!-- OWLlink Editor -->
+		<script type="text/template" id="template_insertowllink">
+		    <p>Use this are to add your own personal <a href="http://owllink.org/"> OWLlink</a> data.</p>
+		    <p>Remember: this will be used when you check for satisfiability or send any diagram information to the server.</p>			    
+		    <textarea cols="40" class="ui-body" id="insert_owllink_input"></textarea>
+		    <div data-role="controlgroup" data-mini="true" data-type="horizontal">
+			<a id="insert_owlclass" data-mini="true" class="ui-btn ui-corner-all">owl:Class</a>
+		    </div>
 		</script>
 		
    		
@@ -97,7 +111,6 @@
 		<div id="classoptions"></div>
 		<div id="relationoptions"></div>
 		
-		<script src="./js/interfaz.js" type="text/javascript"></script>
  	    </div> <!-- /main ui-content -->
 
 	    <!-- ---------------------------------------------------------------------- -->
@@ -136,9 +149,7 @@
 		    <div class="insert_owllink_details" data-role="collapsible"  data-collapsed="true"
 		    	 data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
 			<h2>Insert OWLlink</h2>
-			<p>Use this are to add your own personal <a href="http://owllink.org/"> OWLlink</a> data.</p>
-			<p>Remember: this will be used when you check for satisfiability or send any diagram information to the server.</p>			    
-			<textarea cols="40" class="ui-body" id="insert_owllink_input"></textarea>			
+			<div id="owllink_placer"></div>
 		    </div>
 		    <div class="reasoner_details" data-role="collapsible" data-collapsed="true"
 			 data-collapsed-icon="carat-d" data-expanded-icon="carat-u">

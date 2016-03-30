@@ -217,6 +217,33 @@ ClassOptionsView = Backbone.View.extend(
         this.$el.hide()
 )
 
+##
+# A view for inserting and editing OWLlink text.
+OWLlinkInsertView = Backbone.View.extend(
+    initialize: () ->
+        this.render()
+        @textarea = this.$el.find("#insert_owllink_input")
+        
+    render: () ->
+        template = _.template( $("#template_insertowllink").html() )
+        this.$el.html( template() )
+
+    events:
+        "click a#insert_owlclass" : "insert_class"
+
+    get_owllink: () ->
+        return @textarea.text()
+        
+    set_owllink: (str) ->
+        @textarea.text(str)
+
+    append_owllink: (str) ->
+        @textarea.text(@textarea.text() + str)
+
+    insert_class: () ->
+        this.append_owllink("<owl:Class IRI=\"CLASNAME\" />")
+)
+
 
 exports = exports ? this
 exports.CrearClaseView = CrearClaseView
@@ -224,3 +251,4 @@ exports.EditClassView = EditClassView
 exports.ClassOptionsView = ClassOptionsView
 exports.RelationOptionsView = RelationOptionsView
 exports.TrafficLightsView = TrafficLightsView
+exports.OWLlinkInsertView = OWLlinkInsertView
