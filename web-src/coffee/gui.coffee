@@ -130,7 +130,7 @@ class GUI
                     $("#owllink_source").text(data)
                     $("#owllink_source").show()
                     $("#html-output").hide()
-                offset = $("#output").offset()
+                offset = $("#translation_details").offset()
                 window.scrollTo(
                     offset.left,
                     offset.top

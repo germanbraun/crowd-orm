@@ -27,26 +27,22 @@
 
 	    <div data-role="header">
 		<h1>Interfaz</h1>
-		<a href="#tools-panel" class="ui-btn ui-icon-bars ui-btn-icon-left">Herramientas</a>
-		<div id="trafficlight"></div>	    
+		<div id="trafficlight"></div>
+		<div data-role="navbar">
+		    <ul>
+			<li><a href="#tools-panel" class="ui-btn ui-icon-bars ui-btn-icon-left">Herramientas</a></li>
+			<li><a href="#details-page" data-transition="slide" class="ui-btn ui-btn-icon-right ui-icon-forward">Details</a></li>
+		    </ul>
+		</div>
 	    </div> <!-- /header -->
 
 	    <!-- ---------------------------------------------------------------------- -->
 	    
-	    <div role="main" class="ui-content">		
-		<div id="container"></div>
-		<div id="output">
-		    <h3 class="ui-bar ui-bar-a ui-corner-all">Translation Output</h3>
-		    <div class="ui-body">
-			<div id="html-output"></div>
-			<textarea cols="10" id="owllink_source"></textarea>
-		    </div>
-		    <h3 class="ui-bar ui-bar-a ui-corner-all">Reasoner Input</h3>
-		    <textarea cols="40" class="ui-body" id="reasoner_input"></textarea>
-		    <h3 class="ui-bar ui-bar-a ui-corner-all">Reasoner Output</h3>
-		    <textarea cols="40" class="ui-body" id="reasoner_output"></textarea>
-		    </div>
-		</div>
+	    <div role="main" class="ui-content">
+		<div id="container"></div>		
+	    	    
+		
+		<!-- ---------------------------------------------------------------------- -->
 
 		<!-- Templates -->
 		<script type="text/template" id="template_crearclase">
@@ -110,6 +106,42 @@
 		</address>
 		
 	    </div><!-- /footer -->
+	</div> <!-- /page -->
+
+	<!-- ---------------------------------------------------------------------- -->
+	<!-- Details page -->
+	<div data-role="page" id="details-page">
+	    <div data-role="header">
+		<h1>Details</h1>
+		<div data-role="navbar">
+		    <ul>
+			<li><a class="ui-btn ui-icon-back ui-btn-icon-left" href="#" data-rel="back">Back</a></li>
+		    </ul>
+		</div>
+	    </div>
+
+	    <div role="main" class="ui-content">
+		<div id="details_panel">
+		    <h1 id="details">Details</h1>
+		    <div id="translation_details">
+			<h3 class="ui-bar ui-bar-a ui-corner-all">Translation Output</h3>
+			<div class="ui-body">
+			    <div id="html-output"></div>
+			    <textarea cols="10" id="owllink_source"></textarea>
+			</div>
+		    </div>
+		    <div class="reasoner_details" data-role="collapsible" data-collapsed="true"
+			 data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
+			<h2>Reasoner Details</h2>
+			<h3 class="ui-bar ui-bar-a ui-corner-all">Reasoner Input</h3>
+			<textarea cols="40" class="ui-body" id="reasoner_input"></textarea>
+			<h3 class="ui-bar ui-bar-a ui-corner-all">Reasoner Output</h3>
+			<textarea cols="40" class="ui-body" id="reasoner_output"></textarea>			
+		    </div>
+		</div>
+	    </div>
+	    
+	    <div data-role="footer"></div>
 	</div> <!-- /page -->
     </body>
 </html>
