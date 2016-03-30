@@ -74,6 +74,7 @@ EditClassView = Backbone.View.extend(
 
     events:
         "click a#editclass_button" : "edit_class"
+        "click a#close_button" : "hide"
 
     # Set this class ID and position the form onto the
     # 
@@ -170,6 +171,7 @@ ClassOptionsView = Backbone.View.extend(
         this.hide()
 
     edit_class: (event) ->
+        guiinst.hide_options()
         guiinst.set_editclass_classid(@classid)
         this.hide()
 
