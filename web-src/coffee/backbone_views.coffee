@@ -167,8 +167,8 @@ ClassOptionsView = Backbone.View.extend(
         return @classid
         
     delete_class: (event) ->
+        guiinst.hide_options()
         guiinst.delete_class(@classid)
-        this.hide()
 
     edit_class: (event) ->
         guiinst.hide_options()
