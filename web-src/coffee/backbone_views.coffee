@@ -64,14 +64,16 @@ CrearClaseView = Backbone.View.extend(
         	this.render()
     
         render: () ->
-            template = _.template( $("#template_crearclase").html(), {} )
+            template = _.template( $("#template_tools_navbar").html(), {} )
             this.$el.html(template)
 
         events: 
         	"click a#crearclase_button" :
-                        "crear_clase"
+                "crear_clase"
             "click a#translate_button" :
-                        "translate_owllink"
+                "translate_owllink"
+            "click a#insertowllink_button":
+                "insert_owllink"
 
         crear_clase: (event) ->
             alert("Creando: " + $("#crearclase_input").val() + "...")
@@ -92,6 +94,9 @@ CrearClaseView = Backbone.View.extend(
         # A String: "html", "owllink", etc.
         get_translation_format: () ->
             $("#format_select")[0].value
+
+        insert_owllink: () ->
+            guiinst.show_insert_owllink()
 
                 
 );

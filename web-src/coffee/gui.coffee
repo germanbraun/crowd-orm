@@ -163,6 +163,9 @@ class GUI
         $.mobile.changePage("#diagram-page",
             transition: "slide",
             reverse: true)
+    
+    show_insert_owllink: () ->
+        this.change_to_details_page()
 
 
 exports = exports ? this

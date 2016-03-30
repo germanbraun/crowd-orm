@@ -45,7 +45,7 @@
 		<!-- ---------------------------------------------------------------------- -->
 
 		<!-- Templates -->
-		<script type="text/template" id="template_crearclase">
+		<script type="text/template" id="template_tools_navbar">
 		    <div data-role="navbar">
 			<label>Traducir</label>
 			<select data-mini="true" data-inline="true" id="format_select">
@@ -57,6 +57,9 @@
 			<label>Crear Clase</label>
 			<input data-mini="true" placeholder="ClassName" type="text" id="crearclase_input"/>
 			<a class="ui-btn ui-icon-plus ui-btn-icon-left" type="button" id="crearclase_button">Crear</a>
+
+			<label>Insert OWLlink data</label>
+			<a class="ui-btn ui-icon-edit ui-btn-icon-left" type="button" id="insertowllink_button">Insert OWLlink</a>			
 		    </div>
 		</script>
 		<script type="text/template" id="template_editclass">
@@ -129,6 +132,13 @@
 			    <div id="html-output"></div>
 			    <textarea cols="10" id="owllink_source"></textarea>
 			</div>
+		    </div>
+		    <div class="insert_owllink_details" data-role="collapsible"  data-collapsed="true"
+		    	 data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
+			<h2>Insert OWLlink</h2>
+			<p>Use this are to add your own personal <a href="http://owllink.org/"> OWLlink</a> data.</p>
+			<p>Remember: this will be used when you check for satisfiability or send any diagram information to the server.</p>			    
+			<textarea cols="40" class="ui-body" id="insert_owllink_input"></textarea>			
 		    </div>
 		    <div class="reasoner_details" data-role="collapsible" data-collapsed="true"
 			 data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
