@@ -244,6 +244,22 @@ OWLlinkInsertView = Backbone.View.extend(
         this.append_owllink("<owl:Class IRI=\"CLASSNAME\" />")
 )
 
+ErrorWidgetView = Backbone.View.extend(
+    initialize: () ->
+        this.render()
+        this.$el.hide()
+    render: () ->
+        template = _.template( $("#template_errorwidget").html() )
+        this.$el.html( template() )
+    show: (status, message) ->
+        $("#errorstatus_text").html(status)
+        $("#errormsg_text").html(message)
+        this.$el.show()
+    events:
+        "click a#errorwidget_hide_btn" : "hide"
+    hide: () ->
+        this.$el.hide()
+)
 
 exports = exports ? this
 exports.CrearClaseView = CrearClaseView
@@ -252,3 +268,4 @@ exports.ClassOptionsView = ClassOptionsView
 exports.RelationOptionsView = RelationOptionsView
 exports.TrafficLightsView = TrafficLightsView
 exports.OWLlinkInsertView = OWLlinkInsertView
+exports.ErrorWidgetView = ErrorWidgetView

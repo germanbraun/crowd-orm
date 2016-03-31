@@ -27,6 +27,7 @@ class GUI
         @trafficlight = new TrafficLightsView({el:
             $("#trafficlight")})
         @owllinkinsert = new OWLlinkInsertView({el: $("#owllink_placer")})
+        @errorwidget = new ErrorWidgetView({el: $("#errorwidget_placer")})
         gui.set_current_instance(this);
 
     set_urlprefix : (str) ->
@@ -80,18 +81,33 @@ class GUI
         v.update()
 
     ##
+    # Report an error to the user.
+    #
+    # Params.:
+    # status : String, the status text.
+    # error : String, error message
+    show_error: (status, error) ->
+        $.mobile.loading("hide")
+        @errorwidget.show(status, error)
+
+    ##
     # Send to the server a translation Request.
     request_translation: (format, callback_function) ->
         json = this.diag_to_json()
         url = @urlprefix + "translator/calvanesse.php"
         console.log("Requesting at " + url)
-        $.post(
-            url,
-            "format":
-                format
-            "json":
-                json
-            callback_function
+        $.ajax(
+            type: "POST",
+            url: url,
+            data:            
+                "format":
+                    format
+                "json":
+                    json
+            success:
+                callback_function
+            error:
+                gui.show_error
         )
     ##
     # Send to the server a "is satisfiable" request
@@ -99,9 +115,12 @@ class GUI
         postdata = "json=" + this.diag_to_json()
         url = @urlprefix + "querying/satisfiable.php"
         console.log("Requesting at " + url)
-        $.post(url,
-            postdata,
-            callback_function
+        $.ajax(
+            type: "POST",
+            url: url,
+            data: postdata,
+            success: callback_function,
+            error: gui.show_error
             )
         
     ##
@@ -128,7 +147,7 @@ class GUI
             @trafficlight.turn_red()
         $("#reasoner_input").html(obj.reasoner.input)
         $("#reasoner_output").html(obj.reasoner.output)
-        $.mobile.loader("hide")
+        $.mobile.loading("hide")
         this.change_to_details_page()
         
 
@@ -159,7 +178,7 @@ class GUI
             $("#html-output").hide()
         
         # Goto the Translation text
-        $.mobile.loader("hide")
+        $.mobile.loading("hide")
         this.change_to_details_page()
         
         console.log(data)
@@ -222,6 +241,9 @@ exports.gui.update_satisfiable = (data) ->
 
 exports.gui.update_translation = (data) ->
     exports.gui.gui_instance.update_translation(data)
+
+exports.gui.show_error = (jqXHR, status, text) ->
+    exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
 
 exports.gui.GUI = GUI
 

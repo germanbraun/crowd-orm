@@ -39,6 +39,7 @@
 	    <!-- ---------------------------------------------------------------------- -->
 	    
 	    <div role="main" class="ui-content">
+		<div id="errorwidget_placer"></div>
 		<div id="container"></div>		
 	    	    
 		
@@ -46,6 +47,26 @@
 		<!-- Templates -->
 
 		<!-- Tools Navbar -->
+		<script type="text/template" id="template_errorwidget">
+		    <div class="error">
+			<div class="ui-corner-all">
+			    <div class="ui-bar ui-bar-a">
+				<h1> Error: </h1>
+			    </div>
+			    <div class="ui-body ui-body-a">
+				<dl>
+				    <dt>Status:</dt><dd>
+					<div id="errorstatus_text"></div>
+				    </dd>
+				    <dt>Server Answer:</dt><dd>
+					<div id="errormsg_text"></div>
+				    </dd>
+				</dl>
+				<a id="errorwidget_hide_btn" class="ui-btn ui-icon-back ui-btn-icon-left">Hide</a>
+			    </div>
+			</div>
+		    </div>
+		</script>
 		<script type="text/template" id="template_tools_navbar">
 		    <div data-role="navbar">
 			<label>Traducir</label>
