@@ -4,24 +4,68 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title>Wicom Javascript Testing Units</title>
     <meta name="author" content="Giménez, Christian">
+    <link rel="stylesheet" href="../../web-src/css/jquery.mobile-1.4.5.min.css" />
+    <script src="../../web-src/js/libs/jquery.min.js"></script>
+    <script src="../../web-src/js/libs/jquery.mobile-1.4.5.min.js"></script>
+    <script src="../../web-src/js/libs/lodash.min.js"></script>
+    <script src="../../web-src/js/libs/backbone-min.js"></script>
+    <!-- script src="./js/libs/joint.shapes.erd.min.js"></script -->
   </head>
 
   <body>
-    <h1>Wicom Javascript Testing Units</h1>
-    <p><b>Remember:</b> Execute <code>scripts/compile-coffee.sh</code>
-	script for compiling all CoffeeScripts into Javascript.</p>
+      <div data-role="page" id="tests">
+	  <div data-role="header"> 
+	      <h1>Wicom Javascript Testing Units</h1>
+	      <div data-role="navbar">
+		  <ul>
+		      <li><a data-ajax="false" href="./serverTests.html"
+			     class="ui-btn ui-icon-gear ui-btn-icon-top ui-corner-all ui-btn-active">Test Server Answers</a></li>
+		      <li><a data-ajax="false" href="./modelTests.html"
+			     class="ui-btn ui-icon-grid ui-btn-icon-top ui-corner-all">Model tests</a></li>
+		  </ul>
+	      </div>
+	  </div> <!-- header -->
 
-    <ul>
-	<li><p>These test may fail for some little differences on the XML Strings comparison. Be careful about false failures, and check if the actual value has a proper server answer.</p>
-	    <p>Also, you can use this test for checking <b>server answers</b>.</p>
-	    <a href="./serverTests.html">Testing the Server Answers</a></li>
-      <li><a href="./modelTests.html">Model tests</a></li>
-    </ul>
-    
-    <hr>
-    <address>
-      <a href="mailto:christian@gilia2">Giménez, Christian</a>,
-      30 mar 2016
-    </address>
+	  <div data-role="main" class="ui-content">
+
+	      <div class="ui-corner-all">
+		  <div class="ui-bar ui-bar-a">
+		      <h3>Remember!</h3>
+		  </div>		  
+		  <div class="ui-body ui-body-a">
+		      <p><a class="ui-btn ui-icon-alert ui-btn-icon-notext ui-corner-all"></a> <b>Remember:</b>
+			  Execute <code>scripts/compile-coffee.sh</code>
+			  script for compiling all CoffeeScripts into Javascript.</p>
+		  </div>
+	      </div>
+	      
+	      <div class="ui-corner-all">
+		  <div class="ui-bar ui-bar-a">
+		      <h3>Server</h3>
+		  </div>
+		  <div class="ui-body ui-body-a">
+		      <p>These test may fail for some little differences on the XML Strings comparison. Be careful about false failures, and check if the actual value has a proper server answer.</p>
+		      <p>Also, you can use this test for checking <b>server answers</b>.</p>
+		      <a data-ajax="false" href="./serverTests.html" class="ui-btn ui-corner-all ui-btn-icon-top ui-icon-gear">Test Server Answers</a>
+		  </div>
+	      </div>
+	      
+	      <div class="ui-corner-all">
+		  <div class="ui-bar ui-bar-a">
+		      <h3>Model</h3>
+		  </div>		  
+		  <div class="ui-body ui-body-a">
+		      <a data-ajax="false" href="./modelTests.html" class="ui-btn ui-corner-all ui-btn-icon-top ui-icon-grid">Model tests</a>
+		  </div>
+	      </div>
+	  </div> <!-- main -->
+
+	  <div data-role="footer">
+	      <address>
+		  <a href="mailto:christian@gilia2">Giménez, Christian</a>,
+		  30 mar 2016
+	      </address>
+	  </div> <!-- footer -->
+      </div><!-- page -->
   </body>
 </html>
