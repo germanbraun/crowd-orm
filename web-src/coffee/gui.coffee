@@ -17,6 +17,7 @@
 
 class GUI
     constructor: (@graph, @paper) ->
+        @urlprefix = ""
         @diag = new Diagrama(@graph)
         @state = gui.State.selectionstate()
         @crearclase = new CrearClaseView({el: $("#crearclase")});
@@ -27,6 +28,9 @@ class GUI
             $("#trafficlight")})
         @owllinkinsert = new OWLlinkInsertView({el: $("#owllink_placer")})
         gui.set_current_instance(this);
+
+    set_urlprefix : (str) ->
+        @urlprefix = str
 
     ##
     # What to do when the user clicked on a cellView.
@@ -76,6 +80,31 @@ class GUI
         v.update()
 
     ##
+    # Send to the server a translation Request.
+    request_translation: (format, callback_function) ->
+        json = this.diag_to_json()
+        url = @urlprefix + "translator/calvanesse.php"
+        console.log("Requesting at " + url)
+        $.post(
+            url,
+            "format":
+                format
+            "json":
+                json
+            callback_function
+        )
+    ##
+    # Send to the server a "is satisfiable" request
+    request_satisfiable: (callback_function) ->
+        postdata = "json=" + this.diag_to_json()
+        url = @urlprefix + "querying/satisfiable.php"
+        console.log("Requesting at " + url)
+        $.post(url,
+            postdata,
+            callback_function
+            )
+        
+    ##
     # Put the traffic light on green.
     traffic_light_green: () ->
         @trafficlight.turn_green()
@@ -107,17 +136,16 @@ class GUI
     # Send a POST to the server for checking if the diagram is
     # satisfiable.
     check_satisfiable: () ->
-        postdata = "json=" + this.diag_to_json()
         $.mobile.loading("show", 
             text: "Consulting server...",
             textVisible: true,
             textonly: false
         )
-        $.post("querying/satisfiable.php",
-            postdata,
+        this.request_satisfiable(
             gui.update_satisfiable # Be careful with the context
             # change! this will have another object...
-            );
+            )
+
 
     update_translation: (data) ->
         format = @crearclase.get_translation_format()
@@ -141,20 +169,13 @@ class GUI
     # and the translator/calvanesse.php translator URL.
     translate_owllink: () ->
         format = @crearclase.get_translation_format()
-        json = this.diag_to_json()
         $.mobile.loading("show", 
             text: "Consulting server...",
             textVisible: true,
             textonly: false
         )
-        $.post(
-            "translator/calvanesse.php",
-            "format":
-                format
-            "json":
-                json
-            gui.update_translation
-        )
+        this.request_translation(format, gui.update_translation)
+
 
     change_to_details_page: () ->
         $.mobile.changePage("#details-page",
