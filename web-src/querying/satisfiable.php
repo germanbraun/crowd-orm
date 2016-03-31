@@ -32,8 +32,13 @@ load("wicom.php", "../common/");
 $wicom = new Wicom\Wicom();
 
 if (array_key_exists('json', $_POST)){
-    $answer = $wicom->is_satisfiable($_POST['json']);
-    echo $answer->to_json();
+    try{
+        $answer = $wicom->is_satisfiable($_POST['json']);
+        echo $answer->to_json();
+    }catch(Exception $e){
+        http_response_code(500);
+        echo $e->getMessage();
+    }
 }else{
     echo "Error, json parameter not founded.";
 }
