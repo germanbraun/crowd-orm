@@ -28,6 +28,8 @@ class GUI
             $("#trafficlight")})
         @owllinkinsert = new OWLlinkInsertView({el: $("#owllink_placer")})
         @errorwidget = new ErrorWidgetView({el: $("#errorwidget_placer")})
+        $("#diagram-page").enhanceWithin()
+        $("#details-page").enhanceWithin()
         gui.set_current_instance(this);
 
     set_urlprefix : (str) ->

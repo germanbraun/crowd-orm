@@ -21,7 +21,7 @@
 
     <body>
 	<div data-role="page" id="diagram-page">
-	    <div data-role="panel" data-display="overlay" data-position="left" id="tools-panel" class="comandos" id="comandos">
+	    <div data-role="panel" data-display="overlay" data-position="left" id="tools-panel" class="comandos ui-corner-all" id="comandos">
 		<div style="text-align: right">
 		    <a href="#comandos" data-rel="close" class="ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all ui-btn-inline ui-mini">Close</a>
 		</div>
@@ -43,7 +43,7 @@
 	    
 	    <div role="main" class="ui-content">
 		<div id="errorwidget_placer"></div>
-		<div id="container"></div>		
+		<div id="container"></div>
 	    	    
 		
 		<!-- ---------------------------------------------------------------------- -->
@@ -69,21 +69,22 @@
 			</div>
 		    </div>
 		</script>
+		
 		<script type="text/template" id="template_tools_navbar">
 		    <div data-role="navbar">
 			<label>Traducir</label>
-			<select data-mini="true" data-inline="true" id="format_select">
-			    <option value="owllink" selcted="true">OWLlink</option>
+			<select data-mini="true" data-inline="true" data-native-menu="false" id="format_select">
+			    <option value="owllink" selected="true">OWLlink</option>
 			    <option value="html">HTML</option>
 			</select>
-			<a class="ui-btn ui-icon-edit ui-btn-icon-left" type="button" id="translate_button">Traducir</a>
+		    	<a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all" type="button" id="translate_button">Traducir</a>
 						
 			<label>Crear Clase</label>
 			<input data-mini="true" placeholder="ClassName" type="text" id="crearclase_input"/>
-			<a class="ui-btn ui-icon-plus ui-btn-icon-left" type="button" id="crearclase_button">Crear</a>
+			<a class="ui-btn ui-icon-plus ui-btn-icon-left ui-corner-all" type="button" id="crearclase_button">Crear</a>
 
 			<label>Insert OWLlink data</label>
-			<a class="ui-btn ui-icon-edit ui-btn-icon-left" type="button" id="insertowllink_button">Insert OWLlink</a>			
+			<a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all" type="button" id="insertowllink_button">Insert OWLlink</a>			
 		    </div>
 		</script>
 		<!-- EditClass -->
