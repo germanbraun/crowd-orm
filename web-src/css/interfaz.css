@@ -15,6 +15,17 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+@font-face {
+  font-family: 'CubicCoreMono';
+  src: url('../fonts/CubicCoreMono.ttf');
+}
+
+.crowd-header {
+    font-family: 'CubicCoreMono' !important;
+    font-size: 300% !important;
+    padding: 1px !important;
+}
+
 #diagram-page .wicom-header {
     background-color: #8af;
     color: white;
