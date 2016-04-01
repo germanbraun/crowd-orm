@@ -247,18 +247,22 @@ OWLlinkInsertView = Backbone.View.extend(
 ErrorWidgetView = Backbone.View.extend(
     initialize: () ->
         this.render()
-        this.$el.hide()
+        # We need to initialize the error-popup div because
+        # jquery-mobile.js script is loaded before this script.
+        this.$el.find(".error-popup").popup()
+        #this.$el.hide()
     render: () ->
         template = _.template( $("#template_errorwidget").html() )
         this.$el.html( template() )
     show: (status, message) ->
+        $(".error-popup").popup("open")
         $("#errorstatus_text").html(status)
         $("#errormsg_text").html(message)
-        this.$el.show()
+        console.log(status + " - " + message)
     events:
         "click a#errorwidget_hide_btn" : "hide"
     hide: () ->
-        this.$el.hide()
+        $(".error-popup").popup("close")
 )
 
 exports = exports ? this

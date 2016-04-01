@@ -1,0 +1,60 @@
+/*  interfaz.css --
+    Copyright (C) 2016 Giménez, Christian
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+#diagram-page .wicom-header {
+    background-color: #8af;
+    color: white;
+    text-shadow: 2px 2px 3px #24f;
+    box-shadow: 2px 2px 3px #48f;
+}
+
+#diagram-page .wicom-header .ui-btn {
+    background-color: #8af;    
+    color: white;
+    text-shadow: 2px 2px 3px #24f;
+}
+
+#details-page .wicom-header {
+    background-color: #8af;
+    color: white;
+    text-shadow: 2px 2px 3px #24f;
+    box-shadow: 2px 2px 3px #48f;
+}
+
+#details-page .wicom-header .ui-btn {
+    background-color: #8af;    
+    color: white;
+    text-shadow: 2px 2px 3px #24f;
+}
+
+.error-popup {
+    background-color: #f88 !important;
+}
+
+.error-popup .error-header {
+    background-color: #f88;    
+    border-color: #f55;
+}
+
+.error-popup .error-content {
+    background-color: #f88;
+    border-color: #f55;
+}
+
+.error-popup .ui-btn {
+    background-color: #f55;
+}

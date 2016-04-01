@@ -14,6 +14,8 @@
 	<?php if (array_key_exists('prueba', $_GET) && $_GET['prueba'] == 1){ ?>
 	    <script src="./js/prueba.js"></script>
 	<?php } ?>
+
+        <link rel="stylesheet" href="./css/interfaz.css" />
     </head>
 
     <body>
@@ -25,7 +27,7 @@
 		<div id="crearclase"></div>
 	    </div><!-- /panel -->
 
-	    <div data-role="header">
+	    <div data-role="header" class="wicom-header">
 		<h1>Interfaz</h1>
 		<div id="trafficlight"></div>
 		<div data-role="navbar">
@@ -48,22 +50,21 @@
 
 		<!-- Tools Navbar -->
 		<script type="text/template" id="template_errorwidget">
-		    <div class="error">
-			<div class="ui-corner-all">
-			    <div class="ui-bar ui-bar-a">
-				<h1> Error: </h1>
-			    </div>
-			    <div class="ui-body ui-body-a">
-				<dl>
-				    <dt>Status:</dt><dd>
-					<div id="errorstatus_text"></div>
-				    </dd>
-				    <dt>Server Answer:</dt><dd>
-					<div id="errormsg_text"></div>
-				    </dd>
-				</dl>
-				<a id="errorwidget_hide_btn" class="ui-btn ui-icon-back ui-btn-icon-left">Hide</a>
-			    </div>
+		    <div class="error-popup" data-dismissible="false"  data-role="popup">
+			<div data-role="header" class="error-header">
+			    <h1> Error: </h1>
+			</div>
+			<div data-role="main" class="ui-content error-content">
+			    <dl>
+				<dt>Status:</dt><dd>
+				    <div id="errorstatus_text"></div>
+				</dd>
+				<dt>Server Answer:</dt><dd>
+				    <div id="errormsg_text"></div>
+				</dd>
+			    </dl>
+			    <a data-rel="back" id="errorwidget_hide_btn"
+			       class="ui-corner-all ui-btn ui-icon-back ui-btn-icon-left">Hide</a>
 			</div>
 		    </div>
 		</script>
@@ -148,7 +149,7 @@
 	<!-- ---------------------------------------------------------------------- -->
 	<!-- Details page -->
 	<div data-role="page" id="details-page">
-	    <div data-role="header">
+	    <div data-role="header" class="wicom-header">
 		<h1>Details</h1>
 		<div data-role="navbar">
 		    <ul>
