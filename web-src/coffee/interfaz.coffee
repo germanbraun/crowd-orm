@@ -18,23 +18,24 @@
 # {Diagrama} = require './diagrama'
 # {Class} = require './mymodel'
 
-# Un poco de aliasing para acortar el código.
-uml = joint.shapes.uml;
-
 # ---------------------------------------------------------------------- 
 
-graph = new joint.dia.Graph
-paper = new joint.dia.Paper(
+window.onload = () ->
+    # Un poco de aliasing para acortar el código.
+    uml = joint.shapes.uml;
+
+    graph = new joint.dia.Graph
+    paper = new joint.dia.Paper(
         el: $('#container')
         width: 1000
         height: 1000
         model: graph
         gridSize: 1
-)
+    )
 
-guiinst = new gui.GUI(graph, paper)
+    guiinst = new gui.GUI(graph, paper)
 
-css_clase = 
+    css_clase = 
         '.uml-class-name-rect' : 
             fill: "#fff"
         '.uml-class-attrs-rect' : 
@@ -42,33 +43,32 @@ css_clase =
         '.uml-class-methods-rect' : 
         	fill: "#fff"
         
-# Interfaz
+    # Interfaz
     
-# Events for the Paper
+    # Events for the Paper
 
-# A Cell was clicked: select it.
-paper.on("cell:pointerclick",
-    (cellView, evt, x, y) ->
-        guiinst.on_cell_clicked(cellView, evt, x, y)
-)
+    # A Cell was clicked: select it.
+    paper.on("cell:pointerclick",
+        (cellView, evt, x, y) ->
+            guiinst.on_cell_clicked(cellView, evt, x, y)
+    )
 
-# paper.on("cell:pointerdblclick",
-#     (cellView, evt, x, y) ->
-#         if classoptions != null then classoptions.hide()
-#         editclass = new EditClassView({el: $("#editclass")})
-#         editclass.set_classid(cellView.model.id)
-
-# )
+    # paper.on("cell:pointerdblclick",
+    #     (cellView, evt, x, y) ->
+    #         if classoptions != null then classoptions.hide()
+    #         editclass = new EditClassView({el: $("#editclass")})
+    #         editclass.set_classid(cellView.model.id)
+    
+    # )
         
-# Instancia de CrearClaseView.
-# 
+    # Instancia de CrearClaseView.
+    exports = exports ? this
+    
+    exports.graph = graph
+    exports.paper = paper
+    exports.guiinst = guiinst
 
-exports = exports ? this
+    # Presentamos una inicial clase de ejemplo
+    nueva = new Class("Test Class", [], [])
+    guiinst.add_class(nueva)
 
-exports.graph = graph
-exports.paper = paper
-exports.guiinst = guiinst
-
-# Presentamos una inicial clase de ejemplo
-nueva = new Class("Test Class", [], [])
-guiinst.add_class(nueva)

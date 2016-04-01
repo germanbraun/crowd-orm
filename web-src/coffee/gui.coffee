@@ -17,6 +17,7 @@
 
 class GUI
     constructor: (@graph, @paper) ->
+        @urlprefix = ""
         @diag = new Diagrama(@graph)
         @state = gui.State.selectionstate()
         @crearclase = new CrearClaseView({el: $("#crearclase")});
@@ -25,7 +26,12 @@ class GUI
         @relationoptions = new RelationOptionsView({el: $("#relationoptions")})
         @trafficlight = new TrafficLightsView({el:
             $("#trafficlight")})
+        @owllinkinsert = new OWLlinkInsertView({el: $("#owllink_placer")})
+        @errorwidget = new ErrorWidgetView({el: $("#errorwidget_placer")})
         gui.set_current_instance(this);
+
+    set_urlprefix : (str) ->
+        @urlprefix = str
 
     ##
     # What to do when the user clicked on a cellView.
@@ -75,6 +81,49 @@ class GUI
         v.update()
 
     ##
+    # Report an error to the user.
+    #
+    # Params.:
+    # status : String, the status text.
+    # error : String, error message
+    show_error: (status, error) ->
+        $.mobile.loading("hide")
+        @errorwidget.show(status, error)
+
+    ##
+    # Send to the server a translation Request.
+    request_translation: (format, callback_function) ->
+        json = this.diag_to_json()
+        url = @urlprefix + "translator/calvanesse.php"
+        console.log("Requesting at " + url)
+        $.ajax(
+            type: "POST",
+            url: url,
+            data:            
+                "format":
+                    format
+                "json":
+                    json
+            success:
+                callback_function
+            error:
+                gui.show_error
+        )
+    ##
+    # Send to the server a "is satisfiable" request
+    request_satisfiable: (callback_function) ->
+        postdata = "json=" + this.diag_to_json()
+        url = @urlprefix + "querying/satisfiable.php"
+        console.log("Requesting at " + url)
+        $.ajax(
+            type: "POST",
+            url: url,
+            data: postdata,
+            success: callback_function,
+            error: gui.show_error
+            )
+        
+    ##
     # Put the traffic light on green.
     traffic_light_green: () ->
         @trafficlight.turn_green()
@@ -98,7 +147,7 @@ class GUI
             @trafficlight.turn_red()
         $("#reasoner_input").html(obj.reasoner.input)
         $("#reasoner_output").html(obj.reasoner.output)
-        $.mobile.loader("hide")
+        $.mobile.loading("hide")
         this.change_to_details_page()
         
 
@@ -106,18 +155,16 @@ class GUI
     # Send a POST to the server for checking if the diagram is
     # satisfiable.
     check_satisfiable: () ->
-        json = @diag.to_json()
-        postdata = "json=" + JSON.stringify(json)
         $.mobile.loading("show", 
             text: "Consulting server...",
             textVisible: true,
             textonly: false
         )
-        $.post("querying/satisfiable.php",
-            postdata,
+        this.request_satisfiable(
             gui.update_satisfiable # Be careful with the context
             # change! this will have another object...
-            );
+            )
+
 
     update_translation: (data) ->
         format = @crearclase.get_translation_format()
@@ -131,7 +178,7 @@ class GUI
             $("#html-output").hide()
         
         # Goto the Translation text
-        $.mobile.loader("hide")
+        $.mobile.loading("hide")
         this.change_to_details_page()
         
         console.log(data)
@@ -141,20 +188,13 @@ class GUI
     # and the translator/calvanesse.php translator URL.
     translate_owllink: () ->
         format = @crearclase.get_translation_format()
-        json = JSON.stringify(@diag.to_json())
         $.mobile.loading("show", 
             text: "Consulting server...",
             textVisible: true,
             textonly: false
         )
-        $.post(
-            "translator/calvanesse.php",
-            "format":
-                format
-            "json":
-                json
-            gui.update_translation
-        )
+        this.request_translation(format, gui.update_translation)
+
 
     change_to_details_page: () ->
         $.mobile.changePage("#details-page",
@@ -163,9 +203,23 @@ class GUI
         $.mobile.changePage("#diagram-page",
             transition: "slide",
             reverse: true)
-    
+
+    ##
+    # Show the "Insert OWLlink" section.
     show_insert_owllink: () ->
         this.change_to_details_page()
+
+    ##
+    # Set the OWLlink addon at the "Insert OWLlink" section.
+    set_insert_owllink: (str) ->
+        @owllinkinsert.set_owllink(str)
+
+    diag_to_json: () ->
+        json = @diag.to_json()
+        json.owllink = @owllinkinsert.get_owllink()
+        return JSON.stringify(json)
+        
+        
 
 
 exports = exports ? this
@@ -187,6 +241,9 @@ exports.gui.update_satisfiable = (data) ->
 
 exports.gui.update_translation = (data) ->
     exports.gui.gui_instance.update_translation(data)
+
+exports.gui.show_error = (jqXHR, status, text) ->
+    exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
 
 exports.gui.GUI = GUI
 

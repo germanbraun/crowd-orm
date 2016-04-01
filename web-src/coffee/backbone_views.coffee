@@ -217,6 +217,53 @@ ClassOptionsView = Backbone.View.extend(
         this.$el.hide()
 )
 
+##
+# A view for inserting and editing OWLlink text.
+OWLlinkInsertView = Backbone.View.extend(
+    initialize: () ->
+        this.render()
+        @textarea = this.$el.find("#insert_owllink_input")
+        
+    render: () ->
+        template = _.template( $("#template_insertowllink").html() )
+        this.$el.html( template() )
+
+    events:
+        "click a#insert_owlclass" : "insert_class"
+
+    get_owllink: () ->
+        return @textarea.text()
+        
+    set_owllink: (str) ->
+        @textarea.text(str)
+
+    append_owllink: (str) ->
+        @textarea.text(@textarea.text() + str)
+
+    insert_class: () ->
+        this.append_owllink("<owl:Class IRI=\"CLASSNAME\" />")
+)
+
+ErrorWidgetView = Backbone.View.extend(
+    initialize: () ->
+        this.render()
+        # We need to initialize the error-popup div because
+        # jquery-mobile.js script is loaded before this script.
+        this.$el.find(".error-popup").popup()
+        #this.$el.hide()
+    render: () ->
+        template = _.template( $("#template_errorwidget").html() )
+        this.$el.html( template() )
+    show: (status, message) ->
+        $(".error-popup").popup("open")
+        $("#errorstatus_text").html(status)
+        $("#errormsg_text").html(message)
+        console.log(status + " - " + message)
+    events:
+        "click a#errorwidget_hide_btn" : "hide"
+    hide: () ->
+        $(".error-popup").popup("close")
+)
 
 exports = exports ? this
 exports.CrearClaseView = CrearClaseView
@@ -224,3 +271,5 @@ exports.EditClassView = EditClassView
 exports.ClassOptionsView = ClassOptionsView
 exports.RelationOptionsView = RelationOptionsView
 exports.TrafficLightsView = TrafficLightsView
+exports.OWLlinkInsertView = OWLlinkInsertView
+exports.ErrorWidgetView = ErrorWidgetView

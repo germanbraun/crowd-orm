@@ -64,7 +64,7 @@ class OWLlinkDocument extends Document{
     */
     protected $in_tell = false;
     
-
+    protected $owllink_text = "";
 
     public function set_actual_kb($kb_uri){
         $this->actual_kb = $kb_uri;
@@ -360,8 +360,18 @@ class OWLlinkDocument extends Document{
     ///@}
     // Ask group.
 
+    public function insert_owllink($text){
+        $this->owllink_text = $text;
+        
+    }
+
     public function to_string(){
-        return $this->content->outputMemory();
+        $str = $this->content->outputMemory();
+        $str = str_replace(
+            "</RequestMessage>",
+            $this->owllink_text . "</RequestMessage>",
+            $str);
+        return $str;
     }
 }
 

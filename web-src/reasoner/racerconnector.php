@@ -58,14 +58,22 @@ class RacerConnector extends Connector{
 Are you sure about this path? 
 temporal_path = \"$temporal_path\"");
         }
+
+        $file_path = $temporal_path . "input-file.owllink";
         
-        $owllink_file = fopen($temporal_path . "input-file.owllink", "w");
+        if (file_exists($file_path) and !is_writable($file_path)){
+            throw new \Exception("Temporal file is not writable, please change the permissions.");
+        }
+        
+        $owllink_file = fopen($file_path, "w");
+        
         if (! $owllink_file){
             throw new \Exception("Temporal file couldn't be opened for writing... 
 Is the path \"$temporal_path\" correct?");
         }
+        
         fwrite($owllink_file, $input_string);
-        fclose($owllink_file);
+        fclose($owllink_file);            
         
         exec(
             $racer_path . RacerConnector::PROGRAM_CMD . " " . $temporal_path . "input-file.owllink",
