@@ -8,7 +8,11 @@ include './config/config.php'
 if ($environment == 'production'){
 ?>
     <link rel="stylesheet" href="./css/joint.min.css" />
-    <link rel="stylesheet" href="./css/jquery.mobile-1.4.5.min.css" />
+    <!-- jquery-mobile -->
+    <link rel="stylesheet" href="./css/CROWD-theme.min.css" />
+    <link rel="stylesheet" href="./css/jquery.mobile.icons.min.css" />
+    <link rel="stylesheet" href="./css/jquery.mobile.structure-1.4.5.min.css" />
+    
     <script src="./js/libs/jquery.min.js"></script>
     <script src="./js/libs/jquery.mobile-1.4.5.min.js"></script>
     <script src="./js/libs/lodash.min.js"></script>
@@ -20,7 +24,11 @@ if ($environment == 'production'){
 }else{
 ?>
     <link rel="stylesheet" href="./css/joint.css" />
-    <link rel="stylesheet" href="./css/jquery.mobile-1.4.5.css" />
+    <!-- JQuery Mobile -->
+    <link rel="stylesheet" href="./css/CROWD-theme.css" />
+    <link rel="stylesheet" href="./css/jquery.mobile.icons.min.css" />
+    <link rel="stylesheet" href="./css/jquery.mobile.structure-1.4.5.css" />
+
     <script src="./js/libs/jquery.js"></script>
     <script src="./js/libs/jquery.mobile-1.4.5.js"></script>
     <script src="./js/libs/lodash.min.js"></script>
