@@ -1,4 +1,4 @@
-# factories.coffee --
+# csstheme.coffee --
 # Copyright (C) 2016 Giménez, Christian
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,39 +14,33 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-uml = joint.shapes.uml
+css_class = 
+    '.uml-class-name-rect' : 
+        fill: "#aaf"
+        stroke: "#000"
+        'stroke-width': 0.5
+    '.uml-class-attrs-rect' : 
+        fill: "#ddf"
+        stroke: "#000"
+        'stroke-width': 0.5
+    '.uml-class-methods-rect' : 
+        fill: "#ddf"
+        stroke: "#000"
+        'stroke-width': 0.5
+    '.uml-class-name-text' :
+        fill: "#00f"
+    '.uml-class-attrs-text': 
+        ref: '.uml-class-attrs-rect',
+        'ref-y': 0.5
+        'y-alignment': 'middle'
+    '.uml-class-methods-text':
+        ref: '.uml-class-methods-rect',
+        'ref-y': 0.5
+        'y-alignment': 'middle'
 
-class Factory
-    constructor: () ->
-
-    # Create a class representation.
-    create_class: (name) ->
-                
-class UMLFactory
-   
-    constructor: () ->
     
-    create_class: (class_name) ->
-        nueva = new uml.Class
-            position: {x: 20, y: 20}
-            size: {width: 220, height: 100}
-            name: class_name
-            attributes: []
-            methods: []
-            attrs: csstheme.css_class
-            
-        return nueva
 
-class ERDFactory
-    constructor: () ->
-    
-    create_class: () ->
-        
 
-# If exports doesn't exists, use "this".
 exports = exports ? this
-
-exports.Factory = Factory
-exports.UMLFactory = UMLFactory
-exports.ERDFactory = ERDFactory
-
+exports.csstheme = {}
+exports.csstheme.css_class = css_class

@@ -35,14 +35,6 @@ window.onload = () ->
 
     guiinst = new gui.GUI(graph, paper)
 
-    css_clase = 
-        '.uml-class-name-rect' : 
-            fill: "#fff"
-        '.uml-class-attrs-rect' : 
-        	fill: "#fff"
-        '.uml-class-methods-rect' : 
-        	fill: "#fff"
-        
     # Interfaz
     
     # Events for the Paper

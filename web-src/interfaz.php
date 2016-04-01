@@ -6,6 +6,7 @@
 	?>
 	<title>Interfaz</title>
 
+	<script src="./js/csstheme.js"></script>
 	<script src="./js/backbone_views.js"></script>
 	<script src="./js/GUIState.js"></script>
 	<script src="./js/gui.js"></script>
