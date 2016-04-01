@@ -168,6 +168,8 @@
 			<div class="ui-body">
 			    <div id="html-output"></div>
 			    <textarea cols="10" id="owllink_source"></textarea>
+		    	    <a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all" type="button" id="translate_button"
+			    onclick="guiinst.translate_owllink()">Translate Again</a>
 			</div>
 		    </div>
 		    <div class="insert_owllink_details" data-role="collapsible"  data-collapsed="true"
