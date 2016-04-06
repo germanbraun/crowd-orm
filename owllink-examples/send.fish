@@ -21,5 +21,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-curl -0 --data @$argv[1] http://localhost:8080
+# curl -0 --data @$argv[1] http://localhost:8080
+../run/Racer -- -owllink "$argv[1]"
 
