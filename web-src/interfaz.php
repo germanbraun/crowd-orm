@@ -29,7 +29,7 @@
 	    </div><!-- /panel -->
 
 	    <div data-role="header" class="wicom-header">
-		<h1 class="crowd-header">C R O W D</h1>
+		<h1 class="crowd-header">c r o w d</h1>
 		<div id="trafficlight"></div>
 		<div data-role="navbar">
 		    <ul>
