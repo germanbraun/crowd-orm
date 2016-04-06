@@ -69,16 +69,16 @@ class Translator{
         $this->builder->insert_header();
         
         $this->strategy->translate($json, $this->builder);
+        
+        if (array_key_exists("owllink", $json_obj)){
+            $this->builder->insert_owllink($json_obj["owllink"]);
+        }
 
         if ($this->with_queries){
             $this->queriesgen->gen_satisfiable($this->builder);
             $this->queriesgen->gen_class_satisfiable($json, $this->builder);
         }
         
-        if (array_key_exists("owllink", $json_obj)){
-            
-            $this->builder->insert_owllink($json_obj["owllink"]);
-        }
         $this->builder->insert_footer();
         // return $builder->get_product();
         $document = $this->builder->get_product();        

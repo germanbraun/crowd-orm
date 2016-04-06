@@ -78,6 +78,7 @@ class OWLlinkBuilder extends DocumentBuilder{
     // Queries
 
     public function insert_owllink($text){
+        $this->ensure_end_tell();
         $this->product->insert_owllink($text);
     }
 

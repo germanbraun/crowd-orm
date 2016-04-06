@@ -361,16 +361,17 @@ class OWLlinkDocument extends Document{
     // Ask group.
 
     public function insert_owllink($text){
-        $this->owllink_text = $text;
+        // $this->owllink_text = $text;
+        $this->content->writeRaw($text);
         
     }
 
     public function to_string(){
         $str = $this->content->outputMemory();
-        $str = str_replace(
-            "</RequestMessage>",
-            $this->owllink_text . "</RequestMessage>",
-            $str);
+        // $str = str_replace(
+        //     "</RequestMessage>",
+        //     $this->owllink_text . "</RequestMessage>",
+        //     $str);
         return $str;
     }
 }
