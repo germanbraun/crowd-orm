@@ -313,6 +313,68 @@ EOT;
         
         $this->assertJsonStringEqualsJsonString($expected, $actual, true);
     }
+
+    public function testUnsatisfiableOWLlink(){
+        $query_input = <<<'EOT'
+<?xml version="1.0" encoding="UTF-8"?>
+<RequestMessage xmlns="http://www.owllink.org/owllink#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd"><CreateKB kb="http://localhost/kb1"/><Tell kb="http://localhost/kb1"><owl:SubClassOf><owl:Class IRI="Test Class"/><owl:Class abbreviatedIRI="owl:Thing"/></owl:SubClassOf></Tell><Tell kb="http://localhost/kb1">
+<owl:SubClassOf>
+  <owl:Class IRI="Test Class" />
+  <owl:ObjectComplementOf>
+    <owl:Class IRI="Test Class" />
+  </owl:ObjectComplementOf>
+</owl:SubClassOf>
+</Tell><IsKBSatisfiable kb="http://localhost/kb1"/><IsClassSatisfiable kb="http://localhost/kb1"><owl:Class IRI="Test Class"/></IsClassSatisfiable></RequestMessage>
+EOT;
+        $answer_output = <<<'EOT'
+<?xml version="1.0" encoding="UTF-8"?>
+<ResponseMessage xmlns="http://www.owllink.org/owllink#"
+                 xmlns:owl="http://www.w3.org/2002/07/owl#">
+  <KB kb="http://localhost/kb1"/>
+  <OK/>
+  <OK/>
+  <BooleanResponse result="true"
+                   warning="Unsatisfiable classes: (*BOTTOM* BOTTOM file://owllink-unsatisfiable.xmlTest Class)"/>
+  <BooleanResponse result="false"/>
+</ResponseMessage>
+EOT;
+
+        $expected = <<<'EOT'
+       {
+           "satisfiable": {
+               "kb" : true,
+               "classes" : []
+           },
+           "unsatisfiable": {
+              	"classes" : ["Test Class"]
+           },
+           "suggestions" : {
+              	"links" : []
+           },
+           "reasoner" : {
+              	"input" : "",
+              	"output" : ""
+           }
+       }
+EOT;
+
+        $oa = new OWLlinkAnalizer($query_input, $answer_output);
+        $oa->analize();
+        $answer = $oa->get_answer();
+        // Removing input and output XML string, is merely descriptive.
+        $answer->set_reasoner_input("");
+        $answer->set_reasoner_output("");
+        $actual = $answer->to_json();
+
+
+        /*
+        print("\n\n");
+        print($actual);
+        print("\n\n");
+        */
+        
+        $this->assertJsonStringEqualsJsonString($expected, $actual, true);
+    }
 }
 
 
