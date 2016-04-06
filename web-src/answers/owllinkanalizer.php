@@ -139,7 +139,11 @@ class OWLlinkAnalizer extends AnsAnalizer{
         }
         
         while ($cont){
-            if (!$xml->next()){
+            try{
+                if (!$xml->next()){
+                    return false;
+                }
+            }catch(Exception $e){                
                 return false;
             }
             $cont = $xml->nodeType != XMLReader::ELEMENT;
