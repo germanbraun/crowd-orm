@@ -38,11 +38,6 @@ if ($environment == 'production'){
     <script src="./js/libs/joint.shapes.uml.js"></script>
 <?php 
 }
+
+include "_modelinclude.php";
 ?>
-
-<script src="./js/diagrama.js"></script>
-<script src="./js/factories.js"></script>
-<script src="./js/mymodel.js"></script>
-<script src="./js/products.js"></script>
-
-

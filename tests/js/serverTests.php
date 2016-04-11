@@ -2,7 +2,7 @@
 <html>
     <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>Model Tests</title>
 	<link rel="stylesheet" href="./js/qunit-1.22.0.css">
 	<script src="../../web-src/js/libs/jquery.js"></script>
@@ -11,11 +11,11 @@
 	<script src="../../web-src/js/libs/backbone.js"></script>
 	<script src="../../web-src/js/libs/joint.js"></script>
 	<script src="../../web-src/js/libs/joint.shapes.uml.js"></script>
-	<script src="../../web-src/js/diagrama.js"></script>
-	<script src="../../web-src/js/factories.js"></script>
-	<script src="../../web-src/js/mymodel.js"></script>
-	<script src="../../web-src/js/products.js"></script>
-	<script src="../../web-src/js/server_connection.js"></script>
+
+	<?php
+	include "../../web-src/_modelinclude.php";
+	?>
+
     </head>
     <body>
 	<div id="qunit"></div>
