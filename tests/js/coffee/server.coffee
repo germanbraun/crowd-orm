@@ -24,18 +24,25 @@ remove_xml_spaces = (xml_str) ->
     xml_str = xml_str.replace(/'\s+/, "' ")
     xml_str = xml_str.replace(/\s+'/, " '")
 
+alert_func = (status, error) ->    
+    console.log(status)
+    console.log(error)
 
 QUnit.test( "translate_request test", ( assert ) ->
     expected ='<?xml version="1.0" encoding="UTF-8"?>
 <RequestMessage xmlns="http://www.owllink.org/owllink#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd"><CreateKB kb="http://localhost/kb1"/><Tell kb="http://localhost/kb1"><owl:SubClassOf><owl:Class IRI="Hi World"/><owl:Class abbreviatedIRI="owl:Thing"/></owl:SubClassOf></Tell><IsKBSatisfiable kb="http://localhost/kb1"/><IsClassSatisfiable kb="http://localhost/kb1"><owl:Class IRI="Hi World"/></IsClassSatisfiable></RequestMessage>'
     expected = remove_xml_spaces(expected)
    
-    guiinst = new gui.GUI(null, null);
-    guiinst.set_urlprefix("../../web-src/")
-    guiinst.add_class(new Class("Hi World"))
+    conn = new ServerConnection( alert_func )
+    conn.set_urlprefix("../../web-src/")
+    
+    diag = new Diagrama(null)
+    diag.agregar_clase(new Class("Hi World"))
 
     done = assert.async()    
-    guiinst.request_translation("owllink",
+    conn.request_translation(
+        JSON.stringify(diag.to_json()),
+        "owllink",
         (data) ->           
             actual = remove_xml_spaces(data)
             assert.equal(actual , expected,
@@ -61,12 +68,15 @@ QUnit.test( "satisfiable_request test", ( assert ) ->
             input: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<RequestMessage xmlns=\"http:\/\/www.owllink.org\/owllink#\" xmlns:owl=\"http:\/\/www.w3.org\/2002\/07\/owl#\" xmlns:xsi=\"http:\/\/www.w3.org\/2001\/XMLSchema-instance\" xsi:schemaLocation=\"http:\/\/www.owllink.org\/owllink# http:\/\/www.owllink.org\/owllink-20091116.xsd\"><CreateKB kb=\"http:\/\/localhost\/kb1\"\/><Tell kb=\"http:\/\/localhost\/kb1\"><owl:SubClassOf><owl:Class IRI=\"Hi World\"\/><owl:Class abbreviatedIRI=\"owl:Thing\"\/><\/owl:SubClassOf><\/Tell><IsKBSatisfiable kb=\"http:\/\/localhost\/kb1\"\/><IsClassSatisfiable kb=\"http:\/\/localhost\/kb1\"><owl:Class IRI=\"Hi World\"\/><\/IsClassSatisfiable><\/RequestMessage>",
             output: "<?xml version=\"1.0\" encoding=\"UTF-8\"?><ResponseMessage xmlns=\"http:\/\/www.owllink.org\/owllink#\"                 xmlns:owl=\"http:\/\/www.w3.org\/2002\/07\/owl#\">  <KB kb=\"http:\/\/localhost\/kb1\"\/>  <OK\/>  <BooleanResponse result=\"true\"\/>  <BooleanResponse result=\"true\"\/><\/ResponseMessage>"
 
-    guiinst = new gui.GUI(null, null);
-    guiinst.set_urlprefix("../../web-src/")
-    guiinst.add_class(new Class("Hi World"))
+    conn = new ServerConnection(alert_func)
+    conn.set_urlprefix("../../web-src/")
+    
+    diag = new Diagrama(null)
+    diag.agregar_clase(new Class("Hi World"))
 
     done = assert.async()    
-    guiinst.request_satisfiable(
+    conn.request_satisfiable(
+        JSON.stringify(diag.to_json()),
         (data) ->           
             actual = JSON.parse(data)
             assert.propEqual(actual , expected,
@@ -77,3 +87,6 @@ QUnit.test( "satisfiable_request test", ( assert ) ->
 
     # assert.propEqual(actual , expected, "Translation" )
 )
+
+exports = exports ? this
+exports.alert_func = alert_func
