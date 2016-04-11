@@ -22,10 +22,30 @@
  */
 
 
+/**
+   Echoes all the script tags in the given order. 
+
+   $prefix can be setted to change the path of the Javascript URI.
+ */
+
+if (! isset($prefix)){
+    $prefix = "./";
+}
+
+/**
+   Order in which the script tags must be echoed.
+ */
+$order = [
+    'diagrama.js',
+    'factories.js',
+    'mymodel.js',
+    'products.js',
+    'server_connection.js'
+];
+
+foreach ($order as $script){
+    echo "<script src=\"$prefix/js/model/$script\"></script>\n";
+}
+
 ?>
 
-<script src="./js/model/diagrama.js"></script>
-<script src="./js/mode/factories.js"></script>
-<script src="./js/model/mymodel.js"></script>
-<script src="./js/model/products.js"></script>
-<script src="./js/model/server_connection.js"></script>

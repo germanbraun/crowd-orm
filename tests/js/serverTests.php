@@ -13,6 +13,7 @@
 	<script src="../../web-src/js/libs/joint.shapes.uml.js"></script>
 
 	<?php
+	$prefix = "../../web-src";
 	include "../../web-src/_modelinclude.php";
 	?>
 
