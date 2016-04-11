@@ -21,6 +21,6 @@
 	<div id="qunit"></div>
 	<div id="qunit-fixture"></div>
 	<script src="./js/qunit-1.22.0.js"></script>
-	<script src="./js/server.js"></script>
+	<script src="./js/test_server.js"></script>
     </body>
 </html>
