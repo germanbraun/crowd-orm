@@ -1,4 +1,4 @@
-# server.coffee --
+# test_server.coffee --
 # Copyright (C) 2016 Giménez, Christian
 
 # This program is free software: you can redistribute it and/or modify
@@ -25,8 +25,7 @@ remove_xml_spaces = (xml_str) ->
     xml_str = xml_str.replace(/\s+'/, " '")
 
 alert_func = (status, error) ->    
-    console.log(status)
-    console.log(error)
+    alert(status + " - " + error)
 
 QUnit.test( "translate_request test", ( assert ) ->
     expected ='<?xml version="1.0" encoding="UTF-8"?>
