@@ -32,6 +32,7 @@ class ServerConnection
     # Params:
     # json: A String with the JSON data.
     request_satisfiable: (json, callback_function) ->
+        postdata = "json=" + json
         url = @urlprefix + "querying/satisfiable.php"
         console.log("Requesting at " + url)
         $.ajax(
