@@ -24,10 +24,12 @@ class GUI
         @editclass = new EditClassView({el: $("#editclass")})
         @classoptions = new ClassOptionsView({el: $("#classoptions")})
         @relationoptions = new RelationOptionsView({el: $("#relationoptions")})
-        @trafficlight = new TrafficLightsView({el:
-            $("#trafficlight")})
+        @trafficlight = new TrafficLightsView({el: $("#trafficlight")})
         @owllinkinsert = new OWLlinkInsertView({el: $("#owllink_placer")})
         @errorwidget = new ErrorWidgetView({el: $("#errorwidget_placer")})
+        
+        @serverconn = new ServerConnection()
+                
         $("#diagram-page").enhanceWithin()
         $("#details-page").enhanceWithin()
         gui.set_current_instance(this);
