@@ -80,8 +80,8 @@ class Class extends MyModel
     #
     # Parameters:
     # * factory : a Factory subclass instance.
-    create_joint: (factory) ->
-        if @joint == null then @joint = factory.create_class(@name)
+    create_joint: (factory, css_class=null) ->
+        if @joint == null then @joint = factory.create_class(@name, css_class)
 
     has_classid: (classid) ->
         this.get_classid() == classid

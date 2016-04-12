@@ -26,14 +26,18 @@ class UMLFactory
    
     constructor: () ->
     
-    create_class: (class_name) ->
-        nueva = new uml.Class
+    create_class: (class_name, css_class=null) ->
+        params =
             position: {x: 20, y: 20}
             size: {width: 220, height: 100}
             name: class_name
             attributes: []
             methods: []
-            attrs: csstheme.css_class
+
+        if css_class != null
+            params.attrs = css_class
+
+        nueva = new uml.Class( params )
             
         return nueva
 
