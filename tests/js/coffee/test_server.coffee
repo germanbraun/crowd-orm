@@ -24,8 +24,10 @@ remove_xml_spaces = (xml_str) ->
     xml_str = xml_str.replace(/'\s+/, "' ")
     xml_str = xml_str.replace(/\s+'/, " '")
 
-alert_func = (status, error) ->    
-    alert(status + " - " + error)
+alert_func = (jqXHR, status, error) ->
+    str = status + " : " + error + jqXHR.responseText
+    alert(str)
+    console.log(str)
 
 QUnit.test( "translate_request test", ( assert ) ->
     expected ='<?xml version="1.0" encoding="UTF-8"?>
