@@ -57,7 +57,12 @@ class Class extends MyModel
         @joint = null
 
     get_name: () ->
-        return @name    
+        return @name
+
+    set_name: (@name) ->
+        if @joint != null
+             @joint.set("name", name)
+        
         
     get_attrs: () ->
         return @attrs
@@ -83,6 +88,14 @@ class Class extends MyModel
     create_joint: (factory, css_class=null) ->
         if @joint == null then @joint = factory.create_class(@name, css_class)
 
+    ##
+    # Update the view if the @joint is already created and
+    # associated to this class.
+    update_view: (paper) ->
+        if @joint != null
+            v = @joint.findView(paper)
+            v.update()
+            
     has_classid: (classid) ->
         this.get_classid() == classid
 

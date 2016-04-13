@@ -75,14 +75,15 @@ class GUI
     delete_class: (class_id) ->
         @diag.delete_class_by_classid(class_id)
 
-    edit_class: (class_id) ->
+    edit_class_name: (class_id, name) ->
         # Set the model name
-        cell = @graph.getCell(class_id)
-        cell.set("name", $("#editclass_input").val())
+        # cell = @graph.getCell(class_id)
+        # cell.set("name", name)
+        @diag.rename_class(class_id, name)
         
         # Update the view
-        v = cell.findView(paper)
-        v.update()
+        @diag.update_view(class_id, paper)
+
 
     ##
     # Report an error to the user.

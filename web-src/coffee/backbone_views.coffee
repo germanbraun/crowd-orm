@@ -132,7 +132,8 @@ EditClassView = Backbone.View.extend(
         return @classid
     
     edit_class: (event) ->
-        guiinst.edit_class(@classid)
+        name = $("#editclass_input").val()
+        guiinst.edit_class_name(@classid, name)
         # Hide the form.
         guiinst.hide_options()
 

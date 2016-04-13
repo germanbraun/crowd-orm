@@ -72,6 +72,20 @@ class Diagrama
         @cells_deleted.push(c.get_joint())
         this.actualizar_graph()
 
+    rename_class: (classid, name) ->
+        c = this.find_class_by_classid(classid)
+        if c != null
+            c.set_name(name)
+
+    ##
+    # Update the view associated to the given class's classid if it
+    # have already created its joint object. The view to be updated
+    # must be of the given paper
+    update_view: (class_id, paper) ->
+        class_obj = this.find_class_by_classid(class_id)
+        if class_obj != null
+            class_obj.update_view(paper)
+
     ##
     # Remove the class from the diagram.
     delete_class_by_name: (name) ->
