@@ -76,7 +76,7 @@ Is the path \"$temporal_path\" correct?");
         fclose($owllink_file);            
         
         exec(
-            $racer_path . RacerConnector::PROGRAM_CMD . " " . $temporal_path . "input-file.owllink",
+            $racer_path . RacerConnector::PROGRAM_CMD . " " . $temporal_path . "input-file.owllink 2> /dev/null",
             $answer);
         array_push($this->col_answers, join($answer));
     }
