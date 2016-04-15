@@ -153,7 +153,7 @@ class GUI
         $("#reasoner_input").html(obj.reasoner.input)
         $("#reasoner_output").html(obj.reasoner.output)
         $.mobile.loading("hide")
-        this.change_to_details_page()
+        # this.change_to_details_page()
         
 
     ##
