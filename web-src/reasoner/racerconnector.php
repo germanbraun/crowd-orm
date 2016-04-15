@@ -36,7 +36,7 @@ class RacerConnector extends Connector{
     /**
        The Racer command to execute with all its parameters.
      */
-    const PROGRAM_CMD = "Racer -- -owllink";
+    const PROGRAM_CMD = "Racer -- -silent -owllink";
       
     /**
        Execute Racer with the given $document as input.
@@ -76,7 +76,7 @@ Is the path \"$temporal_path\" correct?");
         fclose($owllink_file);            
         
         exec(
-            $racer_path . RacerConnector::PROGRAM_CMD . " " . $temporal_path . "input-file.owllink 2> /dev/null",
+            $racer_path . RacerConnector::PROGRAM_CMD . " " . $temporal_path . "input-file.owllink",
             $answer);
         array_push($this->col_answers, join($answer));
     }

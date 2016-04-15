@@ -4,15 +4,17 @@
 
 # Instalación
 
-* Usar Apache o Nginx con PHP5.
-* Copiar `web-src` al directorio web de apache (usualmente /var/www/html), o al directorio configurado con Nginx.
-* Ensure that the web server can access the "run" directory here. It needs to write ./run/input-file.owllink file. 
+* Install Apache o Nginx web server with PHP5 module support.
+* Copy `web-src` into the web directory (usually `/var/www/html` for the Apache server).
+* Copy the `web-src/config/config.php.example` into `web-src/config/config.php` and open the file.
+	* Check the configuration parameters at the `config.php` file.
+* Ensure that the web server can access the "run" directory. It needs to write `./run/input-file.owllink` file. 
   You can execute (suppose "www-data" is the username associated to the web server):
   ```
   sudo chgrp -R www-data run
   sudo chown -R g+rwx run
   ```
-  On some systems, you may have to check SELinux to enable Apache writing.
+  On some systems, you may have to configure SELinux parameters to enable Apache writing privileges.
   You can use the `./tests/test-satisf-json.sh` for checking if it is correctly setted.
 
 ## Instalar Compilador de CoffeeScript
