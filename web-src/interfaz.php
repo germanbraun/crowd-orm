@@ -61,7 +61,9 @@
 				    <div id="errorstatus_text"></div>
 				</dd>
 				<dt>Server Answer:</dt><dd>
-				    <div id="errormsg_text"></div>
+				    <pre>
+					<div id="errormsg_text"></div>
+				    </pre>
 				</dd>
 			    </dl>
 			    <a data-rel="back" id="errorwidget_hide_btn"
