@@ -71,3 +71,13 @@
 .error-popup .ui-btn {
     background-color: #f55;
 }
+
+#traffic_img {
+    width: 25px;
+    padding: 0px;
+}
+
+#traffic_btn {
+    padding-top: 4px;
+    padding-bottom: 1px;
+}

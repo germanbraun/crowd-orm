@@ -32,27 +32,27 @@ TrafficLightsView = Backbone.View.extend(
     turn_red: () ->
         this.$el.find("#traffic_img").attr(
             "src",
-            "imgs/traffic-light-red.png") 
+            "imgs/h-traffic-light-red.svg") 
     turn_green: () ->
         this.$el.find("#traffic_img").attr(
             "src",
-            "imgs/traffic-light-green.png") 
+            "imgs/h-traffic-light-green.svg") 
     turn_yellow: () ->
         this.$el.find("#traffic_img").attr(
             "src",
-            "imgs/traffic-light-yellow.png")
+            "imgs/h-traffic-light-yellow.svg")
     turn_yellow_flashing: () ->
         this.$el.find("#traffic_img").attr(
             "src",
-            "imgs/traffic-light-red-flashing.png") 
+            "imgs/h-traffic-light-red-flashing.svg") 
     turn_red_flashing: () ->
         this.$el.find("#traffic_img").attr(
             "src",
-            "imgs/traffic-light-red-flashing.png") 
+            "imgs/h-traffic-light-red-flashing.svg") 
     turn_all: () ->        
         this.$el.find("#traffic_img").attr(
             "src",
-            "imgs/traffic-light.png") 
+            "imgs/h-traffic-light.svg") 
         
 )
 
