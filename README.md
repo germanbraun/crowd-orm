@@ -23,6 +23,13 @@ You can run the `scripts/install.fish` script, it will setup the current working
   ```
   On some systems, you may have to configure SELinux parameters to enable Apache writing privileges.
   You can use the `./tests/test-satisf-json.sh` for checking if it is correctly set.
+* Also, configure PHP for not writing Warnings or Errrors on the HTML produced page. This is done by setting the following on `/etc/php.ini` config file:
+  ```
+  display_errors = Off
+  log_errors = On
+  ```
+  This will log errors and warnings instead of showing on the generated HTML page. See `error_log` configuration parameter, its value is the log filename and path, usually its deafult value is: `/var/log/php/php_error.log`.
+
 
 ## Install CoffeeScript Compiler
 
