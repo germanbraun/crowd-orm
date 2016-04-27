@@ -37,7 +37,7 @@ class RacerConnector extends Connector{
        The Racer command to execute with all its parameters.
      */
     const PROGRAM_CMD = "Racer";
-    const PROGRAM_PARAMS = "-- -silent -owllink";
+    const PROGRAM_PARAMS = "-- -silent -owllink ";
       
     /**
        Execute Racer with the given $document as input.
@@ -55,6 +55,7 @@ class RacerConnector extends Connector{
         $temporal_path = realpath($temporal_path) . "/";
         $file_path = $temporal_path . "input-file.owllink";
         $racer_path .= RacerConnector::PROGRAM_CMD;
+        $commandline = $racer_path . " " . RacerConnector::PROGRAM_PARAMS . $file_path;
 
         $this->check_files($temporal_path, $racer_path, $file_path);
         
@@ -68,10 +69,7 @@ Is the path '$file_path' correct?");
         fwrite($owllink_file, $input_string);
         fclose($owllink_file);            
         
-        exec(
-            $racer_path . " " . RacerConnector::PROGRAM_PARAMS . $file_path,
-            $answer
-        );
+        exec($commandline,$answer );
         
         array_push($this->col_answers, join($answer));
     }
@@ -89,6 +87,15 @@ Are you sure about this path?
 temporal_path = \"$temporal_path\"");
         }
 
+        if (!file_exists($file_path)){
+            throw new \Exception("Temporal file doesn't exists, please create one at '$file_path'.");
+        }
+
+        if (!is_readable($file_path)){
+            throw new \Exception("Temporal file cannot be readed.
+Please set the write and read permissions for '$file_path'");
+        }
+        
         if (file_exists($file_path) and !is_writable($file_path)){
             throw new \Exception("Temporal file is not writable, please change the permissions.
 Check the permissions on '${file_path}'.");

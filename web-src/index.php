@@ -16,7 +16,7 @@
 	    <div role="main" class="ui-content">
 		<div data-role="controlgroup" data-type="vertical">
 		    <a class="ui-btn ui-icon-gear ui-btn-icon-left" data-ajax="false"
-		       href="./web.php">Prueba de conexión entre Racer y esta web</a>
+		       href="./racer-test.php">Prueba de conexión a Racer</a>
 		    <a class="ui-btn ui-icon-edit ui-btn-icon-left" data-ajax="false"
 		       href="./interfaz.php">Editar un diagrama</a>
 		</div>
