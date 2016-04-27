@@ -98,7 +98,7 @@ class Diagrama
     delete_class_by_classid: (classid) ->
         c = this.find_class_by_classid(classid)
         if c != undefined then this.delete_class(c)
-    
+
     agregar_link: (link) ->
         @links.push(link)
         @cells_nuevas.push(link.get_joint(@factory));

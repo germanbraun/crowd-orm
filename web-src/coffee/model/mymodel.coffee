@@ -38,12 +38,12 @@ class MyModel
     # name : A String.
     constructor: (@name) ->
 
-    # Return the joint model associated to this object.
+    # Return the joint model. Create it if it is null and a factory
+    # is provided.
     #
     # Params.:
     #
     # * joint_factory : A Concrete Factory like UMLFactory or ERDFactory instance.
-    # * factory: A Factory subclass instance.
     get_joint: (factory = null) ->
         if factory != null then this.create_joint(factory)
         return @joint
@@ -52,14 +52,28 @@ class MyModel
     # Please redefine this method in the subclass.
     # 
     create_joint: (factory) ->
+        console.warn(this.toString() + " : Redefine create_joint() method on the subclass.");
         return null
-        
+
+    ##
+    # Update the view if the @joint is already created and
+    # associated to this class.
+    update_view: (paper) ->
+        if @joint != null
+            v = @joint.findView(paper)
+            v.update()
+       
     ##
     # Return true if this Joint Model has the given classid string.
     has_classid: (classid) ->
-        return false
+        this.get_classid() == classid
 
-       
+    get_classid: () ->
+        if @joint == null
+            return false
+        else
+            return @joint.id
+
     ##
     # Return a JSON object representation with only the information.
     #
@@ -94,39 +108,13 @@ class Class extends MyModel
         return @methods
 
     ##
-    # Return the joint model. Create it if it is null and a factory
-    # is provided.
-    # 
-    # Params.:
-    # * factory: A Factory subclass instance.
-    get_joint: (factory = null) ->
-        if factory != null then this.create_joint(factory)
-        return @joint
-
-    ##
     # If the joint model wasn't created, make it.
     #
     # Parameters:
     # * factory : a Factory subclass instance.
     create_joint: (factory, css_class=null) ->
-        if @joint == null then @joint = factory.create_class(@name, css_class)
-
-    ##
-    # Update the view if the @joint is already created and
-    # associated to this class.
-    update_view: (paper) ->
-        if @joint != null
-            v = @joint.findView(paper)
-            v.update()
-            
-    has_classid: (classid) ->
-        this.get_classid() == classid
-
-    get_classid: () ->
-        if @joint == null
-            return false
-        else
-            return @joint.id
+        if @joint == null then @joint = factory.create_class(@name,
+            css_class)
 
     to_json: () ->
         json = super()
