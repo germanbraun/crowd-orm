@@ -14,7 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
+# @namespace gui
+#
+# Central GUI *do-it-all* class...
+#
 class GUI
     constructor: (@graph, @paper) ->
         @urlprefix = ""
@@ -59,22 +62,28 @@ class GUI
         # editclass = new EditClassView({el: $("#editclass")})
         @editclass.set_classid(model_id)        
 
-    ##
+    #
     # Add a class to the diagram.
     #
-    # Params.:
-    #  class_inst = A Class instance.
+    # @param class_inst {Class} A Class instance.
     add_class: (class_inst) ->
         @diag.agregar_clase(class_inst)
 
-    ##
+    #
     # Delete a class from the diagram.
     #
-    # Params.:
-    # class_id a String with the class Id.
+    # @param class_id {string} a String with the class Id.
     delete_class: (class_id) ->
         @diag.delete_class_by_classid(class_id)
 
+    # Change a class name identified by its classid.
+    # 
+    # @example Getting a classid
+    #   < graph.getCells()[0].id
+    #   > "5777cd89-45b6-407e-9994-5d681c0717c1"
+    #
+    # @param class_id {string}
+    # @param name {string}
     edit_class_name: (class_id, name) ->
         # Set the model name
         # cell = @graph.getCell(class_id)
@@ -84,25 +93,36 @@ class GUI
         # Update the view
         @diag.update_view(class_id, paper)
 
-    ##
+    #
     # Add a simple association from A to B.
+    # 
+    # @example Getting a classid
+    #   < graph.getCells()[0].id
+    #   > "5777cd89-45b6-407e-9994-5d681c0717c1"
+    #
+    # @param class_a_id {string} 
+    # @param class_b_id {string}
     add_association: (class_a_id, class_b_id) ->
         @diag.add_association(class_a_id, class_b_id)
 
 
 
-    ##
+    #
     # Report an error to the user.
     #
-    # Params.:
-    # status : String, the status text.
-    # error : String, error message
+    # @param status {String} the status text.
+    # @param error {String} error message
     show_error: (status, error) ->
         $.mobile.loading("hide")
         @errorwidget.show(status, error)
 
-    ##
+    #
     # Send to the server a translation Request.
+    #
+    # @param format {string} "owllink", "html" or any supported
+    #   translation format by the server.
+    # @param callback_function A functino to use as a callback when
+    #   the response is recieved.
     request_translation: (format, callback_function) ->
         json = this.diag_to_json()
         url = @urlprefix + "translator/calvanesse.php"
@@ -120,8 +140,8 @@ class GUI
             error:
                 gui.show_error
         )
-    ##
-    # Send to the server a "is satisfiable" request
+    #
+    # Send to the server a "is satisfiable" request.
     request_satisfiable: (callback_function) ->
         postdata = "json=" + this.diag_to_json()
         url = @urlprefix + "querying/satisfiable.php"
@@ -134,21 +154,19 @@ class GUI
             error: gui.show_error
             )
         
-    ##
+    #
     # Put the traffic light on green.
     traffic_light_green: () ->
         @trafficlight.turn_green()
 
-    ##
+    #
     # Put the traffic light on red.
     traffic_light_red: () ->
         @trafficlight.turn_red()
 
-    ##
     # Update the interface with satisfiable information.
     #
-    # Params.:
-    # data is a JSON string with the server response.
+    # @param data {string} is a JSON string with the server response.
     update_satisfiable: (data) ->
         console.log(data)
         obj = JSON.parse(data);
@@ -162,7 +180,7 @@ class GUI
         # this.change_to_details_page()
         
 
-    ##
+    #
     # Send a POST to the server for checking if the diagram is
     # satisfiable.
     check_satisfiable: () ->
@@ -176,7 +194,15 @@ class GUI
             # change! this will have another object...
             )
 
-
+    # Update the translation information on the GUI and show it to the
+    # user.
+    #
+    # Depending on the format selected by the user show it as HTML or
+    # inside a textarea tag.
+    #
+    # @param data {string} The HTML, OWLlink or the translation
+    # string.
+    # @see CrearClaseView#get_translation_format
     update_translation: (data) ->
         format = @crearclase.get_translation_format()
         if format == "html" 
@@ -242,7 +268,8 @@ if exports.gui == undefined
 exports.gui.set_current_instance = (gui_instance) ->
     exports.gui.gui_instance = gui_instance
 
-##
+# @namespace gui
+#
 # This is sooo bad, but the context of a $.post callback function
 # differs from the source caller class.
 #

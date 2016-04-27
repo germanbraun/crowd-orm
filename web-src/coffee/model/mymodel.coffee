@@ -24,7 +24,7 @@
 # {Factory} = require './factories'
 
 
-##
+#
 # 
 # # On subclass
 # 
@@ -33,29 +33,26 @@
 # - create_joint
 # - others?
 class MyModel
-    # Params.:
-    #
-    # name : A String.
+    # @param name {String}
     constructor: (@name) ->
 
     # Return the joint model. Create it if it is null and a factory
     # is provided.
     #
-    # Params.:
-    #
-    # * joint_factory : A Concrete Factory like UMLFactory or ERDFactory instance.
+    # @param factory {Factory subclass} Concrete Factory like UMLFactory or ERDFactory instance.
     get_joint: (factory = null) ->
         if factory != null then this.create_joint(factory)
         return @joint
 
-    ##
-    # Please redefine this method in the subclass.
+    # Create a JointJS view class and assign it to @joint variable.
     # 
+    # @note Please redefine this method in the subclass.
+    # @param factory {Factory subclass} A concrete Factory for creating the
+    #   view instance.
     create_joint: (factory) ->
         console.warn(this.toString() + " : Redefine create_joint() method on the subclass.");
         return null
 
-    ##
     # Update the view if the @joint is already created and
     # associated to this class.
     update_view: (paper) ->
@@ -63,32 +60,34 @@ class MyModel
             v = @joint.findView(paper)
             v.update()
        
-    ##
-    # Return true if this Joint Model has the given classid string.
+    #
+    # @return {boolean} true if this Joint Model has the given classid string.
     has_classid: (classid) ->
         this.get_classid() == classid
 
+    # Return the classid value of the associated JointJS View object.
+    # Use {MyModel#create_joint} for creating a JointJS object.
+    # 
+    # @return {string} A string for the JointJS object or false if it wasn't initialized.
     get_classid: () ->
         if @joint == null
             return false
         else
             return @joint.id
 
-    ##
+    #
     # Return a JSON object representation with only the information.
     #
-    # *Redefine this method on the subclass.*
+    # @note Redefine this method in the subclass.
     to_json: () ->
         name: @name
 
 
 # A Class from our model diagram.
 class Class extends MyModel 
-    # Params.: 
-    #
-    # * name : A string.
-    # * attrs : An array of strings representing the attributes names.
-    # * methods : An array of strings representing the methods names.
+    # @param name {String}
+    # @param attrs {Array<String>} Array representing the attributes names.
+    # @param methods {Array<Strings>} Array representing the methods names.
     constructor : (name, @attrs = null , @methods = null) ->
         super(name)
         @joint = null
@@ -107,11 +106,10 @@ class Class extends MyModel
     get_methods: () ->
         return @methods
 
-    ##
+    #
     # If the joint model wasn't created, make it.
     #
-    # Parameters:
-    # * factory : a Factory subclass instance.
+    # @param factory a Factory subclass instance.
     create_joint: (factory, css_class=null) ->
         if @joint == null then @joint = factory.create_class(@name,
             css_class)
@@ -128,15 +126,14 @@ class Class extends MyModel
 # This give support for two (using from() or to()) or
 # more classes.
 class Link extends MyModel 
-    # Params.:
-    #
-    # * classes: An array of Class objects, the first class is the "from"
-    # and the second is the "to" class in a two-linked relation.
+    # @param classes {Array<Class>} An array of Class objects,
+    #   the first class is the "from" and the second is the "to" class
+    #   in a two-linked relation.
     constructor: (@classes) ->
         super.constructor "" 
 
-    ##
-    # class_from an instance of Class.
+    #
+    # @param class_from an instance of Class.
     set_from : (class_from) ->
         @classes[0] = class_from
         
@@ -169,8 +166,11 @@ class Link extends MyModel
                 @classes[1].get_classid()
                 )
 
+# A generalization link.
+class Generalization extends Link
 
-class Generalization extends Link     
+    # @param parent_class {Class} The parent class.
+    # @param classes {Array<Class>} An array of child classes.
     constructor: (@parent_class, @classes) ->
 
 

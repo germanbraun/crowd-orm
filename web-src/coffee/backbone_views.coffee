@@ -56,9 +56,9 @@ TrafficLightsView = Backbone.View.extend(
         
 )
 
-##
+#
 # CrearClaseView proporciona los elementos y eventos necesarios
-#   para mostra una interfaz para crear una clase.
+# para mostra una interfaz para crear una clase.
 CrearClaseView = Backbone.View.extend(    
         initialize: () ->
         	this.render()
