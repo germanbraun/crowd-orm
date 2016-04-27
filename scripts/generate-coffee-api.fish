@@ -21,4 +21,4 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 echo "Executing codo, ensure you're at the root of the project directory."
-codo -o docs/coffee/ web-src/coffee tests/js/coffee
+codo -v -o docs/coffee/ web-src/coffee tests/js/coffee
