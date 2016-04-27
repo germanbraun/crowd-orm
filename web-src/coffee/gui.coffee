@@ -84,6 +84,12 @@ class GUI
         # Update the view
         @diag.update_view(class_id, paper)
 
+    ##
+    # Add a simple association from A to B.
+    add_association: (class_a_id, class_b_id) ->
+        @diag.add_association(class_a_id, class_b_id)
+
+
 
     ##
     # Report an error to the user.

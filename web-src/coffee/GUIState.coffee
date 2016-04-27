@@ -59,9 +59,13 @@ class SelectionState extends State
 # create an asociation between them.
 class AsociationState extends State
     constructor: () ->
-        
-    on_cell_clicked: (cellView, event, x, y, gui) ->
-        
+        @cell_starter = null
+
+    set_cellStarter: (@cell_starter) ->
+
+    on_cell_clicked: (cell_view, event, x, y, gui) ->
+        gui.add_association(@cell_starter, cell_view)
+        @cell_starter = null;
         
 exports = exports ? this
 if exports.gui == undefined
