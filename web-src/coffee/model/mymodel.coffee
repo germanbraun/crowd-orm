@@ -23,6 +23,15 @@
 
 # {Factory} = require './factories'
 
+
+##
+# 
+# # On subclass
+# 
+# Re-implement this functions:
+# - constructor
+# - create_joint
+# - others?
 class MyModel
     # Params.:
     #
@@ -34,13 +43,27 @@ class MyModel
     # Params.:
     #
     # * joint_factory : A Concrete Factory like UMLFactory or ERDFactory instance.
-    get_joint: (joint_factory) ->
+    # * factory: A Factory subclass instance.
+    get_joint: (factory = null) ->
+        if factory != null then this.create_joint(factory)
+        return @joint
 
+    ##
+    # Please redefine this method in the subclass.
+    # 
+    create_joint: (factory) ->
+        return null
+        
     ##
     # Return true if this Joint Model has the given classid string.
     has_classid: (classid) ->
         return false
 
+       
+    ##
+    # Return a JSON object representation with only the information.
+    #
+    # *Redefine this method on the subclass.*
     to_json: () ->
         name: @name
 
@@ -124,9 +147,17 @@ class Link extends MyModel
     constructor: (@classes) ->
         super.constructor "" 
 
+    ##
+    # class_from an instance of Class.
+    set_from : (class_from) ->
+        @classes[0] = class_from
+        
     get_from : () ->
         return @classes[0]
-            
+
+    set_to : (class_to) ->
+        @classes[1] = class_to
+        
     get_to: () ->
         return @classes[1]
     
@@ -142,6 +173,14 @@ class Link extends MyModel
         json.classes = $.map @classes, (myclass) ->
             myclass.to_json()
         return json
+
+    create_joint: (factory) ->
+        if @joint == null
+            @joint = factory.create_association(
+                @classes[0].get_classid(),
+                @classes[1].get_classid()
+                )
+
 
 class Generalization extends Link     
     constructor: (@parent_class, @classes) ->
