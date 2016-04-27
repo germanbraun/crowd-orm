@@ -21,6 +21,9 @@ class Factory
 
     # Create a class representation.
     create_class: (name) ->
+
+    create_association: (class_a_id, class_b_id, name = null ) ->
+        
                 
 class UMLFactory
    
@@ -40,6 +43,25 @@ class UMLFactory
         nueva = new uml.Class( params )
             
         return nueva
+
+    create_association: (class_a_id, class_b_id, name = null) ->
+        link = new joint.dia.Link(
+                source: {id: class_a_id},
+                target: {id: class_b_id}
+                )
+                
+        if name != null
+            link.set(
+                labels: [
+                    position: -20,
+                    attrs: 
+                        text: {dy: -y , text: name, fill: '#ffffff'},
+                        rect: {fill: 'none'} 
+                ]
+            )
+            
+        return link
+
 
 class ERDFactory
     constructor: () ->
