@@ -76,6 +76,19 @@ Use `doxygen` or `doxywizard` (the Doxygen GUI) for compiling the PHP documentat
 * Execute `doxygen` command on the main directory, or
 * Execute `doxywizard` and open the Doxyfile on the main directory; then click on the "run doxygen" button in the "run" tab.
 
+## CoffeeScript Documentation 
+We use [codo](https://github.com/coffeedoc/codo). However, [docco](http://jashkenas.github.io/docco/) can be used too.
+
+For installing codo:
+
+    sudo npm install -g codo
+	
+For installing docco:
+
+	sudo npm install -g docco
+	
+Compiling documentation:
+
 # Licence
 
 Images :
