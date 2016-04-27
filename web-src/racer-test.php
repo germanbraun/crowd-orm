@@ -24,6 +24,32 @@
 require_once("common/import_functions.php");
 load("racerconnector.php", "reasoner/");
 
+$racer = new Wicom\Reasoner\RacerConnector();
+$answer = null;
+$input = '<?xml version="1.0" encoding="UTF-8"?>
+<RequestMessage xmlns="http://www.owllink.org/owllink#"
+		xmlns:owl="http://www.w3.org/2002/07/owl#" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.owllink.org/owllink# 
+				    http://www.owllink.org/owllink-20091116.xsd">
+  <CreateKB kb="http://localhost/kb1" />
+  <Tell kb="http://localhost/kb1">
+    <!-- <owl:ClassAssertion>
+      <owl:Class IRI="Person" />
+      <owl:NamedIndividual IRI="Mary" />
+      </owl:ClassAssertion>
+      -->
+    
+    <owl:SubClassOf>
+      <owl:Class IRI="Person" />
+      <owl:Class abbreviatedIRI="owl:Thing" />
+    </owl:SubClassOf>
+  </Tell>
+  <!-- <ReleaseKB kb="http://localhost/kb1" /> -->
+</RequestMessage>
+';
+
+
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
@@ -46,40 +72,15 @@ load("racerconnector.php", "reasoner/");
 			<h1 class="ui-bar ui-bar-a ui-corner-all">Input</h1>
 			<div class="ui-body ui-body-a ui-corner-all">
 			    <textarea col="100">
-			    <?php
-			    $input = '<?xml version="1.0" encoding="UTF-8"?>
-<RequestMessage xmlns="http://www.owllink.org/owllink#"
-		xmlns:owl="http://www.w3.org/2002/07/owl#" 
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://www.owllink.org/owllink# 
-				    http://www.owllink.org/owllink-20091116.xsd">
-  <CreateKB kb="http://localhost/kb1" />
-  <Tell kb="http://localhost/kb1">
-    <!-- <owl:ClassAssertion>
-      <owl:Class IRI="Person" />
-      <owl:NamedIndividual IRI="Mary" />
-      </owl:ClassAssertion>
-      -->
-    
-    <owl:SubClassOf>
-      <owl:Class IRI="Person" />
-      <owl:Class abbreviatedIRI="owl:Thing" />
-    </owl:SubClassOf>
-  </Tell>
-  <!-- <ReleaseKB kb="http://localhost/kb1" /> -->
-</RequestMessage>
-';
-			    echo $input;
-			    ?>
+				<?php echo $input; ?>
 			    </textarea>
 			</div>
 		    </div>
-		    
+
 		    <?php		    
-		    try{
-			$racer = new Wicom\Reasoner\RacerConnector();
+		    try{			
 			$racer->run($input);
-			$answer = $racer->get_col_answers()[0];
+			
 		    }catch(Exception $e){
 		    ?>
 			<div class="exception">
@@ -87,18 +88,22 @@ load("racerconnector.php", "reasoner/");
 			    <div class="ui-body ui-body-a ui-corner-all">
 				<textarea cols="100">
 				    <?php echo $e->getMessage(); ?>
-				</textarea>
+				    </textarea>
 			    </div>
 			</div>
 		    <?php 
-		    }
+		    }			
 		    ?>
+
 		    <div class="answer">
 			<h1 class="ui-bar ui-bar-a ui-corner-all"> Answer</h1>
-			<div class="ui-body ui-body-a ui-corner-all">			  
-			    <?php print_r($answer); ?>
+			<div class="ui-body ui-body-a ui-corner-all">
+			    <textarea cols="100">
+				<?php echo $racer->get_col_answers()[0]; ?>
+			    </textarea>				  
 			</div>
 		    </div>
+
 
 		    <a class="ui-btn ui-icon-back ui-btn-icon-left" data-ajax="false"
 		       href="./index.php">Volver</a>
