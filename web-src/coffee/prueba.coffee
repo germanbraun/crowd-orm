@@ -17,6 +17,8 @@
 
 # Prueba exhaustiva, generar cantclases clases.
 
+uml = joint.shapes.uml
+
 lst_clases = []
 lst_rels = []
 startx = 0
@@ -45,7 +47,7 @@ prueba = (cantclases) ->
                     width: 220
                     height: 100
                 name: 'Clase ' + String(i)
-                attrs: css_clase
+                attrs: csstheme.css_class
             );
             
             lst_clases.push(clase)
