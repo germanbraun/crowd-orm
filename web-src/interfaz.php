@@ -124,7 +124,7 @@
 		</script>
 		<!-- OWLlink Editor -->
 		<script type="text/template" id="template_insertowllink">
-		    <p>Use this are to add your own personal <a href="http://owllink.org/"> OWLlink</a> data.</p>
+		    <p>Use this for adding your own personal <a href="http://owllink.org/"> OWLlink</a> data.</p>
 		    <p>Remember: this will be used when you check for satisfiability or send any diagram information to the server.</p>			    
 		    <textarea cols="40" class="ui-body" id="insert_owllink_input"></textarea>
 		    <div data-role="controlgroup" data-mini="true" data-type="horizontal">
