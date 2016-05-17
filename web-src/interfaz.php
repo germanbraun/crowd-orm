@@ -4,7 +4,7 @@
 	<?php
 	include '_headincludes.php';
 	?>
-	<title>Interfaz</title>
+	<title>Design</title>
 
 	<script src="./js/csstheme.js"></script>
 	<script src="./js/backbone_views.js"></script>
@@ -33,7 +33,7 @@
 		<div id="trafficlight"></div>
 		<div data-role="navbar">
 		    <ul>
-			<li><a href="#tools-panel" class="ui-btn ui-icon-bars ui-btn-icon-left">Herramientas</a></li>
+			<li><a href="#tools-panel" class="ui-btn ui-icon-bars ui-btn-icon-left">Tools</a></li>
 			<li><a href="#details-page" data-transition="slide" class="ui-btn ui-btn-icon-right ui-icon-forward">Details</a></li>
 		    </ul>
 		</div>
@@ -74,16 +74,16 @@
 		
 		<script type="text/template" id="template_tools_navbar">
 		    <div data-role="navbar">
-			<label>Traducir</label>
+			<label>Translate</label>
 			<select data-mini="true" data-inline="true" data-native-menu="false" id="format_select">
 			    <option value="owllink" selected="true">OWLlink</option>
 			    <option value="html">HTML</option>
 			</select>
-		    	<a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all" type="button" id="translate_button">Traducir</a>
+		    	<a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all" type="button" id="translate_button">Translate</a>
 						
-			<label>Crear Clase</label>
+			<label>New Class</label>
 			<input data-mini="true" placeholder="ClassName" type="text" id="crearclase_input"/>
-			<a class="ui-btn ui-icon-plus ui-btn-icon-left ui-corner-all" type="button" id="crearclase_button">Crear</a>
+			<a class="ui-btn ui-icon-plus ui-btn-icon-left ui-corner-all" type="button" id="crearclase_button">New</a>
 
 			<label>Insert OWLlink data</label>
 			<a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all" type="button" id="insertowllink_button">Insert OWLlink</a>			
