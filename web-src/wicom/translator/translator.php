@@ -24,7 +24,7 @@
 namespace Wicom\Translator;
 
 use function \load;
-load("queriesgenerator.php", "../wicom/querying/queries/");
+load("queriesgenerator.php", "../querying/queries/");
 
 use Wicom\QueriesGen\QueriesGenerator;
 

@@ -36,11 +36,11 @@
 
 require_once '../../common/import_functions.php';
 
-load('translator.php', '../../translator/');
-load('owllinkdocument.php', '../../translator/documents/');
-load('calvanessestrat.php','../../translator/strategies/');
-load('owllinkbuilder.php', '../../translator/builders/');
-load('htmlbuilder.php', '../../translator/builders/');
+load('translator.php', '../../wicom/translator/');
+load('owllinkdocument.php', '../../wicom/translator/documents/');
+load('calvanessestrat.php','../../wicom/translator/strategies/');
+load('owllinkbuilder.php', '../../wicom/translator/builders/');
+load('htmlbuilder.php', '../../wicom/translator/builders/');
 
 use Wicom\Translator\Translator;
 use Wicom\Translator\Strategies\Calvanesse;

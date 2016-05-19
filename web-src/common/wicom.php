@@ -23,9 +23,9 @@
 
 namespace Wicom;
 
-load("translator.php", "../translator/");
-load("calvanessestrat.php", "../translator/strategies/");
-load("owllinkbuilder.php", "../translator/builders/");
+load("translator.php", "../wicom/translator/");
+load("calvanessestrat.php", "../wicom/translator/strategies/");
+load("owllinkbuilder.php", "../wicom/translator/builders/");
 
 load("runner.php", "../reasoner/");
 load("racerconnector.php", "../reasoner/");
