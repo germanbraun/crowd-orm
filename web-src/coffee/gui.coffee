@@ -21,7 +21,7 @@
 class GUI
     constructor: (@graph, @paper) ->
         @urlprefix = ""
-        @diag = new Diagrama(@graph)
+        @diag = new Diagram(@graph)
         @state = gui.State.selectionstate()
         @crearclase = new CrearClaseView({el: $("#crearclase")});
         @editclass = new EditClassView({el: $("#editclass")})

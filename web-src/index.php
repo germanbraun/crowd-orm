@@ -16,9 +16,9 @@
 	    <div role="main" class="ui-content">
 		<div data-role="controlgroup" data-type="vertical">
 		    <a class="ui-btn ui-icon-gear ui-btn-icon-left" data-ajax="false"
-		       href="./racer-test.php">Prueba de conexión a Racer</a>
+		       href="./racer-test.php">Test the Racer Conection</a>
 		    <a class="ui-btn ui-icon-edit ui-btn-icon-left" data-ajax="false"
-		       href="./model_editor.php">Editar un diagrama</a>
+		       href="./model_editor.php">Model Editor</a>
 		</div>
 	    </div> <!-- /main -->
 	    

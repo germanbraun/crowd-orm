@@ -36,7 +36,7 @@ if (! isset($prefix)){
    Order in which the script tags must be echoed.
  */
 $order = [
-    'diagrama.js',
+    'diagram.js',
     'factories.js',
     'mymodel.js',
     'products.js',

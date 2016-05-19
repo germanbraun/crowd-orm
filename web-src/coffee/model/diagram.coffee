@@ -1,4 +1,4 @@
-# diagrama.coffee --
+# diagram.coffee --
 # Copyright (C) 2016 Giménez, Christian
 
 # This program is free software: you can redistribute it and/or modify
@@ -16,10 +16,13 @@
 
 # {UMLFactory} = require './factories'
 
-class Diagrama
-    ##
-    # Params.:
-    # * graph: Una instancia de joint.Graph.
+#
+# A diagram representation.
+# 
+class Diagram
+    #
+    # @param [joint.Graph] graph
+    # 
     constructor: (@graph = null) ->
         @clases = []
         @links = []
@@ -77,7 +80,7 @@ class Diagrama
         if c != null
             c.set_name(name)
 
-    ##
+    
     # Update the view associated to the given class's classid if it
     # have already created its joint object. The view to be updated
     # must be of the given paper
@@ -86,15 +89,16 @@ class Diagrama
         if class_obj != null
             class_obj.update_view(paper)
 
-    ##
+    
     # Remove the class from the diagram.
     delete_class_by_name: (name) ->
         c = this.find_class_by_name(name)
         if c != undefined then this.delete_class(c)
 
-    ##
+    
     # Delete a class selecting by using its Joint Model
-    # classid string. 
+    # 
+    # @param [classid] string. 
     delete_class_by_classid: (classid) ->
         c = this.find_class_by_classid(classid)
         if c != undefined then this.delete_class(c)
@@ -104,7 +108,7 @@ class Diagrama
         @cells_nuevas.push(link.get_joint(@factory));
         this.actualizar_graph()
 
-    # Actualizar una instancia de joint.Graph con las nuevas celdas.
+    # Update a joint.Graph instance with the new cells.
     actualizar_graph: () ->
         if @graph != null
             @graph.addCell(@cells_nuevas)
@@ -117,7 +121,6 @@ class Diagrama
         @cells_nuevas = []
         
 
-    ##
     # Return a JSON representing the Diagram.
     #
     # We want to send only some things not all the JSON the object
@@ -138,7 +141,7 @@ class Diagrama
         
 exports = exports ? this
 
-exports.Diagrama = Diagrama
+exports.Diagram = Diagram
 
 
 
