@@ -23,7 +23,7 @@ class GUI
         @urlprefix = ""
         @diag = new Diagram(@graph)
         @state = gui.State.selectionstate()
-        @crearclase = new CrearClaseView({el: $("#crearclase")});
+        @crearclase = new CreateClassView({el: $("#crearclase")});
         @editclass = new EditClassView({el: $("#editclass")})
         @classoptions = new ClassOptionsView({el: $("#classoptions")})
         @relationoptions = new RelationOptionsView({el: $("#relationoptions")})
@@ -202,7 +202,7 @@ class GUI
     #
     # @param data {string} The HTML, OWLlink or the translation
     # string.
-    # @see CrearClaseView#get_translation_format
+    # @see CreateClassView#get_translation_format
     update_translation: (data) ->
         format = @crearclase.get_translation_format()
         if format == "html" 

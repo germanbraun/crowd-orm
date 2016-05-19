@@ -53,7 +53,7 @@ window.onload = () ->
     
     # )
         
-    # CrearClaseView instance
+    # CreateClassView instance
     exports = exports ? this
     
     exports.graph = graph

@@ -16,21 +16,18 @@
 
 
 class ServerConnection
-    ##
-    # Params.:
-    # 
-    # error_callback : Which error callback function to use.
+    # @param error_callback Which error callback function to use.
     constructor: (@error_callback) ->
         @urlprefix = ""
 
     set_urlprefix : (str) ->
         @urlprefix = str
 
-    ##
     # Send to the server a "is satisfiable" request
     #
-    # Params:
-    # json: A String with the JSON data.
+    # @param [String] json String with the JSON data.
+    # @param [function] callback_function a function to execute when
+    #     the POST is done.
     request_satisfiable: (json, callback_function) ->
         postdata = "json=" + json
         url = @urlprefix + "api/querying/satisfiable.php"
@@ -43,7 +40,6 @@ class ServerConnection
             error: @error_callback
             )
         
-    ##
     # Send to the server a translation Request.
     request_translation: (json, format, callback_function) ->
         url = @urlprefix + "api/translate/calvanesse.php"
