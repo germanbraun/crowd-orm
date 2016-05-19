@@ -22,7 +22,7 @@
  */
 
 require_once("common/import_functions.php");
-load("racerconnector.php", "reasoner/");
+load("racerconnector.php", "wicom/reasoner/");
 
 $racer = new Wicom\Reasoner\RacerConnector();
 $answer = null;

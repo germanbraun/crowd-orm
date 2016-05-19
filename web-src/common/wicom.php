@@ -27,9 +27,9 @@ load("translator.php", "../wicom/translator/");
 load("calvanessestrat.php", "../wicom/translator/strategies/");
 load("owllinkbuilder.php", "../wicom/translator/builders/");
 
-load("runner.php", "../reasoner/");
-load("racerconnector.php", "../reasoner/");
-load("owllinkanalizer.php", "../answers/");
+load("runner.php", "../wicom/reasoner/");
+load("racerconnector.php", "../wicom/reasoner/");
+load("owllinkanalizer.php", "../wicom/answers/");
 
 use Wicom\Translator\Translator;
 use Wicom\Translator\Strategies\Calvanesse;
