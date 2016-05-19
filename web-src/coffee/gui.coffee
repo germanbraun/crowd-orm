@@ -144,7 +144,7 @@ class GUI
     # Send to the server a "is satisfiable" request.
     request_satisfiable: (callback_function) ->
         postdata = "json=" + this.diag_to_json()
-        url = @urlprefix + "querying/satisfiable.php"
+        url = @urlprefix + "api/querying/satisfiable.php"
         console.log("Requesting at " + url)
         $.ajax(
             type: "POST",
