@@ -65,7 +65,7 @@ class Diagram
         
     agregar_clase: (clase) ->
         @clases.push(clase)
-        @cells_nuevas.push(clase.get_joint(@factory))
+        @cells_nuevas.push(clase.get_joint(@factory, csstheme))
         this.actualizar_graph()
 
     delete_class: (c) ->

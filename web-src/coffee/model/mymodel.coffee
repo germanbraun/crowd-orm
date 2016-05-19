@@ -40,8 +40,8 @@ class MyModel
     # is provided.
     #
     # @param factory {Factory subclass} Concrete Factory like UMLFactory or ERDFactory instance.
-    get_joint: (factory = null) ->
-        if factory != null then this.create_joint(factory)
+    get_joint: (factory = null, csstheme = null) ->
+        if factory != null then this.create_joint(factory, csstheme)
         return @joint
 
     # Create a JointJS view class and assign it to @joint variable.
@@ -49,7 +49,7 @@ class MyModel
     # @note Please redefine this method in the subclass.
     # @param factory {Factory subclass} A concrete Factory for creating the
     #   view instance.
-    create_joint: (factory) ->
+    create_joint: (factory, csstheme = null) ->
         console.warn(this.toString() + " : Redefine create_joint() method on the subclass.");
         return null
 
@@ -110,9 +110,9 @@ class Class extends MyModel
     # If the joint model wasn't created, make it.
     #
     # @param factory a Factory subclass instance.
-    create_joint: (factory, css_class=null) ->
+    create_joint: (factory, csstheme = null) ->
         if @joint == null then @joint = factory.create_class(@name,
-            css_class)
+            csstheme.css_class)
 
     to_json: () ->
         json = super()
