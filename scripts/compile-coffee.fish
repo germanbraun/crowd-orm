@@ -1,11 +1,11 @@
-#! /bin/bash
+#! /usr/bin/fish
 
  
 # Copyright 2016 Giménez, Christian
 
 # Author: Giménez, Christian   
 
-# compilar-coffee.sh
+# compilar-coffee.fish
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
