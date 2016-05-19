@@ -24,7 +24,7 @@
 require_once("common.php");
 
 // use function \load;
-load("owllinkanalizer.php", "answers/");
+load("owllinkanalizer.php", "wicom/answers/");
 
 use Wicom\Answers\OWLlinkAnalizer;
 

@@ -25,8 +25,8 @@ require_once("common.php");
 
 // use function \load;
 load("config.php", "config/");
-load("racerconnector.php", "reasoner/");
-load("runner.php", "reasoner/");
+load("racerconnector.php", "wicom/reasoner/");
+load("runner.php", "wicom/reasoner/");
 
 use Wicom\Reasoner\RacerConnector;
 use Wicom\Reasoner\Runner;

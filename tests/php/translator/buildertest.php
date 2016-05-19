@@ -24,7 +24,7 @@
 require_once("common.php");
 
 // use function \load;
-load("owllinkbuilder.php", "translator/builders/");
+load("owllinkbuilder.php", "wicom/translator/builders/");
 
 use Wicom\Translator\Builders\OWLlinkBuilder;
 

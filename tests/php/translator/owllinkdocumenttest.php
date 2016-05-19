@@ -24,7 +24,7 @@
 require_once("common.php");
 
 //use function \load;
-load("owllinkdocument.php","translator/documents/");
+load("owllinkdocument.php","wicom/translator/documents/");
 
 
 use Wicom\Translator\Documents\OWLlinkDocument;
