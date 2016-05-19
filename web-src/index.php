@@ -18,7 +18,7 @@
 		    <a class="ui-btn ui-icon-gear ui-btn-icon-left" data-ajax="false"
 		       href="./racer-test.php">Prueba de conexión a Racer</a>
 		    <a class="ui-btn ui-icon-edit ui-btn-icon-left" data-ajax="false"
-		       href="./interfaz.php">Editar un diagrama</a>
+		       href="./model_editor.php">Editar un diagrama</a>
 		</div>
 	    </div> <!-- /main -->
 	    
