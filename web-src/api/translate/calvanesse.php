@@ -28,19 +28,19 @@
    Try this command:
    
    @code
-   curl -d 'json={\"classes\": [{\"attrs\":[], \"methods\":[], \"name\": \"Hi World\"}]}' http://host.com/translator/calvanesse.php";
+   curl -d 'json={\"classes\": [{\"attrs\":[], \"methods\":[], \"name\": \"Hi World\"}]}' http://host.com/api/translate/calvanesse.php";
    @endcode
 
    @return An XML web page.
  */
 
-require_once '../common/import_functions.php';
+require_once '../../common/import_functions.php';
 
-load('translator.php');
-load('owllinkdocument.php', 'documents/');
-load('calvanessestrat.php','strategies/');
-load('owllinkbuilder.php', 'builders/');
-load('htmlbuilder.php', 'builders/');
+load('translator.php', '../../translator/');
+load('owllinkdocument.php', '../../translator/documents/');
+load('calvanessestrat.php','../../translator/strategies/');
+load('owllinkbuilder.php', '../../translator/builders/');
+load('htmlbuilder.php', '../../translator/builders/');
 
 use Wicom\Translator\Translator;
 use Wicom\Translator\Strategies\Calvanesse;

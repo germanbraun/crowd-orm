@@ -125,7 +125,7 @@ class GUI
     #   the response is recieved.
     request_translation: (format, callback_function) ->
         json = this.diag_to_json()
-        url = @urlprefix + "translator/calvanesse.php"
+        url = @urlprefix + "api/translate/calvanesse.php"
         console.log("Requesting at " + url)
         $.ajax(
             type: "POST",
@@ -222,7 +222,7 @@ class GUI
 
     ##
     # Event handler for translate diagram to OWLlink using Ajax
-    # and the translator/calvanesse.php translator URL.
+    # and the api/translate/calvanesse.php translator URL.
     translate_owllink: () ->
         format = @crearclase.get_translation_format()
         $.mobile.loading("show", 

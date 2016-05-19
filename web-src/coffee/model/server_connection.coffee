@@ -46,7 +46,7 @@ class ServerConnection
     ##
     # Send to the server a translation Request.
     request_translation: (json, format, callback_function) ->
-        url = @urlprefix + "translator/calvanesse.php"
+        url = @urlprefix + "api/translate/calvanesse.php"
         console.log("Requesting at " + url)
         $.ajax(
             type: "POST",
