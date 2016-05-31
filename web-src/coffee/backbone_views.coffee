@@ -152,7 +152,7 @@ RelationOptionsView = Backbone.View.extend(
         this.$el.html(template({classid: @classid}))
 
     events:
-        'click a#asociation_button' : 'new_relation'
+        'click a#association_button' : 'new_relation'
 
     new_relation: () ->
         gui.gui_instance.set_association_state(@classid)

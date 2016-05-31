@@ -22,7 +22,7 @@
 class State
     constructor: () ->
         @selection_state = new SelectionState()
-        @asociation_state = new AsociationState()
+        @association_state = new AssociationState()
 
     ## 
     # What to do when the user clicked on a cell.
@@ -31,8 +31,8 @@ class State
     selectionstate: () ->
         return @selection_state
         
-    asociationstate: () ->
-        return @asociation_state
+    associationstate: () ->
+        return @association_state
 
 ##
 # Selection state, the user can select some classes.
@@ -55,9 +55,9 @@ class SelectionState extends State
 
 
 ##
-# Asociation state, the user can select another class for
-# create an asociation between them.
-class AsociationState extends State
+# Association state, the user can select another class for
+# create an association between them.
+class AssociationState extends State
     constructor: () ->
         @cell_starter = null
 
@@ -72,4 +72,4 @@ if exports.gui == undefined
     exports.gui = {}
 exports.gui.State = new State()
 exports.gui.SelectionState = SelectionState
-exports.gui.AsociationState = AsociationState
+exports.gui.AssociationState = AssociationState

@@ -112,7 +112,7 @@
 		<script type="text/template" id="template_relationoptions">
 		    <div class="relationOptions" data-role="controlgroup"  data-mini="true" data-type="vertical"  style="visible:false, z-index:1, position:absolute">
 			<input type="hidden" id="relationoptions_classid"  name="classid"  value="<%= classid %>" />
-			<a class="ui-btn ui-corner-all ui-icon-arrow-r ui-btn-icon-notext" type="button" id="asociation_button">Asociation</a>
+			<a class="ui-btn ui-corner-all ui-icon-arrow-r ui-btn-icon-notext" type="button" id="association_button">Association</a>
 			<a class="ui-btn ui-corner-all ui-icon-arrow-u ui-btn-icon-notext" type="button" id="isa_button">Is A</a>			
 		    </div>
 		</script>
