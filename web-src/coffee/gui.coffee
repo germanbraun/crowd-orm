@@ -117,44 +117,6 @@ class GUI
         @errorwidget.show(status, error)
 
     #
-    # Send to the server a translation Request.
-    #
-    # @param format {string} "owllink", "html" or any supported
-    #   translation format by the server.
-    # @param callback_function A functino to use as a callback when
-    #   the response is recieved.
-    request_translation: (format, callback_function) ->
-        json = this.diag_to_json()
-        url = @urlprefix + "translator/calvanesse.php"
-        console.log("Requesting at " + url)
-        $.ajax(
-            type: "POST",
-            url: url,
-            data:            
-                "format":
-                    format
-                "json":
-                    json
-            success:
-                callback_function
-            error:
-                gui.show_error
-        )
-    #
-    # Send to the server a "is satisfiable" request.
-    request_satisfiable: (callback_function) ->
-        postdata = "json=" + this.diag_to_json()
-        url = @urlprefix + "querying/satisfiable.php"
-        console.log("Requesting at " + url)
-        $.ajax(
-            type: "POST",
-            url: url,
-            data: postdata,
-            success: callback_function,
-            error: gui.show_error
-            )
-        
-    #
     # Put the traffic light on green.
     traffic_light_green: () ->
         @trafficlight.turn_green()
@@ -189,7 +151,8 @@ class GUI
             textVisible: true,
             textonly: false
         )
-        this.request_satisfiable(
+        @serverconn.request_satisfiable(
+            this.diag_to_json(),
             gui.update_satisfiable # Be careful with the context
             # change! this will have another object...
             )
@@ -230,7 +193,8 @@ class GUI
             textVisible: true,
             textonly: false
         )
-        this.request_translation(format, gui.update_translation)
+        json = this.diag_to_json()
+        @serverconn.request_translation(json, format, gui.update_translation)
 
 
     change_to_details_page: () ->
