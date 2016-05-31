@@ -56,10 +56,9 @@ TrafficLightsView = Backbone.View.extend(
         
 )
 
-#
-# CrearClaseView proporciona los elementos y eventos necesarios
-# para mostra una interfaz para crear una clase.
-CrearClaseView = Backbone.View.extend(    
+# Provides elements and events needed for displaying the interface for
+# creating a new class.
+CreateClassView = Backbone.View.extend(    
         initialize: () ->
         	this.render()
     
@@ -80,18 +79,15 @@ CrearClaseView = Backbone.View.extend(
             nueva = new Class($("#crearclase_input").val(), [], [])
             gui.gui_instance.add_class(nueva)
 
-        ##
         # Event handler for translate diagram to OWLlink using Ajax
-        # and the translator/calvanesse.php translator URL.
+        # and the api/translate/calvanesse.php translator URL.
         translate_owllink: (event) ->
             gui.gui_instance.translate_owllink()
 
-        ##
         # Which is the current translation format selected by the
         # user?
         #
-        # Returns:
-        # A String: "html", "owllink", etc.
+        # @return [String] "html", "owllink", etc.
         get_translation_format: () ->
             $("#format_select")[0].value
 
@@ -271,7 +267,7 @@ ErrorWidgetView = Backbone.View.extend(
 )
 
 exports = exports ? this
-exports.CrearClaseView = CrearClaseView
+exports.CreateClassView = CreateClassView
 exports.EditClassView = EditClassView
 exports.ClassOptionsView = ClassOptionsView
 exports.RelationOptionsView = RelationOptionsView

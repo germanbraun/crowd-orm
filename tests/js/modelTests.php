@@ -11,10 +11,10 @@
 	<script src="../../web-src/js/libs/backbone.js"></script>
 	<script src="../../web-src/js/libs/joint.js"></script>
 	<script src="../../web-src/js/libs/joint.shapes.uml.js"></script>
-	<script src="../../web-src/js/diagrama.js"></script>
-	<script src="../../web-src/js/factories.js"></script>
-	<script src="../../web-src/js/mymodel.js"></script>
-	<script src="../../web-src/js/products.js"></script>
+	<?php
+	$prefix = "../../web-src";
+	include "../../web-src/_modelinclude.php";
+	?>
 	<script src="../../web-src/js/csstheme.js"></script>
     </head>
     <body>

@@ -24,7 +24,7 @@ QUnit.test( "diag.to_json", ( assert ) ->
 
     # expected = JSON.stringify(expected)
         
-    diag = new Diagrama();
+    diag = new Diagram();
     diag.agregar_clase(new Class("hi world"))
     
     # actual = JSON.stringify(diag.to_json())

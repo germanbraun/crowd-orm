@@ -15,7 +15,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-##
 # Abstract class that helps determine how the interface
 # should respond to a user action depending on the current
 # state.
@@ -34,7 +33,6 @@ class State
     associationstate: () ->
         return @association_state
 
-##
 # Selection state, the user can select some classes.
 class SelectionState extends State
     constructor: () ->
@@ -54,7 +52,6 @@ class SelectionState extends State
             
 
 
-##
 # Association state, the user can select another class for
 # create an association between them.
 class AssociationState extends State

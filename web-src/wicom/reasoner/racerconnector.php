@@ -24,7 +24,7 @@
 namespace Wicom\Reasoner;
 
 load("connector.php");
-load("config.php", "../config/");
+load("config.php", "../../config/");
 
 use Wicom\Reasoner\Connector;
 

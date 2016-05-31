@@ -1,4 +1,4 @@
-# interfaz.coffee --
+# interface.coffee --
 # Copyright (C) 2016 Giménez, Christian
 
 # This program is free software: you can redistribute it and/or modify
@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-# {Diagrama} = require './diagrama'
+# {Diagram} = require './diagram'
 # {Class} = require './mymodel'
 
 # ---------------------------------------------------------------------- 
@@ -36,7 +36,7 @@ window.onload = () ->
     guiinst = new gui.GUI(graph, paper)
     gui.set_current_instance(guiinst)
 
-    # Interfaz
+    # Interface
     
     # Events for the Paper
 
@@ -54,14 +54,14 @@ window.onload = () ->
     
     # )
         
-    # Instancia de CrearClaseView.
+    # CreateClassView instance
     exports = exports ? this
     
     exports.graph = graph
     exports.paper = paper
     exports.guiinst = guiinst
 
-    # Presentamos una inicial clase de ejemplo
-    nueva = new Class("Test Class", [], [])
-    guiinst.add_class(nueva)
+    # Create a first example class
+    newclass = new Class("Test Class", [], [])
+    guiinst.add_class(newclass)
 

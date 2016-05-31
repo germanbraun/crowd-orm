@@ -16,8 +16,6 @@
 
 
 class ServerConnection
-
-    #
     # @param error_callback {function} which error callback function to use.
     constructor: (@error_callback) ->
         @urlprefix = ""
@@ -27,10 +25,12 @@ class ServerConnection
 
     # Send to the server a "is satisfiable" request
     #
-    # @param json {string} the JSON data.
+    # @param [String] json String with the JSON data.
+    # @param [function] callback_function a function to execute when
+    #     the POST is done.
     request_satisfiable: (json, callback_function) ->
         postdata = "json=" + json
-        url = @urlprefix + "querying/satisfiable.php"
+        url = @urlprefix + "api/querying/satisfiable.php"
         console.log("Requesting at " + url)
         $.ajax(
             type: "POST",
@@ -40,7 +40,6 @@ class ServerConnection
             error: @error_callback
             )
         
-    #
     # Send to the server a translation Request.
     #
     # @param json {string} 
@@ -49,7 +48,7 @@ class ServerConnection
     # @param callback_function A functino to use as a callback when
     #   the response is recieved.
     request_translation: (json, format, callback_function) ->
-        url = @urlprefix + "translator/calvanesse.php"
+        url = @urlprefix + "api/translate/calvanesse.php"
         console.log("Requesting at " + url)
         $.ajax(
             type: "POST",

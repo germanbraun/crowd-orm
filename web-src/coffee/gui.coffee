@@ -21,9 +21,9 @@
 class GUI
     constructor: (@graph, @paper) ->
         @urlprefix = ""
-        @diag = new Diagrama(@graph)
+        @diag = new Diagram(@graph)
         @state = gui.State.selectionstate()
-        @crearclase = new CrearClaseView({el: $("#crearclase")});
+        @crearclase = new CreateClassView({el: $("#crearclase")});
         @editclass = new EditClassView({el: $("#editclass")})
         @classoptions = new ClassOptionsView({el: $("#classoptions")})
         @relationoptions = new RelationOptionsView({el: $("#relationoptions")})
@@ -165,7 +165,7 @@ class GUI
     #
     # @param data {string} The HTML, OWLlink or the translation
     # string.
-    # @see CrearClaseView#get_translation_format
+    # @see CreateClassView#get_translation_format
     update_translation: (data) ->
         format = @crearclase.get_translation_format()
         if format == "html" 
@@ -185,7 +185,7 @@ class GUI
 
     ##
     # Event handler for translate diagram to OWLlink using Ajax
-    # and the translator/calvanesse.php translator URL.
+    # and the api/translate/calvanesse.php translator URL.
     translate_owllink: () ->
         format = @crearclase.get_translation_format()
         $.mobile.loading("show", 

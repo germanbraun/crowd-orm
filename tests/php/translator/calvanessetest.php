@@ -24,8 +24,8 @@
 require_once("common.php");
 
 // use function \load;
-load("calvanessestrat.php", "translator/strategies/");
-load("owllinkbuilder.php", "translator/builders/");
+load("calvanessestrat.php", "wicom/translator/strategies/");
+load("owllinkbuilder.php", "wicom/translator/builders/");
 
 use Wicom\Translator\Strategies\Calvanesse;
 use Wicom\Translator\Builders\OWLlinkBuilder;

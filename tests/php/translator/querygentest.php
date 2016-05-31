@@ -24,9 +24,9 @@
 require_once("common.php");
 
 //use function \load;
-load("owllinkdocument.php", "translator/documents/");
-load("owllinkbuilder.php", "translator/builders/");
-load("queriesgenerator.php", "querying/queries/");
+load("owllinkdocument.php", "wicom/translator/documents/");
+load("owllinkbuilder.php", "wicom/translator/builders/");
+load("queriesgenerator.php", "wicom/querying/queries/");
 
 use Wicom\Translator\Documents\OWLlinkDocument;
 use Wicom\Translator\Builders\OWLlinkBuilder;

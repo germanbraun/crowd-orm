@@ -16,34 +16,56 @@
 
 uml = joint.shapes.uml
 
+# *Abstract class.*
+#
+# Factory class for defining common behaviour of all JointJS plugins primitives.
 class Factory
     constructor: () ->
 
     # Create a class representation.
+    #
+    # @param [String] name the class name.
+    # @return A JointJS class model.
     create_class: (name) ->
 
+    # Create an association between two classes.
+    #
+    # @param [String] class_a_id the JointJS id of the first class.
+    # @param [String] class_b_id the JointJS id of the second class.
+    # @param [String] name the association name or tag.
+    #
+    # @return A JointJS link model.
     create_association: (class_a_id, class_b_id, name = null ) ->
         
-                
-class UMLFactory
+
+# UML Factory for creating JointJS shapes representing a primitive in
+# its plugins.
+class UMLFactory extends Factory
    
     constructor: () ->
-    
+
+    # @overload create_class(class_name, css_class=null)
+    #     @param [hash] css_class A CSS class definition in a
+    #     Javascript hash. See the JointJS documentation and demos.
+    # 
+    # @return [joint.shapes.uml.Class] 
     create_class: (class_name, css_class=null) ->
         params =
             position: {x: 20, y: 20}
-            size: {width: 220, height: 100}
+            size: {width: 100, height: 100}
             name: class_name
             attributes: []
             methods: []
+            attrs: css_class
 
         if css_class != null
             params.attrs = css_class
 
-        nueva = new uml.Class( params )
+        newclass = new uml.Class( params )
             
-        return nueva
+        return newclass
 
+    # @return [joint.dia.Link]
     create_association: (class_a_id, class_b_id, name = null) ->
         link = new joint.dia.Link(
                 source: {id: class_a_id},
@@ -62,8 +84,8 @@ class UMLFactory
             
         return link
 
-
-class ERDFactory
+# @todo ERDFactory is not yet implemented. This factory is beyond the scope for this prototype.
+class ERDFactory extends Factory
     constructor: () ->
     
     create_class: () ->

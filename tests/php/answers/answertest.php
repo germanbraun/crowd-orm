@@ -24,7 +24,7 @@
 require_once("common.php");
 
 // use function \load;
-load("answer.php", "answers/");
+load("answer.php", "wicom/answers/");
 
 use Wicom\Answers\Answer;
 

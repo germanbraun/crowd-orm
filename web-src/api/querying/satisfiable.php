@@ -25,9 +25,9 @@
    Return if the given diagram is satisfiable.
  */
 
-require_once("../common/import_functions.php");
+require_once("../../common/import_functions.php");
 
-load("wicom.php", "../common/");
+load("wicom.php", "../../common/");
 
 $wicom = new Wicom\Wicom();
 

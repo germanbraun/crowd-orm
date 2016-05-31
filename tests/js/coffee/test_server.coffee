@@ -37,7 +37,7 @@ QUnit.test( "translate_request test", ( assert ) ->
     conn = new ServerConnection( alert_func )
     conn.set_urlprefix("../../web-src/")
     
-    diag = new Diagrama(null)
+    diag = new Diagram(null)
     diag.agregar_clase(new Class("Hi World"))
 
     done = assert.async()    
@@ -72,7 +72,7 @@ QUnit.test( "satisfiable_request test", ( assert ) ->
     conn = new ServerConnection(alert_func)
     conn.set_urlprefix("../../web-src/")
     
-    diag = new Diagrama(null)
+    diag = new Diagram(null)
     diag.agregar_clase(new Class("Hi World"))
 
     done = assert.async()    

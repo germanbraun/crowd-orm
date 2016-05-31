@@ -10,7 +10,7 @@
 	<script src="./js/backbone_views.js"></script>
 	<script src="./js/GUIState.js"></script>
 	<script src="./js/gui.js"></script>
-	<script src="./js/interfaz.js"></script>
+	<script src="./js/interface.js"></script>
 	
 	<?php if (array_key_exists('prueba', $_GET) && $_GET['prueba'] == 1){ ?>
 	    <script src="./js/prueba.js"></script>

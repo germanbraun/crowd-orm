@@ -27,6 +27,11 @@ starty = 0
 xmax = startx + 220 * 10 + 50 # Queremos una separación de 5 pixeles 5*10=50
 ymax = starty + 100 * 10 + 50 # ^^^ Idem ^^^
 
+# Create a lot of classes and associate them.
+# This test was created to check if 50 or more classes can be handled properly.
+#
+# @param [int] cantclases amount of classes to create and associate.
+# 
 prueba = (cantclases) ->
     xpos = startx
     ypos = starty
