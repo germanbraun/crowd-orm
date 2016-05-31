@@ -205,6 +205,19 @@ class GUI
             transition: "slide",
             reverse: true)
 
+
+    # Change the interface into a "new association" state.
+    #
+    # @param class_id {string} The id of the class that triggered it and thus,
+    #   the starting class of the association.
+    set_association_state: (class_id) ->
+        @state = gui.State.associationstate()
+
+    # Change the interface into a "selection" state.
+    set_selection_state: () ->
+        @state = gui.State.selectionstate()
+
+
     ##
     # Show the "Insert OWLlink" section.
     show_insert_owllink: () ->
@@ -228,9 +241,11 @@ exports = exports ? this
 if exports.gui == undefined
     exports.gui = {}
 
-
+exports.gui.gui_instance = null
 exports.gui.set_current_instance = (gui_instance) ->
     exports.gui.gui_instance = gui_instance
+
+    
 
 # @namespace gui
 #

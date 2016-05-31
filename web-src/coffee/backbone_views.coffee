@@ -27,7 +27,7 @@ TrafficLightsView = Backbone.View.extend(
         "click a#traffic_btn" : "check_satisfiable"
         
     check_satisfiable: (event) ->
-        guiinst.check_satisfiable()
+        gui.gui_instance.check_satisfiable()
 
     turn_red: () ->
         this.$el.find("#traffic_img").attr(
@@ -78,13 +78,13 @@ CrearClaseView = Backbone.View.extend(
         crear_clase: (event) ->
             alert("Creando: " + $("#crearclase_input").val() + "...")
             nueva = new Class($("#crearclase_input").val(), [], [])
-            guiinst.add_class(nueva)
+            gui.gui_instance.add_class(nueva)
 
         ##
         # Event handler for translate diagram to OWLlink using Ajax
         # and the translator/calvanesse.php translator URL.
         translate_owllink: (event) ->
-            guiinst.translate_owllink()
+            gui.gui_instance.translate_owllink()
 
         ##
         # Which is the current translation format selected by the
@@ -96,7 +96,7 @@ CrearClaseView = Backbone.View.extend(
             $("#format_select")[0].value
 
         insert_owllink: () ->
-            guiinst.show_insert_owllink()
+            gui.gui_instance.show_insert_owllink()
 
                 
 );
@@ -133,9 +133,9 @@ EditClassView = Backbone.View.extend(
     
     edit_class: (event) ->
         name = $("#editclass_input").val()
-        guiinst.edit_class_name(@classid, name)
+        gui.gui_instance.edit_class_name(@classid, name)
         # Hide the form.
-        guiinst.hide_options()
+        gui.gui_instance.hide_options()
 
     hide: () ->
         this.$el.hide()
@@ -151,7 +151,11 @@ RelationOptionsView = Backbone.View.extend(
         template = _.template( $("#template_relationoptions").html() )
         this.$el.html(template({classid: @classid}))
 
-    events: () ->
+    events:
+        'click a#asociation_button' : 'new_relation'
+
+    new_relation: () ->
+        gui.gui_instance.set_association_state(@classid)
 
     set_classid: (@classid) ->
         viewpos = graph.getCell(@classid).findView(paper).getBBox()
@@ -206,12 +210,12 @@ ClassOptionsView = Backbone.View.extend(
         return @classid
         
     delete_class: (event) ->
-        guiinst.hide_options()
-        guiinst.delete_class(@classid)
+        gui.gui_instance.hide_options()
+        gui.gui_instance.delete_class(@classid)
 
     edit_class: (event) ->
-        guiinst.hide_options()
-        guiinst.set_editclass_classid(@classid)
+        gui.gui_instance.hide_options()
+        gui.gui_instance.set_editclass_classid(@classid)
         this.hide()
 
     hide: () ->

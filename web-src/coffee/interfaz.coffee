@@ -34,6 +34,7 @@ window.onload = () ->
     )
 
     guiinst = new gui.GUI(graph, paper)
+    gui.set_current_instance(guiinst)
 
     # Interfaz
     
