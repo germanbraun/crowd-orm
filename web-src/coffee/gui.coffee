@@ -65,9 +65,11 @@ class GUI
     #
     # Add a class to the diagram.
     #
-    # @param class_inst {Class} A Class instance.
-    add_class: (class_inst) ->
-        @diag.agregar_clase(class_inst)
+    # @param hash_data {Hash} data information for creating the Class. Use `name`, `attribs` and `methods` keys.
+    # @see Class
+    # @see Diagram#add_class
+    add_class: (hash_data) ->
+        @diag.add_class(hash_data)
 
     #
     # Delete a class from the diagram.

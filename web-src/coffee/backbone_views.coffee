@@ -68,16 +68,17 @@ CreateClassView = Backbone.View.extend(
 
         events: 
         	"click a#crearclase_button" :
-                "crear_clase"
+                "create_class"
             "click a#translate_button" :
                 "translate_owllink"
             "click a#insertowllink_button":
                 "insert_owllink"
 
-        crear_clase: (event) ->
+        create_class: (event) ->
             alert("Creando: " + $("#crearclase_input").val() + "...")
-            nueva = new Class($("#crearclase_input").val(), [], [])
-            gui.gui_instance.add_class(nueva)
+            gui.gui_instance.add_class(
+                name: $("#crearclase_input").val()
+            )
 
         # Event handler for translate diagram to OWLlink using Ajax
         # and the api/translate/calvanesse.php translator URL.

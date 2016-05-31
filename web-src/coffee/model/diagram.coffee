@@ -63,6 +63,34 @@ class Diagram
             elt.has_classid(classid)
         )
         
+    add_association: (class_a_id, class_b_id) ->
+        @links
+        @cells_nevas.push(clase.get_joint(@factory, csstheme))
+
+    #
+    # # Hash Data
+    # 
+    # * `name`    (mandatory)
+    # * `attribs` (optional)
+    # * `methods` (optional)
+    #
+    # @example Adding a class
+    #   diagram_instance.add_class({name: "class A"})
+    #   diagram_instance.add_class({name: "class B", ["attrib1", "attrib2"], ["method1", "method2"]})
+    # 
+    #   
+    # @param hash_data {Hash} data information for creating the new {Class} instance.
+    # @see Class
+    # @see GUI#add_class
+    add_class: (hash_data) ->
+        if hash_data.attribs == undefined
+            hash_data.attribs = []
+        if hash_data.methods == undefined
+            hash_data.methods = []
+        
+        newclass = new Class(hash_data.name, hash_data.attribs, hash_data.methods)
+        agregar_clase(newclass)
+
     agregar_clase: (clase) ->
         @clases.push(clase)
         @cells_nuevas.push(clase.get_joint(@factory, csstheme))
