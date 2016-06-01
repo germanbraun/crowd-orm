@@ -61,7 +61,7 @@ class AssociationState extends State
     set_cellStarter: (@cell_starter) ->
 
     on_cell_clicked: (cell_view, event, x, y, gui) ->
-        gui.add_association(@cell_starter, cell_view)
+        gui.add_association(@cell_starter, cell_view.model.id)
         @cell_starter = null;
         
 exports = exports ? this
