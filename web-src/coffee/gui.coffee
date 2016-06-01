@@ -97,6 +97,7 @@ class GUI
 
     #
     # Add a simple association from A to B.
+    # Then, set the selection state for restoring the interface.
     # 
     # @example Getting a classid
     #   < graph.getCells()[0].id
@@ -106,6 +107,7 @@ class GUI
     # @param class_b_id {string}
     add_association: (class_a_id, class_b_id) ->
         @diag.add_association(class_a_id, class_b_id)
+        this.set_selection_state()
 
 
 
@@ -214,6 +216,7 @@ class GUI
     #   the starting class of the association.
     set_association_state: (class_id) ->
         @state = gui.State.associationstate()
+        @state.set_cellStarter(class_id)
 
     # Change the interface into a "selection" state.
     set_selection_state: () ->
