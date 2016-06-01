@@ -35,6 +35,7 @@
 class MyModel
     # @param name {String}
     constructor: (@name) ->
+        @joint = null
 
     # Return the joint model. Create it if it is null and a factory
     # is provided.
@@ -159,7 +160,7 @@ class Link extends MyModel
             myclass.to_json()
         return json
 
-    create_joint: (factory) ->
+    create_joint: (factory, csstheme = null) ->
         if @joint == null
             @joint = factory.create_association(
                 @classes[0].get_classid(),
