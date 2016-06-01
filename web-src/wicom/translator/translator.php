@@ -35,6 +35,35 @@ use function \json_decode;
    
    1. Give a Strategy translator instance for specifying the algorithm for translating the diagram.
    2. Give a Builder for specifying the output format.
+
+   # JSON Format
+
+   We expect the following fields:
+
+   - `classes` : An Array of classes information. Each class should have:
+     - `attrs` An array of strings representing all attributes names
+     - `methods` An array of strings representing all attributes names
+     - `name` A string which represent the name of the class.
+   - links : An array of links information. Each link should have:
+     - `classes` : An array of strings with the name of the classes involved on the relationship.
+     - `multiplicity` : An array of strings with the multiplicity on each class side.
+     - `name` : A string with the name of the link.
+     - `type` : A string with the type name of the link. Could be: "association", "generalization".
+
+   ## Example
+   @code{json}
+   {"classes": [
+     {"attrs":[], "methods":[], "name": "Person"},
+     {"attrs":[], "methods":[], "name": "Cellphones"}],
+    "links": [
+     {"classes": ["Person", "Cellphones"],
+      "multiplicity": ["1..1", "1..*"],
+      "name": "hasCellphone",
+      "type": "association"}
+      ]
+   }
+   @endcode
+     
  */
 class Translator{
     protected $strategy = null;

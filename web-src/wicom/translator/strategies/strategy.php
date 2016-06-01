@@ -23,6 +23,9 @@
 
 namespace Wicom\Translator\Strategies;
 
+/**
+   @see Translator class for description about the JSON format.
+*/
 abstract class Strategy{
     function __constructor(){
     }
@@ -33,6 +36,8 @@ abstract class Strategy{
        @param json The JSON string
        @param build The Builder instance.
        @return An XML String.
+
+       @see Translator class for description about the JSON format.
      */
     abstract function translate($json, $build);
 }

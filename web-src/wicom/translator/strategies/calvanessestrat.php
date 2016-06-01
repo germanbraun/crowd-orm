@@ -26,6 +26,9 @@ namespace Wicom\Translator\Strategies;
 use function \load;
 load('strategy.php');
 
+/**
+   @see Translator class for description about the JSON format.
+ */
 class Calvanesse extends Strategy{
 
     /**
@@ -39,6 +42,8 @@ class Calvanesse extends Strategy{
        @param json_str A String with a diagram representation in 
        JSON format.
        @param builder A Wicom\Translator\Builders\DocumentBuilder subclass instance.
+
+       @see Translator class for description about the JSON format.
     */
     function translate($json_str, $builder){
         $json = json_decode($json_str, true);
