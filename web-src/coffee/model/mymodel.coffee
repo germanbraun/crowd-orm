@@ -112,8 +112,11 @@ class Class extends MyModel
     #
     # @param factory a Factory subclass instance.
     create_joint: (factory, csstheme = null) ->
-        if @joint == null then @joint = factory.create_class(@name,
-            csstheme.css_class)
+        if @joint == null then
+            if csstheme != null
+                @joint = factory.create_class(@name, csstheme.css_class)
+            else
+                @joint = factory.create_class(@name)
 
     to_json: () ->
         json = super()
@@ -166,14 +169,18 @@ class Link extends MyModel
         )
         return json
 
-    create_joint: (factory, csstheme = null) ->
+    create_joint: (factory, csstheme = null) ->        
         if @joint == null
-            @joint = factory.create_association(
-                @classes[0].get_classid(),
-                @classes[1].get_classid(),
-                null,
-                csstheme.css_links
-                )
+            if csstheme != null
+                @joint = factory.create_association(
+                    @classes[0].get_classid(),
+                    @classes[1].get_classid(),
+                    null,
+                    csstheme.css_links)
+            else
+                @joint = factory.create_association(
+                    @classes[0].get_classid(),
+                    @classes[1].get_classid())
 
 # A generalization link.
 class Generalization extends Link
@@ -185,11 +192,15 @@ class Generalization extends Link
 
     create_joint: (factory, csstheme = null) ->
         if @joint == null
-            @joint = factory.create_generalization(
-                @parent_class.get_classid(),
-                @classes[0].get_classid(),
-                csstheme.css_links
-                )
+            if csstheme != null
+                @joint = factory.create_generalization(
+                    @parent_class.get_classid(),
+                    @classes[0].get_classid(),
+                    csstheme.css_links)
+            else
+                @joint = factory.create_generalization(
+                    @parent_class.get_classid(),
+                    @classes[0].get_classid())
 
     to_json: () ->
         json = super()
