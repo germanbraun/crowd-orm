@@ -159,14 +159,12 @@ class Link extends MyModel
 
     to_json: () ->
         json = super()
-
-        if json.links == undefined
-            json.links = []
-        
-        # Preseve what is already on json.links.
-        json.links.concat $.map(@classes, (myclass) ->
-            myclass.to_json()
+        json.classes = $.map(@classes, (myclass) ->
+            myclass.get_name()
         )
+        json.multiplicity = ["1..1", "1..*"]
+        json.type = "association"
+
         return json
 
     create_joint: (factory, csstheme = null) ->        
@@ -204,14 +202,9 @@ class Generalization extends Link
 
     to_json: () ->
         json = super()
-
-        if json.links == undefined
-            json.links = []
+        json.parent = @parent_class.get_name()
+        json.type = "generalization"
         
-        # Preseve what is already on json.links.
-        json.links.concat $.map(@classes, (myclass) ->
-            myclass.to_json()
-        )
         return json
 
 

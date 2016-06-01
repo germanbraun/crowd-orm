@@ -31,3 +31,32 @@ QUnit.test( "diag.to_json", ( assert ) ->
     actual = diag.to_json()
     assert.propEqual(actual , expected, "dia.to_json" )
 )
+
+
+QUnit.test( "diag.to_json with links", ( assert ) ->
+    expected =
+        classes: [
+            {name: "Person"},
+            {name: "Cellphones"}
+            ]
+        links: [{
+            classes: ["Person", "Cellphones"],
+            multiplicity: ["1..1", "1..*"],
+            name: "",
+            type: "association"}]
+
+
+    # expected = JSON.stringify(expected)
+        
+    diag = new Diagram()
+    person = new Class("Person")
+    cell = new Class("Cellphones")
+    diag.agregar_clase(person)
+    diag.agregar_clase(cell)
+    link = new Link([person, cell])
+    diag.agregar_link(link)
+    
+    # actual = JSON.stringify(diag.to_json())
+    actual = diag.to_json()
+    assert.propEqual(actual , expected, "dia.to_json" )
+)
