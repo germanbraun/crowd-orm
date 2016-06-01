@@ -112,7 +112,7 @@ class Class extends MyModel
     #
     # @param factory a Factory subclass instance.
     create_joint: (factory, csstheme = null) ->
-        if @joint == null then
+        if @joint == null 
             if csstheme != null
                 @joint = factory.create_class(@name, csstheme.css_class)
             else
