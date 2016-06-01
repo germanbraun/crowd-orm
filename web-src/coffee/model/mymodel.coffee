@@ -155,9 +155,15 @@ class Link extends MyModel
         return @classes.length == 2
 
     to_json: () ->
-        json = super()        
-        json.classes = $.map @classes, (myclass) ->
+        json = super()
+
+        if json.links == undefined
+            json.links = []
+        
+        # Preseve what is already on json.links.
+        json.links.concat $.map(@classes, (myclass) ->
             myclass.to_json()
+        )
         return json
 
     create_joint: (factory, csstheme = null) ->
@@ -175,6 +181,27 @@ class Generalization extends Link
     # @param parent_class {Class} The parent class.
     # @param classes {Array<Class>} An array of child classes.
     constructor: (@parent_class, @classes) ->
+
+    create_joint: (factory, csstheme = null) ->
+        if @joint == null
+            @joint = factory.create_generalization(
+                @classes[0].get_classid(),
+                @classes[1].get_classid(),
+                null,
+                csstheme.css_links
+                )
+
+    to_json: () ->
+        json = super()
+
+        if json.links == undefined
+            json.links = []
+        
+        # Preseve what is already on json.links.
+        json.links.concat $.map(@classes, (myclass) ->
+            myclass.to_json()
+        )
+        return json
 
 
 exports = exports ? this
