@@ -130,7 +130,7 @@ class Link extends MyModel
     #   the first class is the "from" and the second is the "to" class
     #   in a two-linked relation.
     constructor: (@classes) ->
-        super.constructor "" 
+        super("")
 
     #
     # @param class_from an instance of Class.

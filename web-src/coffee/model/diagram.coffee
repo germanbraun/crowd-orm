@@ -62,10 +62,17 @@ class Diagram
         return @clases.find( (elt,index,arr) ->
             elt.has_classid(classid)
         )
+
+    # @param class_a_id {string} the ID of the first class.
+    # @param class_b_id {string} the ID of the second class.
+    # @param name {string} optional. THe name of the association.
+    add_association: (class_a_id, class_b_id, name = null) ->
+        class_a = this.find_class_by_classid(class_a_id)
+        class_b = this.find_class_by_classid(class_b_id)
         
-    add_association: (class_a_id, class_b_id) ->
-        @links
-        @cells_nevas.push(clase.get_joint(@factory, csstheme))
+        newassoc = new Link([class_a, class_b])
+        
+        this.agregar_link(newassoc)
 
     #
     # # Hash Data
@@ -89,7 +96,7 @@ class Diagram
             hash_data.methods = []
         
         newclass = new Class(hash_data.name, hash_data.attribs, hash_data.methods)
-        agregar_clase(newclass)
+        this.agregar_clase(newclass)
 
     agregar_clase: (clase) ->
         @clases.push(clase)
