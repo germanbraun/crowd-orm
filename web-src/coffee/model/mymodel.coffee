@@ -181,13 +181,13 @@ class Generalization extends Link
     # @param parent_class {Class} The parent class.
     # @param classes {Array<Class>} An array of child classes.
     constructor: (@parent_class, @classes) ->
+        super(@classes)
 
     create_joint: (factory, csstheme = null) ->
         if @joint == null
             @joint = factory.create_generalization(
+                @parent_class.get_classid(),
                 @classes[0].get_classid(),
-                @classes[1].get_classid(),
-                null,
                 csstheme.css_links
                 )
 

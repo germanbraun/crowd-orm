@@ -109,7 +109,15 @@ class GUI
         @diag.add_association(class_a_id, class_b_id)
         this.set_selection_state()
 
-
+    # Add a Generalization link and then set the selection state.
+    #
+    # @param class_parent_id {string} The parent class Id.
+    # @param class_child_id {string} The child class Id.
+    # 
+    # @todo Support various children on parameter class_child_id.
+    add_generalization: (class_parent_id, class_child_id) ->
+        @diag.add_generalization(class_parent_id, class_child_id)
+        this.set_selection_state()
 
     #
     # Report an error to the user.

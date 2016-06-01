@@ -63,6 +63,20 @@ class Diagram
             elt.has_classid(classid)
         )
 
+    # Add a Generalization link
+    #
+    # @param class_parent_id {string} The parent class Id.
+    # @param class_child_id {string} The child class Id.
+    #
+    # @todo Support various children on parameter class_child_id.
+    add_generalization: (class_parent_id, class_child_id) ->
+        class_parent = this.find_class_by_classid(class_parent_id)
+        class_child = this.find_class_by_classid(class_child_id)
+
+        gen = new Generalization(class_parent, [class_child])
+
+        this.agregar_link(gen)
+    
     # @param class_a_id {string} the ID of the first class.
     # @param class_b_id {string} the ID of the second class.
     # @param name {string} optional. THe name of the association.
