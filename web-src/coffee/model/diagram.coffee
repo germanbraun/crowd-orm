@@ -140,7 +140,7 @@ class Diagram
 
     agregar_link: (link) ->
         @links.push(link)
-        @cells_nuevas.push(link.get_joint(@factory));
+        @cells_nuevas.push(link.get_joint(@factory, csstheme));
         this.actualizar_graph()
 
     # Update a joint.Graph instance with the new cells.

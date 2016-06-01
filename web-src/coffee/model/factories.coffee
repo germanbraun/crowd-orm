@@ -66,10 +66,11 @@ class UMLFactory extends Factory
         return newclass
 
     # @return [joint.dia.Link]
-    create_association: (class_a_id, class_b_id, name = null) ->
+    create_association: (class_a_id, class_b_id, name = null, css_links = null) ->
         link = new joint.dia.Link(
                 source: {id: class_a_id},
-                target: {id: class_b_id}
+                target: {id: class_b_id},
+                attrs: css_links
                 )
                 
         if name != null

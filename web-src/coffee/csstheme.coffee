@@ -48,9 +48,20 @@ css_class =
         'y-alignment': 'middle'
         visibility: 'collapse'
 
-    
+
+# [JointJS special
+# attributes](http://jointjs.com/api#SpecialAttributes) 
+# [SVG
+# attributes](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute)  
+#
+# Links Style
+css_links =
+    '.connection' :
+        'stroke': '#000',
+        'stroke-width': 2
 
 
 exports = exports ? this
 exports.csstheme = {}
 exports.csstheme.css_class = css_class
+exports.csstheme.css_links = css_links

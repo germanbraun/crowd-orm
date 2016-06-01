@@ -164,7 +164,9 @@ class Link extends MyModel
         if @joint == null
             @joint = factory.create_association(
                 @classes[0].get_classid(),
-                @classes[1].get_classid()
+                @classes[1].get_classid(),
+                null,
+                csstheme.css_links
                 )
 
 # A generalization link.
