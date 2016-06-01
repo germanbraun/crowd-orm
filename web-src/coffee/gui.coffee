@@ -31,7 +31,9 @@ class GUI
         @owllinkinsert = new OWLlinkInsertView({el: $("#owllink_placer")})
         @errorwidget = new ErrorWidgetView({el: $("#errorwidget_placer")})
         
-        @serverconn = new ServerConnection()
+        @serverconn = new ServerConnection( (jqXHR, status, text) ->
+            exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
+        )
                 
         $("#diagram-page").enhanceWithin()
         $("#details-page").enhanceWithin()
