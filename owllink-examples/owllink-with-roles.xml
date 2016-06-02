@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RequestMessage xmlns="http://www.owllink.org/owllink#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd">
+  <CreateKB kb="http://localhost/kb1"></CreateKB>
+  <Tell kb="http://localhost/kb1">
+    
+    <!-- Define Test and b -->
+
+    <owl:SubClassOf>
+      <owl:Class IRI="Test"></owl:Class>
+      <owl:Class abbreviatedIRI="owl:Thing"></owl:Class>
+    </owl:SubClassOf>
+    <owl:SubClassOf>
+      <owl:Class IRI="b"></owl:Class>
+      <owl:Class abbreviatedIRI="owl:Thing"></owl:Class>
+    </owl:SubClassOf>
+
+    <!-- Define r relation like (Test, b) instances or From a Test to b instances -->
+    
+    <owl:SubClassOf>
+      <owl:ObjectSomeValuesFrom>
+	<owl:ObjectProperty IRI="r"></owl:ObjectProperty>
+	<owl:Class abbreviatedIRI="owl:Thing"></owl:Class>
+      </owl:ObjectSomeValuesFrom>
+      <owl:Class IRI="Test"></owl:Class>
+    </owl:SubClassOf>
+    
+    <owl:SubClassOf>
+      <owl:ObjectSomeValuesFrom>
+	<owl:ObjectInverseOf>
+	  <owl:ObjectProperty IRI="r"></owl:ObjectProperty>
+	</owl:ObjectInverseOf>
+	<owl:Class abbreviatedIRI="owl:Thing"></owl:Class>
+      </owl:ObjectSomeValuesFrom>
+      <owl:Class IRI="b">
+      </owl:Class>
+    </owl:SubClassOf>
+
+    <!-- define r's cardinality -->
+    
+    <owl:SubClassOf>
+      <owl:Class IRI="Test"></owl:Class>
+      <owl:ObjectIntersectionOf>
+	<owl:ObjectMinCardinality cardinality="0">
+	  <owl:ObjectProperty IRI="r"></owl:ObjectProperty>
+	</owl:ObjectMinCardinality>
+	<owl:ObjectSomeValuesFrom>
+	  <owl:ObjectProperty IRI="r" />
+	  <owl:Class abbreviatedIRI="owl:Thing" />
+	</owl:ObjectSomeValuesFrom>
+      </owl:ObjectIntersectionOf>
+    </owl:SubClassOf>
+
+    <!--
+    <owl:SubClassOf>
+      <owl:Class IRI="Test"></owl:Class>
+      <owl:ObjectMinCardinality cardinality="0">
+	<owl:ObjectProperty IRI="r"></owl:ObjectProperty>
+      </owl:ObjectMinCardinality>
+    </owl:SubClassOf>
+    
+    <owl:SubClassOf>
+      <owl:Class IRI="b"></owl:Class>
+      <owl:ObjectMinCardinality cardinality="0">
+	<owl:ObjectInverseOf> <owl:ObjectProperty IRI="r"></owl:ObjectProperty>	</owl:ObjectInverseOf>
+      </owl:ObjectMinCardinality>
+    </owl:SubClassOf> -->
+    
+  </Tell>
+  <!-- <IsKBSatisfiable kb="http://localhost/kb1"></IsKBSatisfiable> -->
+  <!-- <IsClassSatisfiable kb="http://localhost/kb1">
+    <owl:Class IRI="Test"></owl:Class>
+  </IsClassSatisfiable> -->
+  <IsClassSatisfiable kb="http://localhost/kb1">
+    <owl:Class IRI="Test"></owl:Class>
+  </IsClassSatisfiable>
+    
+</RequestMessage>

@@ -140,9 +140,15 @@ EOT;
 
     <owl:SubClassOf>
 	<owl:Class IRI="Person" />
-	<owl:ObjectMinCardinality cardinality="1">
-	    <owl:ObjectProperty IRI="hasCellphone" />
-	</owl:ObjectMinCardinality>
+	<owl:ObjectIntersectionOf>
+  	  <owl:ObjectMinCardinality cardinality="1">
+	      <owl:ObjectProperty IRI="hasCellphone" />
+      </owl:ObjectMinCardinality>
+      <owl:ObjectSomeValuesFrom>
+		<owl:ObjectProperty IRI="hasCellphone" />
+        <owl:Class abbreviatedIRI="owl:Thing" />
+      </owl:ObjectSomeValuesFrom>
+    </owl:ObjectIntersectionOf>
     </owl:SubClassOf>
 
     <owl:SubClassOf>
@@ -237,18 +243,32 @@ EOT;
 
     <owl:SubClassOf>
 	<owl:Class IRI="Person" />
-	<owl:ObjectMinCardinality cardinality="0">
-	    <owl:ObjectProperty IRI="hasCellphone" />
-	</owl:ObjectMinCardinality>
+    <owl:ObjectIntersectionOf>
+	  <owl:ObjectMinCardinality cardinality="0">
+	      <owl:ObjectProperty IRI="hasCellphone" />
+	  </owl:ObjectMinCardinality>
+	  <owl:ObjectSomeValuesFrom>
+		  <owl:ObjectProperty IRI="hasCellphone" />
+	      <owl:Class abbreviatedIRI="owl:Thing" />
+	  </owl:ObjectSomeValuesFrom>
+    </owl:ObjectIntersectionOf>
     </owl:SubClassOf>
 
     <owl:SubClassOf>
 	<owl:Class IRI="Cellphone" />
-    <owl:ObjectMinCardinality cardinality="0">
-		<owl:ObjectInverseOf>
+    <owl:ObjectIntersectionOf>
+      <owl:ObjectMinCardinality cardinality="0">
+		  <owl:ObjectInverseOf>
 		    <owl:ObjectProperty IRI="hasCellphone" />
-		</owl:ObjectInverseOf>
-    </owl:ObjectMinCardinality>
+		  </owl:ObjectInverseOf>
+      </owl:ObjectMinCardinality>
+	  <owl:ObjectSomeValuesFrom>
+	    <owl:ObjectInverseOf>
+		<owl:ObjectProperty IRI="hasCellphone" />
+	    </owl:ObjectInverseOf>
+	    <owl:Class abbreviatedIRI="owl:Thing" />
+	  </owl:ObjectSomeValuesFrom>
+    </owl:ObjectIntersectionOf>
     </owl:SubClassOf>
 
   </Tell>

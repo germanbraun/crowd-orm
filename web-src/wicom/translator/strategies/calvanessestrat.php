@@ -66,17 +66,17 @@ class Calvanesse extends Strategy{
      */
     protected function translate_multiplicity($mult, $role, $from = true){
         if ($from){
+            $arr_role = ["role" => $role];
             $sub1_DL = [1,
-                        ["role" => $role]];
+                        $arr_role];
             $sub0_DL = [0,
-                        ["role" => $role]];
+                        $arr_role];
         }else{
+            $arr_role = ["inverse" => ["role" => $role]];
             $sub1_DL = [1,
-                        ["inverse" => 
-                         ["role" => $role]]];
+                        $arr_role];
             $sub0_DL = [0,
-                        ["inverse" => 
-                         ["role" => $role]]];
+                        $arr_role];
                         
         }
         
@@ -94,11 +94,17 @@ class Calvanesse extends Strategy{
             break;            
         case "1..*":
         case "1..n":
-            $ret = ["mincard" => $sub1_DL];
+            $ret = ["intersection" => [
+                ["mincard" => $sub1_DL],
+                ["exists" => $arr_role]
+            ]];
             break;
         case "0..*":
         case "0..n":
-            $ret = ["mincard" => $sub0_DL];
+            $ret = ["intersection" => [
+                ["mincard" => $sub0_DL],
+                ["exists" => $arr_role]
+                ]];
             break;
         }
         return $ret;
