@@ -30,6 +30,12 @@ load("owllinkbuilder.php", "wicom/translator/builders/");
 use Wicom\Translator\Strategies\Calvanesse;
 use Wicom\Translator\Builders\OWLlinkBuilder;
 
+/**
+   # Warning!
+   Don't use assertEqualXMLStructure()! It won't check for attributes values! 
+
+   It will only check for the amount of attributes.
+ */
 class CalvanesseTest extends PHPUnit_Framework_TestCase
 {
 
@@ -68,9 +74,10 @@ http://www.owllink.org/owllink-20091116.xsd\">
         $actual = $builder->get_product();
         $actual = $actual->to_string();
 
-        $expected = process_xmlspaces($expected);
-        $actual = process_xmlspaces($actual);
-        $this->assertEqualXMLStructure($expected, $actual, true);
+        //$expected = process_xmlspaces($expected);
+        //$actual = process_xmlspaces($actual);
+        // Don't use assertEqualXMLStructure()! It won't check for attributes values!
+        $this->assertXmlStringEqualsXmlString($expected, $actual, true);
     }
 
     ##
@@ -80,9 +87,9 @@ http://www.owllink.org/owllink-20091116.xsd\">
         $json = <<<'EOT'
 {"classes": [
     {"attrs":[], "methods":[], "name": "Person"},
-    {"attrs":[], "methods":[], "name": "Cellphones"}],
+    {"attrs":[], "methods":[], "name": "Cellphone"}],
  "links": [
-     {"classes": ["Person", "Cellphones"],
+     {"classes": ["Person", "Cellphone"],
       "multiplicity": ["1..1", "1..*"],
       "name": "hasCellphone",
       "type": "association"}
@@ -172,8 +179,100 @@ EOT;
         $actual = $builder->get_product();
         $actual = $actual->to_string();
 
-        $expected = process_xmlspaces($expected);
-        $actual = process_xmlspaces($actual);
-        $this->assertEqualXMLStructure($expected, $actual, true);
+        /*$expected = process_xmlspaces($expected);
+          $actual = process_xmlspaces($actual);*/
+        $this->assertXmlStringEqualsXmlString($expected, $actual);
+    }
+
+    # Test if 0..* to 0..* associations is translated properly.
+    public function testTranslateRolesManyToMany(){
+        //TODO: Complete JSON!
+        $json = <<<'EOT'
+{"classes": [
+    {"attrs":[], "methods":[], "name": "Person"},
+    {"attrs":[], "methods":[], "name": "Cellphone"}],
+ "links": [
+     {"classes": ["Person", "Cellphone"],
+      "multiplicity": ["0..*", "0..*"],
+      "name": "hasCellphone",
+      "type": "association"}
+	]
+}
+EOT;
+        //TODO: Complete XML!
+        $expected = <<<'EOT'
+<?xml version="1.0" encoding="UTF-8"?>
+<RequestMessage xmlns="http://www.owllink.org/owllink#"
+		xmlns:owl="http://www.w3.org/2002/07/owl#" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.owllink.org/owllink# 
+				    http://www.owllink.org/owllink-20091116.xsd">
+  <CreateKB kb="http://localhost/kb1" />
+  <Tell kb="http://localhost/kb1">
+    
+    <owl:SubClassOf>
+      <owl:Class IRI="Person" />
+      <owl:Class abbreviatedIRI="owl:Thing" />
+    </owl:SubClassOf>
+    <owl:SubClassOf>
+      <owl:Class IRI="Cellphone" />
+      <owl:Class abbreviatedIRI="owl:Thing" />
+    </owl:SubClassOf>
+    <!-- One person can has lots of cellphones -->
+
+    <owl:SubClassOf>
+	<owl:ObjectSomeValuesFrom>
+	    <owl:ObjectProperty IRI="hasCellphone" />
+	    <owl:Class abbreviatedIRI="owl:Thing" />
+	</owl:ObjectSomeValuesFrom>
+	<owl:Class IRI="Person" />
+    </owl:SubClassOf>
+   
+    <owl:SubClassOf>
+	<owl:ObjectSomeValuesFrom>
+	    <owl:ObjectInverseOf>
+		<owl:ObjectProperty IRI="hasCellphone" />
+	    </owl:ObjectInverseOf>
+	    <owl:Class abbreviatedIRI="owl:Thing" />
+	</owl:ObjectSomeValuesFrom>
+	<owl:Class IRI="Cellphone" />
+    </owl:SubClassOf>
+
+    <owl:SubClassOf>
+	<owl:Class IRI="Person" />
+	<owl:ObjectMinCardinality cardinality="0">
+	    <owl:ObjectProperty IRI="hasCellphone" />
+	</owl:ObjectMinCardinality>
+    </owl:SubClassOf>
+
+    <owl:SubClassOf>
+	<owl:Class IRI="Cellphone" />
+    <owl:ObjectMinCardinality cardinality="0">
+		<owl:ObjectInverseOf>
+		    <owl:ObjectProperty IRI="hasCellphone" />
+		</owl:ObjectInverseOf>
+    </owl:ObjectMinCardinality>
+    </owl:SubClassOf>
+
+  </Tell>
+  <!-- <ReleaseKB kb="http://localhost/kb1" /> -->
+</RequestMessage>
+EOT;
+        
+        $strategy = new Calvanesse();
+        $builder = new OWLlinkBuilder();
+
+        $builder->insert_header(); // Without this, loading the DOMDocument
+        // will throw error for the owl namespace
+        $strategy->translate($json, $builder);
+        $builder->insert_footer();
+        
+        $actual = $builder->get_product();
+        $actual = $actual->to_string();
+
+       
+        /*$expected = process_xmlspaces($expected);
+        $actual = process_xmlspaces($actual);*/
+        $this->assertXmlStringEqualsXmlString($expected, $actual, TRUE);
     }
 }
