@@ -162,7 +162,7 @@ class Link extends MyModel
         json.classes = $.map(@classes, (myclass) ->
             myclass.get_name()
         )
-        json.multiplicity = ["1..1", "1..*"]
+        json.multiplicity = ["0..*", "0..*"]
         json.type = "association"
 
         return json
