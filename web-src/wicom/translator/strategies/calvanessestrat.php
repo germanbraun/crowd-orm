@@ -61,19 +61,20 @@ class Calvanesse extends Strategy{
        Depending on $mult translate it into DL.
 
        @param $from True if we have to represent the "from" side (left one).
+
        @return A DL list part that represent the multiplicity restriction.
      */
     protected function translate_multiplicity($mult, $role, $from = true){
         if ($from){
             $sub1_DL = [1,
                         ["role" => $role]];
-            $sub1_DL = [0,
+            $sub0_DL = [0,
                         ["role" => $role]];
         }else{
             $sub1_DL = [1,
                         ["inverse" => 
                          ["role" => $role]]];
-            $subo_DL = [0,
+            $sub0_DL = [0,
                         ["inverse" => 
                          ["role" => $role]]];
                         
@@ -128,7 +129,7 @@ class Calvanesse extends Strategy{
                     ["exists" =>
                      ["inverse" =>
                       ["role" => $link["name"]]]],
-                    ["class" => $classes[0]]]]
+                    ["class" => $classes[1]]]]
             ]);
 
             $rest = $this->translate_multiplicity($mult[1], $link["name"]);

@@ -52,8 +52,7 @@ EOT;
 <RequestMessage xmlns=\"http://www.owllink.org/owllink#\"
 xmlns:owl=\"http://www.w3.org/2002/07/owl#\" 
 xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
-xsi:schemaLocation=\"http://www.owllink.org/owllink# 
-http://www.owllink.org/owllink-20091116.xsd\">
+xsi:schemaLocation=\"http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd\">
        <CreateKB kb=\"http://localhost/kb1\" />
        <Tell kb=\"http://localhost/kb1\">   
        <owl:SubClassOf>
@@ -102,8 +101,7 @@ EOT;
 <RequestMessage xmlns="http://www.owllink.org/owllink#"
 		xmlns:owl="http://www.w3.org/2002/07/owl#" 
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://www.owllink.org/owllink# 
-				    http://www.owllink.org/owllink-20091116.xsd">
+		xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd">
   <CreateKB kb="http://localhost/kb1" />
   <Tell kb="http://localhost/kb1">
     <!-- <owl:ClassAssertion>
@@ -205,8 +203,7 @@ EOT;
 <RequestMessage xmlns="http://www.owllink.org/owllink#"
 		xmlns:owl="http://www.w3.org/2002/07/owl#" 
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://www.owllink.org/owllink# 
-				    http://www.owllink.org/owllink-20091116.xsd">
+		xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd">
   <CreateKB kb="http://localhost/kb1" />
   <Tell kb="http://localhost/kb1">
     
