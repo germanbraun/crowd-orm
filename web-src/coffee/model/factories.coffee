@@ -88,8 +88,8 @@ class UMLFactory extends Factory
     # @return [joint.shapes.uml.Generalization]
     create_generalization: (class_a_id, class_b_id, css_links = null) ->
         link = new joint.shapes.uml.Generalization(
-                source: {id: class_a_id},
-                target: {id: class_b_id},
+                source: {id: class_b_id},
+                target: {id: class_a_id},
                 attrs: css_links
                 )
         return link

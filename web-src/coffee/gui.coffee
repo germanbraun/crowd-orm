@@ -22,7 +22,7 @@ class GUI
     constructor: (@graph, @paper) ->
         @urlprefix = ""
         @diag = new Diagram(@graph)
-        @state = gui.State.selectionstate()
+        @state = gui.state_inst.selection_state()
         @crearclase = new CreateClassView({el: $("#crearclase")});
         @editclass = new EditClassView({el: $("#editclass")})
         @classoptions = new ClassOptionsView({el: $("#classoptions")})
@@ -225,12 +225,16 @@ class GUI
     # @param class_id {string} The id of the class that triggered it and thus,
     #   the starting class of the association.
     set_association_state: (class_id) ->
-        @state = gui.State.associationstate()
+        @state = gui.state_inst.association_state()
+        @state.set_cellStarter(class_id)
+
+    set_isa_state: (class_id) ->
+        @state = gui.state_inst.isa_state()
         @state.set_cellStarter(class_id)
 
     # Change the interface into a "selection" state.
     set_selection_state: () ->
-        @state = gui.State.selectionstate()
+        @state = gui.state_inst.selection_state()
 
 
     ##

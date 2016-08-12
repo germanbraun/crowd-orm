@@ -149,10 +149,14 @@ RelationOptionsView = Backbone.View.extend(
         this.$el.html(template({classid: @classid}))
 
     events:
-        'click a#association_button' : 'new_relation'
+        'click a#association_button' : 'new_relation',
+        'click a#isa_button' : 'new_isa'
 
     new_relation: () ->
         gui.gui_instance.set_association_state(@classid)
+
+    new_isa: () ->
+        gui.gui_instance.set_isa_state(@classid)
 
     set_classid: (@classid) ->
         viewpos = graph.getCell(@classid).findView(paper).getBBox()

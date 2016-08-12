@@ -18,20 +18,27 @@
 # Abstract class that helps determine how the interface
 # should respond to a user action depending on the current
 # state.
+#
+# @abstract
 class State
     constructor: () ->
-        @selection_state = new SelectionState()
-        @association_state = new AssociationState()
+        @selectionstate_inst = new SelectionState()
+        @associationstate_inst = new AssociationState()
+        @isastate_inst = new IsAState()
 
-    ## 
     # What to do when the user clicked on a cell.
+    #
+    # @abstract
     on_cell_clicked: (cellView, event, x, y, gui) ->
 
-    selectionstate: () ->
-        return @selection_state
+    selection_state: () ->
+        return @selectionstate_inst
         
-    associationstate: () ->
-        return @association_state
+    association_state: () ->
+        return @associationstate_inst
+
+    isa_state: () ->
+        return @isastate_inst
 
 # Selection state, the user can select some classes.
 class SelectionState extends State
@@ -62,11 +69,30 @@ class AssociationState extends State
 
     on_cell_clicked: (cell_view, event, x, y, gui) ->
         gui.add_association(@cell_starter, cell_view.model.id)
-        @cell_starter = null;
+        @cell_starter = null
+
+
+# IsA state, the user can select another class for
+# create a generalization between them.
+class IsAState extends State
+    constructor: () ->
+        @cell_starter = null
+
+    # Set the parent Cell Id.
+    #
+    # @param cell_starter {string} the parent Cell Id. 
+    set_cellStarter: (@cell_starter) ->
+
+    on_cell_clicked: (cell_view, event, x, y, gui) ->
+        gui.add_generalization(@cell_starter, cell_view.model.id)
+        @cell_starter = null
+
+                  
         
 exports = exports ? this
 if exports.gui == undefined
     exports.gui = {}
-exports.gui.State = new State()
+exports.gui.state_inst = new State()
 exports.gui.SelectionState = SelectionState
 exports.gui.AssociationState = AssociationState
+exports.gui.IsAState = IsAState

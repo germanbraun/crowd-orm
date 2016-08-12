@@ -203,6 +203,7 @@ class Generalization extends Link
     to_json: () ->
         json = super()
         json.parent = @parent_class.get_name()
+        json.multiplicity = null
         json.type = "generalization"
         
         return json
