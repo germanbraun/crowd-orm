@@ -1,0 +1,59 @@
+
+
+   	<owl:SubClassOf>
+		<owl:Class IRI="a"/>
+   		<owl:Class abbreviatedIRI="owl:Thing"/>
+	</owl:SubClassOf>
+
+	<owl:SubClassOf>
+		<owl:Class IRI="b"/>
+		<owl:Class abbreviatedIRI="owl:Thing"/>
+	</owl:SubClassOf>
+
+	<owl:SubClassOf>
+		<owl:ObjectSomeValuesFrom>
+			<owl:ObjectProperty IRI=""/>
+			<owl:Class abbreviatedIRI="owl:Thing"/>
+		</owl:ObjectSomeValuesFrom>
+		<owl:Class IRI="a"/>
+	</owl:SubClassOf>
+
+	<owl:SubClassOf>
+		<owl:ObjectSomeValuesFrom>
+			<owl:ObjectInverseOf>
+				<owl:ObjectProperty IRI=""/>
+			</owl:ObjectInverseOf>
+			<owl:Class abbreviatedIRI="owl:Thing"/>
+		</owl:ObjectSomeValuesFrom>
+		<owl:Class IRI="b"/>
+	</owl:SubClassOf>
+
+	<owl:SubClassOf>
+		<owl:Class IRI="a"/>
+		<owl:ObjectIntersectionOf>
+			<owl:ObjectMinCardinality cardinality="0">
+				<owl:ObjectProperty IRI=""/>
+			</owl:ObjectMinCardinality>
+			<owl:ObjectSomeValuesFrom>
+				<owl:ObjectProperty IRI=""/>
+			 	<owl:Class abbreviatedIRI="owl:Thing"/>
+			</owl:ObjectSomeValuesFrom>
+		</owl:ObjectIntersectionOf>
+	</owl:SubClassOf>
+
+	<owl:SubClassOf>
+		<owl:Class IRI="b"/>
+		<owl:ObjectIntersectionOf>
+			<owl:ObjectMinCardinality cardinality="0">
+				<owl:ObjectInverseOf>
+					<owl:ObjectProperty IRI=""/>
+				</owl:ObjectInverseOf>
+			</owl:ObjectMinCardinality>
+			<owl:ObjectSomeValuesFrom>
+				<owl:ObjectInverseOf>
+					<owl:ObjectProperty IRI=""/>
+				</owl:ObjectInverseOf>
+				<owl:Class abbreviatedIRI="owl:Thing"/>
+			</owl:ObjectSomeValuesFrom>
+		</owl:ObjectIntersectionOf>
+	</owl:SubClassOf>
