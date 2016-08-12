@@ -199,7 +199,7 @@ class GUI
 
     ##
     # Event handler for translate diagram to OWLlink using Ajax
-    # and the api/translate/calvanesse.php translator URL.
+    # and the api/translate/berardi.php translator URL.
     translate_owllink: () ->
         format = @crearclase.get_translation_format()
         $.mobile.loading("show", 

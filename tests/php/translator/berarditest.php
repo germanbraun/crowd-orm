@@ -5,7 +5,7 @@
    
    Author: Giménez, Christian   
 
-   calvanessetest.php
+   berarditest.php
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -24,10 +24,10 @@
 require_once("common.php");
 
 // use function \load;
-load("calvanessestrat.php", "wicom/translator/strategies/");
+load("berardistrat.php", "wicom/translator/strategies/");
 load("owllinkbuilder.php", "wicom/translator/builders/");
 
-use Wicom\Translator\Strategies\Calvanesse;
+use Wicom\Translator\Strategies\Berardi;
 use Wicom\Translator\Builders\OWLlinkBuilder;
 
 /**
@@ -36,7 +36,7 @@ use Wicom\Translator\Builders\OWLlinkBuilder;
 
    It will only check for the amount of attributes.
  */
-class CalvanesseTest extends PHPUnit_Framework_TestCase
+class BerardiTest extends PHPUnit_Framework_TestCase
 {
 
     public function testTranslate(){
@@ -62,7 +62,7 @@ xsi:schemaLocation=\"http://www.owllink.org/owllink# http://www.owllink.org/owll
        </Tell>
 </RequestMessage>";
         
-        $strategy = new Calvanesse();
+        $strategy = new Berardi();
         $builder = new OWLlinkBuilder();
 
         $builder->insert_header(); // Without this, loading the DOMDocument
@@ -172,7 +172,7 @@ EOT;
 </RequestMessage>
 EOT;
         
-        $strategy = new Calvanesse();
+        $strategy = new Berardi();
         $builder = new OWLlinkBuilder();
 
         $builder->insert_header(); // Without this, loading the DOMDocument
@@ -276,7 +276,7 @@ EOT;
 </RequestMessage>
 EOT;
         
-        $strategy = new Calvanesse();
+        $strategy = new Berardi();
         $builder = new OWLlinkBuilder();
 
         $builder->insert_header(); // Without this, loading the DOMDocument

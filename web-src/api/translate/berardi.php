@@ -5,7 +5,7 @@
    
    Author: Giménez, Christian   
 
-   calvanesse.php
+   berardi.php
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -23,12 +23,16 @@
 
 
 /**
-   Translate to OWLlink using Calvanesse strategy. 
+   Translate to OWLlink using Berardi strategy. 
+
+   The Berardi strategy implements the method explained on "Reasoning on UML 
+   Class Diagrams" by Daniela Berardi, Diego Calvanesse and Giuseppe De
+   Giacomo.
 
    Try this command:
    
    @code
-   curl -d 'json={\"classes\": [{\"attrs\":[], \"methods\":[], \"name\": \"Hi World\"}]}' http://host.com/api/translate/calvanesse.php";
+   curl -d 'json={\"classes\": [{\"attrs\":[], \"methods\":[], \"name\": \"Hi World\"}]}' http://host.com/api/translate/berardi.php";
    @endcode
 
    @return An XML web page.
@@ -38,12 +42,12 @@ require_once '../../common/import_functions.php';
 
 load('translator.php', '../../wicom/translator/');
 load('owllinkdocument.php', '../../wicom/translator/documents/');
-load('calvanessestrat.php','../../wicom/translator/strategies/');
+load('berardistrat.php','../../wicom/translator/strategies/');
 load('owllinkbuilder.php', '../../wicom/translator/builders/');
 load('htmlbuilder.php', '../../wicom/translator/builders/');
 
 use Wicom\Translator\Translator;
-use Wicom\Translator\Strategies\Calvanesse;
+use Wicom\Translator\Strategies\Berardi;
 use Wicom\Translator\Builders\OWLlinkBuilder;
 use Wicom\Translator\Builders\HTMLBuilder;
 
@@ -57,7 +61,7 @@ if ( ! array_key_exists('json', $_POST)){
 There's no \"json\" parameter :-(
 Use, for example:
 
-    curl -d 'json={\"classes\": [{\"attrs\":[], \"methods\":[], \"name\": \"Hi World\"}]}' http://host.com/translator/calvanesse.php";
+    curl -d 'json={\"classes\": [{\"attrs\":[], \"methods\":[], \"name\": \"Hi World\"}]}' http://host.com/translator/berardi.php";
 }else{
     $builder = null;
     
@@ -72,7 +76,7 @@ Use, for example:
         die("Format not recognized");
     }
         
-    $trans = new Translator(new Calvanesse(), $builder);
+    $trans = new Translator(new Berardi(), $builder);
     $res = $trans->to_owllink($_POST['json']);
     print_r($res);
 }

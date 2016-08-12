@@ -5,7 +5,7 @@
    
    Author: Giménez, Christian   
 
-   calvanessetrans.php
+   berardistrat.php
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -27,17 +27,21 @@ use function \load;
 load('strategy.php');
 
 /**
+   I implement the method explained on "Reasoning on UML Class Diagrams" by 
+   Daniela Berardi, Diego Calvanesse and Giuseppe De Giacomo.
+
    @see Translator class for description about the JSON format.
  */
-class Calvanesse extends Strategy{
+class Berardi extends Strategy{
 
     /**
        Translate a JSON String into another format depending on 
        the given Builder.
-       
-       Calvanesse strategy do:
-       
-       - Each UML Class is a Class concept in DL.       
+
+       I implement the method explained on "Reasoning on UML Class Diagrams" by 
+       Daniela Berardi, Diego Calvanesse and Giuseppe De Giacomo.
+              
+       - Each UML Class is a Class concept in DL.
 
        @param json_str A String with a diagram representation in 
        JSON format.
