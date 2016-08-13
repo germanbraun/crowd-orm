@@ -134,7 +134,7 @@ class Link extends MyModel
     #   the first class is the "from" and the second is the "to" class
     #   in a two-linked relation.
     constructor: (@classes) ->
-        super("")
+        super(Link.get_new_name())
 
     #
     # @param class_from an instance of Class.
@@ -179,6 +179,12 @@ class Link extends MyModel
                 @joint = factory.create_association(
                     @classes[0].get_classid(),
                     @classes[1].get_classid())
+
+Link.get_new_name = () ->
+    if Link.name_number == undefined
+        Link.name_number = 0
+    Link.name_number = Link.name_number + 1
+    return "r" + Link.name_number
 
 # A generalization link.
 class Generalization extends Link
