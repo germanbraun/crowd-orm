@@ -45,11 +45,90 @@ class HTMLBuilder extends DocumentBuilder{
     public function insert_header(){
     }
     public function insert_footer(){
+        $this->product->end_document();
     }
+
+    /**
+       @name Queries
+    */
+    ///@{
     public function insert_satisfiable(){
     }
     public function insert_satisfiable_class($classname){
     }
+    ///@}
+
+    /**
+       @name DL List 
+    */
+    ///@{
+
+    function translate_DL($DL_list){
+        foreach ($DL_list as $elt){
+            $this->product->begin_line();
+            $this->DL_element($elt);
+            $this->product->end_line();
+        }
+        
+    }
+
+    protected function translate_DL_internal($DL_list){
+        foreach ($DL_list as $elt){
+            $this->DL_element($elt);
+        }
+    }
+    
+    protected function DL_element($elt){
+        $key = array_keys($elt)[0];
+
+        switch ($key){
+        case "class" :
+            $this->product->insert_class($elt["class"]);
+            break;
+        case "role" :
+            $this->product->insert_objectproperty($elt["role"]);
+            break;
+        case "subclass" :
+            $this->product->begin_subclassof();
+            // We expect various consecutives DL cexpressions 
+            // (two classes for example)
+            $this->translate_DL_internal($elt["subclass"]);
+            $this->product->end_subclassof();
+            break;
+        case "intersection" :
+            $this->product->begin_intersectionof();
+            $this->translate_DL_internal($elt["intersection"]);
+            $this->product->end_intersectionof();
+            break;
+        case "inverse" :
+            $this->product->begin_inverseof();
+            // We expect one DL expression
+            // (the inverse of the inverse of the role for example,
+            // but not one role, and one inverse of another role).
+            $this->DL_element($elt["inverse"]);
+            $this->product->end_inverseof();
+            break;
+        case "exists" :
+            $this->product->begin_somevaluesfrom();
+            $this->DL_element($elt["exists"]);
+            $this->product->insert_class("owl:Thing");
+            $this->product->end_somevaluesfrom();
+            break;
+        case "mincard" :
+            $this->product->begin_mincardinality($elt["mincard"][0]);
+            $this->DL_element($elt["mincard"][1]);
+            $this->product->end_mincardinality();
+            break;
+        case "maxcard" :
+            $this->product->begin_maxcardinality($elt["maxcard"][0]);
+            $this->DL_element($elt["maxcard"][1]);
+            $this->product->end_maxcardinality();
+            break;
+        default:
+            throw new \Exception("I don't know $key DL operand");
+        }
+    }
+    //@}
    
 }
 
