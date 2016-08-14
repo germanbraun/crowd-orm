@@ -40,6 +40,7 @@ class HTMLBuilderTest extends PHPUnit_Framework_TestCase
 <p><b>&#8849;</b>(&exist;((hasCellphone)<sup>-</sup> &#8868;)Cellphone)</p>
 <p><b>&#8849;</b>(Person (&ge; 1.hasCellphone))</p>
 <p><b>&#8849;</b>(Cellphone <b>&sqcap;</b>((&ge; 1.(hasCellphone)<sup>-</sup>)(&le; 1.(hasCellphone)<sup>-</sup>)))</p>
+<p><b>&#8849;</b>(&#8868; <b>&sqcap;</b>(&forall;(Rolename Classname)&forall;((Rolename)<sup>-</sup> Class2)))</p>
 EOT;
 
         
@@ -75,7 +76,19 @@ EOT;
                     ["maxcard" =>
                      [1,
                       ["inverse" => ["role" => "hasCellphone"]]]]
-                    ]]]]
+                ]]]],
+            ["subclass" => [
+                ["class" => "owl:Thing"],
+                ["intersection" => [
+                    ["forall" => [
+                        ["role" => "Rolename"],
+                        ["class" => "Classname"]]],
+                    ["forall" => [
+                        ["inverse" => 
+                         ["role" => "Rolename"]],
+                        ["class" => "Class2"]]]
+                ]] //intersection
+            ]] //subclass
         ]);
 
         $builder->insert_footer();

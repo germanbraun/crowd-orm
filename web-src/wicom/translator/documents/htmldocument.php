@@ -95,6 +95,13 @@ class HTMLDocument extends Document{
         $this->content .= ")";
     }
 
+    public function begin_allvaluesfrom(){
+        $this->content .= "&forall;(";
+    }
+    public function end_allvaluesfrom(){
+        $this->content .= ")";        
+    }
+
     public function begin_mincardinality($cardinality){
         $this->content .= "(&ge; $cardinality.";
     }
