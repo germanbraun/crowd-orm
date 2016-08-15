@@ -105,10 +105,10 @@ EOT;
   <CreateKB kb="http://localhost/kb1" />
   <Tell kb="http://localhost/kb1">
     <!-- <owl:ClassAssertion>
-      <owl:Class IRI="Person" />
-      <owl:NamedIndividual IRI="Mary" />
-      </owl:ClassAssertion>
-      -->
+	 <owl:Class IRI="Person" />
+	 <owl:NamedIndividual IRI="Mary" />
+	 </owl:ClassAssertion>
+    -->
     
     <owl:SubClassOf>
       <owl:Class IRI="Person" />
@@ -121,50 +121,43 @@ EOT;
     <!-- One person can has lots of cellphones -->
 
     <owl:SubClassOf>
-	<owl:ObjectSomeValuesFrom>
+      <owl:Class abbreviatedIRI="owl:Thing" />
+      <owl:ObjectIntersectionOf>
+	<owl:ObjectAllValuesFrom>
+	  <owl:ObjectProperty IRI="hasCellphone" />
+	  <owl:Class IRI="Person" />
+	</owl:ObjectAllValuesFrom>
+	<owl:ObjectAllValuesFrom>
+	  <owl:ObjectInverseOf>
+	    <owl:ObjectProperty IRI="hasCellphone" />	    
+	  </owl:ObjectInverseOf>
+	  <owl:Class IRI="Cellphone" />
+	</owl:ObjectAllValuesFrom>
+      </owl:ObjectIntersectionOf>
+    </owl:SubClassOf>
+
+    <!-- Multiplicity -->
+    <owl:SubClassOf>
+      <owl:Class IRI="Person" />
+      <owl:ObjectMinCardinality cardinality="1">
+	<owl:ObjectProperty IRI="hasCellphone" />
+      </owl:ObjectMinCardinality>      
+    </owl:SubClassOf>
+
+    <owl:SubClassOf>
+      <owl:Class IRI="Cellphone" />
+      <owl:ObjectIntersectionOf>
+	<owl:ObjectMinCardinality cardinality="1">
+	  <owl:ObjectInverseOf>
 	    <owl:ObjectProperty IRI="hasCellphone" />
-	    <owl:Class abbreviatedIRI="owl:Thing" />
-	</owl:ObjectSomeValuesFrom>
-	<owl:Class IRI="Person" />
-    </owl:SubClassOf>
-   
-    <owl:SubClassOf>
-	<owl:ObjectSomeValuesFrom>
-	    <owl:ObjectInverseOf>
-		<owl:ObjectProperty IRI="hasCellphone" />
-	    </owl:ObjectInverseOf>
-	    <owl:Class abbreviatedIRI="owl:Thing" />
-	</owl:ObjectSomeValuesFrom>
-	<owl:Class IRI="Cellphone" />
-    </owl:SubClassOf>
-
-    <owl:SubClassOf>
-	<owl:Class IRI="Person" />
-	<owl:ObjectIntersectionOf>
-  	  <owl:ObjectMinCardinality cardinality="1">
-	      <owl:ObjectProperty IRI="hasCellphone" />
-      </owl:ObjectMinCardinality>
-      <owl:ObjectSomeValuesFrom>
-		<owl:ObjectProperty IRI="hasCellphone" />
-        <owl:Class abbreviatedIRI="owl:Thing" />
-      </owl:ObjectSomeValuesFrom>
-    </owl:ObjectIntersectionOf>
-    </owl:SubClassOf>
-
-    <owl:SubClassOf>
-	<owl:Class IRI="Cellphone" />
-	<owl:ObjectIntersectionOf>
-	    <owl:ObjectMinCardinality cardinality="1">
-		<owl:ObjectInverseOf>
-		    <owl:ObjectProperty IRI="hasCellphone" />
-		</owl:ObjectInverseOf>
-	    </owl:ObjectMinCardinality>
-	    <owl:ObjectMaxCardinality cardinality="1">
-		<owl:ObjectInverseOf>
-		    <owl:ObjectProperty IRI="hasCellphone" />
-		</owl:ObjectInverseOf>
-	    </owl:ObjectMaxCardinality>
-	</owl:ObjectIntersectionOf>
+	  </owl:ObjectInverseOf>
+	</owl:ObjectMinCardinality>
+	<owl:ObjectMaxCardinality cardinality="1">
+	  <owl:ObjectInverseOf>
+	    <owl:ObjectProperty IRI="hasCellphone" />
+	  </owl:ObjectInverseOf>
+	</owl:ObjectMaxCardinality>
+      </owl:ObjectIntersectionOf>
     </owl:SubClassOf>
 
   </Tell>
@@ -224,53 +217,22 @@ EOT;
     <!-- One person can has lots of cellphones -->
 
     <owl:SubClassOf>
-	<owl:ObjectSomeValuesFrom>
-	    <owl:ObjectProperty IRI="hasCellphone" />
-	    <owl:Class abbreviatedIRI="owl:Thing" />
-	</owl:ObjectSomeValuesFrom>
+      <owl:Class abbreviatedIRI="owl:Thing" />
+      <owl:ObjectAllValuesFrom>
+	<owl:ObjectProperty IRI="hasCellphone" />
 	<owl:Class IRI="Person" />
+      </owl:ObjectAllValuesFrom>
     </owl:SubClassOf>
-   
+    
     <owl:SubClassOf>
-	<owl:ObjectSomeValuesFrom>
-	    <owl:ObjectInverseOf>
-		<owl:ObjectProperty IRI="hasCellphone" />
-	    </owl:ObjectInverseOf>
-	    <owl:Class abbreviatedIRI="owl:Thing" />
-	</owl:ObjectSomeValuesFrom>
-	<owl:Class IRI="Cellphone" />
+      <owl:Class abbreviatedIRI="owl:Thing" />
+      <owl:ObjectAllValuesFrom>
+	<owl:ObjectInverseOf>
+	  <owl:ObjectProperty IRI="hasCellphone" />
+	</owl:ObjectInverseOf>
+	<owl:Class abbreviatedIRI="Cellphone" />
+      </owl:ObjectAllValuesFrom>
     </owl:SubClassOf>
-
-    <owl:SubClassOf>
-	<owl:Class IRI="Person" />
-    <owl:ObjectIntersectionOf>
-	  <owl:ObjectMinCardinality cardinality="0">
-	      <owl:ObjectProperty IRI="hasCellphone" />
-	  </owl:ObjectMinCardinality>
-	  <owl:ObjectSomeValuesFrom>
-		  <owl:ObjectProperty IRI="hasCellphone" />
-	      <owl:Class abbreviatedIRI="owl:Thing" />
-	  </owl:ObjectSomeValuesFrom>
-    </owl:ObjectIntersectionOf>
-    </owl:SubClassOf>
-
-    <owl:SubClassOf>
-	<owl:Class IRI="Cellphone" />
-    <owl:ObjectIntersectionOf>
-      <owl:ObjectMinCardinality cardinality="0">
-		  <owl:ObjectInverseOf>
-		    <owl:ObjectProperty IRI="hasCellphone" />
-		  </owl:ObjectInverseOf>
-      </owl:ObjectMinCardinality>
-	  <owl:ObjectSomeValuesFrom>
-	    <owl:ObjectInverseOf>
-		<owl:ObjectProperty IRI="hasCellphone" />
-	    </owl:ObjectInverseOf>
-	    <owl:Class abbreviatedIRI="owl:Thing" />
-	  </owl:ObjectSomeValuesFrom>
-    </owl:ObjectIntersectionOf>
-    </owl:SubClassOf>
-
   </Tell>
   <!-- <ReleaseKB kb="http://localhost/kb1" /> -->
 </RequestMessage>
