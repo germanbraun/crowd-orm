@@ -314,6 +314,14 @@ class OWLlinkDocument extends Document{
     public function end_somevaluesfrom(){
         $this->content->EndElement();
     }
+
+    public function begin_allvaluesfrom(){
+        $this->content->startElement("owl:ObjectAllValuesFrom");
+    }
+    public function end_allvaluesfrom(){
+        $this->content->EndElement();
+    }
+    
     public function begin_mincardinality($cardinality){
         $this->content->startElement("owl:ObjectMinCardinality");
         $this->content->writeAttribute("cardinality", $cardinality);

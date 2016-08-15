@@ -98,6 +98,16 @@ class OWLlinkBuilderTest extends PHPUnit_Framework_TestCase
 	</owl:ObjectIntersectionOf>
     </owl:SubClassOf>
 
+    <owl:SubClassOf>
+      <owl:Class abbreviatedIRI="owl:Thing" />
+      <owl:ObjectAllValuesFrom>
+        <owl:ObjectInverseOf>
+          <owl:ObjectProperty IRI="hasCellphone" />
+        </owl:ObjectInverseOf>
+        <owl:Class IRI="Cellphone" />
+      </owl:ObjectAllValuesFrom>
+    </owl:SubClassOf>
+
   </Tell>
   <!-- <ReleaseKB kb="http://localhost/kb1" /> -->
 </RequestMessage>
@@ -136,7 +146,13 @@ EOT;
                     ["maxcard" =>
                      [1,
                       ["inverse" => ["role" => "hasCellphone"]]]]
-                    ]]]]
+                ]]]],
+            ["subclass" => [
+                ["class" => "owl:Thing"],
+                ["forall" => [
+                    ["inverse" =>
+                     ["role" => "hasCellphone"]],
+                    ["class" => "Cellphone"]]]]]
         ]);
 
         $builder->insert_footer();

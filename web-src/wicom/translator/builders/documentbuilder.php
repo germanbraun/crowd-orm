@@ -134,6 +134,12 @@ You passed a " . gettype($elt) . " on: " . print_r($elt, true) );
             $this->product->insert_class("owl:Thing");
             $this->product->end_somevaluesfrom();
             break;
+        case "forall" :
+            $this->product->begin_allvaluesfrom();
+            $this->DL_element($elt["forall"][0]);
+            $this->DL_element($elt["forall"][1]);
+            $this->product->end_allvaluesfrom();
+            break;
         case "mincard" :
             $this->product->begin_mincardinality($elt["mincard"][0]);
             $this->DL_element($elt["mincard"][1]);
