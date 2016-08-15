@@ -132,14 +132,17 @@ class Berardi extends Strategy{
             
             $builder->translate_DL([
                 ["subclass" => [
-                    ["exists" =>
-                     ["role" => $link["name"]]],
-                    ["class" => $link["classes"][0]]]],                
-                ["subclass" => [
-                    ["exists" =>
-                     ["inverse" =>
-                      ["role" => $link["name"]]]],
-                    ["class" => $classes[1]]]]
+                    ["class" => "owl:Thing"],
+                    ["intersection" => [
+                        ["forall" => [
+                            ["role" => $link["name"]],
+                            ["class" => $classes[0]]]],
+                        ["forall" => [
+                            ["inverse" => 
+                             ["role" => $link["name"]]],
+                            ["class" => $classes[1]]]]
+                    ]] //intersection
+                ]] //subclass
             ]);
 
             $rest = $this->translate_multiplicity($mult[1], $link["name"]);
