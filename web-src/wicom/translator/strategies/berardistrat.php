@@ -93,7 +93,6 @@ class Berardi extends Strategy{
             break;
         case "0..1":
             $ret = ["intersection" => [
-                ["mincard" => $sub0_DL],
                 ["maxcard" => $sub1_DL]]];
             break;            
         case "1..*":
@@ -103,12 +102,9 @@ class Berardi extends Strategy{
                 ["exists" => $arr_role]
             ]];
             break;
-        case "0..*":
+        case "0..*":            
         case "0..n":
-            $ret = ["intersection" => [
-                ["mincard" => $sub0_DL],
-                ["exists" => $arr_role]
-                ]];
+            $ret = [];
             break;
         }
         return $ret;
@@ -146,23 +142,28 @@ class Berardi extends Strategy{
             ]);
 
             $rest = $this->translate_multiplicity($mult[1], $link["name"]);
-            $lst = [
-                ["subclass" => [
-                    ["class" => $classes[0]],
-                    $rest
-                ]]
-            ];
-            $builder->translate_DL($lst);
+            if (($rest != null) and (count($rest) > 0)){
+                // Multiplicity should be written.
+                $lst = [
+                    ["subclass" => [
+                        ["class" => $classes[0]],
+                        $rest
+                    ]]
+                ];
+                $builder->translate_DL($lst);
+            }
 
             $rest = $this->translate_multiplicity($mult[0], $link["name"], false);
-            $lst = [
-                ["subclass" => [
-                    ["class" => $classes[1]],
-                    $rest
-                ]]
-            ];
-            $builder->translate_DL($lst);
-            
+            if (($rest != null) and (count($rest) > 0)){
+                // Multiplicity should be written.
+                $lst = [
+                    ["subclass" => [
+                        ["class" => $classes[1]],
+                        $rest
+                    ]]
+                ];
+                $builder->translate_DL($lst);
+            }
 
         }
         
