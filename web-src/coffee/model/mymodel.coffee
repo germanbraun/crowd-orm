@@ -135,7 +135,21 @@ class Link extends MyModel
     #   in a two-linked relation.
     constructor: (@classes) ->
         super(Link.get_new_name())
+        @mult = [null, null]
 
+    # Set the multiplicity.
+    #
+    # For example:
+    # `[null, null]` or `["0..*", "0..*"]` means from 0..* to 0..*.
+    # `[1..*, null]` means from 1..* to 0..*.
+    # 
+    # @param [array] mult An array that describes the multiplicity in strings.
+    set_mult : (@mult) ->
+        change_to_null(m,i) for m,i in @mult
+
+    change_to_null : (mult, index) ->
+        if (mult == "0..*") or (mult == "0..n")
+            @mult[index] = null
     #
     # @param class_from an instance of Class.
     set_from : (class_from) ->
@@ -162,7 +176,7 @@ class Link extends MyModel
         json.classes = $.map(@classes, (myclass) ->
             myclass.get_name()
         )
-        json.multiplicity = ["0..*", "0..*"]
+        json.multiplicity = @mult
         json.type = "association"
 
         return json
@@ -173,12 +187,16 @@ class Link extends MyModel
                 @joint = factory.create_association(
                     @classes[0].get_classid(),
                     @classes[1].get_classid(),
-                    null,
-                    csstheme.css_links)
+                    @name,
+                    csstheme.css_links,
+                    @mult)
             else
                 @joint = factory.create_association(
                     @classes[0].get_classid(),
-                    @classes[1].get_classid())
+                    @classes[1].get_classid(),
+                    @name
+                    null,
+                    @mult)
 
 Link.get_new_name = () ->
     if Link.name_number == undefined

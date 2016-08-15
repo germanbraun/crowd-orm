@@ -65,22 +65,38 @@ class UMLFactory extends Factory
             
         return newclass
 
+    # @param [array] mult The multiplicity strings.
     # @return [joint.dia.Link]
-    create_association: (class_a_id, class_b_id, name = null, css_links = null) ->
+    create_association: (class_a_id, class_b_id, name = null, css_links = null, mult = null) ->
         link = new joint.dia.Link(
                 source: {id: class_a_id},
                 target: {id: class_b_id},
                 attrs: css_links
                 )
-                
+
+        labels = []
         if name != null
-            link.set(
-                labels: [
-                    position: -20,
-                    attrs: 
-                        text: {dy: -y , text: name, fill: '#ffffff'},
-                        rect: {fill: 'none'} 
-                ]
+            labels = labels.concat([
+                position: 0.5,
+                attrs: 
+                    text: {text: name, fill: '#0000ff'},
+                    rect: {fill: '#ffffff'} 
+                ])
+        if mult != null
+            if mult[0] != null
+                labels = labels.concat([
+                    position: 0.1,
+                    attrs:
+                        text: {text: mult[0], fill: '#0000ff'},
+                        rect: {fill: '#ffffff'}])
+            if mult[1] != null
+                labels = labels.concat([
+                    position: 0.9,
+                    attrs:
+                        text: {text: mult[1], fill: '#0000ff'},
+                        rect: {fill: '#ffffff'}])
+        link.set(
+            labels: labels
             )
             
         return link
