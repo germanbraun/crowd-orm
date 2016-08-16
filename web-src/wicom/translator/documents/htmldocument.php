@@ -88,6 +88,20 @@ class HTMLDocument extends Document{
         $this->content .= ")";
     }
 
+    public function begin_unionof(){
+        $this->content .= "<b>&sqcup;</b>(";
+    }
+    public function end_unionof(){
+        $this->content .= ")";
+    }
+
+    public function begin_complementof(){
+        $this->content .= "<b>&not;</b>(";
+    }
+    public function end_complementof(){
+        $this->content .= ")";
+    }
+
     public function begin_somevaluesfrom(){
         $this->content .= "&exist;(";
     }

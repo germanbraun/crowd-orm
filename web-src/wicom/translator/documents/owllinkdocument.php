@@ -308,6 +308,21 @@ class OWLlinkDocument extends Document{
     public function end_intersectionof(){
         $this->content->EndElement();
     }
+
+    public function begin_unionof(){
+        $this->content->startElement("owl:ObjectUnionOf");
+    }
+    public function end_unionof(){
+        $this->content->EndElement();
+    }
+
+    public function begin_complementof(){
+        $this->content->startElement("owl:ObjectComplementOf");
+    }
+    public function end_complementof(){
+        $this->content->EndElement();
+    }
+    
     public function begin_somevaluesfrom(){
         $this->content->startElement("owl:ObjectSomeValuesFrom");
     }

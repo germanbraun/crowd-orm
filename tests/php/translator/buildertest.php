@@ -108,6 +108,16 @@ class OWLlinkBuilderTest extends PHPUnit_Framework_TestCase
       </owl:ObjectAllValuesFrom>
     </owl:SubClassOf>
 
+    <owl:ObjectUnionOf>
+      <owl:Class abbreviatedIRI="owl:Thing" />
+      <owl:Class IRI="hi world" />
+      <owl:Class IRI="hi two" />
+    </owl:ObjectUnionOf>
+
+    <owl:ObjectComplementOf>
+      <owl:Class abbreviatedIRI="owl:Thing" />
+    </owl:ObjectComplementOf>
+
   </Tell>
   <!-- <ReleaseKB kb="http://localhost/kb1" /> -->
 </RequestMessage>
@@ -152,7 +162,12 @@ EOT;
                 ["forall" => [
                     ["inverse" =>
                      ["role" => "hasCellphone"]],
-                    ["class" => "Cellphone"]]]]]
+                    ["class" => "Cellphone"]]]]],
+            ["union" => [
+                ["class" => "owl:Thing"],
+                ["class" => "hi world"],
+                ["class" => "hi two"]]],
+            ["complement" => ["class" => "owl:Thing"]]
         ]);
 
         $builder->insert_footer();

@@ -120,6 +120,16 @@ You passed a " . gettype($elt) . " on: " . print_r($elt, true) );
             $this->translate_DL($elt["intersection"]);
             $this->product->end_intersectionof();
             break;
+        case "union" :
+            $this->product->begin_unionof();
+            $this->translate_DL($elt["union"]);
+            $this->product->end_unionof();
+            break;
+        case "complement" :
+            $this->product->begin_complementof();
+            $this->DL_element($elt["complement"]);
+            $this->product->end_complementof();
+            break;
         case "inverse" :
             $this->product->begin_inverseof();
             // We expect one DL expression
