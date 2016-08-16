@@ -92,15 +92,11 @@ class Berardi extends Strategy{
                 ["maxcard" => $sub1_DL]]];
             break;
         case "0..1":
-            $ret = ["intersection" => [
-                ["maxcard" => $sub1_DL]]];
+            $ret = ["maxcard" => $sub1_DL];
             break;            
         case "1..*":
         case "1..n":
-            $ret = ["intersection" => [
-                ["mincard" => $sub1_DL],
-                ["exists" => $arr_role]
-            ]];
+            $ret = ["mincard" => $sub1_DL];
             break;
         case "0..*":            
         case "0..n":
@@ -109,7 +105,74 @@ class Berardi extends Strategy{
         }
         return $ret;
     }
-    
+
+    /**
+       Translate only the association link.
+       
+       @param link A JSON object representing one association link.
+    */
+    protected function translate_association($link, $builder){
+        $classes = $link["classes"];
+        $mult = $link["multiplicity"];
+            
+        $builder->translate_DL([
+            ["subclass" => [
+                ["class" => "owl:Thing"],
+                ["intersection" => [
+                    ["forall" => [
+                        ["role" => $link["name"]],
+                        ["class" => $classes[0]]]],
+                    ["forall" => [
+                        ["inverse" => 
+                         ["role" => $link["name"]]],
+                        ["class" => $classes[1]]]]
+                ]] //intersection
+            ]] //subclass
+        ]);
+
+        $rest = $this->translate_multiplicity($mult[1], $link["name"]);
+        if (($rest != null) and (count($rest) > 0)){
+            // Multiplicity should be written.
+            $lst = [
+                ["subclass" => [
+                    ["class" => $classes[0]],
+                    $rest
+                ]]
+            ];
+            $builder->translate_DL($lst);
+        }
+
+        $rest = $this->translate_multiplicity($mult[0], $link["name"], false);
+        if (($rest != null) and (count($rest) > 0)){
+            // Multiplicity should be written.
+            $lst = [
+                ["subclass" => [
+                    ["class" => $classes[1]],
+                    $rest
+                ]]
+            ];
+            $builder->translate_DL($lst);
+        }
+    }
+
+    /**
+       Translate a generalization link into DL using the Builder.
+
+       @param link A generaization link in a JSON string.
+     */
+    protected function translate_generalization($link, $builder){
+        $parent = $link["parent"];
+        
+        foreach ($link["classes"] as $class){
+            $lst = [
+                ["subclass" => [
+                    ["class" => $class],
+                    ["class" => $parent]]]
+            ];
+            $builder->translate_DL($lst);
+        }
+    }
+
     /**
        Translate only the links from a JSON string with links using
        the given builder.
@@ -123,48 +186,14 @@ class Berardi extends Strategy{
         }
         $js_links = $json["links"];
         foreach ($js_links as $link){
-            $classes = $link["classes"];
-            $mult = $link["multiplicity"];
-            
-            $builder->translate_DL([
-                ["subclass" => [
-                    ["class" => "owl:Thing"],
-                    ["intersection" => [
-                        ["forall" => [
-                            ["role" => $link["name"]],
-                            ["class" => $classes[0]]]],
-                        ["forall" => [
-                            ["inverse" => 
-                             ["role" => $link["name"]]],
-                            ["class" => $classes[1]]]]
-                    ]] //intersection
-                ]] //subclass
-            ]);
-
-            $rest = $this->translate_multiplicity($mult[1], $link["name"]);
-            if (($rest != null) and (count($rest) > 0)){
-                // Multiplicity should be written.
-                $lst = [
-                    ["subclass" => [
-                        ["class" => $classes[0]],
-                        $rest
-                    ]]
-                ];
-                $builder->translate_DL($lst);
+            switch ($link["type"]){
+            case "association":
+                $this->translate_association($link, $builder);
+                break;
+            case "generalization":
+                $this->translate_generalization($link, $builder);
+                break;
             }
-
-            $rest = $this->translate_multiplicity($mult[0], $link["name"], false);
-            if (($rest != null) and (count($rest) > 0)){
-                // Multiplicity should be written.
-                $lst = [
-                    ["subclass" => [
-                        ["class" => $classes[1]],
-                        $rest
-                    ]]
-                ];
-                $builder->translate_DL($lst);
-            }
-
         }
         
     }

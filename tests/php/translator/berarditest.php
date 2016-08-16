@@ -140,7 +140,7 @@ EOT;
     <owl:SubClassOf>
       <owl:Class IRI="Person" />
       <owl:ObjectMinCardinality cardinality="1">
-	<owl:ObjectProperty IRI="hasCellphone" />
+        <owl:ObjectProperty IRI="hasCellphone" />
       </owl:ObjectMinCardinality>      
     </owl:SubClassOf>
 
@@ -218,21 +218,84 @@ EOT;
 
     <owl:SubClassOf>
       <owl:Class abbreviatedIRI="owl:Thing" />
-      <owl:ObjectAllValuesFrom>
-	<owl:ObjectProperty IRI="hasCellphone" />
-	<owl:Class IRI="Person" />
-      </owl:ObjectAllValuesFrom>
+      <owl:ObjectIntersectionOf>
+	<owl:ObjectAllValuesFrom>
+	  <owl:ObjectProperty IRI="hasCellphone" />
+	  <owl:Class IRI="Person" />	  
+	</owl:ObjectAllValuesFrom>	
+	<owl:ObjectAllValuesFrom>
+	  <owl:ObjectInverseOf>
+	    <owl:ObjectProperty IRI="hasCellphone" />
+	  </owl:ObjectInverseOf>
+	  <owl:Class IRI="Cellphone" />	  
+	</owl:ObjectAllValuesFrom>
+      </owl:ObjectIntersectionOf>
     </owl:SubClassOf>
     
+  </Tell>
+  <!-- <ReleaseKB kb="http://localhost/kb1" /> -->
+</RequestMessage>
+EOT;
+        
+        $strategy = new Berardi();
+        $builder = new OWLlinkBuilder();
+
+        $builder->insert_header(); // Without this, loading the DOMDocument
+        // will throw error for the owl namespace
+        $strategy->translate($json, $builder);
+        $builder->insert_footer();
+        
+        $actual = $builder->get_product();
+        $actual = $actual->to_string();
+
+       
+        /*$expected = process_xmlspaces($expected);
+        $actual = process_xmlspaces($actual);*/
+        $this->assertXmlStringEqualsXmlString($expected, $actual, TRUE);
+    }
+
+    # Test generalization is translated properly.
+    public function testTranslateGeneralization(){
+        //TODO: Complete JSON!
+        $json = <<<'EOT'
+{"classes": [
+    {"attrs":[], "methods":[], "name": "Person"},
+    {"attrs":[], "methods":[], "name": "Employee"}],
+ "links": [
+     {"classes": ["Employee"],
+      "multiplicity": null,
+      "name": "r1",
+      "type": "generalization",
+      "parent": "Person"}
+	]
+}
+EOT;
+        //TODO: Complete XML!
+        $expected = <<<'EOT'
+<?xml version="1.0" encoding="UTF-8"?>
+<RequestMessage xmlns="http://www.owllink.org/owllink#"
+		xmlns:owl="http://www.w3.org/2002/07/owl#" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd">
+  <CreateKB kb="http://localhost/kb1" />
+  <Tell kb="http://localhost/kb1">
+    
     <owl:SubClassOf>
+      <owl:Class IRI="Person" />
       <owl:Class abbreviatedIRI="owl:Thing" />
-      <owl:ObjectAllValuesFrom>
-	<owl:ObjectInverseOf>
-	  <owl:ObjectProperty IRI="hasCellphone" />
-	</owl:ObjectInverseOf>
-	<owl:Class abbreviatedIRI="Cellphone" />
-      </owl:ObjectAllValuesFrom>
     </owl:SubClassOf>
+    <owl:SubClassOf>
+      <owl:Class IRI="Employee" />
+      <owl:Class abbreviatedIRI="owl:Thing" />
+    </owl:SubClassOf>
+    
+    <!-- Generalization -->
+
+    <owl:SubClassOf>
+      <owl:Class IRI="Employee" />
+	  <owl:Class IRI="Person" />
+    </owl:SubClassOf>
+    
   </Tell>
   <!-- <ReleaseKB kb="http://localhost/kb1" /> -->
 </RequestMessage>
