@@ -164,11 +164,66 @@ class Berardi extends Strategy{
         $parent = $link["parent"];
         
         foreach ($link["classes"] as $class){
+            // Translate the parent-child relation
             $lst = [
                 ["subclass" => [
                     ["class" => $class],
                     ["class" => $parent]]]
             ];
+            $builder->translate_DL($lst);
+
+            // Translate the disjoint constraint DL
+            if (in_array("disjoint",$link["constraint"])){
+                $index = array_search($class, $link["classes"]);
+                $complements = array_slice($link["classes"], $index+1);
+                
+                // Make the complement of Class_index for each j=index..n
+                $comp_dl = [];
+                foreach ($complements as $compclass){
+                    array_push($comp_dl,
+                               ["complement" =>
+                                ["class" => $compclass]]
+                    );
+                }
+
+                
+                // Create the disjoint DL with the complements.
+                $lst = null;
+                if (count($complements) > 1){
+                    $lst = [
+                        ["subclass" => [
+                            ["class" => $class],
+                            ["intersection" => 
+                             $comp_dl]]]
+
+                    ];
+                    
+                    $builder->translate_DL($lst);
+                }else{ if (count($complements) == 1){                        
+                        $lst = [["subclass" => [
+                            ["class" => $class],
+                            $comp_dl[0]
+                        ]]];
+
+                        $builder->translate_DL($lst);
+                    }
+                }
+                
+                
+                
+            } // end if-disjoint
+        } // end foreach
+
+        // Translate the covering constraint
+        if (in_array("covering", $link["constraint"])){
+            $union = [];
+            foreach ($link["classes"] as $classunion){
+                array_push($union, ["class" => $classunion]);
+            }
+            $lst = [["subclass" => [
+                ["class" => $parent],
+                ["union" => $union]
+            ]]];
             $builder->translate_DL($lst);
         }
     }

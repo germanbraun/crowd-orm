@@ -253,6 +253,7 @@ EOT;
         $actual = process_xmlspaces($actual);*/
         $this->assertXmlStringEqualsXmlString($expected, $actual, TRUE);
     }
+        
 
     # Test generalization is translated properly.
     public function testTranslateGeneralization(){
@@ -266,11 +267,11 @@ EOT;
       "multiplicity": null,
       "name": "r1",
       "type": "generalization",
-      "parent": "Person"}
+      "parent": "Person",
+      "constraint": []}
 	]
 }
 EOT;
-        //TODO: Complete XML!
         $expected = <<<'EOT'
 <?xml version="1.0" encoding="UTF-8"?>
 <RequestMessage xmlns="http://www.owllink.org/owllink#"
@@ -294,6 +295,198 @@ EOT;
     <owl:SubClassOf>
       <owl:Class IRI="Employee" />
 	  <owl:Class IRI="Person" />
+    </owl:SubClassOf>
+    
+  </Tell>
+  <!-- <ReleaseKB kb="http://localhost/kb1" /> -->
+</RequestMessage>
+EOT;
+        
+        $strategy = new Berardi();
+        $builder = new OWLlinkBuilder();
+
+        $builder->insert_header(); // Without this, loading the DOMDocument
+        // will throw error for the owl namespace
+        $strategy->translate($json, $builder);
+        $builder->insert_footer();
+        
+        $actual = $builder->get_product();
+        $actual = $actual->to_string();
+
+       
+        /*$expected = process_xmlspaces($expected);
+        $actual = process_xmlspaces($actual);*/
+        $this->assertXmlStringEqualsXmlString($expected, $actual, TRUE);
+    }
+
+    # Test generalization with disjoint constraint is translated properly.
+    public function testTranslateGenDisjoint(){
+        //TODO: Complete JSON!
+        $json = <<<'EOT'
+{"classes": [
+    {"attrs":[], "methods":[], "name": "Person"},
+    {"attrs":[], "methods":[], "name": "Employee"},
+    {"attrs":[], "methods":[], "name": "Employer"},
+    {"attrs":[], "methods":[], "name": "Director"}],
+ "links": [
+     {"classes": ["Employee", "Employer", "Director"],
+      "multiplicity": null,
+      "name": "r1",
+      "type": "generalization",
+      "parent": "Person",
+      "constraint": ["disjoint"]}
+	]
+}
+EOT;
+        $expected = <<<'EOT'
+<?xml version="1.0" encoding="UTF-8"?>
+<RequestMessage xmlns="http://www.owllink.org/owllink#"
+		xmlns:owl="http://www.w3.org/2002/07/owl#" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd">
+  <CreateKB kb="http://localhost/kb1" />
+  <Tell kb="http://localhost/kb1">
+    
+    <owl:SubClassOf>
+      <owl:Class IRI="Person" />
+      <owl:Class abbreviatedIRI="owl:Thing" />
+    </owl:SubClassOf>
+    <owl:SubClassOf>
+      <owl:Class IRI="Employee" />
+      <owl:Class abbreviatedIRI="owl:Thing" />
+    </owl:SubClassOf>
+    <owl:SubClassOf>
+      <owl:Class IRI="Employer" />
+      <owl:Class abbreviatedIRI="owl:Thing" />
+    </owl:SubClassOf>
+    <owl:SubClassOf>
+      <owl:Class IRI="Director" />
+      <owl:Class abbreviatedIRI="owl:Thing" />
+    </owl:SubClassOf>
+    
+    <!-- Generalization -->
+
+    <owl:SubClassOf>
+      <owl:Class IRI="Employee" />
+	  <owl:Class IRI="Person" />
+    </owl:SubClassOf>
+    <owl:SubClassOf>
+      <owl:Class IRI="Employer" />
+	  <owl:Class IRI="Person" />
+    </owl:SubClassOf>
+    <owl:SubClassOf>
+      <owl:Class IRI="Director" />
+	  <owl:Class IRI="Person" />
+    </owl:SubClassOf>
+
+    <owl:SubClassOf>
+      <owl:Class IRI="Employee" />
+      <owl:ObjectIntersectionOf>
+        <owl:ObjectComplementOf>
+          <owl:Class IRI="Employer" />
+        </owl:ObjectComplementOf>
+        <owl:ObjectComplementOf>
+          <owl:Class IRI="Director" />
+        </owl:ObjectComplementOf>
+      </owl:ObjectIntersectionOf>
+    </owl:SubClassOf>
+
+    <owl:SubClassOf>
+      <owl:Class IRI="Employer" />
+      <owl:ObjectComplementOf>
+        <owl:Class IRI="Director" />
+      </owl:ObjectComplementOf>
+    </owl:SubClassOf>
+    
+  </Tell>
+  <!-- <ReleaseKB kb="http://localhost/kb1" /> -->
+</RequestMessage>
+EOT;
+        
+        $strategy = new Berardi();
+        $builder = new OWLlinkBuilder();
+
+        $builder->insert_header(); // Without this, loading the DOMDocument
+        // will throw error for the owl namespace
+        $strategy->translate($json, $builder);
+        $builder->insert_footer();
+        
+        $actual = $builder->get_product();
+        $actual = $actual->to_string();
+
+       
+        /*$expected = process_xmlspaces($expected);
+        $actual = process_xmlspaces($actual);*/
+        $this->assertXmlStringEqualsXmlString($expected, $actual, TRUE);
+    }
+
+    # Test generalization with covering constraint is translated properly.
+    public function testTranslateGenCovering(){
+        //TODO: Complete JSON!
+        $json = <<<'EOT'
+{"classes": [
+    {"attrs":[], "methods":[], "name": "Person"},
+    {"attrs":[], "methods":[], "name": "Employee"},
+    {"attrs":[], "methods":[], "name": "Employer"},
+    {"attrs":[], "methods":[], "name": "Director"}],
+ "links": [
+     {"classes": ["Employee", "Employer", "Director"],
+      "multiplicity": null,
+      "name": "r1",
+      "type": "generalization",
+      "parent": "Person",
+      "constraint": ["covering"]}
+	]
+}
+EOT;
+        $expected = <<<'EOT'
+<?xml version="1.0" encoding="UTF-8"?>
+<RequestMessage xmlns="http://www.owllink.org/owllink#"
+		xmlns:owl="http://www.w3.org/2002/07/owl#" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd">
+  <CreateKB kb="http://localhost/kb1" />
+  <Tell kb="http://localhost/kb1">
+    
+    <owl:SubClassOf>
+      <owl:Class IRI="Person" />
+      <owl:Class abbreviatedIRI="owl:Thing" />
+    </owl:SubClassOf>
+    <owl:SubClassOf>
+      <owl:Class IRI="Employee" />
+      <owl:Class abbreviatedIRI="owl:Thing" />
+    </owl:SubClassOf>
+    <owl:SubClassOf>
+      <owl:Class IRI="Employer" />
+      <owl:Class abbreviatedIRI="owl:Thing" />
+    </owl:SubClassOf>
+    <owl:SubClassOf>
+      <owl:Class IRI="Director" />
+      <owl:Class abbreviatedIRI="owl:Thing" />
+    </owl:SubClassOf>
+    
+    <!-- Generalization -->
+
+    <owl:SubClassOf>
+      <owl:Class IRI="Employee" />
+	  <owl:Class IRI="Person" />
+    </owl:SubClassOf>
+    <owl:SubClassOf>
+      <owl:Class IRI="Employer" />
+	  <owl:Class IRI="Person" />
+    </owl:SubClassOf>
+    <owl:SubClassOf>
+      <owl:Class IRI="Director" />
+	  <owl:Class IRI="Person" />
+    </owl:SubClassOf>
+
+    <owl:SubClassOf>
+      <owl:Class IRI="Person" />
+      <owl:ObjectUnionOf>
+          <owl:Class IRI="Employee" />
+          <owl:Class IRI="Employer" />
+          <owl:Class IRI="Director" />
+      </owl:ObjectUnionOf>
     </owl:SubClassOf>
     
   </Tell>
