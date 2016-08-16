@@ -145,7 +145,7 @@ class Link extends MyModel
     # 
     # @param [array] mult An array that describes the multiplicity in strings.
     set_mult : (@mult) ->
-        change_to_null(m,i) for m,i in @mult
+        this.change_to_null(m,i) for m,i in @mult
 
     change_to_null : (mult, index) ->
         if (mult == "0..*") or (mult == "0..n")

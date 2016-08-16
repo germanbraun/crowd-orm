@@ -64,11 +64,15 @@ class SelectionState extends State
 class AssociationState extends State
     constructor: () ->
         @cell_starter = null
+        @mult = null
 
     set_cellStarter: (@cell_starter) ->
 
+    set_mult: (@mult) ->
+    set_cardinality: (@mult) ->
+
     on_cell_clicked: (cell_view, event, x, y, gui) ->
-        gui.add_association(@cell_starter, cell_view.model.id)
+        gui.add_association(@cell_starter, cell_view.model.id, null, @mult)
         @cell_starter = null
 
 

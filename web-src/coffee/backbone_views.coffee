@@ -153,7 +153,21 @@ RelationOptionsView = Backbone.View.extend(
         'click a#isa_button' : 'new_isa'
 
     new_relation: () ->
-        gui.gui_instance.set_association_state(@classid)
+        mult = []
+        mult[0] = this.map_to_mult($('#cardfrom').val())
+        mult[1] = this.map_to_mult($('#cardto').val())
+        gui.gui_instance.set_association_state(@classid, mult)
+
+    # Map the Option value to multiplicity string.
+    #
+    # @param str {string} The value string.
+    # @return {String} A string that represent the multiplicity as in UML.
+    map_to_mult : (str) ->
+        switch str
+            when "zeromany" then "0..*"
+            when "onemany" then "1..*"
+            when "zeroone" then "0..1"
+            when "oneone" then "1..1"
 
     new_isa: () ->
         gui.gui_instance.set_isa_state(@classid)

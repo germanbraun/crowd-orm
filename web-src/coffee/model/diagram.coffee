@@ -79,12 +79,15 @@ class Diagram
     
     # @param class_a_id {string} the ID of the first class.
     # @param class_b_id {string} the ID of the second class.
-    # @param name {string} optional. THe name of the association.
-    add_association: (class_a_id, class_b_id, name = null) ->
+    # @param name {string} optional. The name of the association.
+    # @param mult {array} optional. An array of two strings with the cardinality from class a and to class b.
+    add_association: (class_a_id, class_b_id, name = null, mult = null) ->
         class_a = this.find_class_by_classid(class_a_id)
         class_b = this.find_class_by_classid(class_b_id)
         
         newassoc = new Link([class_a, class_b])
+        if (mult != null)
+            newassoc.set_mult(mult)
         
         this.agregar_link(newassoc)
 

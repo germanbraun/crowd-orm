@@ -107,8 +107,10 @@ class GUI
     #
     # @param class_a_id {string} 
     # @param class_b_id {string}
-    add_association: (class_a_id, class_b_id) ->
-        @diag.add_association(class_a_id, class_b_id)
+    # @param name {string} optional. The association name.
+    # @param mult {array} optional. An array of two string with the cardinality from class and to class b.
+    add_association: (class_a_id, class_b_id, name=null, mult=null) ->
+        @diag.add_association(class_a_id, class_b_id, name, mult)
         this.set_selection_state()
 
     # Add a Generalization link and then set the selection state.
@@ -224,9 +226,11 @@ class GUI
     #
     # @param class_id {string} The id of the class that triggered it and thus,
     #   the starting class of the association.
-    set_association_state: (class_id) ->
+    # @param mult {array} An array of two strings representing the cardinality from and to.
+    set_association_state: (class_id, mult) ->
         @state = gui.state_inst.association_state()
         @state.set_cellStarter(class_id)
+        @state.set_cardinality(mult)
 
     set_isa_state: (class_id) ->
         @state = gui.state_inst.isa_state()
