@@ -119,8 +119,8 @@ class GUI
     # @param class_child_id {string} The child class Id.
     # 
     # @todo Support various children on parameter class_child_id.
-    add_generalization: (class_parent_id, class_child_id) ->
-        @diag.add_generalization(class_parent_id, class_child_id)
+    add_generalization: (class_parent_id, class_child_id, disjoint=false, covering=false) ->
+        @diag.add_generalization(class_parent_id, class_child_id, disjoint, covering)
         this.set_selection_state()
 
     #
@@ -232,9 +232,15 @@ class GUI
         @state.set_cellStarter(class_id)
         @state.set_cardinality(mult)
 
-    set_isa_state: (class_id) ->
+    # Change to the IsA GUI State so the user can select the child for the parent.
+    #
+    # @param class_id {String} The JointJS::Cell id for the parent class.
+    # @param disjoint {Boolean} optional. If the relation has the disjoint constraint.
+    # @param covering {Boolean} optional. If the relation has the disjoint constraint.
+    set_isa_state: (class_id, disjoint=false, covering=false) ->
         @state = gui.state_inst.isa_state()
         @state.set_cellStarter(class_id)
+        @state.set_constraint(disjoint, covering) 
 
     # Change the interface into a "selection" state.
     set_selection_state: () ->

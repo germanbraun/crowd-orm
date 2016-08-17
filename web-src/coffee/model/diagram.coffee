@@ -76,19 +76,21 @@ class Diagram
     # Add a Generalization link.
     #
     # If a generalziation already exists for the same parent, just add the class
-    # into the same Generalizatino instance.
+    # into the same Generalizatino instance. Constraints are ignored in this case.
     #
     # @param class_parent_id {string} The parent class Id.
     # @param class_child_id {string} The child class Id.
     #
     # @todo Support various children on parameter class_child_id.
-    add_generalization: (class_parent_id, class_child_id) ->
+    add_generalization: (class_parent_id, class_child_id, disjoint=false, covering=false) ->
         class_parent = this.find_class_by_classid(class_parent_id)
         class_child = this.find_class_by_classid(class_child_id)
 
         gen = this.find_IsA_with_parent(class_parent)
         if (gen is undefined) || (gen is null)
             gen = new Generalization(class_parent, [class_child])
+            gen.set_disjoint(disjoint)
+            gen.set_covering(covering)
             this.agregar_link(gen)
         else
             gen.add_child(class_child)

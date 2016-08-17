@@ -231,6 +231,8 @@ class Generalization extends Link
     # @param classes {Array<Class>} An array of child classes.
     constructor: (@parent_class, @classes) ->
         super(@classes)
+        @disjoint = false
+        @covering = false
 
     get_joint: (factory=null, csstheme=null) ->
         super(factory, csstheme)
@@ -292,11 +294,24 @@ class Generalization extends Link
     add_child: (childclass) ->
         @classes.push(childclass)
 
+    set_disjoint: (@disjoint) ->
+    set_covering: (@covering) ->
+        
+    get_disjoint: () ->
+        return @disjoint
+    get_covering: () ->
+        return @covering
+
     to_json: () ->
         json = super()
         json.parent = @parent_class.get_name()
         json.multiplicity = null
         json.type = "generalization"
+        
+        constraint = []
+        if @disjoint then constraint.push("disjoint")
+        if @covering then constraint.push("covering")
+        json.constraint = constraint
         
         return json
 

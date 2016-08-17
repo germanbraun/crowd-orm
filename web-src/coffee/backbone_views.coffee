@@ -170,7 +170,9 @@ RelationOptionsView = Backbone.View.extend(
             when "oneone" then "1..1"
 
     new_isa: () ->
-        gui.gui_instance.set_isa_state(@classid)
+        disjoint = $("#chk-disjoint").prop("checked")
+        covering = $("#chk-covering").prop("checked")
+        gui.gui_instance.set_isa_state(@classid, disjoint, covering)
 
     set_classid: (@classid) ->
         viewpos = graph.getCell(@classid).findView(paper).getBBox()

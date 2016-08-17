@@ -80,6 +80,12 @@ class AssociationState extends State
 # create a generalization between them.
 class IsAState extends State
     constructor: () ->
+        this.reset()
+
+    # Reset the state information to the default values.
+    reset: () ->
+        @disjoint = false
+        @covering = false
         @cell_starter = null
 
     # Set the parent Cell Id.
@@ -87,9 +93,17 @@ class IsAState extends State
     # @param cell_starter {string} the parent Cell Id. 
     set_cellStarter: (@cell_starter) ->
 
+    # Set the constrints of the generalization.
+    #
+    # @param disjoint {Boolean} If childrens are disjoint instances.
+    # @param covering {Boolean} If the parent has no instances and are represented as the children ones.
+    set_constraint: (@disjoint, @covering) ->
+    set_disjoint: (@disjoint) ->
+    set_covering: (@covering) ->
+
     on_cell_clicked: (cell_view, event, x, y, gui) ->
-        gui.add_generalization(@cell_starter, cell_view.model.id)
-        @cell_starter = null
+        gui.add_generalization(@cell_starter, cell_view.model.id, @disjoint, @covering)
+        this.reset()
 
                   
         
