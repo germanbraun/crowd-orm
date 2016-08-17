@@ -171,6 +171,13 @@ class Link extends MyModel
     is_two_linked: () ->
         return @classes.length == 2
 
+    # *Implement in the subclass if necesary.*
+    #
+    # @param parentclass {Class} The Class instance to check.
+    # @return `true` if this is a generalization class and has the given parent instance. `false` otherwise.
+    has_parent: (parentclass) ->
+        return false
+
     to_json: () ->
         json = super()
         json.classes = $.map(@classes, (myclass) ->
@@ -223,6 +230,15 @@ class Generalization extends Link
                 @joint = factory.create_generalization(
                     @parent_class.get_classid(),
                     @classes[0].get_classid())
+
+    has_parent: (parentclass) ->
+        return @parent_class == parentclass
+
+    # Add a child into the generalization.
+    # 
+    # @param childclass {Class} a Class instance to add.
+    add_child: (childclass) ->
+        @classes.push(childclass)
 
     to_json: () ->
         json = super()

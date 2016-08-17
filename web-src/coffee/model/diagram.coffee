@@ -63,7 +63,20 @@ class Diagram
             elt.has_classid(classid)
         )
 
-    # Add a Generalization link
+    # Find a generalization that contains the given parent
+    #
+    # @param parentclass {Class} A Class instance that is the parent of the
+    #     generalization.
+    # @return null if nothing founded, a Generalization instance otherwise.
+    find_IsA_with_parent: (parentclass) ->
+        return @links.find( (elt, index, arr) ->
+            elt.has_parent(parentclass)
+        )
+
+    # Add a Generalization link.
+    #
+    # If a generalziation already exists for the same parent, just add the class
+    # into the same Generalizatino instance.
     #
     # @param class_parent_id {string} The parent class Id.
     # @param class_child_id {string} The child class Id.
@@ -73,9 +86,12 @@ class Diagram
         class_parent = this.find_class_by_classid(class_parent_id)
         class_child = this.find_class_by_classid(class_child_id)
 
-        gen = new Generalization(class_parent, [class_child])
-
-        this.agregar_link(gen)
+        gen = this.find_IsA_with_parent(class_parent)
+        if (gen is undefined) || (gen is null)
+            gen = new Generalization(class_parent, [class_child])
+            this.agregar_link(gen)
+        else
+            gen.add_child(class_child)
     
     # @param class_a_id {string} the ID of the first class.
     # @param class_b_id {string} the ID of the second class.
@@ -155,6 +171,12 @@ class Diagram
         c = this.find_class_by_classid(classid)
         if c != undefined then this.delete_class(c)
 
+    # # Limitations
+    # If the link is a generalization it adds as a new generalization,
+    # not as part of another one.
+    #
+    # For example, if you want to add another child into an already existent
+    # generalization, use add_generalization(same_parent, new_child) message.
     agregar_link: (link) ->
         @links.push(link)
         @cells_nuevas.push(link.get_joint(@factory, csstheme));
