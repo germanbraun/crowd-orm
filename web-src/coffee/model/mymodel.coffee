@@ -232,22 +232,56 @@ class Generalization extends Link
     constructor: (@parent_class, @classes) ->
         super(@classes)
 
+    get_joint: (factory=null, csstheme=null) ->
+        super(factory, csstheme)
+
+        if @joint.length < @classes.length
+            # If it was created before but now we have a new child.
+            if factory != null then this.create_joint(factory, csstheme);
+        return @joint
+        
     create_joint: (factory, csstheme = null) ->
-        if @joint == null
+        if (@joint == null) || (@joint.length < @classes.length)
             @joint = []
             if csstheme != null
                 @classes.forEach( (elt, index, arr) ->
-                    @joint.push(factory.create_generalization(
-                        @parent_class.get_classid(),
-                        elt.get_classid(),
-                        csstheme.css_links))
+                    if (!this.has_joint_instance(elt))
+                        @joint.push(factory.create_generalization(
+                            @parent_class.get_classid(),
+                            elt.get_classid(),
+                            csstheme.css_links))
                 this)
             else
                 @classes.forEach( (elt, index, arr) ->
-                    @joint.push(factory.create_generalization(
-                        @parent_class.get_classid(),
-                        elt.get_classid()))
+                    if (!this.has_joint_instance(elt))
+                        @joint.push(factory.create_generalization(
+                            @parent_class.get_classid(),
+                            elt.get_classid()))
                 this)
+
+    # Has the given elt a JointJS::Cell insance already created?
+    # 
+    # @param elt {Class} a Class instance.
+    # @return true if elt has a joint instance at the @joint variable. false otherwise.
+    has_joint_instance: (elt) ->
+        classid = elt.get_classid()
+        founded = @joint.find( (elt, index, arr) ->
+            # elt is a JointJS::Cell instance, a UML::Generalization if the UMLFactory is used.
+            elt.get('source').id == classid
+        )
+        return founded?
+
+    # Search for a child JointJS::Cell inside this relation.
+    # 
+    # @return undefined or null if not founded.
+    get_joint_for_child: (classchild) ->
+        classid = classchild.get_classid()
+        founded = @joint.find( (elt, index, arr) ->
+            # elt is a JointJS::Cell instance, a UML::Generalization if the UMLFactory is used.
+            elt.get('source').id == classid
+        )
+        return founded
+        
 
     has_parent: (parentclass) ->
         return @parent_class == parentclass

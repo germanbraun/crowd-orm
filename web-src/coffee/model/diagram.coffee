@@ -92,6 +92,9 @@ class Diagram
             this.agregar_link(gen)
         else
             gen.add_child(class_child)
+            gen.create_joint(@factory, csstheme)
+            @cells_nuevas.push(gen.get_joint_for_child(class_child))
+            this.actualizar_graph()
     
     # @param class_a_id {string} the ID of the first class.
     # @param class_b_id {string} the ID of the second class.
