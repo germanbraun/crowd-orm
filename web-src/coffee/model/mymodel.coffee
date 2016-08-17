@@ -41,15 +41,22 @@ class MyModel
     # is provided.
     #
     # @param factory {Factory subclass} Concrete Factory like UMLFactory or ERDFactory instance.
+    # @return {Array<JointJS::Cells> An array of Cells elements.
     get_joint: (factory = null, csstheme = null) ->
         if factory != null then this.create_joint(factory, csstheme)
         return @joint
 
     # Create a JointJS view class and assign it to @joint variable.
+    #
+    # # Caution
+    # The first element is used for get_classid, representing it as the JointJS
+    # visual element of this instance. If this instance has more than one
+    # JointJS cells, the first one is the most important.
     # 
     # @note Please redefine this method in the subclass.
     # @param factory {Factory subclass} A concrete Factory for creating the
     #   view instance.
+    # @return {Array<JointJS::Cells>} An array of Cells elements.
     create_joint: (factory, csstheme = null) ->
         console.warn(this.toString() + " : Redefine create_joint() method on the subclass.");
         return null
@@ -58,8 +65,10 @@ class MyModel
     # associated to this class.
     update_view: (paper) ->
         if @joint != null
-            v = @joint.findView(paper)
-            v.update()
+            @joint.forEach( (elt, index, arr) ->
+                v = elt.findView(paper)
+                v.update()
+            this)
        
     #
     # @return {boolean} true if this Joint Model has the given classid string.
@@ -74,7 +83,7 @@ class MyModel
         if @joint == null
             return false
         else
-            return @joint.id
+            return @joint[0].id
 
     #
     # Return a JSON object representation with only the information.
@@ -98,7 +107,7 @@ class Class extends MyModel
 
     set_name: (@name) ->
         if @joint != null
-             @joint.set("name", name)
+             @joint[0].set("name", name)
         
         
     get_attrs: () ->
@@ -112,11 +121,14 @@ class Class extends MyModel
     #
     # @param factory a Factory subclass instance.
     create_joint: (factory, csstheme = null) ->
-        if @joint == null 
+        if @joint == null
+            @joint = []
             if csstheme != null
-                @joint = factory.create_class(@name, csstheme.css_class)
+                @joint.push(
+                    factory.create_class(@name, csstheme.css_class))
             else
-                @joint = factory.create_class(@name)
+                @joint.push(
+                    factory.create_class(@name))
 
     to_json: () ->
         json = super()
@@ -190,20 +202,21 @@ class Link extends MyModel
 
     create_joint: (factory, csstheme = null) ->        
         if @joint == null
+            @joint = []
             if csstheme != null
-                @joint = factory.create_association(
+                @joint.push(factory.create_association(
                     @classes[0].get_classid(),
                     @classes[1].get_classid(),
                     @name,
                     csstheme.css_links,
-                    @mult)
+                    @mult))
             else
-                @joint = factory.create_association(
+                @joint.push(factory.create_association(
                     @classes[0].get_classid(),
                     @classes[1].get_classid(),
                     @name
                     null,
-                    @mult)
+                    @mult))
 
 Link.get_new_name = () ->
     if Link.name_number == undefined
@@ -221,15 +234,20 @@ class Generalization extends Link
 
     create_joint: (factory, csstheme = null) ->
         if @joint == null
+            @joint = []
             if csstheme != null
-                @joint = factory.create_generalization(
-                    @parent_class.get_classid(),
-                    @classes[0].get_classid(),
-                    csstheme.css_links)
+                @classes.forEach( (elt, index, arr) ->
+                    @joint.push(factory.create_generalization(
+                        @parent_class.get_classid(),
+                        elt.get_classid(),
+                        csstheme.css_links))
+                this)
             else
-                @joint = factory.create_generalization(
-                    @parent_class.get_classid(),
-                    @classes[0].get_classid())
+                @classes.forEach( (elt, index, arr) ->
+                    @joint.push(factory.create_generalization(
+                        @parent_class.get_classid(),
+                        elt.get_classid()))
+                this)
 
     has_parent: (parentclass) ->
         return @parent_class == parentclass

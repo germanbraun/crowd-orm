@@ -178,8 +178,8 @@ class Diagram
     # For example, if you want to add another child into an already existent
     # generalization, use add_generalization(same_parent, new_child) message.
     agregar_link: (link) ->
-        @links.push(link)
-        @cells_nuevas.push(link.get_joint(@factory, csstheme));
+        @links.push(link)       
+        @cells_nuevas.concat(link.get_joint(@factory, csstheme));
         this.actualizar_graph()
 
     # Update a joint.Graph instance with the new cells.
