@@ -127,9 +127,15 @@
 				<option value="oneone">1..1</option>
 			    </select>
 			</div>
-			
+
 			<a class="ui-btn ui-corner-all ui-icon-arrow-u ui-btn-icon-notext" type="button" id="isa_button">Is A</a>
-		    </div>
+			<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+			    <input type="checkbox" name="chk-covering" id="chk-covering"/>
+			    <label for="chk-covering">Covering</label>
+			    <input type="checkbox" name="chk-disjoint" id="chk-disjoint" />
+			    <label for="chk-disjoint">Disjoint</label>
+			</fieldset>
+		    </div>		    
 		</script>
 		<!-- TrafficLights -->
 		<script type="text/template" id="template_trafficlight">
