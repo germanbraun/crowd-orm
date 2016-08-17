@@ -162,7 +162,7 @@ class Berardi extends Strategy{
      */
     protected function translate_generalization($link, $builder){
         $parent = $link["parent"];
-        
+
         foreach ($link["classes"] as $class){
             // Translate the parent-child relation
             $lst = [
@@ -171,6 +171,11 @@ class Berardi extends Strategy{
                     ["class" => $parent]]]
             ];
             $builder->translate_DL($lst);
+        }
+
+        // Again the same for each, so it will create an organized OWLlink:
+        // First all classes are subclasses and then the disjoints and covering.
+        foreach ($link["classes"] as $class){
 
             // Translate the disjoint constraint DL
             if (in_array("disjoint",$link["constraint"])){

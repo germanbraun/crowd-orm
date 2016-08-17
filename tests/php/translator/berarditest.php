@@ -413,8 +413,7 @@ EOT;
         
         $actual = $builder->get_product();
         $actual = $actual->to_string();
-
-       
+      
         /*$expected = process_xmlspaces($expected);
         $actual = process_xmlspaces($actual);*/
         $this->assertXmlStringEqualsXmlString($expected, $actual, TRUE);
@@ -504,7 +503,6 @@ EOT;
         
         $actual = $builder->get_product();
         $actual = $actual->to_string();
-
        
         /*$expected = process_xmlspaces($expected);
         $actual = process_xmlspaces($actual);*/
