@@ -243,23 +243,26 @@ class Generalization extends Link
         return @joint
         
     create_joint: (factory, csstheme = null) ->
+        if csstheme == null
+            csstheme =
+                css_links: null
         if (@joint == null) || (@joint.length < @classes.length)
             @joint = []
-            if csstheme != null
-                @classes.forEach( (elt, index, arr) ->
-                    if (!this.has_joint_instance(elt))
-                        @joint.push(factory.create_generalization(
-                            @parent_class.get_classid(),
-                            elt.get_classid(),
-                            csstheme.css_links))
-                this)
-            else
-                @classes.forEach( (elt, index, arr) ->
-                    if (!this.has_joint_instance(elt))
-                        @joint.push(factory.create_generalization(
-                            @parent_class.get_classid(),
-                            elt.get_classid()))
-                this)
+            @classes.forEach( (elt, index, arr) ->
+                if (!this.has_joint_instance(elt))
+                    if index == 0
+                        # Only draw the "disjoint-covering" label at the first line.
+                        disjoint = @disjoint
+                        covering = @covering
+                    else
+                        disjoint = covering = false
+                    @joint.push(factory.create_generalization(
+                        @parent_class.get_classid(),
+                        elt.get_classid(),
+                        csstheme.css_links
+                        disjoint, covering))
+            this)
+
 
     # Has the given elt a JointJS::Cell insance already created?
     # 

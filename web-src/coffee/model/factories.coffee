@@ -101,13 +101,34 @@ class UMLFactory extends Factory
             
         return link
 
+    # @param css_links {Hash} A Hash representing the CSS. See JointJS documentation for the attrs attribute.
+    # @param disjoint {Boolean} Draw a "disjoint" legend.
+    # @param covering {Boolean} Draw a "covering" legend.
     # @return [joint.shapes.uml.Generalization]
-    create_generalization: (class_a_id, class_b_id, css_links = null) ->
+    create_generalization: (class_a_id, class_b_id, css_links = null, disjoint=false, covering=false) ->
         link = new joint.shapes.uml.Generalization(
                 source: {id: class_b_id},
                 target: {id: class_a_id},
                 attrs: css_links
                 )
+
+        if disjoint || covering
+            legend = "{"
+            if disjoint then legend = legend + "disjoint"
+            if covering
+                if legend != ""
+                    legend = legend + ","
+                legend = legend + "covering"
+            legend = legend + "}"
+        
+            link.set(
+                labels: [
+                    position: 0.8,
+                    attrs:
+                        text: {text: legend, fill: '#0000ff'},
+                        rect: {fill: "#ffffff"}
+            ])
+
         return link
 
 
