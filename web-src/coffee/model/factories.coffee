@@ -56,9 +56,15 @@ class UMLFactory extends Factory
             name: class_name
             attributes: []
             methods: []
-            attrs: css_class
+            attrs:
+                '.uml-class-name-rect':
+                    fill: '#ffffff'
+                    stroke: '#000000'
+                '.uml-class-name-text':
+                    fill: '#000000'                    
 
-        if css_class != null
+
+        if css_class?
             params.attrs = css_class
 
         newclass = new uml.Class( params )
