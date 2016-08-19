@@ -156,7 +156,7 @@ class GUI
         $("#reasoner_output").html(obj.reasoner.output)
         $.mobile.loading("hide")
         this.set_unsatisfiable(obj.unsatisfiable.classes)
-        # this.set_satisfiable(obj.satisfiable.classes)
+        this.set_satisfiable(obj.satisfiable.classes)
         # this.change_to_details_page()
 
 
@@ -165,6 +165,12 @@ class GUI
     # @param classes_list {Array<String>} a list of classes names.
     set_unsatisfiable: (classes_list) ->
         @diag.set_unsatisfiable(classes_list)
+
+    # Show these classes as satisifable.
+    #
+    # @param classes_list {Array<String>} a list of classes names.
+    set_satisfiable: (classes_list) ->
+        @diag.set_satisfiable(classes_list)
         
     #
     # Send a POST to the server for checking if the diagram is
