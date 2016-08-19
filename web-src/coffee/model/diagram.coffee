@@ -63,28 +63,52 @@ class Diagram
             elt.has_classid(classid)
         )
 
-    # Add a Generalization link
+    # Find a generalization that contains the given parent
+    #
+    # @param parentclass {Class} A Class instance that is the parent of the
+    #     generalization.
+    # @return null if nothing founded, a Generalization instance otherwise.
+    find_IsA_with_parent: (parentclass) ->
+        return @links.find( (elt, index, arr) ->
+            elt.has_parent(parentclass)
+        )
+
+    # Add a Generalization link.
+    #
+    # If a generalziation already exists for the same parent, just add the class
+    # into the same Generalizatino instance. Constraints are ignored in this case.
     #
     # @param class_parent_id {string} The parent class Id.
     # @param class_child_id {string} The child class Id.
     #
     # @todo Support various children on parameter class_child_id.
-    add_generalization: (class_parent_id, class_child_id) ->
+    add_generalization: (class_parent_id, class_child_id, disjoint=false, covering=false) ->
         class_parent = this.find_class_by_classid(class_parent_id)
         class_child = this.find_class_by_classid(class_child_id)
 
-        gen = new Generalization(class_parent, [class_child])
-
-        this.agregar_link(gen)
+        gen = this.find_IsA_with_parent(class_parent)
+        if (gen is undefined) || (gen is null)
+            gen = new Generalization(class_parent, [class_child])
+            gen.set_disjoint(disjoint)
+            gen.set_covering(covering)
+            this.agregar_link(gen)
+        else
+            gen.add_child(class_child)
+            gen.create_joint(@factory, csstheme)
+            @cells_nuevas.push(gen.get_joint_for_child(class_child))
+            this.actualizar_graph()
     
     # @param class_a_id {string} the ID of the first class.
     # @param class_b_id {string} the ID of the second class.
-    # @param name {string} optional. THe name of the association.
-    add_association: (class_a_id, class_b_id, name = null) ->
+    # @param name {string} optional. The name of the association.
+    # @param mult {array} optional. An array of two strings with the cardinality from class a and to class b.
+    add_association: (class_a_id, class_b_id, name = null, mult = null) ->
         class_a = this.find_class_by_classid(class_a_id)
         class_b = this.find_class_by_classid(class_b_id)
         
         newassoc = new Link([class_a, class_b])
+        if (mult != null)
+            newassoc.set_mult(mult)
         
         this.agregar_link(newassoc)
 
@@ -152,8 +176,14 @@ class Diagram
         c = this.find_class_by_classid(classid)
         if c != undefined then this.delete_class(c)
 
+    # # Limitations
+    # If the link is a generalization it adds as a new generalization,
+    # not as part of another one.
+    #
+    # For example, if you want to add another child into an already existent
+    # generalization, use add_generalization(same_parent, new_child) message.
     agregar_link: (link) ->
-        @links.push(link)
+        @links.push(link)       
         @cells_nuevas.push(link.get_joint(@factory, csstheme));
         this.actualizar_graph()
 

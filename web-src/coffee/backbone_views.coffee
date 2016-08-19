@@ -81,7 +81,7 @@ CreateClassView = Backbone.View.extend(
             )
 
         # Event handler for translate diagram to OWLlink using Ajax
-        # and the api/translate/calvanesse.php translator URL.
+        # and the api/translate/berardi.php translator URL.
         translate_owllink: (event) ->
             gui.gui_instance.translate_owllink()
 
@@ -149,10 +149,30 @@ RelationOptionsView = Backbone.View.extend(
         this.$el.html(template({classid: @classid}))
 
     events:
-        'click a#association_button' : 'new_relation'
+        'click a#association_button' : 'new_relation',
+        'click a#isa_button' : 'new_isa'
 
     new_relation: () ->
-        gui.gui_instance.set_association_state(@classid)
+        mult = []
+        mult[0] = this.map_to_mult($('#cardfrom').val())
+        mult[1] = this.map_to_mult($('#cardto').val())
+        gui.gui_instance.set_association_state(@classid, mult)
+
+    # Map the Option value to multiplicity string.
+    #
+    # @param str {string} The value string.
+    # @return {String} A string that represent the multiplicity as in UML.
+    map_to_mult : (str) ->
+        switch str
+            when "zeromany" then "0..*"
+            when "onemany" then "1..*"
+            when "zeroone" then "0..1"
+            when "oneone" then "1..1"
+
+    new_isa: () ->
+        disjoint = $("#chk-disjoint").prop("checked")
+        covering = $("#chk-covering").prop("checked")
+        gui.gui_instance.set_isa_state(@classid, disjoint, covering)
 
     set_classid: (@classid) ->
         viewpos = graph.getCell(@classid).findView(paper).getBBox()

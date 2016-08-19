@@ -24,11 +24,11 @@
 require_once("common.php");
 
 //use function \load;
-load("calvanessestrat.php", "wicom/translator/strategies/");
+load("berardistrat.php", "wicom/translator/strategies/");
 load("owllinkbuilder.php", "wicom/translator/builders/");
 load("translator.php", "wicom/translator/");
 
-use Wicom\Translator\Strategies\Calvanesse;
+use Wicom\Translator\Strategies\Berardi;
 use Wicom\Translator\Builders\OWLlinkBuilder;
 use Wicom\Translator\Translator;
 
@@ -58,7 +58,7 @@ http://www.owllink.org/owllink-20091116.xsd\">
 </IsClassSatisfiable>
 </RequestMessage>";
         
-        $strategy = new Calvanesse();
+        $strategy = new Berardi();
         $builder = new OWLlinkBuilder();
         $translator = new Translator($strategy, $builder);
     
@@ -93,7 +93,7 @@ http://www.owllink.org/owllink-20091116.xsd\">
 <hiworld></hiworld>
 </RequestMessage>";
         
-        $strategy = new Calvanesse();
+        $strategy = new Berardi();
         $builder = new OWLlinkBuilder();
         $translator = new Translator($strategy, $builder);
     

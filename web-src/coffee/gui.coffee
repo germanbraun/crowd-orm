@@ -22,7 +22,7 @@ class GUI
     constructor: (@graph, @paper) ->
         @urlprefix = ""
         @diag = new Diagram(@graph)
-        @state = gui.State.selectionstate()
+        @state = gui.state_inst.selection_state()
         @crearclase = new CreateClassView({el: $("#crearclase")});
         @editclass = new EditClassView({el: $("#editclass")})
         @classoptions = new ClassOptionsView({el: $("#classoptions")})
@@ -107,8 +107,10 @@ class GUI
     #
     # @param class_a_id {string} 
     # @param class_b_id {string}
-    add_association: (class_a_id, class_b_id) ->
-        @diag.add_association(class_a_id, class_b_id)
+    # @param name {string} optional. The association name.
+    # @param mult {array} optional. An array of two string with the cardinality from class and to class b.
+    add_association: (class_a_id, class_b_id, name=null, mult=null) ->
+        @diag.add_association(class_a_id, class_b_id, name, mult)
         this.set_selection_state()
 
     # Add a Generalization link and then set the selection state.
@@ -117,8 +119,8 @@ class GUI
     # @param class_child_id {string} The child class Id.
     # 
     # @todo Support various children on parameter class_child_id.
-    add_generalization: (class_parent_id, class_child_id) ->
-        @diag.add_generalization(class_parent_id, class_child_id)
+    add_generalization: (class_parent_id, class_child_id, disjoint=false, covering=false) ->
+        @diag.add_generalization(class_parent_id, class_child_id, disjoint, covering)
         this.set_selection_state()
 
     #
@@ -199,7 +201,7 @@ class GUI
 
     ##
     # Event handler for translate diagram to OWLlink using Ajax
-    # and the api/translate/calvanesse.php translator URL.
+    # and the api/translate/berardi.php translator URL.
     translate_owllink: () ->
         format = @crearclase.get_translation_format()
         $.mobile.loading("show", 
@@ -224,13 +226,25 @@ class GUI
     #
     # @param class_id {string} The id of the class that triggered it and thus,
     #   the starting class of the association.
-    set_association_state: (class_id) ->
-        @state = gui.State.associationstate()
+    # @param mult {array} An array of two strings representing the cardinality from and to.
+    set_association_state: (class_id, mult) ->
+        @state = gui.state_inst.association_state()
         @state.set_cellStarter(class_id)
+        @state.set_cardinality(mult)
+
+    # Change to the IsA GUI State so the user can select the child for the parent.
+    #
+    # @param class_id {String} The JointJS::Cell id for the parent class.
+    # @param disjoint {Boolean} optional. If the relation has the disjoint constraint.
+    # @param covering {Boolean} optional. If the relation has the disjoint constraint.
+    set_isa_state: (class_id, disjoint=false, covering=false) ->
+        @state = gui.state_inst.isa_state()
+        @state.set_cellStarter(class_id)
+        @state.set_constraint(disjoint, covering) 
 
     # Change the interface into a "selection" state.
     set_selection_state: () ->
-        @state = gui.State.selectionstate()
+        @state = gui.state_inst.selection_state()
 
 
     ##
