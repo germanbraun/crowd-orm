@@ -192,23 +192,15 @@ class Diagram
     # @see set_class_unsatisfiable
     #
     # @param classes_list {Array<String>} a list of classes names.
-    # @param paper {JointJS.Paper} The paper instance for updating the view.
-    set_unsatisfiable: (classes_list, paper) ->
+    set_unsatisfiable: (classes_list) ->
         classes_list.forEach( (class_name, i, arr) ->
-            this.set_class_unsatisfiable(class_name, paper)
+            this.set_class_unsatisfiable(class_name)
         this)
 
     # Show this class as unsatisfiable.
     #
-    # This won't affect any class behaviour, just visual.
-    # This won't update the view, ensure to call update_view() after this.
-    #
-    # 
     # @param class_name {String} The class name.
-    # @param paper {JointJS.Paper} The paper instance for updating the view.
-    #
-    # @see update_view
-    set_class_unsatisfiable: (class_name, paper) ->
+    set_class_unsatisfiable: (class_name) ->
         c = this.find_class_by_name(class_name)
         if c?
             c.set_unsatisfiable(true, csstheme)
