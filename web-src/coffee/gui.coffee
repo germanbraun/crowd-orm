@@ -148,10 +148,8 @@ class GUI
     update_satisfiable: (data) ->
         console.log(data)
         obj = JSON.parse(data);
-        if obj.satisfiable.kb
-            @trafficlight.turn_green()
-        else
-            @trafficlight.turn_red()
+        
+        this.set_trafficlight(obj)
         $("#reasoner_input").html(obj.reasoner.input)
         $("#reasoner_output").html(obj.reasoner.output)
         $.mobile.loading("hide")
@@ -159,6 +157,17 @@ class GUI
         this.set_satisfiable(obj.satisfiable.classes)
         # this.change_to_details_page()
 
+    # Set the traffic-light according to the JSON object recived by the server.
+    #
+    # @param obj {JSON} The JSON object parsed from the recieved data.
+    set_trafficlight: (obj) ->
+        if (obj.satisfiable.kb)
+            if (obj.unsatisfiable.classes.length == 0)
+                @trafficlight.turn_green()
+            else
+                @trafficlight.turn_yellow()
+        else
+            @trafficlight.turn_red()
 
     # Show these classes as unsatisifable.
     #
