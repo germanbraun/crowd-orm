@@ -101,6 +101,7 @@ class Class extends MyModel
     constructor : (name, @attrs = null , @methods = null) ->
         super(name)
         @joint = null
+        @unsatisfiable = false
 
     get_name: () ->
         return @name
@@ -116,16 +117,43 @@ class Class extends MyModel
     get_methods: () ->
         return @methods
 
+
+    # Set if this class is unsatisfiable. Changing its appearance if `csstheme`
+    # is given.
+    #
+    # @param bool {Boolean} If it is unsatisfiable or not.
+    # @param csstheme {CSSTheme} optional. A csstheme object that if given,
+    #   will set the appearance of this class depending if it is unsatisfiable.
+    set_unsatisfiable: (bool, csstheme=null) ->
+        @unsatisfiable = bool
+        if csstheme?
+            this.set_theme(csstheme)
+            
+
+    # Set the csstheme to the joint class.
+    set_theme: (csstheme) ->
+        if (@joint?) && (@joint.length > 0)
+            # Joint instance exists.
+            if @unsatisfiable
+                @joint[0].set('attrs', csstheme.css_class_unsatisfiable)
+            else
+                @joint[0].set('attrs', csstheme.css_class)
+
     #
     # If the joint model wasn't created, make it.
     #
     # @param factory a Factory subclass instance.
     create_joint: (factory, csstheme = null) ->
-        if @joint == null
+        unless @joint?
             @joint = []
-            if csstheme != null
+            if csstheme?
+                if @unsatisfiable
+                    cssclass = csstheme.css_class_unsatisfiable
+                else
+                    cssclass = csstheme.css_class
+                    
                 @joint.push(
-                    factory.create_class(@name, csstheme.css_class))
+                    factory.create_class(@name, cssclass))
             else
                 @joint.push(
                     factory.create_class(@name))

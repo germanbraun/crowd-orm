@@ -95,7 +95,7 @@ class GUI
         @diag.rename_class(class_id, name)
         
         # Update the view
-        @diag.update_view(class_id, paper)
+        @diag.update_view(class_id, @paper)
 
     #
     # Add a simple association from A to B.
@@ -148,16 +148,39 @@ class GUI
     update_satisfiable: (data) ->
         console.log(data)
         obj = JSON.parse(data);
-        if obj.satisfiable.kb
-            @trafficlight.turn_green()
-        else
-            @trafficlight.turn_red()
+        
+        this.set_trafficlight(obj)
         $("#reasoner_input").html(obj.reasoner.input)
         $("#reasoner_output").html(obj.reasoner.output)
         $.mobile.loading("hide")
+        this.set_unsatisfiable(obj.unsatisfiable.classes)
+        this.set_satisfiable(obj.satisfiable.classes)
         # this.change_to_details_page()
-        
 
+    # Set the traffic-light according to the JSON object recived by the server.
+    #
+    # @param obj {JSON} The JSON object parsed from the recieved data.
+    set_trafficlight: (obj) ->
+        if (obj.satisfiable.kb)
+            if (obj.unsatisfiable.classes.length == 0)
+                @trafficlight.turn_green()
+            else
+                @trafficlight.turn_yellow()
+        else
+            @trafficlight.turn_red()
+
+    # Show these classes as unsatisifable.
+    #
+    # @param classes_list {Array<String>} a list of classes names.
+    set_unsatisfiable: (classes_list) ->
+        @diag.set_unsatisfiable(classes_list)
+
+    # Show these classes as satisifable.
+    #
+    # @param classes_list {Array<String>} a list of classes names.
+    set_satisfiable: (classes_list) ->
+        @diag.set_satisfiable(classes_list)
+        
     #
     # Send a POST to the server for checking if the diagram is
     # satisfiable.

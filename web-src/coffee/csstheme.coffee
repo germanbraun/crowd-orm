@@ -48,6 +48,41 @@ css_class =
         'y-alignment': 'middle'
         visibility: 'collapse'
 
+# [JointJS special
+# attributes](http://jointjs.com/api#SpecialAttributes) 
+# [SVG
+# attributes](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute)  
+#
+# Unsatisfiable Class style.
+css_class_unsatisfiable = 
+    '.uml-class-name-rect' : 
+        fill: "#faa"
+        stroke: "#000"
+        'stroke-width': 0.5
+    '.uml-class-attrs-rect' : 
+        fill: "#fdd"
+        stroke: "#000"
+        'stroke-width': 0.5
+        visibility: 'collapse'
+    '.uml-class-methods-rect' : 
+        fill: "#fdd"
+        stroke: "#000"
+        'stroke-width': 0.5
+        visibility: 'collapse'
+    '.uml-class-name-text' :
+        fill: "#00f"
+    '.uml-class-attrs-text': 
+        ref: '.uml-class-attrs-rect',
+        'ref-y': 0.5
+        'y-alignment': 'middle'
+        visibility: 'collapse'
+    '.uml-class-methods-text':
+        ref: '.uml-class-methods-rect',
+        'ref-y': 0.5
+        'y-alignment': 'middle'
+        visibility: 'collapse'
+
+
 
 # [JointJS special
 # attributes](http://jointjs.com/api#SpecialAttributes) 
@@ -64,4 +99,5 @@ css_links =
 exports = exports ? this
 exports.csstheme = {}
 exports.csstheme.css_class = css_class
+exports.csstheme.css_class_unsatisfiable = css_class_unsatisfiable
 exports.csstheme.css_links = css_links

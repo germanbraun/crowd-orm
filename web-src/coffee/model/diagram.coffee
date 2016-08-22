@@ -187,6 +187,42 @@ class Diagram
         @cells_nuevas.push(link.get_joint(@factory, csstheme));
         this.actualizar_graph()
 
+    # Show these classes as satisifiable.
+    #
+    # @see set_class_satisfiable
+    #
+    # @param classes_list {Array<String>} a list of classes names.
+    set_satisfiable: (classes_list) ->
+        classes_list.forEach( (class_name, i, arr) ->
+            this.set_class_satisfiable(class_name)
+        this)
+
+    # Show this class as satisfiable.
+    #
+    # @param class_name {String} The class name.
+    set_class_satisfiable: (class_name) ->
+        c = this.find_class_by_name(class_name)
+        if c?
+            c.set_unsatisfiable(false, csstheme)
+
+    # Show these classes as unsatisifiable.
+    #
+    # @see set_class_unsatisfiable
+    #
+    # @param classes_list {Array<String>} a list of classes names.
+    set_unsatisfiable: (classes_list) ->
+        classes_list.forEach( (class_name, i, arr) ->
+            this.set_class_unsatisfiable(class_name)
+        this)
+
+    # Show this class as unsatisfiable.
+    #
+    # @param class_name {String} The class name.
+    set_class_unsatisfiable: (class_name) ->
+        c = this.find_class_by_name(class_name)
+        if c?
+            c.set_unsatisfiable(true, csstheme)
+
     # Update a joint.Graph instance with the new cells.
     actualizar_graph: () ->
         if @graph != null
