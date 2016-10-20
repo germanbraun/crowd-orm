@@ -108,7 +108,7 @@ class Class extends MyModel
 
     set_name: (@name) ->
         if @joint != null
-             @joint[0].set("name", name)
+             @joint[0].set("name", @name)
         
         
     get_attrs: () ->
