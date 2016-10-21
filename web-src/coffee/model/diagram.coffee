@@ -56,7 +56,6 @@ class Diagram
         return @clases.find( (elt, index, arr) ->
             elt.get_name() == name
         )
-        
 
     find_class_by_classid: (classid) ->
         return @clases.find( (elt,index,arr) ->
@@ -161,8 +160,7 @@ class Diagram
         class_obj = this.find_class_by_classid(class_id)
         if class_obj != null
             class_obj.update_view(paper)
-
-    
+                
     # Remove the class from the diagram.
     delete_class_by_name: (name) ->
         c = this.find_class_by_name(name)
@@ -175,6 +173,17 @@ class Diagram
     delete_class_by_classid: (classid) ->
         c = this.find_class_by_classid(classid)
         if c != undefined then this.delete_class(c)
+
+    # Reset the current diagram to start over empty.
+    #
+    # Remove all classes and associations.
+    reset: () ->
+        # Associations is supposed to be deleted after each classes has
+        @clases.forEach( (c, i, arr) ->
+            this.delete_class(c)
+        this)
+        this.actualizar_graph()
+        
 
     # # Limitations
     # If the link is a generalization it adds as a new generalization,
