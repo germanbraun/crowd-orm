@@ -162,6 +162,8 @@ class Class extends MyModel
         json = super()
         json.attrs = @attrs.toSource() if @attrs != null     
         json.methods = @methods.toSource() if @methods != null
+        if @joint?
+            json.position = @joint[0].position()
         return json
                
 

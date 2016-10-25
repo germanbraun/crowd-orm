@@ -124,6 +124,7 @@ class Diagram
     # 
     #   
     # @param hash_data {Hash} data information for creating the new {Class} instance.
+    # @return The new class
     # @see Class
     # @see GUI#add_class
     add_class: (hash_data) ->
@@ -134,6 +135,7 @@ class Diagram
         
         newclass = new Class(hash_data.name, hash_data.attribs, hash_data.methods)
         this.agregar_clase(newclass)
+        return newclass
 
     agregar_clase: (clase) ->
         @clases.push(clase)
@@ -271,7 +273,10 @@ class Diagram
     import_json: (json) ->
         json.classes.forEach(
             (elt, index, arr) ->
-                this.add_class(elt)
+                c = this.add_class(elt)
+                c.get_joint()[0].position(
+                    elt.position.x,
+                    elt.position.y)
         this)
         # associations
         # json.links.forEach(
