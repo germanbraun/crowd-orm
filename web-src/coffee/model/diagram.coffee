@@ -262,20 +262,19 @@ class Diagram
         classes: classes_json
         links: links_json
                 
-    # Import all classes and associations from a JSON string.
+    # Import all classes and associations from a JSON object.
     #
     # Make sure to reset() this diagram if you don't want the classes already
     # on this model.
     # 
-    # @param jsonstr {String} a JSON string.
-    import_json: (jsonstr) ->
-        json = JSON.parse(jsonstr)
-        json.classes.for_each(
+    # @param json {JSON object} a JSON object. Use json = JSON.parse(jsonstr) to retrieve from a string.
+    import_json: (json) ->
+        json.classes.forEach(
             (elt, index, arr) ->
                 this.add_class(elt)
         this)
         # associations
-        # json.links.for_each(
+        # json.links.forEach(
         #     (elt, index, arr) ->
         #         class_a_id = this.find_class_by_name(elt.classes[0])
         #         class_b_id = this.find_class_by_name(elt.classes[1])
