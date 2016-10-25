@@ -73,6 +73,8 @@ CreateClassView = Backbone.View.extend(
                 "translate_owllink"
             "click a#insertowllink_button":
                 "insert_owllink"
+            "click a#importjson_open_dialog":
+                "import_json"
 
         create_class: (event) ->
             alert("Creando: " + $("#crearclase_input").val() + "...")
@@ -94,6 +96,8 @@ CreateClassView = Backbone.View.extend(
 
         insert_owllink: () ->
             gui.gui_instance.show_insert_owllink()
+        import_json: () ->
+            gui.gui_instance.show_import_json()
 
                 
 );
@@ -287,6 +291,23 @@ ErrorWidgetView = Backbone.View.extend(
         $(".error-popup").popup("close")
 )
 
+ImportWidgetView = Backbone.View.extend(
+    initialize: () ->
+        this.render()
+        this.$el.find("#popupImport").popup()
+    render: () ->
+        template = _.template( $("#template_errorwidget").html() )
+        this.$el.html( template() )
+    show: () ->
+        $("#popupImport").popup("open")
+    events:
+        "click a#importjson_import" : "do_import"
+    do_import: () ->
+        $("#popupImport").popup("close")
+        jsonstr = $("#importjson_input").value
+        gui.gui_instance.import_jsonstr(jsonstr)
+        
+
 exports = exports ? this
 exports.CreateClassView = CreateClassView
 exports.EditClassView = EditClassView
@@ -295,3 +316,4 @@ exports.RelationOptionsView = RelationOptionsView
 exports.TrafficLightsView = TrafficLightsView
 exports.OWLlinkInsertView = OWLlinkInsertView
 exports.ErrorWidgetView = ErrorWidgetView
+exports.ImportWidgetView = ImportWidgetView

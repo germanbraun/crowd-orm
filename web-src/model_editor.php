@@ -86,7 +86,9 @@
 			<a class="ui-btn ui-icon-plus ui-btn-icon-left ui-corner-all" type="button" id="crearclase_button">New</a>
 
 			<label>Insert OWLlink data</label>
-			<a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all" type="button" id="insertowllink_button">Insert OWLlink</a>			
+			<a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all" type="button" id="insertowllink_button">Insert OWLlink</a>
+			<label>Import JSON</label>
+			<a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all" type="button" id="importjson_open_dialog">Import JSON</a>
 		    </div>
 		</script>
 		<!-- EditClass -->
@@ -153,6 +155,17 @@
 		    </div>
 		</script>
 		
+		<!-- Import JSON Dialog -->
+		<!-- Import JSON template -->
+		<script type="text/template" id="template_importjson">
+		    <div data-role="popup" id="popupImport" data-theme="a" class="ui-corner-all">
+			<form>
+			    <h3>Paste the JSON string here</h3>
+			    <textarea cols="40" class="ui-body" id="importjson_input"></textarea>
+			    <a id="importjson_import" data-mini="true" class="ui-btn ui-corner-all">Import</a>
+			</form>
+		    </div>
+		</script>
    		
 		<div id="editclass"></div>
 		<div id="classoptions"></div>
