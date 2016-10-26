@@ -291,21 +291,25 @@ ErrorWidgetView = Backbone.View.extend(
         $(".error-popup").popup("close")
 )
 
-ImportWidgetView = Backbone.View.extend(
+# View widget for the "Import JSON".
+ImportJSONView = Backbone.View.extend(
     initialize: () ->
         this.render()
-        this.$el.find("#popupImport").popup()
+        this.$el.find(".importjson-popup").popup()        
     render: () ->
-        template = _.template( $("#template_errorwidget").html() )
+        template = _.template( $("#template_importjson").html() )
         this.$el.html( template() )
     show: () ->
-        $("#popupImport").popup("open")
+        $(".importjson-popup").popup("open")
+        this.delegateEvents()
     events:
-        "click a#importjson_import" : "do_import"
+        "click a#importjson_importbtn" : "do_import"
     do_import: () ->
-        $("#popupImport").popup("close")
+        # console.log("Hiding popup ImportJSONView instance.")
+        $(".importjson-popup").popup("close")
         jsonstr = $("#importjson_input").value
         gui.gui_instance.import_jsonstr(jsonstr)
+)
         
 
 exports = exports ? this
@@ -316,4 +320,4 @@ exports.RelationOptionsView = RelationOptionsView
 exports.TrafficLightsView = TrafficLightsView
 exports.OWLlinkInsertView = OWLlinkInsertView
 exports.ErrorWidgetView = ErrorWidgetView
-exports.ImportWidgetView = ImportWidgetView
+exports.ImportJSONView = ImportJSONView

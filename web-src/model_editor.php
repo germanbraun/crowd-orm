@@ -43,6 +43,7 @@
 	    
 	    <div role="main" class="ui-content">
 		<div id="errorwidget_placer"></div>
+		<div id="importjsonwidget_placer"></div>
 		<div id="container"></div>
 	    	    
 		
@@ -158,12 +159,15 @@
 		<!-- Import JSON Dialog -->
 		<!-- Import JSON template -->
 		<script type="text/template" id="template_importjson">
-		    <div data-role="popup" id="popupImport" data-theme="a" class="ui-corner-all">
-			<form>
-			    <h3>Paste the JSON string here</h3>
+		    <div class="importjson-popup" data-dismissible="false"  data-role="popup">
+			<div data-role="header">
+			    <h1>Import JSON</h1>
+			</div>
+			<div data-role="main"  class="ui-content">
+			    <p>Paste the JSON string here</p>
 			    <textarea cols="40" class="ui-body" id="importjson_input"></textarea>
-			    <a id="importjson_import" data-mini="true" class="ui-btn ui-corner-all">Import</a>
-			</form>
+			    <a id="importjson_importbtn" data-mini="true" class="ui-btn ui-corner-all">Import</a>
+			</div>
 		    </div>
 		</script>
    		
