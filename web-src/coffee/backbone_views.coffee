@@ -295,17 +295,20 @@ ErrorWidgetView = Backbone.View.extend(
 ImportJSONView = Backbone.View.extend(
     initialize: () ->
         this.render()
-        this.$el.find(".importjson-popup").popup()        
+        this.$el.find(".importjson-popup").popup()
+        # For some reason, backboneJS doesn't process the given event.
+        # Maybe a bug or some incompatibility with JQueryMobile?
+        $("#importjson_importbtn").on('click', this.do_import)
     render: () ->
         template = _.template( $("#template_importjson").html() )
         this.$el.html( template() )
     show: () ->
         $(".importjson-popup").popup("open")
-        this.delegateEvents()
+        # this.delegateEvents()
     events:
         "click a#importjson_importbtn" : "do_import"
     do_import: () ->
-        # console.log("Hiding popup ImportJSONView instance.")
+        console.log("Doing import now!")
         $(".importjson-popup").popup("close")
         jsonstr = $("#importjson_input").value
         gui.gui_instance.import_jsonstr(jsonstr)
