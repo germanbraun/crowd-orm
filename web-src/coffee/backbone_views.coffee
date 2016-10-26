@@ -314,7 +314,7 @@ ImportJSONView = Backbone.View.extend(
     do_import: () ->
         console.log("Doing import now!")
         $(".importjson-popup").popup("close")
-        jsonstr = $("#importjson_input").value
+        jsonstr = $("#importjson_input").val()
         gui.gui_instance.import_jsonstr(jsonstr)
 )
 
