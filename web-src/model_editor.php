@@ -90,6 +90,8 @@
 			<a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all" type="button" id="insertowllink_button">Insert OWLlink</a>
 			<label>Import JSON</label>
 			<a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all" type="button" id="importjson_open_dialog">Import JSON</a>
+			<label>Export JSON</label>
+			<a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all" type="button" id="exportjson_open_dialog">Export JSON</a>
 		    </div>
 		</script>
 		<!-- EditClass -->
@@ -170,6 +172,15 @@
 			</div>
 		    </div>
 		</script>
+		<script type="text/template" id="template_exportjson">
+		    <p>Copy this text for importing again in a new session.</p>
+		    <p>Use the Refresh button to refresh the JSON content with the last modifications.</p>
+		    <textarea cols="40" class="ui-body" id="exportjson_input"><%= jsonstr %></textarea>
+		    <div data-role="controlgroup" data-mini="true" data-type="horizontal">
+			<a id="exportjson_copybtn" data-mini="true" class="ui-btn ui-corner-all">Copy</a>
+			<a id="exportjson_refreshbtn" data-mini="true" class="ui-btn ui-corner-all">Refresh</a>
+		    </div>
+		</script>
    		
 		<div id="editclass"></div>
 		<div id="classoptions"></div>
@@ -212,6 +223,13 @@
 			    onclick="guiinst.translate_owllink()">Translate Again</a>
 			</div>
 		    </div>
+		    
+		    <div class="exportjson_details" data-role="collapsible" data-collapsed="true"
+			 data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
+			<h2>JSON Export String</h2>
+			<div id="exportjson_placer"></div>
+		    </div>
+		    
 		    <div class="insert_owllink_details" data-role="collapsible"  data-collapsed="true"
 		    	 data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
 			<h2>Insert OWLlink</h2>
