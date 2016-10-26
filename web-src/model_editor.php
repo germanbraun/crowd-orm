@@ -1,3 +1,6 @@
+<?php
+require_once('template.php');
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
     <head>
@@ -49,140 +52,17 @@
 		
 		<!-- ---------------------------------------------------------------------- -->
 		<!-- Templates -->
-
-		<!-- Tools Navbar -->
-		<script type="text/template" id="template_errorwidget">
-		    <div class="error-popup" data-dismissible="false"  data-role="popup">
-			<div data-role="header" class="error-header">
-			    <h1> Error: </h1>
-			</div>
-			<div data-role="main" class="ui-content error-content">
-			    <dl>
-				<dt>Status:</dt><dd>
-				    <div id="errorstatus_text"></div>
-				</dd>
-				<dt>Server Answer:</dt><dd>
-				    <pre>
-					<div id="errormsg_text"></div>
-				    </pre>
-				</dd>
-			    </dl>
-			    <a data-rel="back" id="errorwidget_hide_btn"
-			       class="ui-corner-all ui-btn ui-icon-back ui-btn-icon-left">Hide</a>
-			</div>
-		    </div>
-		</script>
-		
-		<script type="text/template" id="template_tools_navbar">
-		    <div data-role="navbar">
-			<label>Translate</label>
-			<select data-mini="true" data-inline="true" data-native-menu="false" id="format_select">
-			    <option value="owllink" selected="true">OWLlink</option>
-			    <option value="html">HTML</option>
-			</select>
-		    	<a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all" type="button" id="translate_button">Translate</a>
-						
-			<label>New Class</label>
-			<input data-mini="true" placeholder="ClassName" type="text" id="crearclase_input"/>
-			<a class="ui-btn ui-icon-plus ui-btn-icon-left ui-corner-all" type="button" id="crearclase_button">New</a>
-
-			<label>Insert OWLlink data</label>
-			<a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all" type="button" id="insertowllink_button">Insert OWLlink</a>
-			<label>Reset All</label>
-			<a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all" type="button" id="resetall_button">Reset All</a>
-			<label>Import JSON</label>
-			<a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all" type="button" id="importjson_open_dialog">Import JSON</a>
-			<label>Export JSON</label>
-			<a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all" type="button" id="exportjson_open_dialog">Export JSON</a>
-		    </div>
-		</script>
-		<!-- EditClass -->
-		<script type="text/template" id="template_editclass">
-		    <form>
-			<input type="hidden" id="editclass_classid" name="classid" value="<%= classid %>" />
-			<input data-mini="true" placeholder="ClassName" type="text" id="editclass_input"  />
-			<div data-role="controlgroup" data-mini="true" data-type="horizontal">
-			    <a class="ui-btn ui-corner-all ui-icon-check ui-btn-icon-notext" type="button" id="editclass_button">Accept</a>
-			    <a class="ui-btn ui-corner-all ui-icon-back ui-btn-icon-notext" type="button" id="close_button">Close</a>
-			</div>
-		    </form>
-		</script>
-		<!-- ClassOptions -->
-		<script type="text/template" id="template_classoptions">
-		    <div class="classOptions" data-role="controlgroup" data-mini="true" data-type="vertical" style="visible:false, z-index:1, position:absolute" >
-			<input type="hidden" id="cassoptions_classid" name="classid" value="<%= classid %>" />
-			<a class="ui-btn ui-corner-all ui-icon-edit ui-btn-icon-notext" type="button" id="editclass_button">Edit</a>
-			<a class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext" type="button" id="deleteclass_button">Delete</a>
-		    </div>
-		</script>
-		<!-- RelationOptions -->
-		<script type="text/template" id="template_relationoptions">
-		    <div class="relationOptions" style="visible:false, z-index:1, position:absolute">
-			<input type="hidden" id="relationoptions_classid"  name="classid"  value="<%= classid %>" />
-			<div data-role="controlgroup" data-mini="true" data-type="horizontal">
-			    <select data-mini="true" data-inline="true" data-native-menu="false" id="cardfrom">
-				<option value="zeromany">0..*</option>
-				<option value="onemany">1..*</option>
-				<option value="zeroone">0..1</option>
-				<option value="oneone">1..1</option>
-			    </select>
-			    <a class="ui-btn ui-corner-all ui-icon-arrow-r ui-btn-icon-notext" type="button" id="association_button">Association</a>
-			    <select data-mini="true" data-inline="true" data-native-menu="false" id="cardto" >
-				<option value="zeromany">0..*</option>
-				<option value="onemany">1..*</option>
-				<option value="zeroone">0..1</option>
-				<option value="oneone">1..1</option>
-			    </select>
-			</div>
-
-			<a class="ui-btn ui-corner-all ui-icon-arrow-u ui-btn-icon-notext" type="button" id="isa_button">Is A</a>
-			<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
-			    <input type="checkbox" name="chk-covering" id="chk-covering"/>
-			    <label for="chk-covering">Covering</label>
-			    <input type="checkbox" name="chk-disjoint" id="chk-disjoint" />
-			    <label for="chk-disjoint">Disjoint</label>
-			</fieldset>
-		    </div>		    
-		</script>
-		<!-- TrafficLights -->
-		<script type="text/template" id="template_trafficlight">
-		    <a class="ui-btn ui-btn-right ui-corner-all" id="traffic_btn">
-			<img id="traffic_img" src="imgs/h-traffic-light.svg" alt="Reasoner answer..."/>
-		    </a>			
-		</script>
-		<!-- OWLlink Editor -->
-		<script type="text/template" id="template_insertowllink">
-		    <p>Use this for adding your own personal <a href="http://owllink.org/"> OWLlink</a> data.</p>
-		    <p>Remember: this will be used when you check for satisfiability or send any diagram information to the server.</p>			    
-		    <textarea cols="40" class="ui-body" id="insert_owllink_input"></textarea>
-		    <div data-role="controlgroup" data-mini="true" data-type="horizontal">
-			<a id="insert_owlclass" data-mini="true" class="ui-btn ui-corner-all">owl:Class</a>
-		    </div>
-		</script>
-		
-		<!-- Import JSON Dialog -->
-		<!-- Import JSON template -->
-		<script type="text/template" id="template_importjson">
-		    <div class="importjson-popup" data-dismissible="false"  data-role="popup">
-			<div data-role="header">
-			    <h1>Import JSON</h1>
-			</div>
-			<div data-role="main"  class="ui-content">
-			    <p>Paste the JSON string here</p>
-			    <textarea cols="40" class="ui-body" id="importjson_input"></textarea>
-			    <a id="importjson_importbtn" data-mini="true" class="ui-btn ui-corner-all">Import</a>
-			</div>
-		    </div>
-		</script>
-		<script type="text/template" id="template_exportjson">
-		    <p>Copy this text for importing again in a new session.</p>
-		    <p>Use the Refresh button to refresh the JSON content with the last modifications.</p>
-		    <textarea cols="40" class="ui-body" id="exportjson_input"><%= jsonstr %></textarea>
-		    <div data-role="controlgroup" data-mini="true" data-type="horizontal">
-			<a id="exportjson_copybtn" data-mini="true" class="ui-btn ui-corner-all">Copy</a>
-			<a id="exportjson_refreshbtn" data-mini="true" class="ui-btn ui-corner-all">Refresh</a>
-		    </div>
-		</script>
+		<?php
+		insert_template("errorwidget");
+		insert_template("tools_navbar");
+		insert_template("editclass");
+		insert_template("classoptions");
+		insert_template("relationoptions");
+		insert_template("trafficlight");
+		insert_template("insertowllink");
+		insert_template("importjson");
+		insert_template("exportjson");
+		?>			
    		
 		<div id="editclass"></div>
 		<div id="classoptions"></div>
