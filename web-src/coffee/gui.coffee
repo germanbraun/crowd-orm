@@ -315,7 +315,11 @@ class GUI
     #
     # @param jsonstr {String} a JSON string, like the one returned by diag_to_json().
     import_jsonstr: (jsonstr) ->
-        this.import_json(JSON.parse(jsonstr))
+        json = JSON.parse(jsonstr)
+        # Importing owllink
+        @owllinkinsert.append_owllink("\n" + json.owllink)
+        # Importing the Diagram
+        this.import_json(json)
 
     # Import a JSON object.
     #
