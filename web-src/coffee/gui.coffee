@@ -330,8 +330,14 @@ class GUI
     # @param json_obj {JSON object} A JSON object.
     import_json: (json_obj) ->
         @diag.import_json(json_obj)
-        
 
+    # Reset all the diagram and the input forms.
+    #
+    # Reset the diagram and the "OWLlink Insert" input field.
+    reset_all: () ->
+        @diag.reset()
+        @owllinkinsert.set_owllink("")
+        this.hide_toolbar()
 
 exports = exports ? this
 

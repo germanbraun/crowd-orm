@@ -73,6 +73,8 @@ CreateClassView = Backbone.View.extend(
                 "translate_owllink"
             "click a#insertowllink_button":
                 "insert_owllink"
+            "click a#resetall_button":
+                "reset_all"
             "click a#importjson_open_dialog":
                 "import_json"
             "click a#exportjson_open_dialog":
@@ -98,6 +100,8 @@ CreateClassView = Backbone.View.extend(
 
         insert_owllink: () ->
             gui.gui_instance.show_insert_owllink()
+        reset_all: () ->
+            gui.gui_instance.reset_all()
         import_json: () ->
             gui.gui_instance.show_import_json()
         export_json: () ->

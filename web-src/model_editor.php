@@ -88,6 +88,8 @@
 
 			<label>Insert OWLlink data</label>
 			<a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all" type="button" id="insertowllink_button">Insert OWLlink</a>
+			<label>Reset All</label>
+			<a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all" type="button" id="resetall_button">Reset All</a>
 			<label>Import JSON</label>
 			<a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all" type="button" id="importjson_open_dialog">Import JSON</a>
 			<label>Export JSON</label>

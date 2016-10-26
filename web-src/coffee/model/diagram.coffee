@@ -181,7 +181,7 @@ class Diagram
         @clases = @clases.filter( (elt, index, arr) ->
             elt != c
         )
-        @cells_deleted.push(c.get_joint())
+        @cells_deleted = @cells_deleted.concat(c.get_joint())
         this.actualizar_graph()
 
     rename_class: (classid, name) ->
