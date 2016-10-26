@@ -39,5 +39,6 @@ if ($environment == 'production'){
 <?php 
 }
 
-include "_modelinclude.php";
+// include "_modelinclude.php";
 ?>
+<script src="./js/model.js"></script>

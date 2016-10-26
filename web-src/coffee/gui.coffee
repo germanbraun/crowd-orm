@@ -30,6 +30,8 @@ class GUI
         @trafficlight = new TrafficLightsView({el: $("#trafficlight")})
         @owllinkinsert = new OWLlinkInsertView({el: $("#owllink_placer")})
         @errorwidget = new ErrorWidgetView({el: $("#errorwidget_placer")})
+        @importjsonwidget = new ImportJSONView({el: $("#importjsonwidget_placer")})
+        @exportjsonwidget = new ExportJSONView({el: $("#exportjson_placer")})
         
         @serverconn = new ServerConnection( (jqXHR, status, text) ->
             exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
@@ -243,7 +245,11 @@ class GUI
         $.mobile.changePage("#diagram-page",
             transition: "slide",
             reverse: true)
-
+    #
+    # Hide the left side "Tools" toolbar
+    # 
+    hide_toolbar: () ->
+        $("#tools-panel [data-rel=close]").click()
 
     # Change the interface into a "new association" state.
     #
@@ -269,6 +275,24 @@ class GUI
     set_selection_state: () ->
         @state = gui.state_inst.selection_state()
 
+    # Update and show the "Export JSON String" section.
+    show_export_json: () ->
+        @exportjsonwidget.set_jsonstr(this.diag_to_json())
+        $(".exportjson_details").collapsible("expand")
+        this.change_to_details_page()
+
+    # Refresh the content of the "Export JSON String" section.
+    #
+    # No need to show it.
+    refresh_export_json: () ->
+        @exportjsonwidget.set_jsonstr(this.diag_to_json())
+
+    #
+    # Show the "Import JSON" modal dialog.
+    #
+    show_import_json: () ->
+        this.hide_toolbar()
+        @importjsonwidget.show()
 
     ##
     # Show the "Insert OWLlink" section.
@@ -284,9 +308,36 @@ class GUI
         json = @diag.to_json()
         json.owllink = @owllinkinsert.get_owllink()
         return JSON.stringify(json)
-        
-        
 
+    # Import a JSON string.
+    #
+    # This will not reset the current diagram, just add more elements.
+    #
+    # @param jsonstr {String} a JSON string, like the one returned by diag_to_json().
+    import_jsonstr: (jsonstr) ->
+        json = JSON.parse(jsonstr)
+        # Importing owllink
+        @owllinkinsert.append_owllink("\n" + json.owllink)
+        # Importing the Diagram
+        this.import_json(json)
+
+    # Import a JSON object.
+    #
+    # This will not reset the current diagram, just add more elements.
+    #
+    # Same as import_jsonstr, but it accept a JSON object as parameter.
+    #
+    # @param json_obj {JSON object} A JSON object.
+    import_json: (json_obj) ->
+        @diag.import_json(json_obj)
+
+    # Reset all the diagram and the input forms.
+    #
+    # Reset the diagram and the "OWLlink Insert" input field.
+    reset_all: () ->
+        @diag.reset()
+        @owllinkinsert.set_owllink("")
+        this.hide_toolbar()
 
 exports = exports ? this
 

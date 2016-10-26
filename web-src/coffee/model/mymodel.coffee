@@ -162,6 +162,8 @@ class Class extends MyModel
         json = super()
         json.attrs = @attrs.toSource() if @attrs != null     
         json.methods = @methods.toSource() if @methods != null
+        if @joint?
+            json.position = @joint[0].position()
         return json
                
 
@@ -217,6 +219,14 @@ class Link extends MyModel
     # @return `true` if this is a generalization class and has the given parent instance. `false` otherwise.
     has_parent: (parentclass) ->
         return false
+
+    # Is this link associated to the given class?
+    #
+    # @param c {Class instance} The class to test with.
+    #
+    # @return {Boolean}
+    is_associated: (c) ->
+        this.has_parent(c) or @classes.includes(c)
 
     to_json: () ->
         json = super()
