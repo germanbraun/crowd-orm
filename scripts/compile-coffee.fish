@@ -25,7 +25,18 @@
 # Uso: scripts/compilar-coffee.sh
 #
 
-coffee --output web-src/js --compile web-src/coffee 
+echo "Compiling Coffeescripts into Javascript"
+coffee --output web-src/js --compile web-src/coffee
+set model_order diagram factories mymodel products server_connection
+
+echo "Mergin model files"
+if test -f web-src/js/model.js
+	rm web-src/js/model.js
+end
+for js in $model_order
+	cat web-src/js/model/$js.js  >> web-src/js/model.js
+	rm web-src/js/model/$js.js
+end
 
 # Compile tests coffee scripts
 
