@@ -244,7 +244,11 @@ class GUI
         $.mobile.changePage("#diagram-page",
             transition: "slide",
             reverse: true)
-
+    #
+    # Hide the left side "Tools" toolbar
+    # 
+    hide_toolbar: () ->
+        $("#tools-panel [data-rel=close]").click()
 
     # Change the interface into a "new association" state.
     #
@@ -275,6 +279,7 @@ class GUI
     # Show the "Import JSON" modal dialog.
     #
     show_import_json: () ->
+        this.hide_toolbar()
         @importjsonwidget.show()
 
     ##
