@@ -38,6 +38,15 @@ for js in $model_order
 	rm web-src/js/model/$js.js
 end
 
+echo "Mergin backbone_views files"
+if test -f web-src/js/backbone_views.js
+	rm web-src/js/backbone_views.js
+end
+for js in web-src/js/views/*.js
+	cat $js >> web-src/js/backbone_views.js
+	rm $js
+end
+
 # Compile tests coffee scripts
 
 coffee --output tests/js/js --compile tests/js/coffee
