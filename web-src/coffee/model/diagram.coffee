@@ -177,17 +177,52 @@ class Diagram
         @cells_nuevas.push(clase.get_joint(@factory, csstheme))
         this.actualizar_graph()
 
+    # @param c {Class instance}. 
     delete_class: (c) ->
         @clases = @clases.filter( (elt, index, arr) ->
             elt != c
         )
+
+        this.remove_associated_links(c)
+        
         @cells_deleted = @cells_deleted.concat(c.get_joint())
         this.actualizar_graph()
+
+    # Search for all links associated to the given class.
+    #
+    # @param c {Class instance} The class.
+    # 
+    # @return Array of Links instances.
+    find_associated_links: (c) ->
+        @links.filter( (link, indx, arr) ->
+            link.is_associated(c)
+        this)
+        
+    
+    # Remove all links associated to the given class.
+    #
+    # @param c {Class instance} The class.
+    remove_associated_links: (c) ->
+        lst = this.find_associated_links(c)
+        lst.forEach( (link, indx, arr) ->
+            this.delete_link(link)
+        this)
 
     rename_class: (classid, name) ->
         c = this.find_class_by_classid(classid)
         if c != null
             c.set_name(name)
+
+    # Remove the given link from the diagram.
+    # 
+    # @param link {Link instance} The link to remove.
+    delete_link: (link) ->
+        @links = @links.filter( (elt, index, arr) ->
+            elt != link
+        )
+       
+        @cells_deleted = @cells_deleted.concat(link.get_joint())
+        this.actualizar_graph()
 
     
     # Update the view associated to the given class's classid if it

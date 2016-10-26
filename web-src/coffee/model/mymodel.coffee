@@ -220,6 +220,14 @@ class Link extends MyModel
     has_parent: (parentclass) ->
         return false
 
+    # Is this link associated to the given class?
+    #
+    # @param c {Class instance} The class to test with.
+    #
+    # @return {Boolean}
+    is_associated: (c) ->
+        this.has_parent(c) or @classes.includes(c)
+
     to_json: () ->
         json = super()
         json.classes = $.map(@classes, (myclass) ->
