@@ -31,6 +31,7 @@ class GUI
         @owllinkinsert = new OWLlinkInsertView({el: $("#owllink_placer")})
         @errorwidget = new ErrorWidgetView({el: $("#errorwidget_placer")})
         @importjsonwidget = new ImportJSONView({el: $("#importjsonwidget_placer")})
+        @exportjsonwidget = new ExportJSONView({el: $("#exportjson_placer")})
         
         @serverconn = new ServerConnection( (jqXHR, status, text) ->
             exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
@@ -274,6 +275,17 @@ class GUI
     set_selection_state: () ->
         @state = gui.state_inst.selection_state()
 
+    # Update and show the "Export JSON String" section.
+    show_export_json: () ->
+        @exportjsonwidget.set_jsonstr(this.diag_to_json())
+        $(".exportjson_details").collapsible("expand")
+        this.change_to_details_page()
+
+    # Refresh the content of the "Export JSON String" section.
+    #
+    # No need to show it.
+    refresh_export_json: () ->
+        @exportjsonwidget.set_jsonstr(this.diag_to_json())
 
     #
     # Show the "Import JSON" modal dialog.

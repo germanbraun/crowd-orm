@@ -75,6 +75,8 @@ CreateClassView = Backbone.View.extend(
                 "insert_owllink"
             "click a#importjson_open_dialog":
                 "import_json"
+            "click a#exportjson_open_dialog":
+                "export_json"
 
         create_class: (event) ->
             alert("Creando: " + $("#crearclase_input").val() + "...")
@@ -98,6 +100,8 @@ CreateClassView = Backbone.View.extend(
             gui.gui_instance.show_insert_owllink()
         import_json: () ->
             gui.gui_instance.show_import_json()
+        export_json: () ->
+            gui.gui_instance.show_export_json()
 
                 
 );
@@ -313,6 +317,25 @@ ImportJSONView = Backbone.View.extend(
         jsonstr = $("#importjson_input").value
         gui.gui_instance.import_jsonstr(jsonstr)
 )
+
+ExportJSONView = Backbone.View.extend(
+    initialize: () ->
+        @jsonstr = ""
+        this.render()
+    render: () ->
+        template = _.template( $("#template_exportjson").html() )
+        this.$el.html(template({jsonstr: @jsonstr}))
+        this.$el.enhanceWithin() # Have pretty JQueryMobile buttons and textarea again.
+    events:
+        "click a#exportjson_copybtn" : "copy_jsonstr"
+        "click a#exportjson_refreshbtn" : "refresh"
+    copy_jsonstr: () ->
+
+    refresh: () ->
+        gui.gui_instance.refresh_export_json()
+    set_jsonstr: (@jsonstr) ->
+        this.render()
+)
         
 
 exports = exports ? this
@@ -324,3 +347,4 @@ exports.TrafficLightsView = TrafficLightsView
 exports.OWLlinkInsertView = OWLlinkInsertView
 exports.ErrorWidgetView = ErrorWidgetView
 exports.ImportJSONView = ImportJSONView
+exports.ExportJSONView = ExportJSONView
