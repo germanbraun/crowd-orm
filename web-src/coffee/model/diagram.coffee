@@ -77,14 +77,49 @@ class Diagram
     # If a generalziation already exists for the same parent, just add the class
     # into the same Generalizatino instance. Constraints are ignored in this case.
     #
-    # @param class_parent_id {string} The parent class Id.
-    # @param class_child_id {string} The child class Id.
+    # This methods try to normalize all parameters  and then call add_generalization_objs().
     #
-    # @todo Support various children on parameter class_child_id.
-    add_generalization: (class_parent_id, class_child_id, disjoint=false, covering=false) ->
-        class_parent = this.find_class_by_classid(class_parent_id)
-        class_child = this.find_class_by_classid(class_child_id)
+    # @param class_parent {string, object} The parent class Id string or the class_parent Class object.
+    # @param class_child_id {string, array of strings, array of objects, object} The child class string, an array of class Ids strings, an array of Class objects or the child object.
+    #
+    add_generalization: (class_parent, class_childs, disjoint=false, covering=false) ->
+        class_parent_obj = null
+        class_child_obj = null
 
+        # Normalize class_parent
+        if typeof(class_parent) == "string"
+            # class_parent is an Id string
+            class_parent_obj = this.find_class_by_classid(class_parent)
+        else if typeof(class_parent) == "object"
+            # class_parent is the Class instance
+            class_parent_obj = class_parent
+
+        # Normalize class_childs        
+        if class_childs instanceof Array
+            # class_child is an Array, add one by one...
+            class_childs.forEach( (child) ->
+                # child could be a string or obj, it doesn't matter! :-)
+                this.add_generalization(class_parent, child, disjoint, covering)
+            this)
+        else if typeof(class_childs) == "string"
+            # class_child is an Id string
+            class_child_obj = this.find_class_by_classid(class_childs)
+        else if typeof(class_childs) == "object"
+            # class_child is the Class instance
+            class_child_obj = class_childs
+
+        if class_child_obj? and class_parent_obj?
+            this.add_generalization_objs(class_parent_obj, class_child_obj, disjoint, covering)
+
+    # Add a Generalization link.
+    #
+    # If a generalziation already exists for the same parent, just add the class
+    # into the same Generalizatino instance. Constraints are ignored in this case.
+    #
+    # @param class_parent {Class instance} A Class object.
+    # @param class_child {Class instance} A Class object.
+    #
+    add_generalization_objs: (class_parent, class_child, disjoint=false, covering=false) ->
         gen = this.find_IsA_with_parent(class_parent)
         if (gen is undefined) || (gen is null)
             gen = new Generalization(class_parent, [class_child])
@@ -106,7 +141,7 @@ class Diagram
         class_b = this.find_class_by_classid(class_b_id)
         
         newassoc = new Link([class_a, class_b])
-        if (mult != null)
+        if (mult isnt null)
             newassoc.set_mult(mult)
         
         this.agregar_link(newassoc)
@@ -279,14 +314,30 @@ class Diagram
                     elt.position.y)
         this)
         # associations
-        # json.links.forEach(
-        #     (elt, index, arr) ->
-        #         class_a_id = this.find_class_by_name(elt.classes[0])
-        #         class_b_id = this.find_class_by_name(elt.classes[1])
-        #         this.add_association(
-        #             class_a_id.get_classid(),
-        #             class_b_id.get_classid(),
-        #             elt.name)
+        json.links.forEach(
+            (elt, index, arr) ->
+                if elt.type is "association"
+                    class_a = this.find_class_by_name(elt.classes[0])
+                    class_b = this.find_class_by_name(elt.classes[1])
+                    this.add_association(
+                        class_a.get_classid(),
+                        class_b.get_classid(),
+                        elt.name,
+                        elt.multiplicity)
+                if elt.type is "generalization"
+                    class_parent = this.find_class_by_name(elt.parent)
+                    classes_children = elt.classes.map(
+                        (childname) ->
+                            this.find_class_by_name(childname)
+                    this)
+                    disjoint = elt.constraint.includes("disjoint")
+                    covering = elt.constraint.includes("covering")
+                    this.add_generalization(
+                        class_parent,
+                        classes_children,
+                        disjoint, covering)
+                                
+        this)
         
 exports = exports ? this
 
