@@ -22,7 +22,7 @@ class GUI
     constructor: (@graph, @paper) ->
         @urlprefix = ""
         @diag = new Diagram(@graph)
-        @state = gui.State.selectionstate()
+        @state = gui.state_inst.selection_state()
         @crearclase = new CreateClassView({el: $("#crearclase")});
         @editclass = new EditClassView({el: $("#editclass")})
         @classoptions = new ClassOptionsView({el: $("#classoptions")})
@@ -30,6 +30,8 @@ class GUI
         @trafficlight = new TrafficLightsView({el: $("#trafficlight")})
         @owllinkinsert = new OWLlinkInsertView({el: $("#owllink_placer")})
         @errorwidget = new ErrorWidgetView({el: $("#errorwidget_placer")})
+        @importjsonwidget = new ImportJSONView({el: $("#importjsonwidget_placer")})
+        @exportjsonwidget = new ExportJSONView({el: $("#exportjson_placer")})
         
         @serverconn = new ServerConnection( (jqXHR, status, text) ->
             exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
@@ -95,7 +97,7 @@ class GUI
         @diag.rename_class(class_id, name)
         
         # Update the view
-        @diag.update_view(class_id, paper)
+        @diag.update_view(class_id, @paper)
 
     #
     # Add a simple association from A to B.
@@ -107,8 +109,10 @@ class GUI
     #
     # @param class_a_id {string} 
     # @param class_b_id {string}
-    add_association: (class_a_id, class_b_id) ->
-        @diag.add_association(class_a_id, class_b_id)
+    # @param name {string} optional. The association name.
+    # @param mult {array} optional. An array of two string with the cardinality from class and to class b.
+    add_association: (class_a_id, class_b_id, name=null, mult=null) ->
+        @diag.add_association(class_a_id, class_b_id, name, mult)
         this.set_selection_state()
 
     # Add a Generalization link and then set the selection state.
@@ -117,8 +121,8 @@ class GUI
     # @param class_child_id {string} The child class Id.
     # 
     # @todo Support various children on parameter class_child_id.
-    add_generalization: (class_parent_id, class_child_id) ->
-        @diag.add_generalization(class_parent_id, class_child_id)
+    add_generalization: (class_parent_id, class_child_id, disjoint=false, covering=false) ->
+        @diag.add_generalization(class_parent_id, class_child_id, disjoint, covering)
         this.set_selection_state()
 
     #
@@ -146,16 +150,39 @@ class GUI
     update_satisfiable: (data) ->
         console.log(data)
         obj = JSON.parse(data);
-        if obj.satisfiable.kb
-            @trafficlight.turn_green()
-        else
-            @trafficlight.turn_red()
+        
+        this.set_trafficlight(obj)
         $("#reasoner_input").html(obj.reasoner.input)
         $("#reasoner_output").html(obj.reasoner.output)
         $.mobile.loading("hide")
+        this.set_unsatisfiable(obj.unsatisfiable.classes)
+        this.set_satisfiable(obj.satisfiable.classes)
         # this.change_to_details_page()
-        
 
+    # Set the traffic-light according to the JSON object recived by the server.
+    #
+    # @param obj {JSON} The JSON object parsed from the recieved data.
+    set_trafficlight: (obj) ->
+        if (obj.satisfiable.kb)
+            if (obj.unsatisfiable.classes.length == 0)
+                @trafficlight.turn_green()
+            else
+                @trafficlight.turn_yellow()
+        else
+            @trafficlight.turn_red()
+
+    # Show these classes as unsatisifable.
+    #
+    # @param classes_list {Array<String>} a list of classes names.
+    set_unsatisfiable: (classes_list) ->
+        @diag.set_unsatisfiable(classes_list)
+
+    # Show these classes as satisifable.
+    #
+    # @param classes_list {Array<String>} a list of classes names.
+    set_satisfiable: (classes_list) ->
+        @diag.set_satisfiable(classes_list)
+        
     #
     # Send a POST to the server for checking if the diagram is
     # satisfiable.
@@ -199,7 +226,7 @@ class GUI
 
     ##
     # Event handler for translate diagram to OWLlink using Ajax
-    # and the api/translate/calvanesse.php translator URL.
+    # and the api/translate/berardi.php translator URL.
     translate_owllink: () ->
         format = @crearclase.get_translation_format()
         $.mobile.loading("show", 
@@ -218,20 +245,54 @@ class GUI
         $.mobile.changePage("#diagram-page",
             transition: "slide",
             reverse: true)
-
+    #
+    # Hide the left side "Tools" toolbar
+    # 
+    hide_toolbar: () ->
+        $("#tools-panel [data-rel=close]").click()
 
     # Change the interface into a "new association" state.
     #
     # @param class_id {string} The id of the class that triggered it and thus,
     #   the starting class of the association.
-    set_association_state: (class_id) ->
-        @state = gui.State.associationstate()
+    # @param mult {array} An array of two strings representing the cardinality from and to.
+    set_association_state: (class_id, mult) ->
+        @state = gui.state_inst.association_state()
         @state.set_cellStarter(class_id)
+        @state.set_cardinality(mult)
+
+    # Change to the IsA GUI State so the user can select the child for the parent.
+    #
+    # @param class_id {String} The JointJS::Cell id for the parent class.
+    # @param disjoint {Boolean} optional. If the relation has the disjoint constraint.
+    # @param covering {Boolean} optional. If the relation has the disjoint constraint.
+    set_isa_state: (class_id, disjoint=false, covering=false) ->
+        @state = gui.state_inst.isa_state()
+        @state.set_cellStarter(class_id)
+        @state.set_constraint(disjoint, covering) 
 
     # Change the interface into a "selection" state.
     set_selection_state: () ->
-        @state = gui.State.selectionstate()
+        @state = gui.state_inst.selection_state()
 
+    # Update and show the "Export JSON String" section.
+    show_export_json: () ->
+        @exportjsonwidget.set_jsonstr(this.diag_to_json())
+        $(".exportjson_details").collapsible("expand")
+        this.change_to_details_page()
+
+    # Refresh the content of the "Export JSON String" section.
+    #
+    # No need to show it.
+    refresh_export_json: () ->
+        @exportjsonwidget.set_jsonstr(this.diag_to_json())
+
+    #
+    # Show the "Import JSON" modal dialog.
+    #
+    show_import_json: () ->
+        this.hide_toolbar()
+        @importjsonwidget.show()
 
     ##
     # Show the "Insert OWLlink" section.
@@ -247,9 +308,36 @@ class GUI
         json = @diag.to_json()
         json.owllink = @owllinkinsert.get_owllink()
         return JSON.stringify(json)
-        
-        
 
+    # Import a JSON string.
+    #
+    # This will not reset the current diagram, just add more elements.
+    #
+    # @param jsonstr {String} a JSON string, like the one returned by diag_to_json().
+    import_jsonstr: (jsonstr) ->
+        json = JSON.parse(jsonstr)
+        # Importing owllink
+        @owllinkinsert.append_owllink("\n" + json.owllink)
+        # Importing the Diagram
+        this.import_json(json)
+
+    # Import a JSON object.
+    #
+    # This will not reset the current diagram, just add more elements.
+    #
+    # Same as import_jsonstr, but it accept a JSON object as parameter.
+    #
+    # @param json_obj {JSON object} A JSON object.
+    import_json: (json_obj) ->
+        @diag.import_json(json_obj)
+
+    # Reset all the diagram and the input forms.
+    #
+    # Reset the diagram and the "OWLlink Insert" input field.
+    reset_all: () ->
+        @diag.reset()
+        @owllinkinsert.set_owllink("")
+        this.hide_toolbar()
 
 exports = exports ? this
 

@@ -41,15 +41,22 @@ class MyModel
     # is provided.
     #
     # @param factory {Factory subclass} Concrete Factory like UMLFactory or ERDFactory instance.
+    # @return {Array<JointJS::Cells> An array of Cells elements.
     get_joint: (factory = null, csstheme = null) ->
         if factory != null then this.create_joint(factory, csstheme)
         return @joint
 
     # Create a JointJS view class and assign it to @joint variable.
+    #
+    # # Caution
+    # The first element is used for get_classid, representing it as the JointJS
+    # visual element of this instance. If this instance has more than one
+    # JointJS cells, the first one is the most important.
     # 
     # @note Please redefine this method in the subclass.
     # @param factory {Factory subclass} A concrete Factory for creating the
     #   view instance.
+    # @return {Array<JointJS::Cells>} An array of Cells elements.
     create_joint: (factory, csstheme = null) ->
         console.warn(this.toString() + " : Redefine create_joint() method on the subclass.");
         return null
@@ -58,8 +65,10 @@ class MyModel
     # associated to this class.
     update_view: (paper) ->
         if @joint != null
-            v = @joint.findView(paper)
-            v.update()
+            @joint.forEach( (elt, index, arr) ->
+                v = elt.findView(paper)
+                v.update()
+            this)
        
     #
     # @return {boolean} true if this Joint Model has the given classid string.
@@ -74,7 +83,7 @@ class MyModel
         if @joint == null
             return false
         else
-            return @joint.id
+            return @joint[0].id
 
     #
     # Return a JSON object representation with only the information.
@@ -92,13 +101,14 @@ class Class extends MyModel
     constructor : (name, @attrs = null , @methods = null) ->
         super(name)
         @joint = null
+        @unsatisfiable = false
 
     get_name: () ->
         return @name
 
     set_name: (@name) ->
         if @joint != null
-             @joint.set("name", name)
+             @joint[0].set("name", @name)
         
         
     get_attrs: () ->
@@ -107,21 +117,53 @@ class Class extends MyModel
     get_methods: () ->
         return @methods
 
+
+    # Set if this class is unsatisfiable. Changing its appearance if `csstheme`
+    # is given.
+    #
+    # @param bool {Boolean} If it is unsatisfiable or not.
+    # @param csstheme {CSSTheme} optional. A csstheme object that if given,
+    #   will set the appearance of this class depending if it is unsatisfiable.
+    set_unsatisfiable: (bool, csstheme=null) ->
+        @unsatisfiable = bool
+        if csstheme?
+            this.set_theme(csstheme)
+            
+
+    # Set the csstheme to the joint class.
+    set_theme: (csstheme) ->
+        if (@joint?) && (@joint.length > 0)
+            # Joint instance exists.
+            if @unsatisfiable
+                @joint[0].set('attrs', csstheme.css_class_unsatisfiable)
+            else
+                @joint[0].set('attrs', csstheme.css_class)
+
     #
     # If the joint model wasn't created, make it.
     #
     # @param factory a Factory subclass instance.
     create_joint: (factory, csstheme = null) ->
-        if @joint == null 
-            if csstheme != null
-                @joint = factory.create_class(@name, csstheme.css_class)
+        unless @joint?
+            @joint = []
+            if csstheme?
+                if @unsatisfiable
+                    cssclass = csstheme.css_class_unsatisfiable
+                else
+                    cssclass = csstheme.css_class
+                    
+                @joint.push(
+                    factory.create_class(@name, cssclass))
             else
-                @joint = factory.create_class(@name)
+                @joint.push(
+                    factory.create_class(@name))
 
     to_json: () ->
         json = super()
         json.attrs = @attrs.toSource() if @attrs != null     
         json.methods = @methods.toSource() if @methods != null
+        if @joint?
+            json.position = @joint[0].position()
         return json
                
 
@@ -134,8 +176,22 @@ class Link extends MyModel
     #   the first class is the "from" and the second is the "to" class
     #   in a two-linked relation.
     constructor: (@classes) ->
-        super("")
+        super(Link.get_new_name())
+        @mult = [null, null]
 
+    # Set the multiplicity.
+    #
+    # For example:
+    # `[null, null]` or `["0..*", "0..*"]` means from 0..* to 0..*.
+    # `[1..*, null]` means from 1..* to 0..*.
+    # 
+    # @param [array] mult An array that describes the multiplicity in strings.
+    set_mult : (@mult) ->
+        this.change_to_null(m,i) for m,i in @mult
+
+    change_to_null : (mult, index) ->
+        if (mult == "0..*") or (mult == "0..n")
+            @mult[index] = null
     #
     # @param class_from an instance of Class.
     set_from : (class_from) ->
@@ -157,28 +213,54 @@ class Link extends MyModel
     is_two_linked: () ->
         return @classes.length == 2
 
+    # *Implement in the subclass if necesary.*
+    #
+    # @param parentclass {Class} The Class instance to check.
+    # @return `true` if this is a generalization class and has the given parent instance. `false` otherwise.
+    has_parent: (parentclass) ->
+        return false
+
+    # Is this link associated to the given class?
+    #
+    # @param c {Class instance} The class to test with.
+    #
+    # @return {Boolean}
+    is_associated: (c) ->
+        this.has_parent(c) or @classes.includes(c)
+
     to_json: () ->
         json = super()
         json.classes = $.map(@classes, (myclass) ->
             myclass.get_name()
         )
-        json.multiplicity = ["0..*", "0..*"]
+        json.multiplicity = @mult
         json.type = "association"
 
         return json
 
     create_joint: (factory, csstheme = null) ->        
         if @joint == null
+            @joint = []
             if csstheme != null
-                @joint = factory.create_association(
+                @joint.push(factory.create_association(
                     @classes[0].get_classid(),
                     @classes[1].get_classid(),
-                    null,
-                    csstheme.css_links)
+                    @name,
+                    csstheme.css_links,
+                    @mult))
             else
-                @joint = factory.create_association(
+                @joint.push(factory.create_association(
                     @classes[0].get_classid(),
-                    @classes[1].get_classid())
+                    @classes[1].get_classid(),
+                    @name
+                    null,
+                    @mult))
+
+Link.get_new_name = () ->
+    if Link.name_number == undefined
+        Link.name_number = 0
+    Link.name_number = Link.name_number + 1
+    return "r" + Link.name_number
 
 # A generalization link.
 class Generalization extends Link
@@ -187,23 +269,90 @@ class Generalization extends Link
     # @param classes {Array<Class>} An array of child classes.
     constructor: (@parent_class, @classes) ->
         super(@classes)
+        @disjoint = false
+        @covering = false
 
+    get_joint: (factory=null, csstheme=null) ->
+        super(factory, csstheme)
+
+        if @joint.length < @classes.length
+            # If it was created before but now we have a new child.
+            if factory != null then this.create_joint(factory, csstheme);
+        return @joint
+        
     create_joint: (factory, csstheme = null) ->
-        if @joint == null
-            if csstheme != null
-                @joint = factory.create_generalization(
-                    @parent_class.get_classid(),
-                    @classes[0].get_classid(),
-                    csstheme.css_links)
-            else
-                @joint = factory.create_generalization(
-                    @parent_class.get_classid(),
-                    @classes[0].get_classid())
+        if csstheme == null
+            csstheme =
+                css_links: null
+        if (@joint == null) || (@joint.length < @classes.length)
+            @joint = []
+            @classes.forEach( (elt, index, arr) ->
+                if (!this.has_joint_instance(elt))
+                    if index == 0
+                        # Only draw the "disjoint-covering" label at the first line.
+                        disjoint = @disjoint
+                        covering = @covering
+                    else
+                        disjoint = covering = false
+                    @joint.push(factory.create_generalization(
+                        @parent_class.get_classid(),
+                        elt.get_classid(),
+                        csstheme.css_links
+                        disjoint, covering))
+            this)
+
+
+    # Has the given elt a JointJS::Cell insance already created?
+    # 
+    # @param elt {Class} a Class instance.
+    # @return true if elt has a joint instance at the @joint variable. false otherwise.
+    has_joint_instance: (elt) ->
+        classid = elt.get_classid()
+        founded = @joint.find( (elt, index, arr) ->
+            # elt is a JointJS::Cell instance, a UML::Generalization if the UMLFactory is used.
+            elt.get('source').id == classid
+        )
+        return founded?
+
+    # Search for a child JointJS::Cell inside this relation.
+    # 
+    # @return undefined or null if not founded.
+    get_joint_for_child: (classchild) ->
+        classid = classchild.get_classid()
+        founded = @joint.find( (elt, index, arr) ->
+            # elt is a JointJS::Cell instance, a UML::Generalization if the UMLFactory is used.
+            elt.get('source').id == classid
+        )
+        return founded
+        
+
+    has_parent: (parentclass) ->
+        return @parent_class == parentclass
+
+    # Add a child into the generalization.
+    # 
+    # @param childclass {Class} a Class instance to add.
+    add_child: (childclass) ->
+        @classes.push(childclass)
+
+    set_disjoint: (@disjoint) ->
+    set_covering: (@covering) ->
+        
+    get_disjoint: () ->
+        return @disjoint
+    get_covering: () ->
+        return @covering
 
     to_json: () ->
         json = super()
         json.parent = @parent_class.get_name()
+        json.multiplicity = null
         json.type = "generalization"
+        
+        constraint = []
+        if @disjoint then constraint.push("disjoint")
+        if @covering then constraint.push("covering")
+        json.constraint = constraint
         
         return json
 

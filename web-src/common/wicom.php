@@ -24,7 +24,7 @@
 namespace Wicom;
 
 load("translator.php", "../wicom/translator/");
-load("calvanessestrat.php", "../wicom/translator/strategies/");
+load("berardistrat.php", "../wicom/translator/strategies/");
 load("owllinkbuilder.php", "../wicom/translator/builders/");
 
 load("runner.php", "../wicom/reasoner/");
@@ -32,7 +32,7 @@ load("racerconnector.php", "../wicom/reasoner/");
 load("owllinkanalizer.php", "../wicom/answers/");
 
 use Wicom\Translator\Translator;
-use Wicom\Translator\Strategies\Calvanesse;
+use Wicom\Translator\Strategies\Berardi;
 use Wicom\Translator\Builders\OWLlinkBuilder;
 
 use Wicom\Reasoner\Runner;
@@ -49,7 +49,7 @@ class Wicom{
        satisfiability.
      */
     function is_satisfiable($json_str){
-        $trans = new Translator(new Calvanesse(), new OWLlinkBuilder());
+        $trans = new Translator(new Berardi(), new OWLlinkBuilder());
         $owllink_str = $trans->to_owllink($json_str);
         
         $runner = new Runner(new RacerConnector());

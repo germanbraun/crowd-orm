@@ -56,42 +56,85 @@ class UMLFactory extends Factory
             name: class_name
             attributes: []
             methods: []
-            attrs: css_class
+            attrs:
+                '.uml-class-name-rect':
+                    fill: '#ffffff'
+                    stroke: '#000000'
+                '.uml-class-name-text':
+                    fill: '#000000'                    
 
-        if css_class != null
+
+        if css_class?
             params.attrs = css_class
 
         newclass = new uml.Class( params )
             
         return newclass
 
+    # @param [array] mult The multiplicity strings.
     # @return [joint.dia.Link]
-    create_association: (class_a_id, class_b_id, name = null, css_links = null) ->
+    create_association: (class_a_id, class_b_id, name = null, css_links = null, mult = null) ->
         link = new joint.dia.Link(
                 source: {id: class_a_id},
                 target: {id: class_b_id},
                 attrs: css_links
                 )
-                
+
+        labels = []
         if name != null
-            link.set(
-                labels: [
-                    position: -20,
-                    attrs: 
-                        text: {dy: -y , text: name, fill: '#ffffff'},
-                        rect: {fill: 'none'} 
-                ]
+            labels = labels.concat([
+                position: 0.5,
+                attrs: 
+                    text: {text: name, fill: '#0000ff'},
+                    rect: {fill: '#ffffff'} 
+                ])
+        if mult != null
+            if mult[0] != null
+                labels = labels.concat([
+                    position: 0.1,
+                    attrs:
+                        text: {text: mult[0], fill: '#0000ff'},
+                        rect: {fill: '#ffffff'}])
+            if mult[1] != null
+                labels = labels.concat([
+                    position: 0.9,
+                    attrs:
+                        text: {text: mult[1], fill: '#0000ff'},
+                        rect: {fill: '#ffffff'}])
+        link.set(
+            labels: labels
             )
             
         return link
 
+    # @param css_links {Hash} A Hash representing the CSS. See JointJS documentation for the attrs attribute.
+    # @param disjoint {Boolean} Draw a "disjoint" legend.
+    # @param covering {Boolean} Draw a "covering" legend.
     # @return [joint.shapes.uml.Generalization]
-    create_generalization: (class_a_id, class_b_id, css_links = null) ->
+    create_generalization: (class_a_id, class_b_id, css_links = null, disjoint=false, covering=false) ->
         link = new joint.shapes.uml.Generalization(
-                source: {id: class_a_id},
-                target: {id: class_b_id},
+                source: {id: class_b_id},
+                target: {id: class_a_id},
                 attrs: css_links
                 )
+
+        if disjoint || covering
+            legend = "{"
+            if disjoint then legend = legend + "disjoint"
+            if covering
+                if legend != ""
+                    legend = legend + ","
+                legend = legend + "covering"
+            legend = legend + "}"
+        
+            link.set(
+                labels: [
+                    position: 0.8,
+                    attrs:
+                        text: {text: legend, fill: '#0000ff'},
+                        rect: {fill: "#ffffff"}
+            ])
+
         return link
 
 
