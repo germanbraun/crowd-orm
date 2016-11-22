@@ -30,11 +30,13 @@ css_class =
         stroke: "#000"
         'stroke-width': 0.5
         visibility: 'collapse'
+        display: 'none'
     '.uml-class-methods-rect' : 
         fill: "#ddf"
         stroke: "#000"
         'stroke-width': 0.5
         visibility: 'collapse'
+        display: 'none'
     '.uml-class-name-text' :
         fill: "#00f"
     '.uml-class-attrs-text': 
@@ -42,11 +44,13 @@ css_class =
         'ref-y': 0.5
         'y-alignment': 'middle'
         visibility: 'collapse'
+        display: 'none'
     '.uml-class-methods-text':
         ref: '.uml-class-methods-rect',
         'ref-y': 0.5
         'y-alignment': 'middle'
         visibility: 'collapse'
+        display: 'none'
 
 # [JointJS special
 # attributes](http://jointjs.com/api#SpecialAttributes) 
@@ -64,11 +68,13 @@ css_class_unsatisfiable =
         stroke: "#000"
         'stroke-width': 0.5
         visibility: 'collapse'
+        display: 'none'
     '.uml-class-methods-rect' : 
         fill: "#fdd"
         stroke: "#000"
         'stroke-width': 0.5
         visibility: 'collapse'
+        display: 'none'
     '.uml-class-name-text' :
         fill: "#00f"
     '.uml-class-attrs-text': 
@@ -76,11 +82,13 @@ css_class_unsatisfiable =
         'ref-y': 0.5
         'y-alignment': 'middle'
         visibility: 'collapse'
+        display: 'none'
     '.uml-class-methods-text':
         ref: '.uml-class-methods-rect',
         'ref-y': 0.5
         'y-alignment': 'middle'
         visibility: 'collapse'
+        display: 'none'
 
 
 
