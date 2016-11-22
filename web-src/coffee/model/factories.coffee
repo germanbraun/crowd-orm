@@ -52,7 +52,7 @@ class UMLFactory extends Factory
     create_class: (class_name, css_class=null) ->
         params =
             position: {x: 20, y: 20}
-            size: {width: 100, height: 100}
+            size: {width: 100, height: 50}
             name: class_name
             attributes: []
             methods: []
