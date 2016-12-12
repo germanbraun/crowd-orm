@@ -1,9 +1,9 @@
 <?php 
 /* 
 
-   Copyright 2016 Gilia, Departamento de Teoría de la Computación, Universidad Nacional del Comahue
+   Copyright 2016 GILIA, Departamento de Teoría de la Computación, Universidad Nacional del Comahue
    
-   Author: Gilia  
+   Author: GILIA
 
    crowd_uml.php
    
@@ -47,6 +47,7 @@ class UMLcrowd extends Strategy{
        @see Translator class for description about the JSON format.
     */
     function translate($json_str, $builder){
+    
         $json = json_decode($json_str, true);
 
         // Classes
@@ -55,7 +56,9 @@ class UMLcrowd extends Strategy{
             $builder->insert_subclassof($class["name"], "owl:Thing");
         }
 
-        $this->translate_links($json, $builder);        
+        $this->translate_links($json, $builder); 
+
+  
     }
 
     /**
@@ -103,31 +106,122 @@ class UMLcrowd extends Strategy{
         return $ret;
     }
 
+
+
+    /**
+       Generates internal classes for reasoning on cardinalities.
+       
+	   @param $role associated role
+	   @param $classes classes participating in association $link with multiplicity $mult
+
+    */
+
+	protected function generate_internal_classes($role, $classes, $builder, $withclass=true){
+
+		if ($withclass){
+
+		$builder->translate_DL([
+            ["subclass" => [   //cambiar a equivalent
+					["class" => $classes[0]],
+					["intersection" => [
+							["class" => $classes[0]],
+                			["mincard" => [1, ["inverse" => ["role" => $role]]]]]]
+			]]]);
+		
+		$builder->translate_DL([
+            ["subclass" => [
+					["class" => $classes[0]],
+					["intersection" => [
+							["class" => $classes[0]],
+                			["maxcard" => [1, ["inverse" => ["role" => $role]]]]]]
+			]]]);
+
+		
+		$builder->translate_DL([
+            ["subclass" => [
+					["class" => $classes[1]],
+					["intersection" => [
+							["class" => $classes[1]],
+                			["mincard" => [1, ["inverse" => ["role" => $role]]]]]]
+			]]]);
+		
+		$builder->translate_DL([
+            ["subclass" => [
+					["class" => $classes[1]],
+					["intersection" => [
+							["class" => $classes[1]],
+                			["maxcard" => [1, ["inverse" => ["role" => $role]]]]]]
+			]]]);
+		}
+		else {
+
+		$builder->translate_DL([
+            ["subclass" => [   //cambiar a equivalent
+					["class" => $classes[0]],
+					["intersection" => [
+							["class" => $classes[0]],
+                			["mincard" => [1, ["role" => $role]]]]]
+			]]]);
+		
+		$builder->translate_DL([
+            ["subclass" => [
+					["class" => $classes[0]],
+					["intersection" => [
+							["class" => $classes[0]],
+                			["maxcard" => [1, ["role" => $role]]]]]
+			]]]);
+
+		
+		$builder->translate_DL([
+            ["subclass" => [
+					["class" => $classes[1]],
+					["intersection" => [
+							["class" => $classes[1]],
+                			["mincard" => [1, ["inverse" => ["role" => $role]]]]]]
+			]]]);
+		
+		$builder->translate_DL([
+            ["subclass" => [
+					["class" => $classes[1]],
+					["intersection" => [
+							["class" => $classes[1]],
+                			["maxcard" => [1, ["inverse" => ["role" => $role]]]]]]
+			]]]);
+
+		}
+
+		return $builder;
+
+	}
+
+
     /**
        Translate only the association link.
        
-       @param link A JSON object representing one association link.
+       @param link A JSON object representing one association link without class.
     */
-    protected function translate_association($link, $builder){
+    protected function translate_association_without_class($link, $builder){
         $classes = $link["classes"];
         $mult = $link["multiplicity"];
             
         $builder->translate_DL([
             ["subclass" => [
-                ["class" => "owl:Thing"],
-                ["intersection" => [
-                    ["forall" => [
-                        ["role" => $link["name"]],
-                        ["class" => $classes[0]]]],
-                    ["forall" => [
-                        ["inverse" => 
-                         ["role" => $link["name"]]],
-                        ["class" => $classes[1]]]]
-                ]] //intersection
-            ]] //subclass
-        ]);
+                			["forall" => [
+								["role" => $link["name"]],
+								["class" => $classes[0]]]]
+			]]]);
 
-        $rest = $this->translate_multiplicity($mult[1], $link["name"]);
+		$builder->translate_DL([
+            ["subclass" => [
+                			["forall" => [ 
+								["inverse" => ["role" => $link["name"]]],
+								["class" => $classes[1]]]]
+			]]]);
+
+		$rest = $this->generate_internal_classes($link["name"], $classes, $builder,false);
+
+
+/*        $rest = $this->translate_multiplicity($mult[1], $link["name"]);
         if (($rest != null) and (count($rest) > 0)){
             // Multiplicity should be written.
             $lst = [
@@ -149,7 +243,39 @@ class UMLcrowd extends Strategy{
                 ]]
             ];
             $builder->translate_DL($lst);
-        }
+        }*/
+
+
+
+
+    }
+
+
+    /**
+       Translate only the association link.
+       
+       @param link A JSON object representing one association link with class.
+    */
+    protected function translate_association_with_class($link, $builder){
+        $classes = $link["classes"];
+        $mult = $link["multiplicity"];
+            
+        $builder->translate_DL([
+            ["subclass" => [
+                			["exists" => $link["name"]],
+							["class" => $classes[0]]
+			]]]);
+
+		$builder->translate_DL([
+            ["subclass" => [
+                ["exists" => [ 
+					["inverse" => $link["name"]]]],
+				["class" => $classes[1]]
+			]]]);
+
+
+		$rest = $this->generate_internal_classes($link["name"], $classes,true);
+
     }
 
     /**
@@ -228,6 +354,7 @@ class UMLcrowd extends Strategy{
             ]]];
             $builder->translate_DL($lst);
         }
+
     }
 
     /**
@@ -245,7 +372,7 @@ class UMLcrowd extends Strategy{
         foreach ($js_links as $link){
             switch ($link["type"]){
             case "association":
-                $this->translate_association($link, $builder);
+                $this->translate_association_without_class($link, $builder);
                 break;
             case "generalization":
                 $this->translate_generalization($link, $builder);

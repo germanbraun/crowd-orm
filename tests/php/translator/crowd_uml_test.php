@@ -36,8 +36,11 @@ use Wicom\Translator\Builders\OWLlinkBuilder;
 
    It will only check for the amount of attributes.
  */
+
+
 class UMLcrowdTest extends PHPUnit_Framework_TestCase
 {
+
 
     public function testTranslate(){
         //TODO: Complete JSON!
@@ -79,89 +82,94 @@ xsi:schemaLocation=\"http://www.owllink.org/owllink# http://www.owllink.org/owll
         $this->assertXmlStringEqualsXmlString($expected, $actual, true);
     }
 
+
+
+
     ##
-    # Test if translate works properly with binary roles.    
-    public function testTranslateBinaryRoles(){
-        //TODO: Complete JSON!
-        $json = <<<'EOT'
-{"classes": [
-    {"attrs":[], "methods":[], "name": "Person"},
-    {"attrs":[], "methods":[], "name": "Cellphone"}],
- "links": [
-     {"classes": ["Person", "Cellphone"],
-      "multiplicity": ["1..1", "1..*"],
-      "name": "hasCellphone",
-      "type": "association"}
-	]
-}
+    # Test if translate works properly with binary roles many-to-many
+    public function testTranslateBinaryRolesWithoutClass(){
+
+/*  {
+"classes": [{"name":"PhoneCall", "attrs":[], "methods":[]},
+			 {"name":"Phone", "attrs":[], "methods":[]}],
+"links": [{"name": "r1", "classes":["PhoneCall","Phone"], "multiplicity":[null,null], "type":"association"}]
+} 
+  */   
+	$json = <<< EOT
+{
+"classes": [{"name":"PhoneCall", "attrs":[], "methods":[]},
+			 {"name":"Phone", "attrs":[], "methods":[]}],
+"links": [{"name": "r1", "classes":["PhoneCall","Phone"], "multiplicity":[null,null], "type":"association"}]
+} 
 EOT;
+
         //TODO: Complete XML!
         $expected = <<<'EOT'
 <?xml version="1.0" encoding="UTF-8"?>
 <RequestMessage xmlns="http://www.owllink.org/owllink#"
 		xmlns:owl="http://www.w3.org/2002/07/owl#" 
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd">
+		xsi:schemaLocation="http://www.owllink.org/owllink# 
+				    http://www.owllink.org/owllink-20091116.xsd">
   <CreateKB kb="http://localhost/kb1" />
   <Tell kb="http://localhost/kb1">
-    <!-- <owl:ClassAssertion>
-	 <owl:Class IRI="Person" />
-	 <owl:NamedIndividual IRI="Mary" />
-	 </owl:ClassAssertion>
-    -->
-    
+    <owl:EquivalentClasses>
+        <owl:Class IRI="#PhoneCall_r1_max"/>
+        <owl:ObjectIntersectionOf>
+            <owl:Class IRI="#PhoneCall"/>
+            <owl:ObjectMaxCardinality cardinality="1">
+                <owl:ObjectProperty IRI="#r1"/>
+            </owl:ObjectMaxCardinality>
+        </owl:ObjectIntersectionOf>
+    </owl:EquivalentClasses>
+    <owl:EquivalentClasses>
+        <owl:Class IRI="#PhoneCall_r1_min"/>
+        <owl:ObjectIntersectionOf>
+            <owl:Class IRI="#PhoneCall"/>
+            <owl:ObjectMinCardinality cardinality="1">
+                <owl:ObjectProperty IRI="#r1"/>
+            </owl:ObjectMinCardinality>
+        </owl:ObjectIntersectionOf>
+    </owl:EquivalentClasses>
+    <owl:EquivalentClasses>
+        <owl:Class IRI="#Phone_r1_max"/>
+        <owl:ObjectIntersectionOf>
+            <owl:Class IRI="#Phone"/>
+            <owl:ObjectMaxCardinality cardinality="1">
+                <owl:ObjectInverseOf>
+                    <owl:ObjectProperty IRI="#r1"/>
+                </owl:ObjectInverseOf>
+            </owl:ObjectMaxCardinality>
+        </owl:ObjectIntersectionOf>
+    </owl:EquivalentClasses>
+    <owl:EquivalentClasses>
+        <owl:Class IRI="#Phone_r1_min"/>
+        <owl:ObjectIntersectionOf>
+            <owl:Class IRI="#Phone"/>
+            <owl:ObjectMinCardinality cardinality="1">
+                <owl:ObjectInverseOf>
+                    <owl:ObjectProperty IRI="#r1"/>
+                </owl:ObjectInverseOf>
+            </owl:ObjectMinCardinality>
+        </owl:ObjectIntersectionOf>
+    </owl:EquivalentClasses>
     <owl:SubClassOf>
-      <owl:Class IRI="Person" />
+      <owl:Class IRI="Phone" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     <owl:SubClassOf>
-      <owl:Class IRI="Cellphone" />
+      <owl:Class IRI="PhoneCall" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
-    <!-- One person can has lots of cellphones -->
-
-    <owl:SubClassOf>
-      <owl:Class abbreviatedIRI="owl:Thing" />
-      <owl:ObjectIntersectionOf>
-	<owl:ObjectAllValuesFrom>
-	  <owl:ObjectProperty IRI="hasCellphone" />
-	  <owl:Class IRI="Person" />
-	</owl:ObjectAllValuesFrom>
-	<owl:ObjectAllValuesFrom>
-	  <owl:ObjectInverseOf>
-	    <owl:ObjectProperty IRI="hasCellphone" />	    
-	  </owl:ObjectInverseOf>
-	  <owl:Class IRI="Cellphone" />
-	</owl:ObjectAllValuesFrom>
-      </owl:ObjectIntersectionOf>
-    </owl:SubClassOf>
-
-    <!-- Multiplicity -->
-    <owl:SubClassOf>
-      <owl:Class IRI="Person" />
-      <owl:ObjectMinCardinality cardinality="1">
-        <owl:ObjectProperty IRI="hasCellphone" />
-      </owl:ObjectMinCardinality>      
-    </owl:SubClassOf>
-
-    <owl:SubClassOf>
-      <owl:Class IRI="Cellphone" />
-      <owl:ObjectIntersectionOf>
-	<owl:ObjectMinCardinality cardinality="1">
-	  <owl:ObjectInverseOf>
-	    <owl:ObjectProperty IRI="hasCellphone" />
-	  </owl:ObjectInverseOf>
-	</owl:ObjectMinCardinality>
-	<owl:ObjectMaxCardinality cardinality="1">
-	  <owl:ObjectInverseOf>
-	    <owl:ObjectProperty IRI="hasCellphone" />
-	  </owl:ObjectInverseOf>
-	</owl:ObjectMaxCardinality>
-      </owl:ObjectIntersectionOf>
-    </owl:SubClassOf>
-
+    <owl:ObjectPropertyDomain>
+        <owl:ObjectProperty IRI="#r1"/>
+        <owl:Class IRI="#PhoneCall"/>
+    </owl:ObjectPropertyDomain>
+    <owl:ObjectPropertyRange>
+        <owl:ObjectProperty IRI="#r1"/>
+        <owl:Class IRI="#Phone"/>
+    </owl:ObjectPropertyRange>
   </Tell>
-  <!-- <ReleaseKB kb="http://localhost/kb1" /> -->
 </RequestMessage>
 EOT;
         
@@ -175,11 +183,10 @@ EOT;
         
         $actual = $builder->get_product();
         $actual = $actual->to_string();
-
-        /*$expected = process_xmlspaces($expected);
-          $actual = process_xmlspaces($actual);*/
-        $this->assertXmlStringEqualsXmlString($expected, $actual);
+        $this->assertXmlStringEqualsXmlString($expected, $actual,true);
     }
+
+
 
     # Test if 0..* to 0..* associations is translated properly.
     public function testTranslateRolesManyToMany(){
@@ -233,7 +240,6 @@ EOT;
     </owl:SubClassOf>
     
   </Tell>
-  <!-- <ReleaseKB kb="http://localhost/kb1" /> -->
 </RequestMessage>
 EOT;
         
@@ -298,7 +304,6 @@ EOT;
     </owl:SubClassOf>
     
   </Tell>
-  <!-- <ReleaseKB kb="http://localhost/kb1" /> -->
 </RequestMessage>
 EOT;
         
@@ -313,11 +318,10 @@ EOT;
         $actual = $builder->get_product();
         $actual = $actual->to_string();
 
-       
-        /*$expected = process_xmlspaces($expected);
-        $actual = process_xmlspaces($actual);*/
         $this->assertXmlStringEqualsXmlString($expected, $actual, TRUE);
-    }
+    } 
+
+
 
     # Test generalization with disjoint constraint is translated properly.
     public function testTranslateGenDisjoint(){
