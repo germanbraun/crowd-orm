@@ -77,7 +77,10 @@ abstract class DocumentBuilder{
     */
     ///@{
     public function translate_DL($DL_list){
+
+//		print_r($DL_list);
         foreach ($DL_list as $elt){
+//			print_r($elt);
             $this->DL_element($elt);
         }
     }
@@ -98,8 +101,11 @@ abstract class DocumentBuilder{
 check your Descriptive Logic array if is correctly formatted. 
 You passed a " . gettype($elt) . " on: " . print_r($elt, true) );
         }
-        
+
+       // print_r($elt);
         $key = array_keys($elt)[0];
+
+//		print_r($key);
 
         switch ($key){
         case "class" :
@@ -160,6 +166,23 @@ You passed a " . gettype($elt) . " on: " . print_r($elt, true) );
             $this->DL_element($elt["maxcard"][1]);
             $this->product->end_maxcardinality();
             break;
+		case "domain" :
+			$this->product->begin_objectpropertydomain();
+			$this->DL_element($elt["domain"][0]);
+			$this->DL_element($elt["domain"][1]);
+			$this->product->end_objectpropertydomain();
+			break;
+		case "range" :
+			$this->product->begin_objectpropertyrange();
+			$this->DL_element($elt["range"][0]);
+			$this->DL_element($elt["range"][1]);
+			$this->product->end_objectpropertyrange();
+			break;
+		case "equivalentclasses" :
+			$this->product->begin_equivalentclasses();
+			$this->translate_DL($elt["equivalentclasses"]);
+			$this->product->end_equivalentclasses();
+			break;
         default:
             throw new \Exception("I don't know $key DL operand");
         }

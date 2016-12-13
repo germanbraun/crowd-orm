@@ -156,14 +156,14 @@ class UMLcrowd extends Strategy{
 		else {
 
 		$builder->translate_DL([
-            ["subclass" => [   //cambiar a equivalent
-					["class" => $classes[0]],
-					["intersection" => [
-							["class" => $classes[0]],
-                			["mincard" => [1, ["role" => $role]]]]]
+            ["equivalentclasses" => [
+						["class" => $classes[0]],
+						["intersection" => [
+								["class" => $classes[0]],
+                				["mincard" => [1, ["role" => $role]]]]]
 			]]]);
 		
-		$builder->translate_DL([
+/*		$builder->translate_DL([
             ["subclass" => [
 					["class" => $classes[0]],
 					["intersection" => [
@@ -186,7 +186,7 @@ class UMLcrowd extends Strategy{
 					["intersection" => [
 							["class" => $classes[1]],
                 			["maxcard" => [1, ["inverse" => ["role" => $role]]]]]]
-			]]]);
+			]]]);*/
 
 		}
 
@@ -200,53 +200,38 @@ class UMLcrowd extends Strategy{
        
        @param link A JSON object representing one association link without class.
     */
+
     protected function translate_association_without_class($link, $builder){
         $classes = $link["classes"];
         $mult = $link["multiplicity"];
             
         $builder->translate_DL([
-            ["subclass" => [
-                			["forall" => [
-								["role" => $link["name"]],
-								["class" => $classes[0]]]]
-			]]]);
+			["domain" => [["role" => $link["name"]], ["class" => $classes[0]]]],
+			["range" => [["role" => $link["name"]], ["class" => $classes[1]]]],
+			["equivalentclasses" => [["class" => $classes[0]."_".$link["name"]."_"."min"],
+						            ["intersection" => [["class" => $classes[0]],
+                				                        ["mincard" => [1, ["role" => $link["name"]]]]]
+									]]
+			],
+			["equivalentclasses" => [["class" => $classes[0]."_".$link["name"]."_"."max"],
+						            ["intersection" => [["class" => $classes[0]],
+                				                        ["maxcard" => [1, ["role" => $link["name"]]]]]
+									]]
+			],
+			["equivalentclasses" => [["class" => $classes[1]."_".$link["name"]."_"."min"],
+						            ["intersection" => [["class" => $classes[1]],
+                				                        ["mincard" => [1, ["inverse" => ["role" => $link["name"]]]]]]
+									]]
+			],
+			["equivalentclasses" => [["class" => $classes[1]."_".$link["name"]."_"."max"],
+						            ["intersection" => [["class" => $classes[1]],
+                				                        ["maxcard" => [1, ["inverse" => ["role" => $link["name"]]]]]]
+									]]
+			]
 
-		$builder->translate_DL([
-            ["subclass" => [
-                			["forall" => [ 
-								["inverse" => ["role" => $link["name"]]],
-								["class" => $classes[1]]]]
-			]]]);
+		]);
 
-		$rest = $this->generate_internal_classes($link["name"], $classes, $builder,false);
-
-
-/*        $rest = $this->translate_multiplicity($mult[1], $link["name"]);
-        if (($rest != null) and (count($rest) > 0)){
-            // Multiplicity should be written.
-            $lst = [
-                ["subclass" => [
-                    ["class" => $classes[0]],
-                    $rest
-                ]]
-            ];
-            $builder->translate_DL($lst);
-        }
-
-        $rest = $this->translate_multiplicity($mult[0], $link["name"], false);
-        if (($rest != null) and (count($rest) > 0)){
-            // Multiplicity should be written.
-            $lst = [
-                ["subclass" => [
-                    ["class" => $classes[1]],
-                    $rest
-                ]]
-            ];
-            $builder->translate_DL($lst);
-        }*/
-
-
-
+	//	$last = $this->generate_internal_classes($link["name"], $classes, $builder,false);
 
     }
 
