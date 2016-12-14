@@ -116,8 +116,6 @@ You passed a " . gettype($elt) . " on: " . print_r($elt, true) );
             break;
         case "subclass" :
             $this->product->begin_subclassof();
-            // We expect various consecutives DL cexpressions 
-            // (two classes for example)
             $this->translate_DL($elt["subclass"]);
             $this->product->end_subclassof();
             break;
