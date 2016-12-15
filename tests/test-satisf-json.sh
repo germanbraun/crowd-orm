@@ -20,4 +20,4 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-curl -d 'json={"classes": [{"attrs":[], "methods":[], "name": "Hi World"}]}' http://localhost/wicom/web-src/querying/satisfiable.php
+curl -d 'json={"classes": [{"attrs":[], "methods":[], "name": "Hi World"}]}' http://localhost/html/wicom/web-src/api/querying/satisfiable.php

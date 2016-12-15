@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RequestMessage xmlns="http://www.owllink.org/owllink#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd"><CreateKB kb="http://localhost/kb1"/>
+
+<Tell kb="http://localhost/kb1">
+   	<owl:SubClassOf>
+		<owl:Class IRI="a"/>
+   		<owl:Class abbreviatedIRI="owl:Thing"/>
+	</owl:SubClassOf>
+
+	<owl:SubClassOf>
+		<owl:Class IRI="b"/>
+		<owl:Class abbreviatedIRI="owl:Thing"/>
+	</owl:SubClassOf>
+
+	<owl:SubClassOf>
+		<owl:ObjectSomeValuesFrom>
+			<owl:ObjectProperty IRI=""/>
+			<owl:Class abbreviatedIRI="owl:Thing"/>
+		</owl:ObjectSomeValuesFrom>
+		<owl:Class IRI="a"/>
+	</owl:SubClassOf>
+
+	<owl:SubClassOf>
+		<owl:ObjectSomeValuesFrom>
+			<owl:ObjectInverseOf>
+				<owl:ObjectProperty IRI=""/>
+			</owl:ObjectInverseOf>
+			<owl:Class abbreviatedIRI="owl:Thing"/>
+		</owl:ObjectSomeValuesFrom>
+		<owl:Class IRI="b"/>
+	</owl:SubClassOf>
+
+	<owl:SubClassOf>
+		<owl:Class IRI="a"/>
+		<owl:ObjectIntersectionOf>
+			<owl:ObjectMinCardinality cardinality="0">
+				<owl:ObjectProperty IRI=""/>
+			</owl:ObjectMinCardinality>
+			<owl:ObjectSomeValuesFrom>
+				<owl:ObjectProperty IRI=""/>
+			 	<owl:Class abbreviatedIRI="owl:Thing"/>
+			</owl:ObjectSomeValuesFrom>
+		</owl:ObjectIntersectionOf>
+	</owl:SubClassOf>
+
+	<owl:SubClassOf>
+		<owl:Class IRI="b"/>
+		<owl:ObjectIntersectionOf>
+			<owl:ObjectMinCardinality cardinality="0">
+				<owl:ObjectInverseOf>
+					<owl:ObjectProperty IRI=""/>
+				</owl:ObjectInverseOf>
+			</owl:ObjectMinCardinality>
+			<owl:ObjectSomeValuesFrom>
+				<owl:ObjectInverseOf>
+					<owl:ObjectProperty IRI=""/>
+				</owl:ObjectInverseOf>
+				<owl:Class abbreviatedIRI="owl:Thing"/>
+			</owl:ObjectSomeValuesFrom>
+		</owl:ObjectIntersectionOf>
+	</owl:SubClassOf>
+
+</Tell><IsKBSatisfiable kb="http://localhost/kb1"/><IsClassSatisfiable kb="http://localhost/kb1"><owl:Class IRI="a"/></IsClassSatisfiable><IsClassSatisfiable kb="http://localhost/kb1"><owl:Class IRI="b"/></IsClassSatisfiable></RequestMessage>

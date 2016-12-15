@@ -279,14 +279,14 @@ class OWLlinkDocument extends Document{
         if ($is_abbreviated){
             $this->content->writeAttribute("abbreviatedIRI", $name);
         }else{
-            $this->content->writeAttribute("IRI", $name);
+            $this->content->writeAttribute("IRI", "#".$name);
         }
         $this->content->endElement();
     }
 
     public function insert_objectproperty($name){
         $this->content->startElement("owl:ObjectProperty");        
-        $this->content->writeAttribute("IRI", $name);
+        $this->content->writeAttribute("IRI", "#".$name);
         $this->content->endElement();
     }
 
@@ -351,8 +351,30 @@ class OWLlinkDocument extends Document{
     public function end_maxcardinality(){
         $this->content->EndElement();
     }
+
+	public function begin_objectpropertydomain(){
+		$this->content->startElement("owl:ObjectPropertyDomain");        
+	}
         
-    
+   	public function end_objectpropertydomain(){
+        $this->content->EndElement();
+	}
+
+	public function begin_objectpropertyrange(){
+		$this->content->startElement("owl:ObjectPropertyRange");        
+	}
+        
+   	public function end_objectpropertyrange(){
+        $this->content->EndElement();
+	}
+
+	public function begin_equivalentclasses(){
+		$this->content->startElement("owl:EquivalentClasses");        
+	}
+        
+   	public function end_equivalentclasses(){
+        $this->content->EndElement();
+	}
     ///@}
     // Tell group.
 
