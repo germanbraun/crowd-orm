@@ -61,51 +61,6 @@ class UMLcrowd extends Strategy{
   
     }
 
-    /**
-       Depending on $mult translate it into DL.
-
-       @param $from True if we have to represent the "from" side (left one).
-
-       @return A DL list part that represent the multiplicity restriction.
-     */
-    protected function translate_multiplicity($mult, $role, $from = true){
-        if ($from){
-            $arr_role = ["role" => $role];
-            $sub1_DL = [1,
-                        $arr_role];
-            $sub0_DL = [0,
-                        $arr_role];
-        }else{
-            $arr_role = ["inverse" => ["role" => $role]];
-            $sub1_DL = [1,
-                        $arr_role];
-            $sub0_DL = [0,
-                        $arr_role];
-                        
-        }
-        
-        $ret = null;
-        switch($mult){
-        case "1..1":
-            $ret = ["intersection" => [
-                ["mincard" => $sub1_DL],
-                ["maxcard" => $sub1_DL]]];
-            break;
-        case "0..1":
-            $ret = ["maxcard" => $sub1_DL];
-            break;            
-        case "1..*":
-        case "1..n":
-            $ret = ["mincard" => $sub1_DL];
-            break;
-        case "0..*":            
-        case "0..n":
-            $ret = [];
-            break;
-        }
-        return $ret;
-    }
-
 
 
     /**
@@ -196,7 +151,55 @@ class UMLcrowd extends Strategy{
 
 
     /**
-       Translate only the association link.
+       Depending on $mult translate it into DL.
+
+       @param $from True if we have to represent the right cardinality.
+
+       @return A DL list part that represent the multiplicity restriction.
+     */
+    protected function translate_multiplicity($mult, $role, $classes, $from = true){
+ 
+        if ($from) {
+            $arr_role = ["role" => $role];
+            $sub1_DL = [1,
+                        $arr_role];
+            $sub0_DL = [0,
+                        $arr_role];
+        }
+
+		else {
+            $arr_role = ["inverse" => ["role" => $role]];
+            $sub1_DL = [1,
+                        $arr_role];
+            $sub0_DL = [0,
+                        $arr_role];
+                        
+        }
+        
+        $ret = null;
+        switch($mult){
+        case "1..1":
+            $ret = ["intersection" => [
+                ["mincard" => $sub1_DL],
+                ["maxcard" => $sub1_DL]]];
+            break;
+        case "0..1":
+            $ret = ["maxcard" => $sub1_DL];
+            break;            
+        case "1..*":
+        case "1..n":
+            $ret = ["mincard" => $sub1_DL];
+            break;
+        case "0..*":            
+        case "0..n":
+            $ret = [];
+            break;
+        }
+        return $ret;
+    }
+
+    /**
+       Translate associations without class together with cardinalities 0..*, 1..*, 0..1 and 1..1 for both directions.
        
        @param link A JSON object representing one association link without class.
     */
@@ -204,34 +207,103 @@ class UMLcrowd extends Strategy{
     protected function translate_association_without_class($link, $builder){
         $classes = $link["classes"];
         $mult = $link["multiplicity"];
-            
-        $builder->translate_DL([
+
+		$assoc_without_class = [
 			["domain" => [["role" => $link["name"]], ["class" => $classes[0]]]],
 			["range" => [["role" => $link["name"]], ["class" => $classes[1]]]],
 			["equivalentclasses" => [["class" => $classes[0]."_".$link["name"]."_"."min"],
 						            ["intersection" => [["class" => $classes[0]],
-                				                        ["mincard" => [1, ["role" => $link["name"]]]]]
+                				                        ["mincard" => [1, ["role" => $link["name"]], ["top" => "owl:Thing"]]]]
 									]]
 			],
 			["equivalentclasses" => [["class" => $classes[0]."_".$link["name"]."_"."max"],
 						            ["intersection" => [["class" => $classes[0]],
-                				                        ["maxcard" => [1, ["role" => $link["name"]]]]]
+                				                        ["maxcard" => [1, ["role" => $link["name"]], ["top" => "owl:Thing"]]]]
 									]]
 			],
 			["equivalentclasses" => [["class" => $classes[1]."_".$link["name"]."_"."min"],
 						            ["intersection" => [["class" => $classes[1]],
-                				                        ["mincard" => [1, ["inverse" => ["role" => $link["name"]]]]]]
+                				                        ["mincard" => [1, ["inverse" => ["role" => $link["name"]]], ["top" => "owl:Thing"]]]]
 									]]
 			],
 			["equivalentclasses" => [["class" => $classes[1]."_".$link["name"]."_"."max"],
 						            ["intersection" => [["class" => $classes[1]],
-                				                        ["maxcard" => [1, ["inverse" => ["role" => $link["name"]]]]]]
+                				                        ["maxcard" => [1, ["inverse" => ["role" => $link["name"]]], ["top" => "owl:Thing"]]]]
 									]]
 			]
 
-		]);
+		];
+            
 
-	//	$last = $this->generate_internal_classes($link["name"], $classes, $builder,false);
+		$right = null;
+		switch ($mult[0]){
+				
+			case null : $right = [];
+						break;
+			case "0..1" : $right = [
+							["subclass" => [["class" => $classes[0]],
+						            		["maxcard" => [1, ["role" => $link["name"]], ["class" => $classes[1]]]]]
+									]];
+				  		break;
+			case "1..*" : $right = [
+							["subclass" => [["class" => $classes[0]],
+						            		["mincard" => [1, ["role" => $link["name"]], ["class" => $classes[1]]]]]
+									]];
+						break;
+			case "1..1" : $right = [
+							["subclass" => [["class" => $classes[0]],
+						            		["mincard" => [1, ["role" => $link["name"]], ["class" => $classes[1]]]]]],
+							[ "subclass" => [["class" => $classes[0]],
+						            		["maxcard" => [1, ["role" => $link["name"]], ["class" => $classes[1]]]]]]
+									];
+						break;
+			default:  
+				throw new \Exception("Undefined right multiplicity between: ".$classes[0]." and ".$classes[1]);
+
+		}
+
+
+		$left = null;
+		switch ($mult[1]){
+
+			case null : $left = [];
+						break;
+			case "0..1" : $left = [
+							["subclass" => [["class" => $classes[1]],
+						            		["maxcard" => [1, ["inverse" => ["role" => $link["name"]]], ["class" => $classes[0]]]]]
+									]];
+						break; 
+			case "1..*" : $left = [
+							["subclass" => [["class" => $classes[1]],
+						            		["mincard" => [1, ["inverse" => ["role" => $link["name"]]], ["class" => $classes[0]]]]]
+									]];
+						break;
+			case "1..1" : $left = [
+							["subclass" => [["class" => $classes[1]],
+						            		["mincard" => [1, ["inverse" => ["role" => $link["name"]]], ["class" => $classes[0]]]]]],	
+							["subclass" => [["class" => $classes[1]],
+						            		["maxcard" => [1, ["inverse" => ["role" => $link["name"]]], ["class" => $classes[0]]]]]]
+								 ];
+
+						break;
+
+			default: 
+				throw new \Exception("Undefined left multiplicity between: ".$classes[0]." and ".$classes[1]);
+		}
+
+
+		foreach ($right as $rightelem) {
+			
+			array_push($assoc_without_class, $rightelem);
+		}
+
+		foreach ($left as $leftelem) {
+			
+			array_push($assoc_without_class, $leftelem);
+		}
+
+		$builder->translate_DL($assoc_without_class);
+
 
     }
 

@@ -102,12 +102,15 @@ check your Descriptive Logic array if is correctly formatted.
 You passed a " . gettype($elt) . " on: " . print_r($elt, true) );
         }
 
-       // print_r($elt);
+//        print_r($elt);
         $key = array_keys($elt)[0];
 
 //		print_r($key);
 
         switch ($key){
+		case "top" :
+			$this->product->insert_class($elt["top"],true);
+			break;
         case "class" :
             $this->product->insert_class($elt["class"]);
             break;
@@ -116,8 +119,6 @@ You passed a " . gettype($elt) . " on: " . print_r($elt, true) );
             break;
         case "subclass" :
             $this->product->begin_subclassof();
-            // We expect various consecutives DL cexpressions 
-            // (two classes for example)
             $this->translate_DL($elt["subclass"]);
             $this->product->end_subclassof();
             break;
@@ -138,9 +139,6 @@ You passed a " . gettype($elt) . " on: " . print_r($elt, true) );
             break;
         case "inverse" :
             $this->product->begin_inverseof();
-            // We expect one DL expression
-            // (the inverse of the inverse of the role for example,
-            // but not one role, and one inverse of another role).
             $this->DL_element($elt["inverse"]);
             $this->product->end_inverseof();
             break;
@@ -159,11 +157,13 @@ You passed a " . gettype($elt) . " on: " . print_r($elt, true) );
         case "mincard" :
             $this->product->begin_mincardinality($elt["mincard"][0]);
             $this->DL_element($elt["mincard"][1]);
+			$this->DL_element($elt["mincard"][2]);
             $this->product->end_mincardinality();
             break;
         case "maxcard" :
             $this->product->begin_maxcardinality($elt["maxcard"][0]);
             $this->DL_element($elt["maxcard"][1]);
+			$this->DL_element($elt["maxcard"][2]);
             $this->product->end_maxcardinality();
             break;
 		case "domain" :
