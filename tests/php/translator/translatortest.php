@@ -82,17 +82,17 @@ http://www.owllink.org/owllink-20091116.xsd\">
 <CreateKB kb=\"http://localhost/kb1\" />
 <Tell kb=\"http://localhost/kb1\">   
   <owl:SubClassOf>
-    <owl:Class IRI=\"Hi World\" />
+    <owl:Class IRI=\"#Hi World\" />
     <owl:Class abbreviatedIRI=\"owl:Thing\" />
   </owl:SubClassOf>
 </Tell>
+<hiworld></hiworld>
 <IsKBSatisfiable kb=\"http://localhost/kb1\" />
 <IsClassSatisfiable kb=\"http://localhost/kb1\">
   <owl:Class IRI=\"Hi World\" />
 </IsClassSatisfiable>
-<hiworld></hiworld>
 </RequestMessage>";
-        
+
         $strategy = new Berardi();
         $builder = new OWLlinkBuilder();
         $translator = new Translator($strategy, $builder);
