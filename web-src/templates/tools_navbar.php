@@ -26,6 +26,7 @@
     <label>Translate</label>
     <select data-mini="true" data-inline="true" data-native-menu="false" id="format_select">
 	<option value="owllink" selected="true">OWLlink</option>
+	<option value="owllinkCROWD" selected="true">OWLlinkCROWD</option>
 	<option value="html">HTML</option>
     </select>
     <a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all" type="button" id="translate_button">Translate</a>

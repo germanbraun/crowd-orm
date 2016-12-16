@@ -26,24 +26,24 @@
 #
 
 echo "Compiling Coffeescripts into Javascript"
-coffee --output web-src/js --compile web-src/coffee
+coffee --output web-src/js/libs/ --compile web-src/coffee
 set model_order diagram factories mymodel products server_connection
 
 echo "Mergin model files"
-if test -f web-src/js/model.js
-	rm web-src/js/model.js
+if test -f web-src/js/libs/model.js
+	rm web-src/js/libs/model.js
 end
 for js in $model_order
-	cat web-src/js/model/$js.js  >> web-src/js/model.js
-	rm web-src/js/model/$js.js
+	cat web-src/js/libs/model/$js.js  >> web-src/js/libs/model.js
+	rm web-src/js/libs/model/$js.js
 end
 
 echo "Mergin backbone_views files"
-if test -f web-src/js/backbone_views.js
-	rm web-src/js/backbone_views.js
+if test -f web-src/js/libs/backbone_views.js
+	rm web-src/js/libs/backbone_views.js
 end
-for js in web-src/js/views/*.js
-	cat $js >> web-src/js/backbone_views.js
+for js in web-src/js/libs/views/*.js
+	cat $js >> web-src/js/libs/backbone_views.js
 	rm $js
 end
 
