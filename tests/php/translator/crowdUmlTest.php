@@ -42,7 +42,7 @@ class UMLcrowdTest extends PHPUnit_Framework_TestCase
 {
 
 
-    public function testTranslate(){
+/*    public function testTranslate(){
         //TODO: Complete JSON!
         $json = <<<'EOT'
 {
@@ -81,7 +81,7 @@ xsi:schemaLocation=\"http://www.owllink.org/owllink# http://www.owllink.org/owll
         // Don't use assertEqualXMLStructure()! It won't check for attributes values!
         $this->assertXmlStringEqualsXmlString($expected, $actual, true);
     }
-
+*/
 
 
 
@@ -102,8 +102,7 @@ EOT;
 <RequestMessage xmlns="http://www.owllink.org/owllink#"
 		xmlns:owl="http://www.w3.org/2002/07/owl#" 
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://www.owllink.org/owllink# 
-				    http://www.owllink.org/owllink-20091116.xsd">
+		xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd">
   <CreateKB kb="http://localhost/kb1" />
   <Tell kb="http://localhost/kb1">
     <owl:SubClassOf>
@@ -128,6 +127,7 @@ EOT;
             <owl:Class IRI="#PhoneCall"/>
             <owl:ObjectMinCardinality cardinality="1">
                 <owl:ObjectProperty IRI="#r1"/>
+     			<owl:Class abbreviatedIRI="owl:Thing" />
             </owl:ObjectMinCardinality>
         </owl:ObjectIntersectionOf>
     </owl:EquivalentClasses>
@@ -137,6 +137,7 @@ EOT;
             <owl:Class IRI="#PhoneCall"/>
             <owl:ObjectMaxCardinality cardinality="1">
                 <owl:ObjectProperty IRI="#r1"/>
+			    <owl:Class abbreviatedIRI="owl:Thing" />
             </owl:ObjectMaxCardinality>
         </owl:ObjectIntersectionOf>
     </owl:EquivalentClasses>
@@ -148,6 +149,7 @@ EOT;
                 <owl:ObjectInverseOf>
                     <owl:ObjectProperty IRI="#r1"/>
                 </owl:ObjectInverseOf>
+				<owl:Class abbreviatedIRI="owl:Thing" />
             </owl:ObjectMinCardinality>
         </owl:ObjectIntersectionOf>
     </owl:EquivalentClasses>
@@ -159,6 +161,7 @@ EOT;
                 <owl:ObjectInverseOf>
                     <owl:ObjectProperty IRI="#r1"/>
                 </owl:ObjectInverseOf>
+		     	<owl:Class abbreviatedIRI="owl:Thing" />
             </owl:ObjectMaxCardinality>
         </owl:ObjectIntersectionOf>
     </owl:EquivalentClasses>
@@ -200,12 +203,9 @@ EOT;
 <RequestMessage xmlns="http://www.owllink.org/owllink#"
 		xmlns:owl="http://www.w3.org/2002/07/owl#" 
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://www.owllink.org/owllink# 
-				    http://www.owllink.org/owllink-20091116.xsd">
+		xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd">
   <CreateKB kb="http://localhost/kb1" />
   <Tell kb="http://localhost/kb1">
-
-
     <owl:SubClassOf>
       <owl:Class IRI="#PhoneCall" />
       <owl:Class abbreviatedIRI="owl:Thing" />
@@ -228,6 +228,7 @@ EOT;
             <owl:Class IRI="#PhoneCall"/>
             <owl:ObjectMinCardinality cardinality="1">
                 <owl:ObjectProperty IRI="#r1"/>
+				<owl:Class abbreviatedIRI="owl:Thing" />
             </owl:ObjectMinCardinality>
         </owl:ObjectIntersectionOf>
     </owl:EquivalentClasses>
@@ -237,6 +238,7 @@ EOT;
             <owl:Class IRI="#PhoneCall"/>
             <owl:ObjectMaxCardinality cardinality="1">
                 <owl:ObjectProperty IRI="#r1"/>
+				<owl:Class abbreviatedIRI="owl:Thing" />
             </owl:ObjectMaxCardinality>
         </owl:ObjectIntersectionOf>
     </owl:EquivalentClasses>
@@ -248,6 +250,7 @@ EOT;
                 <owl:ObjectInverseOf>
                     <owl:ObjectProperty IRI="#r1"/>
                 </owl:ObjectInverseOf>
+				<owl:Class abbreviatedIRI="owl:Thing" />
             </owl:ObjectMinCardinality>
         </owl:ObjectIntersectionOf>
     </owl:EquivalentClasses>
@@ -259,6 +262,7 @@ EOT;
                 <owl:ObjectInverseOf>
                     <owl:ObjectProperty IRI="#r1"/>
                 </owl:ObjectInverseOf>
+				<owl:Class abbreviatedIRI="owl:Thing" />
             </owl:ObjectMaxCardinality>
         </owl:ObjectIntersectionOf>
     </owl:EquivalentClasses>
@@ -266,6 +270,7 @@ EOT;
        	  <owl:Class IRI="#PhoneCall"/>
           <owl:ObjectMaxCardinality cardinality="1">
                <owl:ObjectProperty IRI="#r1"/>
+			   <owl:Class IRI="#Phone"/>
            </owl:ObjectMaxCardinality> 
     </owl:SubClassOf>
     <owl:SubClassOf>
@@ -273,7 +278,8 @@ EOT;
           <owl:ObjectMaxCardinality cardinality="1">
 			 <owl:ObjectInverseOf>
                	<owl:ObjectProperty IRI="#r1"/>
-             </owl:ObjectInverseOf>             
+             </owl:ObjectInverseOf>  
+			 <owl:Class IRI="#PhoneCall"/>           
            </owl:ObjectMaxCardinality> 
     </owl:SubClassOf>
   </Tell>
@@ -295,8 +301,252 @@ EOT;
 
 
 
+    ##
+    # Test if translate works properly with binary roles many-to-many
+    public function testTranslateBinaryRolesWithoutClass1N(){  
+		$json = <<< EOT
+{
+"classes": [{"name":"PhoneCall", "attrs":[], "methods":[]},
+			 {"name":"Phone", "attrs":[], "methods":[]}],
+"links": [{"name": "r1", "classes":["PhoneCall","Phone"], "multiplicity":["1..*","1..*"], "type":"association"}]
+} 
+EOT;
+
+        //TODO: Complete XML!
+        $expected = <<< EOT
+<?xml version="1.0" encoding="UTF-8"?>
+<RequestMessage xmlns="http://www.owllink.org/owllink#"
+		xmlns:owl="http://www.w3.org/2002/07/owl#" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd">
+  <CreateKB kb="http://localhost/kb1" />
+  <Tell kb="http://localhost/kb1">
+    <owl:SubClassOf>
+      <owl:Class IRI="#PhoneCall" />
+      <owl:Class abbreviatedIRI="owl:Thing" />
+    </owl:SubClassOf>
+    <owl:SubClassOf>
+      <owl:Class IRI="#Phone" />
+      <owl:Class abbreviatedIRI="owl:Thing" />
+    </owl:SubClassOf>
+    <owl:ObjectPropertyDomain>
+        <owl:ObjectProperty IRI="#r1"/>
+        <owl:Class IRI="#PhoneCall"/>
+    </owl:ObjectPropertyDomain>
+    <owl:ObjectPropertyRange>
+        <owl:ObjectProperty IRI="#r1"/>
+        <owl:Class IRI="#Phone"/>
+    </owl:ObjectPropertyRange>
+    <owl:EquivalentClasses>
+        <owl:Class IRI="#PhoneCall_r1_min"/>
+        <owl:ObjectIntersectionOf>
+            <owl:Class IRI="#PhoneCall"/>
+            <owl:ObjectMinCardinality cardinality="1">
+                <owl:ObjectProperty IRI="#r1"/>
+				<owl:Class abbreviatedIRI="owl:Thing" />
+            </owl:ObjectMinCardinality>
+        </owl:ObjectIntersectionOf>
+    </owl:EquivalentClasses>
+    <owl:EquivalentClasses>
+        <owl:Class IRI="#PhoneCall_r1_max"/>
+        <owl:ObjectIntersectionOf>
+            <owl:Class IRI="#PhoneCall"/>
+            <owl:ObjectMaxCardinality cardinality="1">
+                <owl:ObjectProperty IRI="#r1"/>
+				<owl:Class abbreviatedIRI="owl:Thing" />
+            </owl:ObjectMaxCardinality>
+        </owl:ObjectIntersectionOf>
+    </owl:EquivalentClasses>
+    <owl:EquivalentClasses>
+        <owl:Class IRI="#Phone_r1_min"/>
+        <owl:ObjectIntersectionOf>
+            <owl:Class IRI="#Phone"/>
+            <owl:ObjectMinCardinality cardinality="1">
+                <owl:ObjectInverseOf>
+                    <owl:ObjectProperty IRI="#r1"/>
+                </owl:ObjectInverseOf>
+				<owl:Class abbreviatedIRI="owl:Thing" />
+            </owl:ObjectMinCardinality>
+        </owl:ObjectIntersectionOf>
+    </owl:EquivalentClasses>
+    <owl:EquivalentClasses>
+        <owl:Class IRI="#Phone_r1_max"/>
+        <owl:ObjectIntersectionOf>
+            <owl:Class IRI="#Phone"/>
+            <owl:ObjectMaxCardinality cardinality="1">
+                <owl:ObjectInverseOf>
+                    <owl:ObjectProperty IRI="#r1"/>
+                </owl:ObjectInverseOf>
+				<owl:Class abbreviatedIRI="owl:Thing" />
+            </owl:ObjectMaxCardinality>
+        </owl:ObjectIntersectionOf>
+    </owl:EquivalentClasses>
+    <owl:SubClassOf>
+       	  <owl:Class IRI="#PhoneCall"/>
+          <owl:ObjectMinCardinality cardinality="1">
+               <owl:ObjectProperty IRI="#r1"/>
+			   <owl:Class IRI="#Phone"/>
+           </owl:ObjectMinCardinality> 
+    </owl:SubClassOf>
+    <owl:SubClassOf>
+       	  <owl:Class IRI="#Phone"/>
+          <owl:ObjectMinCardinality cardinality="1">
+			 <owl:ObjectInverseOf>
+               	<owl:ObjectProperty IRI="#r1"/>
+             </owl:ObjectInverseOf>  
+			 <owl:Class IRI="#PhoneCall"/>           
+           </owl:ObjectMinCardinality> 
+    </owl:SubClassOf>
+  </Tell>
+</RequestMessage>
+EOT;
+        
+        $strategy = new UMLcrowd();
+        $builder = new OWLlinkBuilder();
+
+        $builder->insert_header(); // Without this, loading the DOMDocument
+        // will throw error for the owl namespace
+        $strategy->translate($json, $builder);
+        $builder->insert_footer();
+        
+        $actual = $builder->get_product();
+        $actual = $actual->to_string();
+        $this->assertXmlStringEqualsXmlString($expected, $actual,true);
+    }
 
 
+    ##
+    # Test if translate works properly with binary roles many-to-many
+    public function testTranslateBinaryRolesWithoutClass11(){  
+		$json = <<< EOT
+{
+"classes": [{"name":"PhoneCall", "attrs":[], "methods":[]},
+			 {"name":"Phone", "attrs":[], "methods":[]}],
+"links": [{"name": "r1", "classes":["PhoneCall","Phone"], "multiplicity":["1..1","1..1"], "type":"association"}]
+} 
+EOT;
+
+        //TODO: Complete XML!
+        $expected = <<< EOT
+<?xml version="1.0" encoding="UTF-8"?>
+<RequestMessage xmlns="http://www.owllink.org/owllink#"
+		xmlns:owl="http://www.w3.org/2002/07/owl#" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd">
+  <CreateKB kb="http://localhost/kb1" />
+  <Tell kb="http://localhost/kb1">
+    <owl:SubClassOf>
+      <owl:Class IRI="#PhoneCall" />
+      <owl:Class abbreviatedIRI="owl:Thing" />
+    </owl:SubClassOf>
+    <owl:SubClassOf>
+      <owl:Class IRI="#Phone" />
+      <owl:Class abbreviatedIRI="owl:Thing" />
+    </owl:SubClassOf>
+    <owl:ObjectPropertyDomain>
+        <owl:ObjectProperty IRI="#r1"/>
+        <owl:Class IRI="#PhoneCall"/>
+    </owl:ObjectPropertyDomain>
+    <owl:ObjectPropertyRange>
+        <owl:ObjectProperty IRI="#r1"/>
+        <owl:Class IRI="#Phone"/>
+    </owl:ObjectPropertyRange>
+    <owl:EquivalentClasses>
+        <owl:Class IRI="#PhoneCall_r1_min"/>
+        <owl:ObjectIntersectionOf>
+            <owl:Class IRI="#PhoneCall"/>
+            <owl:ObjectMinCardinality cardinality="1">
+                <owl:ObjectProperty IRI="#r1"/>
+				<owl:Class abbreviatedIRI="owl:Thing" />
+            </owl:ObjectMinCardinality>
+        </owl:ObjectIntersectionOf>
+    </owl:EquivalentClasses>
+    <owl:EquivalentClasses>
+        <owl:Class IRI="#PhoneCall_r1_max"/>
+        <owl:ObjectIntersectionOf>
+            <owl:Class IRI="#PhoneCall"/>
+            <owl:ObjectMaxCardinality cardinality="1">
+                <owl:ObjectProperty IRI="#r1"/>
+				<owl:Class abbreviatedIRI="owl:Thing" />
+            </owl:ObjectMaxCardinality>
+        </owl:ObjectIntersectionOf>
+    </owl:EquivalentClasses>
+    <owl:EquivalentClasses>
+        <owl:Class IRI="#Phone_r1_min"/>
+        <owl:ObjectIntersectionOf>
+            <owl:Class IRI="#Phone"/>
+            <owl:ObjectMinCardinality cardinality="1">
+                <owl:ObjectInverseOf>
+                    <owl:ObjectProperty IRI="#r1"/>
+                </owl:ObjectInverseOf>
+				<owl:Class abbreviatedIRI="owl:Thing" />
+            </owl:ObjectMinCardinality>
+        </owl:ObjectIntersectionOf>
+    </owl:EquivalentClasses>
+    <owl:EquivalentClasses>
+        <owl:Class IRI="#Phone_r1_max"/>
+        <owl:ObjectIntersectionOf>
+            <owl:Class IRI="#Phone"/>
+            <owl:ObjectMaxCardinality cardinality="1">
+                <owl:ObjectInverseOf>
+                    <owl:ObjectProperty IRI="#r1"/>
+                </owl:ObjectInverseOf>
+				<owl:Class abbreviatedIRI="owl:Thing" />
+            </owl:ObjectMaxCardinality>
+        </owl:ObjectIntersectionOf>
+    </owl:EquivalentClasses>
+    <owl:SubClassOf>
+       	  <owl:Class IRI="#PhoneCall"/>
+          <owl:ObjectMinCardinality cardinality="1">
+               <owl:ObjectProperty IRI="#r1"/>
+			   <owl:Class IRI="#Phone"/>
+           </owl:ObjectMinCardinality> 
+    </owl:SubClassOf>
+    <owl:SubClassOf>
+       	  <owl:Class IRI="#PhoneCall"/>
+          <owl:ObjectMaxCardinality cardinality="1">
+               <owl:ObjectProperty IRI="#r1"/>
+			   <owl:Class IRI="#Phone"/>
+           </owl:ObjectMaxCardinality> 
+    </owl:SubClassOf>
+    <owl:SubClassOf>
+       	  <owl:Class IRI="#Phone"/>
+          <owl:ObjectMinCardinality cardinality="1">
+			 <owl:ObjectInverseOf>
+               	<owl:ObjectProperty IRI="#r1"/>
+             </owl:ObjectInverseOf>  
+			 <owl:Class IRI="#PhoneCall"/>           
+           </owl:ObjectMinCardinality> 
+    </owl:SubClassOf>
+    <owl:SubClassOf>
+       	  <owl:Class IRI="#Phone"/>
+          <owl:ObjectMaxCardinality cardinality="1">
+			 <owl:ObjectInverseOf>
+               	<owl:ObjectProperty IRI="#r1"/>
+             </owl:ObjectInverseOf>  
+			 <owl:Class IRI="#PhoneCall"/>           
+           </owl:ObjectMaxCardinality> 
+    </owl:SubClassOf>
+  </Tell>
+</RequestMessage>
+EOT;
+        
+        $strategy = new UMLcrowd();
+        $builder = new OWLlinkBuilder();
+
+        $builder->insert_header(); // Without this, loading the DOMDocument
+        // will throw error for the owl namespace
+        $strategy->translate($json, $builder);
+        $builder->insert_footer();
+        
+        $actual = $builder->get_product();
+        $actual = $actual->to_string();
+        $this->assertXmlStringEqualsXmlString($expected, $actual,true);
+    }
+
+
+
+/*
 
 
     # Test if 0..* to 0..* associations is translated properly.
@@ -365,12 +615,10 @@ EOT;
         $actual = $builder->get_product();
         $actual = $actual->to_string();
 
-       
-        /*$expected = process_xmlspaces($expected);
-        $actual = process_xmlspaces($actual);*/
+      
         $this->assertXmlStringEqualsXmlString($expected, $actual, TRUE);
     }
-        
+       
 
     # Test generalization is translated properly.
     public function testTranslateGeneralization(){
@@ -529,8 +777,6 @@ EOT;
         $actual = $builder->get_product();
         $actual = $actual->to_string();
       
-        /*$expected = process_xmlspaces($expected);
-        $actual = process_xmlspaces($actual);*/
         $this->assertXmlStringEqualsXmlString($expected, $actual, TRUE);
     }
 
@@ -619,8 +865,8 @@ EOT;
         $actual = $builder->get_product();
         $actual = $actual->to_string();
        
-        /*$expected = process_xmlspaces($expected);
-        $actual = process_xmlspaces($actual);*/
         $this->assertXmlStringEqualsXmlString($expected, $actual, TRUE);
     }
+*/
+
 }
