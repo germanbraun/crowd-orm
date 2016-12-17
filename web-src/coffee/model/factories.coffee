@@ -95,17 +95,18 @@ class UMLFactory extends Factory
                     attrs:
                         text: {text: mult[0], fill: '#0000ff'},
                         rect: {fill: '#ffffff'}])
-            if mult[1] != null
-                labels = labels.concat([
-                    position: 0.9,
-                    attrs:
-                        text: {text: mult[1], fill: '#0000ff'},
-                        rect: {fill: '#ffffff'}])
-        link.set(
-            labels: labels
-            )
-            
-        return link
+			if mult[1] != null
+				labels = labels.concat([
+					position: 0.9,
+					attrs:
+						text: {text: mult[1], fill: '#0000ff'},
+						rect: {fill: '#ffffff'}])
+
+		link.set(
+				labels: labels
+		)
+
+		return link
 
     # @param css_links {Hash} A Hash representing the CSS. See JointJS documentation for the attrs attribute.
     # @param disjoint {Boolean} Draw a "disjoint" legend.
@@ -127,15 +128,32 @@ class UMLFactory extends Factory
                 legend = legend + "covering"
             legend = legend + "}"
         
-            link.set(
-                labels: [
-                    position: 0.8,
-                    attrs:
-                        text: {text: legend, fill: '#0000ff'},
-                        rect: {fill: "#ffffff"}
-            ])
+		labels = labels.concat([
+			position: 0.8,
+			attrs:
+				text: 	{
+						text: legend, fill: '#0000ff'
+						},
+				rect: 	{
+						fill: '#ffffff'
+						}
+		])
 
-        return link
+		link.set	(
+					labels: labels
+		)
+
+		return link
+
+ #       link.set(
+ #               labels: ([
+ #                   position: 0.8,
+ #                   attrs:
+ #                       text: {text: legend, fill: '#0000ff'},
+ #                       rect: {fill: "#ffffff"}])
+ #				)
+
+
 
 
 # @todo ERDFactory is not yet implemented. This factory is beyond the scope for this prototype.
