@@ -2,6 +2,8 @@
 
 * `web-src` : Web directory for Apache or Nginx web server.
 
+After reading this Readme, see `./web-src/coffee/Readme.md` for more information about the CoffeeScript developing and its directory structure. 
+
 # Requirements
 
 * Install Apache o Nginx web server with PHP5 module support.

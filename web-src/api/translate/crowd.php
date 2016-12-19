@@ -1,11 +1,11 @@
 <?php 
 /* 
 
-   Copyright 2016 Giménez, Christian
+   Copyright 2016 GILIA
    
-   Author: Giménez, Christian   
+   Author: GILIA
 
-   berardi.php
+   crowd.php
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@
    Try this command:
    
    @code
-   curl -d 'json={\"classes\": [{\"attrs\":[], \"methods\":[], \"name\": \"Hi World\"}]}' http://host.com/api/translate/berardi.php";
+   curl -d 'json={\"classes\": [{\"attrs\":[], \"methods\":[], \"name\": \"Hi World\"}]}' http://host.com/api/translate/crowd.php";
    @endcode
 
    @return An XML web page.
@@ -42,16 +42,16 @@ require_once '../../common/import_functions.php';
 
 load('translator.php', '../../wicom/translator/');
 load('owllinkdocument.php', '../../wicom/translator/documents/');
-load('berardistrat.php','../../wicom/translator/strategies/');
+load('crowd_uml.php','../../wicom/translator/strategies/');
 load('owllinkbuilder.php', '../../wicom/translator/builders/');
 load('htmlbuilder.php', '../../wicom/translator/builders/');
 
 use Wicom\Translator\Translator;
-use Wicom\Translator\Strategies\Berardi;
+use Wicom\Translator\Strategies\UMLcrowd;
 use Wicom\Translator\Builders\OWLlinkBuilder;
 use Wicom\Translator\Builders\HTMLBuilder;
 
-$format = 'owllink';
+$format = 'owllinkCROWD';
 if (array_key_exists('format',$_REQUEST)){
     $format = $_REQUEST['format'];
 }
@@ -61,13 +61,14 @@ if ( ! array_key_exists('json', $_POST)){
 There's no \"json\" parameter :-(
 Use, for example:
 
-    curl -d 'json={\"classes\": [{\"attrs\":[], \"methods\":[], \"name\": \"Hi World\"}]}' http://host.com/translator/berardi.php";
+    curl -d 'json={\"classes\": [{\"attrs\":[], \"methods\":[], \"name\": \"Hi World\"}]}' http://host.com/translator/crowd.php";
 }else{
     $builder = null;
 
+
     
     switch ($format){
-    case "owllink" :
+    case "owllinkCROWD" :
         $builder = new OWLlinkBuilder();
         break;
     case "html" :
@@ -77,7 +78,7 @@ Use, for example:
         die("Format not recognized");
     }
         
-    $trans = new Translator(new Berardi(), $builder);
+    $trans = new Translator(new UMLcrowd(), $builder);
     $res = $trans->to_owllink($_POST['json']);
     print_r($res);
 }
