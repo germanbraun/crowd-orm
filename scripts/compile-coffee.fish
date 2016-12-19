@@ -25,26 +25,35 @@
 # Uso: scripts/compilar-coffee.sh
 #
 
+set_color --bold white
 echo "Compiling Coffeescripts into Javascript"
-coffee --output web-src/js/libs/ --compile web-src/coffee
+set_color normal
+coffee --output web-src/js/ --compile web-src/coffee
+
 set model_order diagram factories mymodel products server_connection
 
+set_color --bold white
 echo "Mergin model files"
-if test -f web-src/js/libs/model.js
-	rm web-src/js/libs/model.js
+set_color normal
+if test -f web-src/js/model.js
+	rm -v web-src/js/model.js
 end
 for js in $model_order
-	cat web-src/js/libs/model/$js.js  >> web-src/js/libs/model.js
-	rm web-src/js/libs/model/$js.js
+	echo "Merging web_src/js/$js.js into web-src/js/model.js"
+	cat web-src/js/model/$js.js  >> web-src/js/model.js
+	rm -v web-src/js/model/$js.js
 end
 
+set_color --bold white
 echo "Mergin backbone_views files"
-if test -f web-src/js/libs/backbone_views.js
-	rm web-src/js/libs/backbone_views.js
+set_color normal
+if test -f web-src/js/backbone_views.js
+	rm -v web-src/js/backbone_views.js
 end
-for js in web-src/js/libs/views/*.js
-	cat $js >> web-src/js/libs/backbone_views.js
-	rm $js
+for js in web-src/js/views/*.js
+	echo "Merging $js into web-src/js/backbone_views.js"
+	cat $js >> web-src/js/backbone_views.js
+	rm -v $js
 end
 
 # Compile tests coffee scripts

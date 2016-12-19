@@ -63,7 +63,6 @@ class UMLFactory extends Factory
                 '.uml-class-name-text':
                     fill: '#000000'                    
 
-
         if css_class?
             params.attrs = css_class
 
@@ -75,17 +74,17 @@ class UMLFactory extends Factory
     # @return [joint.dia.Link]
     create_association: (class_a_id, class_b_id, name = null, css_links = null, mult = null) ->
         link = new joint.dia.Link(
-                source: {id: class_a_id},
-                target: {id: class_b_id},
-                attrs: css_links
-                )
+            source: {id: class_a_id}
+            target: {id: class_b_id}
+            attrs: css_links
+        )
 
         labels = []
         if name != null
             labels = labels.concat([
-                position: 0.5,
+                position: 0.5
                 attrs: 
-                    text: {text: name, fill: '#0000ff'},
+                    text: {text: name, fill: '#0000ff'}
                     rect: {fill: '#ffffff'} 
                 ])
         if mult != null
@@ -94,19 +93,18 @@ class UMLFactory extends Factory
                     position: 0.1,
                     attrs:
                         text: {text: mult[0], fill: '#0000ff'},
-                        rect: {fill: '#ffffff'}])
-			if mult[1] != null
-				labels = labels.concat([
-					position: 0.9,
-					attrs:
-						text: {text: mult[1], fill: '#0000ff'},
-						rect: {fill: '#ffffff'}])
+                        rect: {fill: '#ffffff'}
+                ])
+            if mult[1] != null
+                labels = labels.concat([
+                    position: 0.9,
+                    attrs:
+                        text: {text: mult[1], fill: '#0000ff'},
+                        rect: {fill: '#ffffff'}
+                ])
 
-		link.set(
-				labels: labels
-		)
-
-		return link
+        link.set({labels: labels})
+        return link
 
     # @param css_links {Hash} A Hash representing the CSS. See JointJS documentation for the attrs attribute.
     # @param disjoint {Boolean} Draw a "disjoint" legend.
@@ -114,10 +112,10 @@ class UMLFactory extends Factory
     # @return [joint.shapes.uml.Generalization]
     create_generalization: (class_a_id, class_b_id, css_links = null, disjoint=false, covering=false) ->
         link = new joint.shapes.uml.Generalization(
-                source: {id: class_b_id},
-                target: {id: class_a_id},
-                attrs: css_links
-                )
+            source: {id: class_b_id}
+            target: {id: class_a_id}
+            attrs: css_links
+        )
 
         if disjoint || covering
             legend = "{"
@@ -127,23 +125,19 @@ class UMLFactory extends Factory
                     legend = legend + ","
                 legend = legend + "covering"
             legend = legend + "}"
-        
-		labels = labels.concat([
-			position: 0.8,
-			attrs:
-				text: 	{
-						text: legend, fill: '#0000ff'
-						},
-				rect: 	{
-						fill: '#ffffff'
-						}
+
+        labels = labels.concat([
+            position: 0.8
+            attrs:
+                text:
+                    text: legend
+                    fill: '#0000ff'
+                rect: 	
+                    fill: '#ffffff'
 		])
 
-		link.set	(
-					labels: labels
-		)
-
-		return link
+        link.set({labels: labels})
+        return link
 
  #       link.set(
  #               labels: ([
