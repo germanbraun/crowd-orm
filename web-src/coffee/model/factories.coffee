@@ -134,7 +134,8 @@ class UMLFactory extends Factory
                     fill: '#0000ff'
                 rect: 	
                     fill: '#ffffff'
-		])
+                    
+        ])
 
         link.set({labels: labels})
         return link
