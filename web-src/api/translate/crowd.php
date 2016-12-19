@@ -54,6 +54,7 @@ use Wicom\Translator\Builders\HTMLBuilder;
 $format = 'owllinkCROWD';
 if (array_key_exists('format',$_REQUEST)){
     $format = $_REQUEST['format'];
+    console.log($format);
 }
 
 if ( ! array_key_exists('json', $_POST)){
@@ -65,7 +66,7 @@ Use, for example:
 }else{
     $builder = null;
 
-
+    console.log($format);
     
     switch ($format){
     case "owllinkCROWD" :
@@ -74,7 +75,7 @@ Use, for example:
     case "html" :
         $builder = new HTMLBuilder();
         break;
-    default:
+    default: console.log($format);
         die("Format not recognized");
     }
         
