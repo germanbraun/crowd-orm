@@ -31,7 +31,7 @@ joint.shapes.uml.Class = joint.shapes.basic.Generic.extend({
 
             '.uml-class-name-text': {
                 'ref': '.uml-class-name-rect', 'ref-y': .5, 'ref-x': .5, 'text-anchor': 'middle', 'y-alignment': 'middle', 'font-weight': 'bold',
-                'fill': 'black', 'font-size': 12, 'font-family': 'Times New Roman'
+                'fill': 'black', 'font-size': 14, 'font-family': 'Times New Roman'
             },
             '.uml-class-attrs-text': {
                 'ref': '.uml-class-attrs-rect', 'ref-y': 5, 'ref-x': 5,

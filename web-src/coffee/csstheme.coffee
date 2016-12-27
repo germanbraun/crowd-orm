@@ -22,7 +22,7 @@
 # Class style.
 css_class = 
     '.uml-class-name-rect' : 
-        fill: "#aaf"
+        fill: "#fff"
         stroke: "#000"
         'stroke-width': 0.5
     '.uml-class-attrs-rect' : 
@@ -38,7 +38,7 @@ css_class =
         visibility: 'collapse'
         display: 'none'
     '.uml-class-name-text' :
-        fill: "#00f"
+        fill: "#000"
     '.uml-class-attrs-text': 
         ref: '.uml-class-attrs-rect',
         'ref-y': 0.5
