@@ -1,5 +1,5 @@
-# relation_options.coffee --
-# Copyright (C) 2016 Giménez, Christian
+# isa.coffee --
+# Copyright (C) 2016 GILIA
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -17,44 +17,29 @@
 
 
 
-RelationOptionsView = Backbone.View.extend(
+IsaOptionsView = Backbone.View.extend(
     initialize: () ->
         this.render()
         this.$el.hide()
 
     render: () ->
-        template = _.template( $("#template_relationoptions").html() )
+        template = _.template( $("#template_isaoptions").html() )
         this.$el.html(template({classid: @classid}))
 
     events:
-        'click a#association_button' : 'new_relation'
+        'click a#isa_button' : 'new_isa'
 
-    new_relation: () ->
-        mult = []
-        mult[0] = this.map_to_mult($('#cardfrom-1').val())
-        mult[1] = this.map_to_mult($('#cardfrom-2').val())
-        mult[2] = this.map_to_mult($('#cardto-1').val())
-        mult[3] = this.map_to_mult($('#cardto-2').val())
-        gui.gui_instance.set_association_state(@classid, mult)
-
-    # Map the Option value to multiplicity string.
-    #
-    # @param str {string} The value string.
-    # @return {String} A string that represent the multiplicity as in UML.
-    map_to_mult : (str) ->
-        switch str
-            when "zeromany" then "0..*"
-            when "onemany" then "1..*"
-            when "zeroone" then "0..1"
-            when "oneone" then "1..1"
-
+    new_isa: () ->
+        disjoint = $("#chk-disjoint").prop("checked")
+        covering = $("#chk-covering").prop("checked")
+        gui.gui_instance.set_isa_state(@classid, disjoint, covering)
 
     set_classid: (@classid) ->
         viewpos = graph.getCell(@classid).findView(paper).getBBox()
 
         this.$el.css(
-            top: viewpos.y,
-            left: viewpos.x + viewpos.width,
+            top: viewpos.height * 3 + viewpos.y,
+            left: viewpos.x,
             position: 'absolute',
             'z-index': 1
             )
@@ -71,4 +56,4 @@ RelationOptionsView = Backbone.View.extend(
         
 
 exports = exports ? this
-exports.RelationOptionsView = RelationOptionsView
+exports.IsaOptionsView = IsaOptionsView
