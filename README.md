@@ -91,7 +91,7 @@ For installing docco:
 	
 Compiling documentation:
 
- ./scripts/generate-coffee-api.fish from project root directory
+```./scripts/generate-coffee-api.fish from project root directory```
 
 # Licence
 
