@@ -55,13 +55,13 @@
     <input type="hidden" id="relationoptions_classid"  name="classid"  value="<%= classid %>" />
     <div data-role="controlgroup" data-mini="true" data-type="horizontal" style="float: left">
 	<form>
-    	<input type="hidden" id="cardfrom-1" name="cardfrom-1" value="<%= classid %>" />
-    	<input data-mini="true" placeholder="0" type="text" id="editclass_input" size="2" maxlength="4" />
-    	<input type="hidden" id="cardfrom-2" name="cardfrom-2" value="<%= classid %>" />
-    	<input data-mini="true" placeholder="*" type="text" id="editclass_input" size="2" maxlength="4" />
+    	<input type="hidden" id="relationoptions_classid" name="classid" value="<%= classid %>" />
+    	<input data-mini="true" placeholder="0" type="text" id="cardfrom-1" size="2" maxlength="4" />
+    	<input type="hidden" id="relationoptions_classid" name="classid" value="<%= classid %>" />
+    	<input data-mini="true" placeholder="*" type="text" id="cardfrom-2" size="2" maxlength="4" />
     <div data-role="controlgroup" data-mini="true" data-type="horizontal">
-	<a class="ui-btn ui-corner-all ui-icon-check ui-btn-icon-notext" type="button" id="editclass_button">Accept</a>
-	<a class="ui-btn ui-corner-all ui-icon-back ui-btn-icon-notext" type="button" id="close_button">Close</a>
+	<a class="ui-btn ui-corner-all ui-icon-check ui-btn-icon-notext" type="button" id="cardfrom_accept">Accept</a>
+	<a class="ui-btn ui-corner-all ui-icon-back ui-btn-icon-notext" type="button" id="cardfrom_close">Close</a>
     </div>
 	</form>
 	</div>
@@ -69,15 +69,17 @@
 	<div style="float: left">
 	<a class="ui-btn ui-corner-all ui-icon-arrow-r ui-btn-icon-notext" type="button" id="association_button">Association</a>
 	</div>
+	
+	<input type="hidden" id="relationoptions_classid"  name="classid"  value="<%= classid %>" />
 	<div data-role="controlgroup" data-mini="true" data-type="horizontal" style="float: right">
 	<form>
-    	<input type="hidden" id="cardto-1" name="cardto-1" value="<%= classid %>" />
-    	<input data-mini="true" placeholder="0" type="text" id="editclass_input" size="2" maxlength="4" />
-    	<input type="hidden" id="cardto-2" name="cardto-2" value="<%= classid %>" />
-    	<input data-mini="true" placeholder="*" type="text" id="editclass_input" size="2" maxlength="4" />
+    	<input type="hidden" id="relationoptions_classid" name="classid" value="<%= classid %>" />
+    	<input data-mini="true" placeholder="0" type="text" id="cardto-1" size="2" maxlength="4" />
+    	<input type="hidden" id="relationoptions_classid" name="classid" value="<%= classid %>" />
+    	<input data-mini="true" placeholder="*" type="text" id="cardto-2" size="2" maxlength="4" />
     <div data-role="controlgroup" data-mini="true" data-type="horizontal">
-	<a class="ui-btn ui-corner-all ui-icon-check ui-btn-icon-notext" type="button" id="editclass_button">Accept</a>
-	<a class="ui-btn ui-corner-all ui-icon-back ui-btn-icon-notext" type="button" id="close_button">Close</a>
+	<a class="ui-btn ui-corner-all ui-icon-check ui-btn-icon-notext" type="button" id="cardto_accept">Accept</a>
+	<a class="ui-btn ui-corner-all ui-icon-back ui-btn-icon-notext" type="button" id="cardto_close">Close</a>
     </div>
 	</form>
 	</div>
