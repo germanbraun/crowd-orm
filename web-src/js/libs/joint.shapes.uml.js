@@ -23,7 +23,7 @@ joint.shapes.uml.Class = joint.shapes.basic.Generic.extend({
         type: 'uml.Class',
 
         attrs: {
-            rect: { 'width': 200 },
+            rect: { 'width': 100 },
 
             '.uml-class-name-rect': { 'stroke': 'black', 'stroke-width': 2, 'fill': '#3498db' },
             '.uml-class-attrs-rect': { 'stroke': 'black', 'stroke-width': 2, 'fill': '#2980b9' },

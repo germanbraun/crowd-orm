@@ -27,6 +27,7 @@ class GUI
         @editclass = new EditClassView({el: $("#editclass")})
         @classoptions = new ClassOptionsView({el: $("#classoptions")})
         @relationoptions = new RelationOptionsView({el: $("#relationoptions")})
+        @isaoptions = new IsaOptionsView({el: $("#isaoptions")})
         @trafficlight = new TrafficLightsView({el: $("#trafficlight")})
         @owllinkinsert = new OWLlinkInsertView({el: $("#owllink_placer")})
         @errorwidget = new ErrorWidgetView({el: $("#errorwidget_placer")})
@@ -54,6 +55,7 @@ class GUI
     set_options_classid: (model_id) ->
         @relationoptions.set_classid(model_id)
         @classoptions.set_classid(model_id)
+        @isaoptions.set_classid(model_id)
 
     ##
     # Hide the class options GUI.
@@ -61,6 +63,7 @@ class GUI
         @classoptions.hide()
         @relationoptions.hide()
         @editclass.hide()
+        @isaoptions.hide()
 
     set_editclass_classid: (model_id) ->
         # editclass = new EditClassView({el: $("#editclass")})
