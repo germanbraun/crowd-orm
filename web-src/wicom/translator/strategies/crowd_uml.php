@@ -125,22 +125,22 @@ class UMLcrowd extends Strategy{
 		$assoc_without_class = [
 			["domain" => [["role" => $link["name"]], ["class" => $classes[0]]]],
 			["range" => [["role" => $link["name"]], ["class" => $classes[1]]]],
-			["equivalentclasses" => [["class" => $classes[0]."_".$link["name"]."_"."min"],
+			["equivalentclasses" => [["class_min" => [$classes[0], $link["name"]]],
 						            ["intersection" => [["class" => $classes[0]],
                 				                        ["mincard" => [1, ["role" => $link["name"]], ["top" => "owl:Thing"]]]]
 									]]
 			],
-			["equivalentclasses" => [["class" => $classes[0]."_".$link["name"]."_"."max"],
+			["equivalentclasses" => [["class_max" => [$classes[0], $link["name"]]],
 						            ["intersection" => [["class" => $classes[0]],
                 				                        ["maxcard" => [1, ["role" => $link["name"]], ["top" => "owl:Thing"]]]]
 									]]
 			],
-			["equivalentclasses" => [["class" => $classes[1]."_".$link["name"]."_"."min"],
+			["equivalentclasses" => [["class_min" => [$classes[1], $link["name"]]],
 						            ["intersection" => [["class" => $classes[1]],
                 				                        ["mincard" => [1, ["inverse" => ["role" => $link["name"]]], ["top" => "owl:Thing"]]]]
 									]]
 			],
-			["equivalentclasses" => [["class" => $classes[1]."_".$link["name"]."_"."max"],
+			["equivalentclasses" => [["class_max" => [$classes[1], $link["name"]]],
 						            ["intersection" => [["class" => $classes[1]],
                 				                        ["maxcard" => [1, ["inverse" => ["role" => $link["name"]]], ["top" => "owl:Thing"]]]]
 									]]
