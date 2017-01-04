@@ -32,32 +32,32 @@ RelationOptionsView = Backbone.View.extend(
     	"click a#association_button" : "new_relation"
     	
     cardfrom: (from) ->
-    	from = "2..10"
-    	console.log from
-#    	from_1 = $('#cardfrom-1').val()
-#    	console.log(from_1)
-#    	from_aux = from_1.concat ".."
-#    	from_2 = $('#cardfrom-2').val()
-#    	console.log(from_2)
-#    	from = from_aux.concat from_2
+#    	from = "2..3"
+#   	console.log from
+    	from_1 = $('#cardfrom-1').val()
+    	console.log(from_1)
+    	from_aux = from_1.concat ".."
+    	from_2 = $('#cardfrom-2').val()
+    	console.log(from_2)
+    	@from = from_aux.concat from_2
 
 
     
     cardto: (too) ->
-    	too = "4..8"
-    	console.log too
-#    	too_1 = $('#cardto-1').val()
-#    	console.log(too_1)
-#    	too_aux = too_1.concat ".."
-#    	too_2 = $('#cardto-2').val()
-#    	console.log(too_2)
-#   	too = too_aux.concat too_2
+#    	too = "4..8"
+#    	console.log too
+    	too_1 = $('#cardto-1').val()
+    	console.log(too_1)
+    	too_aux = too_1.concat ".."
+    	too_2 = $('#cardto-2').val()
+    	console.log(too_2)
+	   	@too = too_aux.concat too_2
 #    	console.log too
     		
     new_relation: (from, too) ->
         mult = []
-        mult[0] = "1..1"
-        mult[1] = "1..1"
+        mult[0] = @from
+        mult[1] = @too
         console.log(mult)
         gui.gui_instance.set_association_state(@classid, mult)
 
