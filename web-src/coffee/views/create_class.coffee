@@ -40,7 +40,7 @@ CreateClassView = Backbone.View.extend(
                 "export_json"
 
         create_class: (event) ->
-            alert("Creando: " + $("#crearclase_input").val() + "...")
+            # alert("Creando: " + $("#crearclase_input").val() + "...")
             gui.gui_instance.add_class(
                 name: $("#crearclase_input").val()
             )
