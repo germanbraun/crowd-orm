@@ -48,7 +48,7 @@ class ServerConnection
     # @param callback_function A functino to use as a callback when
     #   the response is recieved.
     request_translation: (json, format, callback_function) ->
-        url = @urlprefix + "api/translate/berardi.php"
+        url = @urlprefix + "api/translate/crowd.php"
         console.log("Requesting at " + url)
         $.ajax(
             type: "POST",

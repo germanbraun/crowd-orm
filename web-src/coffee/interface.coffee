@@ -62,6 +62,6 @@ window.onload = () ->
     exports.guiinst = guiinst
 
     # Create a first example class
-    newclass = new Class("Test Class", [], [])
+    newclass = new Class("Class", [], [])
     guiinst.add_class(newclass)
 

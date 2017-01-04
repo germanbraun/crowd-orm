@@ -62,94 +62,6 @@ class UMLcrowd extends Strategy{
     }
 
 
-
-    /**
-       Generates internal classes for reasoning on cardinalities.
-       
-	   @param $role associated role
-	   @param $classes classes participating in association $link with multiplicity $mult
-
-    */
-
-	protected function generate_internal_classes($role, $classes, $builder, $withclass=true){
-
-		if ($withclass){
-
-		$builder->translate_DL([
-            ["subclass" => [   //cambiar a equivalent
-					["class" => $classes[0]],
-					["intersection" => [
-							["class" => $classes[0]],
-                			["mincard" => [1, ["inverse" => ["role" => $role]]]]]]
-			]]]);
-		
-		$builder->translate_DL([
-            ["subclass" => [
-					["class" => $classes[0]],
-					["intersection" => [
-							["class" => $classes[0]],
-                			["maxcard" => [1, ["inverse" => ["role" => $role]]]]]]
-			]]]);
-
-		
-		$builder->translate_DL([
-            ["subclass" => [
-					["class" => $classes[1]],
-					["intersection" => [
-							["class" => $classes[1]],
-                			["mincard" => [1, ["inverse" => ["role" => $role]]]]]]
-			]]]);
-		
-		$builder->translate_DL([
-            ["subclass" => [
-					["class" => $classes[1]],
-					["intersection" => [
-							["class" => $classes[1]],
-                			["maxcard" => [1, ["inverse" => ["role" => $role]]]]]]
-			]]]);
-		}
-		else {
-
-		$builder->translate_DL([
-            ["equivalentclasses" => [
-						["class" => $classes[0]],
-						["intersection" => [
-								["class" => $classes[0]],
-                				["mincard" => [1, ["role" => $role]]]]]
-			]]]);
-		
-/*		$builder->translate_DL([
-            ["subclass" => [
-					["class" => $classes[0]],
-					["intersection" => [
-							["class" => $classes[0]],
-                			["maxcard" => [1, ["role" => $role]]]]]
-			]]]);
-
-		
-		$builder->translate_DL([
-            ["subclass" => [
-					["class" => $classes[1]],
-					["intersection" => [
-							["class" => $classes[1]],
-                			["mincard" => [1, ["inverse" => ["role" => $role]]]]]]
-			]]]);
-		
-		$builder->translate_DL([
-            ["subclass" => [
-					["class" => $classes[1]],
-					["intersection" => [
-							["class" => $classes[1]],
-                			["maxcard" => [1, ["inverse" => ["role" => $role]]]]]]
-			]]]);*/
-
-		}
-
-		return $builder;
-
-	}
-
-
     /**
        Depending on $mult translate it into DL.
 
@@ -199,14 +111,16 @@ class UMLcrowd extends Strategy{
     }
 
     /**
-       Translate associations without class together with cardinalities 0..*, 1..*, 0..1 and 1..1 for both directions.
+       Translate associations without class together with cardinalities 0..*, 1..*, 0..1, 1..1 and M..N > 1 for both directions.
        
        @param link A JSON object representing one association link without class.
     */
 
     protected function translate_association_without_class($link, $builder){
+
         $classes = $link["classes"];
         $mult = $link["multiplicity"];
+
 
 		$assoc_without_class = [
 			["domain" => [["role" => $link["name"]], ["class" => $classes[0]]]],
@@ -234,9 +148,9 @@ class UMLcrowd extends Strategy{
 
 		];
             
-
+		// [1..1,0..2] $right=0..2, $left=1..1
 		$right = null;
-		switch ($mult[0]){
+		switch ($mult[1]){
 				
 			case null : $right = [];
 						break;
@@ -253,18 +167,33 @@ class UMLcrowd extends Strategy{
 			case "1..1" : $right = [
 							["subclass" => [["class" => $classes[0]],
 						            		["mincard" => [1, ["role" => $link["name"]], ["class" => $classes[1]]]]]],
-							[ "subclass" => [["class" => $classes[0]],
+							["subclass" => [["class" => $classes[0]],
 						            		["maxcard" => [1, ["role" => $link["name"]], ["class" => $classes[1]]]]]]
 									];
 						break;
-			default:  
-				throw new \Exception("Undefined right multiplicity between: ".$classes[0]." and ".$classes[1]);
+			default: 
+
+				if (($mult[1][0] >= 0) || ($mult[1][3] >= 0)){
+
+					if ($mult[1][0] <= $mult[1][3]){
+
+						$right = [
+							["subclass" => [["class" => $classes[0]],
+						            		["mincard" => [$mult[1][0], ["role" => $link["name"]], ["class" => $classes[1]]]]]],
+							["subclass" => [["class" => $classes[0]],
+						            		["maxcard" => [$mult[1][3], ["role" => $link["name"]], ["class" => $classes[1]]]]]]
+									];
+					}
+					else throw new \Exception("Right multiplicity between: ".$classes[0]." and ".$classes[1]. " is wrongly defined");
+
+				}
+				else throw new \Exception("Undefined right multiplicity between: ".$classes[0]." and ".$classes[1]);
 
 		}
 
 
 		$left = null;
-		switch ($mult[1]){
+		switch ($mult[0]){
 
 			case null : $left = [];
 						break;
@@ -288,7 +217,22 @@ class UMLcrowd extends Strategy{
 						break;
 
 			default: 
-				throw new \Exception("Undefined left multiplicity between: ".$classes[0]." and ".$classes[1]);
+
+				if (($mult[0][0] > 1) || ($mult[0][3] > 1)){
+
+					if ($mult[0][0] <= $mult[0][3]){
+
+						$left = [
+							["subclass" => [["class" => $classes[1]],
+						            		["mincard" => [$mult[0][0], ["inverse" => ["role" => $link["name"]]], ["class" => $classes[0]]]]]],
+							["subclass" => [["class" => $classes[1]],
+						            		["maxcard" => [$mult[0][3], ["inverse" => ["role" => $link["name"]]], ["class" => $classes[0]]]]]]
+									];
+					}
+					else throw new \Exception("Left multiplicity between: ".$classes[1]." and ".$classes[0]. " is wrongly defined");
+
+				}
+				else throw new \Exception("Undefined left multiplicity between: ".$classes[1]." and ".$classes[0]);
 		}
 
 
@@ -297,10 +241,12 @@ class UMLcrowd extends Strategy{
 			array_push($assoc_without_class, $rightelem);
 		}
 
+
 		foreach ($left as $leftelem) {
 			
 			array_push($assoc_without_class, $leftelem);
 		}
+
 
 		$builder->translate_DL($assoc_without_class);
 

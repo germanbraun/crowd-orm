@@ -396,7 +396,7 @@ class OWLlinkDocument extends Document{
         $this->content->writeAttribute("kb", $this->actual_kb);
         
         $this->content->startElement("owl:Class");
-        $this->content->writeAttribute("IRI", $classname);
+        $this->content->writeAttribute("IRI", "#".$classname);
         $this->content->endElement();
         
         $this->content->endElement();

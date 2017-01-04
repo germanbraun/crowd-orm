@@ -28,7 +28,7 @@
 set_color --bold white
 echo "Compiling Coffeescripts into Javascript"
 set_color normal
-coffee --output web-src/js/ --compile web-src/coffee
+coffee --output web-src/js/ --compile web-src/coffee/
 
 set model_order diagram factories mymodel products server_connection
 
