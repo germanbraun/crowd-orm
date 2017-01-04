@@ -111,6 +111,8 @@ class UMLFactory extends Factory
     # @param covering {Boolean} Draw a "covering" legend.
     # @return [joint.shapes.uml.Generalization]
     create_generalization: (class_a_id, class_b_id, css_links = null, disjoint=false, covering=false) ->
+        labels = []
+        
         link = new joint.shapes.uml.Generalization(
             source: {id: class_b_id}
             target: {id: class_a_id}
