@@ -401,6 +401,26 @@ class OWLlinkDocument extends Document{
         
         $this->content->endElement();
     }
+
+    /**
+       Insert an ASK query denominated IsEntailedDirect for all the classes in the array.
+
+       @param $array An array of Strings with classnames.
+     */
+    public function insert_equivalent_class_query($array){
+        $this->content->startElement("IsEntailedDirect");
+        $this->content->writeAttribute("kb", $this->actual_kb);
+
+        $this->content->startelement("owl:EquivalentClasses");
+        foreach ($array as $classname){
+            $this->content->startElement("owl:Class");
+            $this->content->writeAttribute("IRI", "#" . $classname);
+            $this->content->endElement();
+        }
+        $this->content->endElement();        
+        
+        $this->content->endElement();
+    }
     
     ///@}
     // Ask group.

@@ -106,6 +106,7 @@ class Translator{
         if ($this->with_queries){
             $this->queriesgen->gen_satisfiable($this->builder);
             $this->queriesgen->gen_class_satisfiable($json, $this->builder);
+            $this->queriesgen->gen_infer_cardinalities($json, $this->builder);
         }
         
         $this->builder->insert_footer();

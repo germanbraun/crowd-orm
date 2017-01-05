@@ -115,10 +115,14 @@ You passed a " . gettype($elt) . " on: " . print_r($elt, true) );
             $this->product->insert_class($elt["class"]);
             break;
         case "class_min" :
-            $this->product->insert_class($elt["class"][0] . "_" . $["class"][1] . "_min");
+            $this->insert_class_min(
+                $elt["class_min"][0],
+                $elt["class_min"][0] . "_" . $elt["class_min"][1] . "_min");
             break;
         case "class_max" :
-            $this->product->insert_class($elt["class"][0] . "_" . $["class"][1] . "_max");
+            $this->insert_class_max(
+                $elt["class_max"][0],
+                $elt["class_max"][0] . "_" . $elt["class_max"][1] . "_max");
             break;
         case "role" :
             $this->product->insert_objectproperty($elt["role"]);

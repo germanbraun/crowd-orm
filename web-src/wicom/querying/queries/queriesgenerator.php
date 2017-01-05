@@ -53,6 +53,21 @@ class QueriesGenerator{
             $builder->insert_satisfiable_class($jelem["name"]);
         }
     }
+
+    /**
+       Generate queries for checking for equivalent classes between min and max.
+
+       @see gen_class_satisfiable() for parameters.
+     */
+    function gen_infer_cardinalities($json_diagram, $builder){
+        // [[class => [min, max]], [class2 => [min2, max2]], ...]
+        $lst_classes = $builder->get_classes_with_min_max();
+
+        foreach ($lst_classes as $classname => $tuple){
+            $builder->insert_equivalent_class_query([$classname, $tuple[0]]);
+            $builder->insert_equivalent_class_query([$classname, $tuple[1]]);
+        }
+    }
 }
     
 ?>
