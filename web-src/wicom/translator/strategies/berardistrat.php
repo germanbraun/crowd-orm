@@ -25,6 +25,7 @@ namespace Wicom\Translator\Strategies;
 
 use function \load;
 load('strategy.php');
+load('uml.php');
 
 /**
    I implement the method explained on "Reasoning on UML Class Diagrams" by 
@@ -32,34 +33,7 @@ load('strategy.php');
 
    @see Translator class for description about the JSON format.
  */
-class Berardi extends Strategy{
-
-    /**
-       Translate a JSON String into another format depending on 
-       the given Builder.
-
-       I implement the method explained on "Reasoning on UML Class Diagrams" by 
-       Daniela Berardi, Diego Calvanesse and Giuseppe De Giacomo.
-              
-       - Each UML Class is a Class concept in DL.
-
-       @param json_str A String with a diagram representation in 
-       JSON format.
-       @param builder A Wicom\Translator\Builders\DocumentBuilder subclass instance.
-
-       @see Translator class for description about the JSON format.
-    */
-    function translate($json_str, $builder){
-        $json = json_decode($json_str, true);
-
-        // Classes
-        $js_clases = $json["classes"];
-        foreach ($js_clases as $class){
-            $builder->insert_subclassof($class["name"], "owl:Thing");
-        }
-
-        $this->translate_links($json, $builder);        
-    }
+class Berardi extends UML{
 
     /**
        Depending on $mult translate it into DL.
