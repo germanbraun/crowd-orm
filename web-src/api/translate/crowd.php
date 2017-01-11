@@ -23,11 +23,9 @@
 
 
 /**
-   Translate to OWLlink using Berardi strategy. 
+   Translate to OWLlink using crowd strategy. 
 
-   The Berardi strategy implements the method explained on "Reasoning on UML 
-   Class Diagrams" by Daniela Berardi, Diego Calvanesse and Giuseppe De
-   Giacomo.
+   to be published
 
    Try this command:
    
