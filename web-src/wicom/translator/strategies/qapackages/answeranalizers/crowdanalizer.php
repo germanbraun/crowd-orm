@@ -5,7 +5,7 @@
    
    Author: Giménez, Christian   
 
-   owllinkanalizer.php
+   crowdanalizer.php
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -21,16 +21,16 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Wicom\Answers;
+namespace Wicom\Translator\Strategies\QAPackages\AnswerAnalizers;
 
 load("answer.php");
 load("ansanalizer.php");
 
-use Wicom\Answers\Answer;
-use Wicom\Answers\AnsAnalizer;
+use Wicom\Translator\Strategies\QAPackages\Answer;
+use Wicom\Translator\Strategies\QAPackages\AnsAnalizer;
 use \XMLReader;
 
-class OWLlinkAnalizer extends AnsAnalizer{
+class CrowdAnalizer extends AnsAnalizer{
 
     /**
        XMLReader instance for parsing the query given to the 

@@ -1,11 +1,11 @@
 <?php 
 /* 
 
-   Copyright 2016 Giménez, Christian
+   Copyright 2017 Giménez, Christian
    
    Author: Giménez, Christian   
 
-   queriesgenerator.php
+   umlqueries.php
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -21,15 +21,24 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Wicom\QueriesGen;
+namespace Wicom\Translator\Strategies\QAPackages\QueriesGenerator;
 
-class QueriesGenerator{
+use function \load;
+load('queriesgenerator.php');
+
+class UMLQueries extends QueriesGenerator {
     function __construct(){
     }
 
+    function generate_all_queries($json_str, $builder){
+        $this->gen_satisfiable($builder);
+        $this->gen_class_satisfiable($json_str, $builder);
+        $this->gen_inf_cardinalities($json_str, $builder);
+    }
+    
     /**
        I generate queries for checking diagram satisfability.
-
+       
        @param $builder A Wicom\Translator\Builders\DocumentBuilder
        instance.
      */
@@ -69,5 +78,4 @@ class QueriesGenerator{
         }
     }
 }
-    
 ?>
