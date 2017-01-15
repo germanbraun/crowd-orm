@@ -5,7 +5,7 @@
    
    Author: Giménez, Christian   
 
-   umlqueries.php
+   crowdqueries.php
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -26,10 +26,27 @@ namespace Wicom\Translator\Strategies\QAPackages\QueriesGenerator;
 use function \load;
 load('queriesgenerator.php');
 
-class UMLQueries extends QueriesGenerator {
+/**
+   Queries only for the Crowd strategy.
+
+   Generates queries for checking:
+
+   * KB Satisfiability.
+   * Classes satisfiability.
+   * For cardinalities inference.
+
+ */
+class CrowdQueries extends QueriesGenerator {
     function __construct(){
     }
 
+    /**
+       Generate all queries on the builder provided.
+
+       @param $json_str a String representing the JSON of the user model.
+       @param $builder an instance of Wicom\Translator\Builders\DocumentBuilder.
+
+     */
     function generate_all_queries($json_str, $builder){
         $this->gen_satisfiable($builder);
         $this->gen_class_satisfiable($json_str, $builder);

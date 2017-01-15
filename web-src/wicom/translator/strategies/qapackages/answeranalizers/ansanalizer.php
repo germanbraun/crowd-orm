@@ -28,7 +28,7 @@
    follows:
 
  */
-namespace Wicom\Translator\Strategies\QAPackages;
+namespace Wicom\Translator\Strategies\QAPackages\AnswerAnalizer;
 
 /**
    Analize the reasoner answer.

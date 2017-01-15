@@ -5,7 +5,7 @@
    
    Author: Giménez, Christian   
 
-   crowdanalizer.php
+   berardianalizer.php
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ use Wicom\Translator\Strategies\QAPackages\AnswerAnalizer\Answer;
 use Wicom\Translator\Strategies\QAPackages\AnswerAnalizer\AnsAnalizer;
 use \XMLReader;
 
-class CrowdAnalizer extends AnsAnalizer{
+class BerardiAnalizer extends AnsAnalizer{
 
     /**
        XMLReader instance for parsing the query given to the 
