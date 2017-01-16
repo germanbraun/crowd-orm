@@ -32,6 +32,8 @@ namespace Wicom\Translator\Strategies\QAPackages\AnswerAnalizer;
 
 /**
    Analize the reasoner answer.
+
+   You need to create an instance and provide the reasoner query and its response using generate_answer().
  */
 abstract class AnsAnalizer{
 
@@ -43,10 +45,16 @@ abstract class AnsAnalizer{
     protected $answer = null;
 
     /**
+       Please, call generate_answer() for start to process the reasoner query and its response.
+     */
+    function __construct(){
+    }
+
+    /**
        @param query The input query String given to the reasoner.
        @param answer The output given by the reasoner.
-     */
-    function __construct($query, $answer){
+    */
+    function generate_answer($query, $answer){
         $this->answer = new Answer();
         $this->answer->set_reasoner_input($query);
         $this->answer->set_reasoner_output($answer);

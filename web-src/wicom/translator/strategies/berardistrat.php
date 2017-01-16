@@ -24,8 +24,11 @@
 namespace Wicom\Translator\Strategies;
 
 use function \load;
+load('berardipack.php', 'qapackages/');
 load('strategy.php');
 load('uml.php');
+
+use Wicom\Translator\Strategies\QAPackages\BerardiPack;
 
 /**
    I implement the method explained on "Reasoning on UML Class Diagrams" by 
@@ -35,6 +38,13 @@ load('uml.php');
  */
 class Berardi extends UML{
 
+    
+    function __construct(){
+        parent::__construct();
+        
+        $this->qapack = new BerardiPack();
+    }
+    
     /**
        Depending on $mult translate it into DL.
 

@@ -51,14 +51,14 @@ class BerardiAnalizer extends AnsAnalizer{
         "IsKBSatisfiable" => "BooleanResponse",
         "IsClassSatisfiable" => "BooleanResponse"
     ];
-    
-    function __construct($query, $answer){
-        parent::__construct($query, $answer);
-        
+
+    function generate_answer($query, $answer){
+        parent::generate_answer($query, $answer);
+
         $this->query_reader = XMLReader::xml($query);
         $this->answer_reader = XMLReader::xml($answer);
     }
-
+    
     /**
        Remove comments and other tags, and create an array with 
        the most important tags and its answer.

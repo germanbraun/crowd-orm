@@ -24,8 +24,11 @@
 namespace Wicom\Translator\Strategies;
 
 use function \load;
+load('crowdpack.php', './qapackages/');
 load('strategy.php');
 load('uml.php');
+
+use Wicom\Translator\Strategies\QAPackages\CrowdPack;
 
 /**
    This module implements the graphical-oriented UML encoding for crowd.
@@ -34,6 +37,13 @@ load('uml.php');
    @see Translator class for description about the JSON format.
  */
 class UMLcrowd extends UML{
+
+    function __construct(){
+        parent::__construct();
+
+        $this->qapack = new CrowdPack();
+    }
+   
     /**
        Depending on $mult translate it into DL.
 

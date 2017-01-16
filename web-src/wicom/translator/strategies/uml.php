@@ -49,7 +49,7 @@ abstract class UML extends Strategy{
             $builder->insert_subclassof($class["name"], "owl:Thing");
         }
 
-        $this->translate_links($json, $builder); 
+        $this->translate_links($json, $builder);
     }
 
     /**

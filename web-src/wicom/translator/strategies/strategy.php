@@ -27,7 +27,15 @@ namespace Wicom\Translator\Strategies;
    @see Translator class for description about the JSON format.
 */
 abstract class Strategy{
-    function __constructor(){
+
+    /**
+       An instance of any QAPack subclass.
+
+       @see Wicom\Translator\Strategies\QAPackages
+     */
+    protected $qapack = null;
+    
+    function __construct(){
     }
 
     /**
@@ -40,4 +48,15 @@ abstract class Strategy{
        @see Translator class for description about the JSON format.
      */
     abstract function translate($json, $build);
+
+    /**
+       Generate queries appropiates for this queries using the Builder to store them in the document.
+       
+       @param $json a JSON string representing the user's model.
+       @param $builder Wicom\Translator\Builders\DocumentBuilder 
+    */
+    function translate_queries($json, $builder){
+        $this->qapack->generate_queries($json, $builder);
+    }
+
 }

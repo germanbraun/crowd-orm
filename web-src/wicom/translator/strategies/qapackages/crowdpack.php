@@ -24,19 +24,21 @@
 namespace Wicom\Translator\Strategies\QAPackages;
 
 use function \load;
-load("crowdqueries.php", "./queriesgenerators/");
-load("crowdanalizer.php", "./answeranalizers/");
+load("qapack.php");
+load("crowdqueries.php", "queriesgenerators/");
+load("crowdanalizer.php", "answeranalizers/");
 
 use Wicom\Translator\Strategies\QAPackages\QueriesGenerators\CrowdQueries;
 use Wicom\Translator\Strategies\QAPackages\AnswerAnalizers\CrowdAnalizer;
+use Wicom\Translator\Strategies\QAPackages\QAPack;
 
 /**
    Question and Answer Pack for the Crowd translation strategy.
  */
 class CrowdPack extends QAPack{
     function __construct(){
-        $this->query_generator = CrowdQueries();
-        $this->ans_analizer = CrowdAnalizer();
+        $this->query_generator = new CrowdQueries();
+        $this->ans_analizer = new CrowdAnalizer();
     }
     
 }

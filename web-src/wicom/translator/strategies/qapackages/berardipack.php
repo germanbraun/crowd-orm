@@ -24,8 +24,9 @@
 namespace Wicom\Translator\Strategies\QAPackages;
 
 use function \load;
-load("berardiqueries.php", "./queriesgenerators/");
-load("berardidanalizer.php", "./answeranalizers/");
+load("qapack.php");
+load("berardiqueries.php", "queriesgenerators/");
+load("berardianalizer.php", "answeranalizers/");
 
 use Wicom\Translator\Strategies\QAPackages\QueriesGenerators\BerardiQueries;
 use Wicom\Translator\Strategies\QAPackages\AnswerAnalizers\BerardiAnalizer;
@@ -35,8 +36,8 @@ use Wicom\Translator\Strategies\QAPackages\AnswerAnalizers\BerardiAnalizer;
  */
 class BerardiPack extends QAPack{
     function __construct(){
-        $this->query_generator = BerardiQueries();
-        $this->ans_analizer = BerardiAnalizer();
+        $this->query_generator = new BerardiQueries();
+        $this->ans_analizer = new BerardiAnalizer();
     }
     
 }

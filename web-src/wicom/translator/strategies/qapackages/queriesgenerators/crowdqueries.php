@@ -21,7 +21,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Wicom\Translator\Strategies\QAPackages\QueriesGenerator;
+namespace Wicom\Translator\Strategies\QAPackages\QueriesGenerators;
 
 use function \load;
 load('queriesgenerator.php');

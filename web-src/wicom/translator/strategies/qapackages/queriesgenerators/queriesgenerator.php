@@ -21,7 +21,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Wicom\Translator\Strategies\QAPackages\QueriesGenerator;
+namespace Wicom\Translator\Strategies\QAPackages\QueriesGenerators;
 
 /**
    Superclass for all the queries generators available.
