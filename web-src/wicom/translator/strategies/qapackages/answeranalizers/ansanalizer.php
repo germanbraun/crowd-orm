@@ -28,7 +28,11 @@
    follows:
 
  */
-namespace Wicom\Translator\Strategies\QAPackages\AnswerAnalizer;
+namespace Wicom\Translator\Strategies\QAPackages\AnswerAnalizers;
+
+use function \load;
+load("answer.php");
+    
 
 /**
    Analize the reasoner answer.

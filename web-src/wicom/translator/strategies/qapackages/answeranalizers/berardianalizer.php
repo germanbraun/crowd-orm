@@ -26,8 +26,8 @@ namespace Wicom\Translator\Strategies\QAPackages\AnswerAnalizers;
 load("answer.php");
 load("ansanalizer.php");
 
-use Wicom\Translator\Strategies\QAPackages\AnswerAnalizer\Answer;
-use Wicom\Translator\Strategies\QAPackages\AnswerAnalizer\AnsAnalizer;
+use Wicom\Translator\Strategies\QAPackages\AnswerAnalizers\Answer;
+use Wicom\Translator\Strategies\QAPackages\AnswerAnalizers\AnsAnalizer;
 use \XMLReader;
 
 class BerardiAnalizer extends AnsAnalizer{
@@ -181,10 +181,10 @@ class BerardiAnalizer extends AnsAnalizer{
                 // It is in fact an element.
                 if($in_query){
                     $cont = ! array_key_exists($xml->name,
-                                               OWLlinkAnalizer::ANSWERS_MAP);
+                                               BerardiAnalizer::ANSWERS_MAP);
                 }else{
                     $cont = ! array_search($xml->name,
-                                           OWLlinkAnalizer::ANSWERS_MAP);
+                                           BerardiAnalizer::ANSWERS_MAP);
                 }
             }
         }
