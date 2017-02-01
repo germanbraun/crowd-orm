@@ -54,7 +54,7 @@ abstract class QAPack{
 
      */
     function generate_queries($json_diagram, $builder){
-        $this->query_generator($json_diagram, $builder);
+        $this->query_generator->generate_all_queries($json_diagram, $builder);
     }
 
     function analize_answer(){

@@ -50,7 +50,7 @@ class CrowdQueries extends QueriesGenerator {
     function generate_all_queries($json_str, $builder){
         $this->gen_satisfiable($builder);
         $this->gen_class_satisfiable($json_str, $builder);
-        $this->gen_inf_cardinalities($json_str, $builder);
+        $this->gen_infer_cardinalities($json_str, $builder);
     }
     
     /**
