@@ -29,10 +29,12 @@ load('objecttype.php', '../metamodel/');
 load('subsumption.php', '../metamodel/');
 load('relationship.php', '../metamodel/');
 load('objecttypecardinality.php', '../metamodel/');
+load('attribute.php', '../metamodel/');
 use Wicom\Translator\Metamodel\ObjectType;
 use Wicom\Translator\Metamodel\Relationship;
 use Wicom\Translator\Metamodel\Subsumption;
 use Wicom\Translator\Metamodel\Objecttypecardinality;
+use Wicom\Translator\Metamodel\Attribute;
 
 
 /*
@@ -72,12 +74,16 @@ class UMLMeta extends MetaStrategy{
 		$this->meta = ["Object type" => [],
 					   "Subsumption" => [],
 					   "Association" => [],
-					   "Object type cardinality" => []];
+					   "Object type cardinality" => [],
+					   "Attribute" => []
+					  ];
 	}
 	
 	
     function create_metamodel($json_str){
         $json = json_decode($json_str, true);
+        
+        print_r($json);
 
         $this->identifyClasses($json);
         $this->identifySubsumption($json);
@@ -86,12 +92,21 @@ class UMLMeta extends MetaStrategy{
     }
     
     function identifyClasses($json){
-    	$js_clases = $json["classes"];
+    	$js_classes = $json["classes"];
     	
-    	foreach ($js_clases as $class){
+    	foreach ($js_classes as $class){
     		$objecttype = new ObjectType($class["name"]);
     		array_push($this->meta["Object type"],$objecttype->get_json_array());
-    	
+    		
+    		$js_attr = $class["attrs"];
+    		
+    		if (!empty($js_attr)){
+    			foreach ($js_attr as $attr){
+    				$attr_obj = new Attribute($class["name"],$attr["name"],$attr["datatype"]);
+    				array_push($this->meta["Attribute"],$attr_obj->get_json_array());
+    			}
+    		}
+    		
     	}
     	
     }
@@ -120,6 +135,7 @@ class UMLMeta extends MetaStrategy{
     	}
     	
     }
+    
     	
     function get_json(){
     	return json_encode($this->meta,true);

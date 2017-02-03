@@ -63,7 +63,8 @@ $expected = <<< EOT
 				  "parent" : "Phone",
 			      "children" : ["CellPhone", "FixedPhone"]}],
 "Association" : [],
-"Object type cardinality" : []
+"Object type cardinality" : [],
+"Attribute" : []
 }
 EOT;
 		
@@ -102,7 +103,43 @@ EOT;
 			      "classes" : ["PhoneCall", "Phone"]}],
 "Object type cardinality" : [{"association" : "r1",
 							  "min..max left" : "0..*",
-							  "min..max right" : "0..*"}]
+							  "min..max right" : "0..*"}],
+"Attribute" : []
+}
+EOT;
+	
+		$strategy = new UMLMeta();
+		$strategy->create_metamodel($json);
+		print_r($strategy->meta);
+		$this->assertJsonStringEqualsJsonString($expected, $strategy->get_json(),true);
+	
+	}
+	
+
+	##
+	# Test if we can generate the metamodel equivalent to the given UML diagram with classes and attributes.
+	# Cardinalities are null.
+	public function testUMLWithAttributesMetamodel(){
+		$json = <<< EOT
+{
+"classes": [{"name": "PhoneCall", "attrs":[{"name" : "date", "datatype" : "String"}], "methods":[]},
+		    {"name": "Phone", "attrs":[{"name" : "location", "datatype" : "String"}, 
+		    						   {"name" : "owner", "datatype" : "String"}], "methods":[]}
+		   ],
+"links": []
+}
+EOT;
+	
+		$expected = <<< EOT
+{
+"Object type" : [{"name" : "PhoneCall"},
+			     {"name" : "Phone"}],
+"Subsumption" : [],
+"Association" : [],
+"Object type cardinality" : [],
+"Attribute"   : [{"class name" : "PhoneCall", "attribute name" : "date", "datatype" : "String"},
+				 {"class name" : "Phone", "attribute name" : "location", "datatype" : "String"},
+				 {"class name" : "Phone", "attribute name" : "owner", "datatype" : "String"}]
 }
 EOT;
 	
@@ -114,18 +151,14 @@ EOT;
 	}
 	
 	
-	
-	
-	
-	
-	
 	##
 	# General Test 
 	public function testUMLMetamodel(){
 		$json = <<< EOT
 {
-"classes": [{"name":"PhoneCall", "attrs":[], "methods":[]},
-		    {"name":"Phone", "attrs":[], "methods":[]},
+"classes": [{"name":"PhoneCall", "attrs":[{"name" : "date", "datatype" : "String"}], "methods":[]},
+		    {"name":"Phone", "attrs":[{"name" : "location", "datatype" : "String"}, 
+		    						  {"name" : "owner", "datatype" : "String"}], "methods":[]},
 			{"name":"CellPhone", "attrs":[], "methods":[]},
 			{"name":"FixedPhone", "attrs":[], "methods":[]}],
 "links":   [
@@ -158,7 +191,10 @@ EOT;
 			      "classes" : ["PhoneCall", "Phone"]}],
 "Object type cardinality" : [{"association" : "r2",
 							  "min..max left" : "0..*",
-							  "min..max right" : "0..*"}]
+							  "min..max right" : "0..*"}],
+"Attribute"   : [{"class name" : "PhoneCall", "attribute name" : "date", "datatype" : "String"},
+				 {"class name" : "Phone", "attribute name" : "location", "datatype" : "String"},
+				 {"class name" : "Phone", "attribute name" : "owner", "datatype" : "String"}]
 }
 EOT;
 	
