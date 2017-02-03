@@ -25,18 +25,107 @@ namespace Wicom\Translator\MetaStrategies;
 
 use function \load;
 load('metastrategy.php');
+load('objecttype.php', '../metamodel/');
+load('subsumption.php', '../metamodel/');
+load('relationship.php', '../metamodel/');
+load('objecttypecardinality.php', '../metamodel/');
+use Wicom\Translator\Metamodel\ObjectType;
+use Wicom\Translator\Metamodel\Relationship;
+use Wicom\Translator\Metamodel\Subsumption;
+use Wicom\Translator\Metamodel\Objecttypecardinality;
+
+
+/*
+	JSON metamodel example for static entities UML
+	
+{
+"Object type" : [{"name" : "Phone"},
+			     {"name" : "CellPhone"},
+		         {"name" : "FixedPhone"}],
+"Subsumption" : [{"name" : "r1",
+				  "parent" : "Phone",
+			      "children" : ["CellPhone", "FixedPhone"]}],
+"Role" : [],
+"Qualified relationship" : [],
+"Shared aggregate" : [],
+"Composite aggregate" : [],
+"Attribute" : [],
+"Multivalued attribute" : [],
+"Mapped to" : [],
+"Composite attribute" : [],
+"Value type" : [],
+"Dimensional value type" : [],
+"Data type" : [],
+"Weak object type" : [],
+"Associative object type" : [],
+"Nested Object type" : [],
+"Qualifier" : []
+}
+
+ */
 
 class UMLMeta extends MetaStrategy{
-    function create_metamodel($json, $build){
+	
+	public $meta;
+	
+	function __construct(){
+		$this->meta = ["Object type" => [],
+					   "Subsumption" => [],
+					   "Association" => [],
+					   "Object type cardinality" => []];
+	}
+	
+	
+    function create_metamodel($json_str){
         $json = json_decode($json_str, true);
-        
-        // Classes
-        $js_clases = $json["classes"];
-        foreach ($js_clases as $class){
-            $builder->insert_subclassof($class["name"], "owl:Thing");
-        }
 
-        $this->generate_links($json, $builder); 
+        $this->identifyClasses($json);
+        $this->identifySubsumption($json);
+      	$this->idenfityBinaryAssoc0NWithoutRoles($json);
+         
     }
+    
+    function identifyClasses($json){
+    	$js_clases = $json["classes"];
+    	
+    	foreach ($js_clases as $class){
+    		$objecttype = new ObjectType($class["name"]);
+    		array_push($this->meta["Object type"],$objecttype->get_json_array());
+    	
+    	}
+    	
+    }
+    
+    function identifySubsumption($json){
+    	$json_links = $json["links"];
+    	$rest = array_filter($json_links,function($gen){return $gen["type"] == "generalization";});
+    	
+    	foreach ($rest as $sub){
+    		$sub_obj = new Subsumption($sub["name"],$sub["parent"],$sub["classes"]);
+    		array_push($this->meta["Subsumption"],$sub_obj->get_json_array());
+    		
+    	}
+    }
+    
+    function idenfityBinaryAssoc0NWithoutRoles($json){
+    	$json_links = $json["links"];
+    	$rest = array_filter($json_links,function($gen){return $gen["type"] == "association";});
+    	
+    	foreach ($rest as $assoc){
+    		$assoc_obj = new Relationship($assoc["name"], $assoc["classes"]);
+    		array_push($this->meta["Association"],$assoc_obj->get_json_array());
+    		$type_card_obj = new Objecttypecardinality($assoc["name"], $assoc["multiplicity"]);
+    		array_push($this->meta["Object type cardinality"],$type_card_obj->get_json_array());
+    	
+    	}
+    	
+    }
+    	
+    function get_json(){
+    	return json_encode($this->meta,true);
+    	
+    }
+    
+    
 }
 ?>

@@ -28,7 +28,7 @@ namespace Wicom\Translator\Builders;
 
    @abstract
  */
-abstract class DocumentBuilder{
+abstract class DocumentBuilder extends Documents{
     protected $product = null;
     
     abstract public function insert_header();
@@ -50,9 +50,9 @@ abstract class DocumentBuilder{
 
        @return A Wicom\Translator\Documents\Document subclass instance.
      */
-    public function get_product(){
-        return $this->product;
-    }
+//    public function get_product(){
+//        return $this->product;
+//    }
 
     /**
        @name DL List Translation
