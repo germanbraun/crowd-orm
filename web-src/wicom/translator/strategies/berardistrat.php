@@ -158,7 +158,7 @@ class Berardi extends Strategy{
     /**
        Translate a generalization link into DL using the Builder.
 
-       @param link A generaization link in a JSON string.
+       @param link A generalization link in a JSON string.
      */
     protected function translate_generalization($link, $builder){
         $parent = $link["parent"];

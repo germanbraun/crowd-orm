@@ -32,17 +32,18 @@ abstract class MetaStrategy{
     }
 
     /**
-     Translate the given JSON String into the OWL XML string according to metamodel rules defined in
-     
+     Translate a given JSON String representing a graphical diagram into a new JSON string according 
+	 to metamodel rules defined in:
+	 
      (a) Fillottrani, Keet. Conceptual Model Interoperability: A Metamodel-driven Approach. 2014.
-     (b) Fillottrani, Keet. KF metamodel formalization. 2014.
+	 (b) Fillottrani, Keet. KF metamodel formalization. 2014.
       
-     @param json The JSON string
-     @param build The Builder instance.
-     @return An XML String.
+     @param json a JSON string
+     @return a JSON metamodel string.
     
      @see Translator class for description about the JSON format.
      */
+    
     abstract function create_metamodel($json);
 }
 ?>
