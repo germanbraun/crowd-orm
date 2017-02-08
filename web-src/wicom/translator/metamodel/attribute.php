@@ -55,6 +55,12 @@ load('attributeproperty.php');
 			];
 		
 		}
+		
+		
+		function transformationORM($metajson){
+		
+		
+		}
 
 	}
 

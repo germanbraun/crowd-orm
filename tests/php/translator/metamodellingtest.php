@@ -154,7 +154,7 @@ EOT;
 	
 	
 	##
-	# General Test 
+	# General Test from UML to Metamodel
 	public function testUMLMetamodel(){
 		$json = <<< EOT
 {
@@ -206,5 +206,114 @@ EOT;
 		$this->assertJsonStringEqualsJsonString($expected, $strategy->get_json(),true);
 	
 	}
+	
+	
+	##
+	# Test translation from metamodel object types to ORM entity types.
+	public function testMetamodelObjectType2ORM(){
+		$json = <<< EOT
+{
+"Object type": [{"name":"PhoneCall"},
+		    	{"name":"Phone"},
+				{"name":"CellPhone"},
+				{"name":"FixedPhone"}],
+"Subsumption" : [],
+"Association" : [],
+"Object type cardinality" : [],
+"Attribute"   : []
+}
+EOT;
+
+		$expected = <<< EOT
+{
+"entity type" : [{"name" : "PhoneCall"},
+			     {"name" : "Phone"},
+				 {"name" : "CellPhone"},
+		         {"name" : "FixedPhone"}],
+"links" : []
+}
+EOT;
+		
+		$strategy = new UMLMeta();
+		$strategy->create_metamodel($json);
+		print_r($strategy->meta);
+		$this->assertJsonStringEqualsJsonString($expected, $strategy->get_json(),true);
+		
+		}
+		
+	##
+	# Test translation from metamodel object types and attributes to ORM entity types and data types.
+	public function testMetamodelObjectTypeAttr2ORMDatatypes(){
+		$json = <<< EOT
+{
+"Object type": [{"name":"PhoneCall"},
+		    	{"name":"Phone"}],
+"Subsumption" : [],
+"Association" : [],
+"Object type cardinality" : [],
+"Attribute"   : [{"class name" : "PhoneCall", "attribute name" : "date", "datatype" : "String"},
+				 {"class name" : "Phone", "attribute name" : "location", "datatype" : "String"},
+				 {"class name" : "Phone", "attribute name" : "owner", "datatype" : "String"}]
+}
+EOT;
+
+		$expected = <<< EOT
+{
+"entity type" : [{"name" : "PhoneCall"},
+			     {"name" : "Phone"}],
+"value type" : [{"entity name" : "PhoneCall", "value type name" : "date", "datatype" : "String"},
+				{"entity name" : "Phone", "value type name" : "location", "datatype" : "String"},
+				{"entity name" : "Phone", "value type name" : "owner", "datatype" : "String"}],
+"links" : [{"name" : "has",
+			"entity type" : ["PhoneCall", "date"],
+			"multiplicity" : ["0..*","1..*"],
+			"type" : "binary predicate"
+			}]
+}
+EOT;
+		
+			$strategy = new UMLMeta();
+			$strategy->create_metamodel($json);
+			print_r($strategy->meta);
+			$this->assertJsonStringEqualsJsonString($expected, $strategy->get_json(),true);
+		
+		}
+	
+		
+	##
+	# Test translation from metamodel object types and subsumptions to ORM entity types and subtypes.
+	public function testMetamodelObjectTypeSub2ORMSubtypes(){
+		$json = <<< EOT
+{
+"Object type": [{"name":"Phone"},
+				{"name":"CellPhone"}],
+"Subsumption" : [{"name" : "r1",
+				  "parent" : "Phone",
+			      "children" : ["CellPhone"]}],
+"Association" : [],
+"Object type cardinality" : [],
+"Attribute"   : []
+}
+EOT;
+		$expected = <<< EOT
+{
+"entity type" : [{"name" : "Phone"},
+			     {"name" : "CellPhone"}],
+"links" : [{"entity type" : ["CellPhone"],
+			"multiplicity" : null,
+			"name" : "r1",
+			"type" : "subtype",
+			"parent" : "Phone",
+			"constraint" : []
+		   }]
+}
+EOT;
+		
+		$strategy = new UMLMeta();
+		$strategy->create_metamodel($json);
+		print_r($strategy->meta);
+		$this->assertJsonStringEqualsJsonString($expected, $strategy->get_json(),true);
+		
+		}
 	
 }

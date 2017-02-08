@@ -7,7 +7,7 @@ Grupo de Investigación en Lenguajes e Inteligencia Artificial (GILIA) -
 Facultad de Informática
 Universidad Nacional del Comahue
 
-objecttype.php
+meta2orm.php
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -23,47 +23,3 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-namespace Wicom\Translator\Metamodel;
-use function \load;
-load('entitytype.php');
-
-
-	class ObjectType extends EntityType{
-		
-		protected $objectTypeName = ""; 
-		
-		/**
-		 UML: class 
-		 EER: entity type 
-		 ORM: non-lexical object type / entity type
-			for Object subtype, there is the naming, respectively:
-				subclass (UML)
-				subtype (EER)
-				subtype (ORM)
-				
-		 * @param $name object type name
-		 */
-		
-		function __construct($name){
-			
-			$this->objectTypeName = $name;
-		}
-		
-		function get_json_array(){
-			return ["name" => $this->objectTypeName];
-			
-		}
-		
-		/**
-		 * Generate ORM entity types from metamodel object types
-		 */
-		
-		function equivalenceORM($objtype){
-			return ["name" => $objtype["name"]]; 
-			
-		}
-
-
-	}
-
-?>
