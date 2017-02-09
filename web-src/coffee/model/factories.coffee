@@ -70,6 +70,8 @@ class UMLFactory extends Factory
             
         return newclass
 
+    # Create an association links.
+    # 
     # @param [array] mult The multiplicity strings.
     # @return [joint.dia.Link]
     create_association: (class_a_id, class_b_id, name = null, css_links = null, mult = null) ->
@@ -151,6 +153,66 @@ class UMLFactory extends Factory
  #				)
 
 
+    # Create an association link with it association class.
+    # 
+    # @param [array] mult The multiplicity strings.
+    # @return [joint.dia.Link]
+    create_association_class: (class_a_id, class_b_id, name, css_links = null, mult = null) ->
+        link = new joint.dia.Link(
+            source: {id: class_a_id}
+            target: {id: class_b_id}
+            attrs: css_links
+        )
+
+        labels = []
+        # labels = labels.concat([
+        #     position: 0.5
+        #     attrs: 
+        #         text: {text: name, fill: '#0000ff'}
+        #         rect: {fill: '#ffffff'} 
+        #     ])
+        if mult != null
+            if mult[0] != null
+                labels = labels.concat([
+                    position: 0.1,
+                    attrs:
+                        text: {text: mult[0], fill: '#0000ff'},
+                        rect: {fill: '#ffffff'}
+                ])
+            if mult[1] != null
+                labels = labels.concat([
+                    position: 0.9,
+                    attrs:
+                        text: {text: mult[1], fill: '#0000ff'},
+                        rect: {fill: '#ffffff'}
+                ])
+
+        link.set({labels: labels})
+
+        # I'm sorry! But I have to use graph for this.
+        # getSourceElement() and getTargetElement()
+        # doesn't work if the link is not associated with a graph!
+        target_pos = graph.getCell(class_b_id).position()
+        source_pos = graph.getCell(class_a_id).position()
+
+        x = Math.abs(target_pos.x - source_pos.x) / 2
+        y = Math.abs(target_pos.y - source_pos.y) / 2
+
+        assoc_class = create_class(name)
+        assoc_class.position(x,y)
+        link.assoc_class = assoc_class
+
+        link.on('change', () ->
+            target_pos = link.getTargetElement().position()
+            source_pos = link.getSourceElement().position()
+
+            x = Math.abs(target_pos.x - source_pos.x) / 2
+            y = Math.abs(target_pos.y - source_pos.y) / 2
+
+            this.assoc_class.position(x,y)
+        )
+                       
+        return link
 
 
 # @todo ERDFactory is not yet implemented. This factory is beyond the scope for this prototype.
