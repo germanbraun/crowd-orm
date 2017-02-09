@@ -146,6 +146,17 @@ class Diagram
         
         this.agregar_link(newassoc)
 
+    add_association_class: (class_a_id, class_b_id, name, mult = null) ->
+        class_a = this.find_class_by_classid(class_a_id)
+        class_b = this.find_class_by_classid(class_b_id)
+        
+        newassoc = new LinkWithClass([class_a, class_b], name)
+        if (mult isnt null)
+            newassoc.set_mult(mult)
+        
+        this.agregar_link(newassoc)
+        newassoc.update_position()
+
     #
     # # Hash Data
     # 
