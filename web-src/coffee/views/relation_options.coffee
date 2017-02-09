@@ -27,9 +27,10 @@ RelationOptionsView = Backbone.View.extend(
         this.$el.html(template({classid: @classid}))
 
     events:
-    	"click a#cardfrom_accept" : "cardfrom",
-    	"click a#cardto_accept" : "cardto",
-    	"click a#association_button" : "new_relation"
+        "click a#cardfrom_accept" : "cardfrom",
+        "click a#cardto_accept" : "cardto",
+        "click a#association_button" : "new_relation",
+        "click a#assoc_class_button" : "new_assoc_class"
     	
     cardfrom: (from) ->
 #    	from = "2..3"
@@ -58,8 +59,19 @@ RelationOptionsView = Backbone.View.extend(
         mult = []
         mult[0] = @from
         mult[1] = @too
+        console.log("New association without class:")
         console.log(mult)
         gui.gui_instance.set_association_state(@classid, mult)
+
+    new_assoc_class: (from, too) ->
+        mult = []
+        mult[0] = @from
+        mult[1] = @too
+        name = $("#assoc_name").val()
+        console.log("New association with class: " + name)
+        console.log(mult)
+        gui.gui_instance.set_association_state(@classid, mult, name, true)
+        
 
     # Map the Option value to multiplicity string.
     #

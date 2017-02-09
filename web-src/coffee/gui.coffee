@@ -118,6 +118,15 @@ class GUI
         @diag.add_association(class_a_id, class_b_id, name, mult)
         this.set_selection_state()
 
+    # Idem a {GUI#add_association} but includes an association class.
+    #
+    # Some parameters are not optional.
+    #
+    # @see #add_association.
+    add_association_class: (class_a_id, class_b_id, name, mult=null) ->
+        @diag.add_association_class(class_a_id, class_b_id, name, mult)
+        this.set_selection_state()
+
     # Add a Generalization link and then set the selection state.
     #
     # @param class_parent_id {string} The parent class Id.
@@ -259,10 +268,16 @@ class GUI
     # @param class_id {string} The id of the class that triggered it and thus,
     #   the starting class of the association.
     # @param mult {array} An array of two strings representing the cardinality from and to.
-    set_association_state: (class_id, mult) ->
+    # @param name [String] A string describing the name of the relation.
+    # @param with_class [boolean] If true, this is an association with class.
+    set_association_state: (class_id, mult, name=null, with_class=false) ->
         @state = gui.state_inst.association_state()
         @state.set_cellStarter(class_id)
         @state.set_cardinality(mult)
+        @state.set_name(name)
+        # set_with_class needs a name,
+        # if name=null it will set it to false nevertheless
+        @state.set_with_class(with_class)
 
     # Change to the IsA GUI State so the user can select the child for the parent.
     #

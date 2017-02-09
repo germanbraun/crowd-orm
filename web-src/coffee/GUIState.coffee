@@ -65,15 +65,52 @@ class AssociationState extends State
     constructor: () ->
         @cell_starter = null
         @mult = null
+        @with_class = false
+        @name = null
+
+    # Reset the state restoring its default values.
+    reset: () ->
+        @cell_starter = null
+        @with_class = false
+        @name = null
 
     set_cellStarter: (@cell_starter) ->
 
     set_mult: (@mult) ->
     set_cardinality: (@mult) ->
+    set_name: (@name) ->
 
+    # Create an association with class? 
+    #
+    # By default is false. Set to true if you have setted the name before.
+    #
+    # @param with_class [boolean] True if an association with class is needed.
+    # @see #enable_with_class
+    set_with_class: (with_class) ->
+        if @name?
+            @with_class = true
+        else
+            @with_class = false
+    # Ensure to create an association with class.
+    #
+    # `associationstate.enable_with_class("a name")` is the same as:
+    # 
+    # @example Same as
+    #   associationstate.set_name("a name")
+    #   associationstate.set_with_class(true)
+    #
+    # @param name [String] The name for the association class.
+    # @see #set_with_class
+    enable_with_class: (@name) ->
+        @with_class = true
+        
     on_cell_clicked: (cell_view, event, x, y, gui) ->
-        gui.add_association(@cell_starter, cell_view.model.id, null, @mult)
-        @cell_starter = null
+        if @with_class
+            gui.add_association_class(@cell_starter, cell_view.model.id, @name, @mult)
+        else
+            gui.add_association(@cell_starter, cell_view.model.id, null, @mult)
+
+        this.reset()
 
 
 # IsA state, the user can select another class for
