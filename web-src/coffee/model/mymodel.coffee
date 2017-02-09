@@ -492,6 +492,15 @@ class LinkWithClass extends Link
             @j_assoc_link.set('target',
                 id: @j_assoc_class.id
             )
+
+    # Exports to JSON
+    #
+    # Also adds the key "associated_class" and add the JSON of the associated class.
+    # 
+    # @return [object] The JSON object.
+    # 
+    # @see MyModel#to_json
+    # @see Link#to_json
     to_json: () ->
         json = super()
         json.associated_class = @assoc_class.to_json()
