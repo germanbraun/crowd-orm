@@ -420,7 +420,10 @@ class LinkWithClass extends Link
         super(@classes)
         @name = name
         @mult = [null,null]
+
+        @assoc_class = new Class(name)
         @j_assoc_link = null
+        # Easy access to the assoc_class.get_joint().
         @j_assoc_class = null
 
     # As {Link#create_joint}, but it also creates the association link and class.
@@ -431,9 +434,16 @@ class LinkWithClass extends Link
     # @see MyModel#create_joint
     create_joint: (factory, csstheme = null) ->
         super(factory, csstheme)
+
+        # Easy access to the Joint of associated class.
+        #
+        # A better approach has to be used instead of this, but for now it should work.
+        # 
+        # @todo craete a Class subclass "AssociateClass" and delegate some methods instead of asking for the joint.
+        @j_assoc_class = @assoc_class.get_joint(factory, csstheme)[0]
         
         @j_assoc_link = factory.create_association_link(csstheme.css_assoc_links)
-        @j_assoc_class = factory.create_association_class(@name, csstheme.css_class)
+        # @j_assoc_class = factory.create_association_class(@name, csstheme.css_class)
 
         @joint.push(@j_assoc_link)
         @joint.push(@j_assoc_class)
@@ -482,7 +492,11 @@ class LinkWithClass extends Link
             @j_assoc_link.set('target',
                 id: @j_assoc_class.id
             )
+    to_json: () ->
+        json = super()
+        json.associated_class = @assoc_class.to_json()
 
+        return json
             
     
 
