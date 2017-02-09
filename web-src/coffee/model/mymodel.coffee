@@ -139,10 +139,9 @@ class Class extends MyModel
             else
                 @joint[0].set('attrs', csstheme.css_class)
 
-    #
     # If the joint model wasn't created, make it.
-    #
-    # @param factory a Factory subclass instance.
+    # 
+    # @see MyModel#create_joint
     create_joint: (factory, csstheme = null) ->
         unless @joint?
             @joint = []
@@ -238,6 +237,8 @@ class Link extends MyModel
 
         return json
 
+    #
+    # @see MyModel#create_joint
     create_joint: (factory, csstheme = null) ->        
         if @joint == null
             @joint = []
@@ -279,7 +280,8 @@ class Generalization extends Link
             # If it was created before but now we have a new child.
             if factory != null then this.create_joint(factory, csstheme);
         return @joint
-        
+
+    # @see MyModel#create_joint
     create_joint: (factory, csstheme = null) ->
         if csstheme == null
             csstheme =
@@ -357,12 +359,89 @@ class Generalization extends Link
         return json
 
 
+# A link with association class.
+#
+# Also manage the association link, wich is the link that goes through the
+# middle of the link with to the association class; the association class, which
+# represent the association and is at the middle of the association link.
+#
+class LinkWithClass extends Link
+   
+    constructor: (@classes, name) ->
+        super(@classes)
+        @name = name
+        @mult = [null,null]
+        @j_assoc_link = null
+        @j_assoc_class = null
+
+    # As {Link#create_joint}, but it also creates the association link and class.
+    #
+    # Also, inherit the same parameters.
+    #
+    # @return [Array] A list of joint objects created by the factory given.
+    # @see MyModel#create_joint
+    create_joint: (factory, csstheme = null) ->
+        super(factory, csstheme)
+        
+        @j_assoc_link = factory.create_association_link(csstheme.css_assoc_links)
+        @j_assoc_class = factory.create_association_class(@name, csstheme.css_class)
+
+        @joint.push(@j_assoc_link)
+        @joint.push(@j_assoc_class)
+
+        # It doesn't work. It is the scope of "this" or maybe another problem.
+        # @joint[0].on('change:attrs', this.update_position)
+        # @classes[0].get_joint()[0].on('change:position', this.update_position)
+        # @classes[1].get_joint()[0].on('change:position', this.update_position)
+
+    # Update position of the association link and association class
+    # according tot he target and source classes (it must be half a way).
+    update_position: () ->
+        if (@j_assoc_link?) and (@j_assoc_class?)
+            # For some misterious reason, you have to add some joint elements ids
+            # on source and target. If not it will not associate the link with the
+            # Element provided, instead it will still points to (10,10) coordinates.
+            #
+            # For this reason, we have to initialize with some ids that already
+            # has been loaded into the graph object.
+            @j_assoc_link.set('source',
+                id: @classes[0].get_joint()[0].id
+            )
+            @j_assoc_link.set('target',
+                id: @classes[1].get_joint()[0].id
+            )
+
+            # Now we can proceed asigning the source and target accordingly
+            # Calculate the middle of the association's line, translate the
+            # association class to that middle and a bit down.
+            # Finally, set it to the source of the dashed line. Its target is
+            # the association class.
+            target_pos = @classes[1].get_joint()[0].position()            
+            source_pos = @classes[0].get_joint()[0].position()
+            target_size = @classes[1].get_joint()[0].attributes.size
+            source_size = @classes[0].get_joint()[0].attributes.size
+            middlex = Math.abs(target_pos.x + source_pos.x + target_size.width/2 + source_size.width/2  ) / 2
+            middley = Math.abs(target_pos.y + source_pos.y + target_size.height/2 + source_size.height/2) / 2
+
+            @j_assoc_class.position(middlex, middley + 100)
+            @j_assoc_link.set('source',
+                x: middlex,
+                y: middley
+            )
+            @j_assoc_link.set('target',
+                id: @j_assoc_class.id
+            )
+
+            
+    
+
 exports = exports ? this
        
 exports.MyModel = MyModel
 exports.Class = Class
 exports.Link = Link
 exports.Generalization = Generalization
+exports.LinkWithClass = LinkWithClass
 
 
 

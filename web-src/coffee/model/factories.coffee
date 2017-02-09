@@ -153,67 +153,28 @@ class UMLFactory extends Factory
  #				)
 
 
-    # Create an association link with it association class.
+    # Create an association class.
     # 
-    # @param [array] mult The multiplicity strings.
-    # @return [joint.dia.Link]
-    create_association_class: (class_a_id, class_b_id, name, css_links = null, mult = null) ->
+    # 
+    # @see #create_class
+    create_association_class: (class_name, css_class = null) ->
+        return this.create_class(class_name, css_class)
+
+    # Create an association link only (the one dashed one that appears between
+    # the UML association and the UML association class).
+    #
+    # @return [joint.dia.Link] a Joint Link object.
+    create_association_link: (css_assoc_links = {"stroke-dasharray": "5,5"}) ->
+        # For some misterious reason, you have to add some joint elements ids
+        # on source and target. If not it will not associate the link with the
+        # Element provided, instead it will still points to (10,10) coordinates.
         link = new joint.dia.Link(
-            source: {id: class_a_id}
-            target: {id: class_b_id}
-            attrs: css_links
+            source: {x: 10, y: 10},
+            target: {x: 100, y: 100},
+            attrs: css_assoc_links
         )
 
-        labels = []
-        # labels = labels.concat([
-        #     position: 0.5
-        #     attrs: 
-        #         text: {text: name, fill: '#0000ff'}
-        #         rect: {fill: '#ffffff'} 
-        #     ])
-        if mult != null
-            if mult[0] != null
-                labels = labels.concat([
-                    position: 0.1,
-                    attrs:
-                        text: {text: mult[0], fill: '#0000ff'},
-                        rect: {fill: '#ffffff'}
-                ])
-            if mult[1] != null
-                labels = labels.concat([
-                    position: 0.9,
-                    attrs:
-                        text: {text: mult[1], fill: '#0000ff'},
-                        rect: {fill: '#ffffff'}
-                ])
-
-        link.set({labels: labels})
-
-        # I'm sorry! But I have to use graph for this.
-        # getSourceElement() and getTargetElement()
-        # doesn't work if the link is not associated with a graph!
-        target_pos = graph.getCell(class_b_id).position()
-        source_pos = graph.getCell(class_a_id).position()
-
-        x = Math.abs(target_pos.x - source_pos.x) / 2
-        y = Math.abs(target_pos.y - source_pos.y) / 2
-
-        assoc_class = create_class(name)
-        assoc_class.position(x,y)
-        link.assoc_class = assoc_class
-
-        link.on('change', () ->
-            target_pos = link.getTargetElement().position()
-            source_pos = link.getSourceElement().position()
-
-            x = Math.abs(target_pos.x - source_pos.x) / 2
-            y = Math.abs(target_pos.y - source_pos.y) / 2
-
-            this.assoc_class.position(x,y)
-        )
-                       
         return link
-
 
 # @todo ERDFactory is not yet implemented. This factory is beyond the scope for this prototype.
 class ERDFactory extends Factory
