@@ -92,6 +92,18 @@ class MyModel
     to_json: () ->
         name: @name
 
+    # Simply update the coordinates of this object to its proper position.
+    # Useful when the object has other dependants, that should move accordingly
+    # to one or another.
+    #
+    # Consider it could be called when the user change the position of the
+    # JointJS Object or any associated MyModel/Joint object to update the
+    # position of this object accordingly to them. So, this is also an
+    # **event handler** .
+    # 
+    # Redefine this function if necessary.
+    update_position: () ->        
+
 
 # A Class from our model diagram.
 class Class extends MyModel 
@@ -102,6 +114,7 @@ class Class extends MyModel
         super(name)
         @joint = null
         @unsatisfiable = false
+        @on_change_objs = []
 
     get_name: () ->
         return @name
@@ -109,14 +122,12 @@ class Class extends MyModel
     set_name: (@name) ->
         if @joint != null
              @joint[0].set("name", @name)
-        
-        
+       
     get_attrs: () ->
         return @attrs
 
     get_methods: () ->
         return @methods
-
 
     # Set if this class is unsatisfiable. Changing its appearance if `csstheme`
     # is given.
@@ -164,6 +175,44 @@ class Class extends MyModel
         if @joint?
             json.position = @joint[0].position()
         return json
+
+    # I attach myself and my event handlers into the joint model
+    # for answering myself whenever some important changes happens.
+    #
+    # If I have already attached, I don't attach again.
+    #
+    # This will attach for:
+    #
+    # - change:position : {Class#notify_change_position}
+    #
+    attach_my_event_handlers: () ->
+        if @joint?
+            unless @joint[0].mymodel_class?
+                @joint[0].mymodel_class = this
+                @joint[0].on('change:position', () ->
+                    @mymodel_class.notify_change_position(this);
+                )
+
+    # Attach an object for notifying whenever the class changes position.
+    #
+    # @param [MyModel] object has to answer to {MyModel#update_position}.
+    # @see #notify_change_position
+    # @see MyModel#update_position
+    attach_on_change_position: (object) ->
+        this.attach_my_event_handlers()
+
+        @on_change_objs.push(object)
+
+    # **Event handler** for notifying all objects attached that the position has been changed.
+    #
+    # It will call update_position() to all objects attached. 
+    #
+    # @param [joint.dia.Element] model The Joint element that has recieved the event.
+    # @see MyModel#update_position
+    notify_change_position: (model) ->
+        @on_change_objs.forEach( (obj, indx, arr) ->
+            obj.update_position()
+        )   
                
 
 # A Link between two classes or more classes.
@@ -393,6 +442,8 @@ class LinkWithClass extends Link
         # @joint[0].on('change:attrs', this.update_position)
         # @classes[0].get_joint()[0].on('change:position', this.update_position)
         # @classes[1].get_joint()[0].on('change:position', this.update_position)
+        @classes[0].attach_on_change_position(this)
+        @classes[1].attach_on_change_position(this)
 
     # Update position of the association link and association class
     # according tot he target and source classes (it must be half a way).
