@@ -291,6 +291,7 @@ class Link extends MyModel
             myclass.get_name()
         )
         json.multiplicity = @mult
+        json.roles = @roles
         json.type = "association"
 
         return json
