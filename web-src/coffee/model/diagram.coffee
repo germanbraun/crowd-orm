@@ -149,7 +149,7 @@ class Diagram
         
         this.agregar_link(newassoc)
 
-    add_association_class: (class_a_id, class_b_id, name, mult = null, roles=null) ->
+    add_association_class: (class_a_id, class_b_id, name, mult = null, roles= null) ->
         class_a = this.find_class_by_classid(class_a_id)
         class_b = this.find_class_by_classid(class_b_id)
         

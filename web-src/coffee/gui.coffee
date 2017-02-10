@@ -128,7 +128,7 @@ class GUI
     #
     # @see #add_association.
     add_association_class: (class_a_id, class_b_id, name, mult=null, roles=null) ->
-        @diag.add_association_class(class_a_id, class_b_id, name, mult)
+        @diag.add_association_class(class_a_id, class_b_id, name, mult, roles)
         this.set_selection_state()
 
     # Add a Generalization link and then set the selection state.
