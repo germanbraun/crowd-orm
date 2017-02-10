@@ -67,6 +67,7 @@ class AssociationState extends State
         @mult = null
         @with_class = false
         @name = null
+        @roles = null
 
     # Reset the state restoring its default values.
     reset: () ->
@@ -76,7 +77,15 @@ class AssociationState extends State
 
     set_cellStarter: (@cell_starter) ->
 
+    # Set the association's multiplicity that the user gave.
+    # 
+    # @param mult [Array] An array with two strings. 
     set_mult: (@mult) ->
+        
+    # Set the association's roles that the user gave.
+    # 
+    # @param roles [Array] An array with two strings.
+    set_roles: (@roles) ->
     set_cardinality: (@mult) ->
     set_name: (@name) ->
 
@@ -88,7 +97,7 @@ class AssociationState extends State
     # @see #enable_with_class
     set_with_class: (with_class) ->
         if @name?
-            @with_class = true
+            @with_class = with_class
         else
             @with_class = false
     # Ensure to create an association with class.
@@ -103,12 +112,19 @@ class AssociationState extends State
     # @see #set_with_class
     enable_with_class: (@name) ->
         @with_class = true
-        
+
+    # What to do when the user clicks on another cell.
+    #
+    # @param cell_view [joint.dia.CellView] The cell view that recieves the click event.
+    # @param event [Event] The event object representation. {https://developer.mozilla.org/en-US/docs/Web/API/Event/Event}
+    # @param x [int] Where's the X coordinate position where the mouse has clicked.
+    # @param y [int] Where's the Y coordinate position where the mouse has clicked.
+    # @param gui [GUI] A the current GUI instance.
     on_cell_clicked: (cell_view, event, x, y, gui) ->
         if @with_class
-            gui.add_association_class(@cell_starter, cell_view.model.id, @name, @mult)
+            gui.add_association_class(@cell_starter, cell_view.model.id, @name, @mult, @roles)
         else
-            gui.add_association(@cell_starter, cell_view.model.id, null, @mult)
+            gui.add_association(@cell_starter, cell_view.model.id, @name, @mult, @roles)
 
         this.reset()
 

@@ -136,23 +136,28 @@ class Diagram
     # @param class_b_id {string} the ID of the second class.
     # @param name {string} optional. The name of the association.
     # @param mult {array} optional. An array of two strings with the cardinality from class a and to class b.
-    add_association: (class_a_id, class_b_id, name = null, mult = null) ->
+    # @param roles {array} optional. An array of two strings with the from and to roles.
+    add_association: (class_a_id, class_b_id, name = null, mult = null, roles = null) ->
         class_a = this.find_class_by_classid(class_a_id)
         class_b = this.find_class_by_classid(class_b_id)
         
-        newassoc = new Link([class_a, class_b])
+        newassoc = new Link([class_a, class_b], name)
         if (mult isnt null)
             newassoc.set_mult(mult)
+        if (roles isnt null)
+            newassoc.set_roles(roles)
         
         this.agregar_link(newassoc)
 
-    add_association_class: (class_a_id, class_b_id, name, mult = null) ->
+    add_association_class: (class_a_id, class_b_id, name, mult = null, roles=null) ->
         class_a = this.find_class_by_classid(class_a_id)
         class_b = this.find_class_by_classid(class_b_id)
         
         newassoc = new LinkWithClass([class_a, class_b], name)
         if (mult isnt null)
             newassoc.set_mult(mult)
+        if (roles isnt null)
+            newassoc.set_roles(roles)
         
         this.agregar_link(newassoc)
         newassoc.update_position()

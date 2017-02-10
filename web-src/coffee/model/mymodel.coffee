@@ -223,9 +223,13 @@ class Link extends MyModel
     # @param classes {Array<Class>} An array of Class objects,
     #   the first class is the "from" and the second is the "to" class
     #   in a two-linked relation.
-    constructor: (@classes) ->
-        super(Link.get_new_name())
+    constructor: (@classes, name=null) ->
+        if name?
+            super(name)
+        else
+            super(Link.get_new_name())
         @mult = [null, null]
+        @roles = [null, null]
 
     # Set the multiplicity.
     #
@@ -236,6 +240,11 @@ class Link extends MyModel
     # @param [array] mult An array that describes the multiplicity in strings.
     set_mult : (@mult) ->
         this.change_to_null(m,i) for m,i in @mult
+
+    # Change the from and to roles.
+    #
+    # @param [array] roles An array with two strings, the from and to roles.
+    set_roles: (@roles) ->
 
     change_to_null : (mult, index) ->
         if (mult == "0..*") or (mult == "0..n")
@@ -297,14 +306,16 @@ class Link extends MyModel
                     @classes[1].get_classid(),
                     @name,
                     csstheme.css_links,
-                    @mult))
+                    @mult,
+                    @roles))
             else
                 @joint.push(factory.create_association(
                     @classes[0].get_classid(),
                     @classes[1].get_classid(),
                     @name
                     null,
-                    @mult))
+                    @mult,
+                    @roles))
 
 Link.get_new_name = () ->
     if Link.name_number == undefined
@@ -417,8 +428,7 @@ class Generalization extends Link
 class LinkWithClass extends Link
    
     constructor: (@classes, name) ->
-        super(@classes)
-        @name = name
+        super(@classes, name)
         @mult = [null,null]
 
         @assoc_class = new Class(name)
