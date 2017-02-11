@@ -37,7 +37,14 @@ load("answer.php");
 /**
    Analize the reasoner answer.
 
-   You need to create an instance and provide the reasoner query and its response using generate_answer().
+   You need to create an instance and provide the reasoner query and its response using generate_answer(). Then you can ask for analize() all.
+
+   @code{php}
+   $ans = new AnsAnalizer();
+   $ans->generate_answer($reasoner_query, $reasoner_answer);
+   $ans->analize()
+   @endcode
+   
  */
 abstract class AnsAnalizer{
 
@@ -55,6 +62,8 @@ abstract class AnsAnalizer{
     }
 
     /**
+       Generate an empty Answer instance available before analizing.
+
        @param query The input query String given to the reasoner.
        @param answer The output given by the reasoner.
     */
@@ -64,12 +73,19 @@ abstract class AnsAnalizer{
         $this->answer->set_reasoner_output($answer);
     }
 
+    /**
+       Do the last task and return the Answer instance. 
+
+       Ensure to call generate_answer() and analize() before.
+     */
     function get_answer(){
         return $this->answer;
     }
 
     /**
        Analize and create the answer.
+
+       **Implements in the subclass**
 
        Set the $answer attribute. 
      */

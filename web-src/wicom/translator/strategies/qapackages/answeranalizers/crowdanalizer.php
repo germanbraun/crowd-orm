@@ -30,6 +30,11 @@ use Wicom\Translator\Strategies\QAPackages\AnswerAnalizers\Answer;
 use Wicom\Translator\Strategies\QAPackages\AnswerAnalizers\AnsAnalizer;
 use \XMLReader;
 
+/**
+   crowd Answer Analizer.
+
+   
+ */
 class CrowdAnalizer extends AnsAnalizer{
 
     /**

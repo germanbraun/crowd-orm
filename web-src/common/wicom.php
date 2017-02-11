@@ -29,7 +29,7 @@ load("owllinkbuilder.php", "../wicom/translator/builders/");
 
 load("runner.php", "../wicom/reasoner/");
 load("racerconnector.php", "../wicom/reasoner/");
-load("owllinkanalizer.php", "../wicom/answers/");
+# load("owllinkanalizer.php", "../wicom/answers/");
 
 use Wicom\Translator\Translator;
 use Wicom\Translator\Strategies\UMLcrowd;
@@ -38,7 +38,7 @@ use Wicom\Translator\Builders\OWLlinkBuilder;
 use Wicom\Reasoner\Runner;
 use Wicom\Reasoner\RacerConnector;
 
-use Wicom\Answers\OWLlinkAnalizer;
+# use Wicom\Answers\OWLlinkAnalizer;
 
 class Wicom{
     function __construct(){
@@ -47,19 +47,29 @@ class Wicom{
     /**
        Check the diagram represented in JSON format for 
        satisfiability.
+       
+       @param $json_str A String with the diagram in JSON format.
+       @return Wicom\Translator\Strategies\QAPackages\AnswerAnalizers\Answer an answer object.
      */
     function is_satisfiable($json_str){
-        $trans = new Translator(new UMLcrowd(), new OWLlinkBuilder());
+        // Translate using a strategy
+        $strategy = new UMLcrowd();
+        $trans = new Translator($strategy, new OWLlinkBuilder());
         $owllink_str = $trans->to_owllink($json_str);
-        
+
+        // Execute the reasoner
         $runner = new Runner(new RacerConnector());
         $runner->run($owllink_str);
         $owllink_answer = $runner->get_last_answer();
-        
-        $owllink_analizer = new OWLlinkAnalizer($owllink_str, $owllink_answer);
-        $owllink_analizer->analize();
-        
-        return $owllink_analizer->get_answer();
+
+        // Generate the answer.
+        /*
+          $owllink_analizer = new OWLlinkAnalizer($owllink_str, $owllink_answer);        
+          $owllink_analizer->analize();        
+
+          return $owllink_analizer->get_answer();
+        */
+        return $strategy->analize_answer($owllink_str, $owllink_answer);
     }
 }
 

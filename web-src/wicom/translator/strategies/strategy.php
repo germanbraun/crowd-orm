@@ -59,4 +59,12 @@ abstract class Strategy{
         $this->qapack->generate_queries($json, $builder);
     }
 
+    function analize_answer($reasoner_query, $reasoner_answer){
+        $this->qapack->analize_answer($reasoner_query, $reasoner_answer);
+        return $this->qapack->get_answer();
+    }
+    function get_answer(){
+        return $this->qapack->get_answer();
+    }
+
 }

@@ -57,10 +57,24 @@ abstract class QAPack{
         $this->query_generator->generate_all_queries($json_diagram, $builder);
     }
 
-    function analize_answer(){
+    /**
+       Analize the reasoner results. Use get_answer() for retrieving the answer.
+
+       @param $reasoner_query A String with the reasoner input (query).
+       @param $reasoner_answer A String with the reasoner output (answer).
+    */
+    function analize_answer($reasoner_query, $reasoner_answer){
+        $this->ans_analizer->generate_answer($reasoner_query, $reasoner_answer);
         $this->ans_analizer->analize();
     }
-    
+
+    /**
+       Retrieve the answer. 
+
+       Ensure to call the analize_answer() before.
+       
+       @return Wicom\Translator\Strategies\QAPackages\AnswerAnalizers\Answer An answer object.
+     */
     function get_answer(){
         return $this->ans_analizer->get_answer();
     }
