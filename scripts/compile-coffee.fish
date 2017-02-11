@@ -30,7 +30,7 @@ echo "Compiling Coffeescripts into Javascript"
 set_color normal
 coffee --output web-src/js/ --compile web-src/coffee/
 
-set model_order diagram factories mymodel products server_connection
+set model_order diagram umldiagram factories mymodel products server_connection
 
 set_color --bold white
 echo "Mergin model files"
