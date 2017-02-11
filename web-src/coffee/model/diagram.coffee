@@ -356,6 +356,8 @@ class Diagram
     # on this model.
     # 
     # @param json {JSON object} a JSON object. Use json = JSON.parse(jsonstr) to retrieve from a string.
+    # 
+    # @todo Better programmed it would be if we pass a JSON part to the constructor of each model class. Leaving the responsability of each MyModel class to create itself.
     import_json: (json) ->
         json.classes.forEach(
             (elt, index, arr) ->
@@ -370,11 +372,20 @@ class Diagram
                 if elt.type is "association"
                     class_a = this.find_class_by_name(elt.classes[0])
                     class_b = this.find_class_by_name(elt.classes[1])
-                    this.add_association(
-                        class_a.get_classid(),
-                        class_b.get_classid(),
-                        elt.name,
-                        elt.multiplicity)
+                    if elt.associated_class?
+                        this.add_association_class(
+                            class_a.get_classid(),
+                            class_b.get_classid(),
+                            elt.name,
+                            elt.multiplicity,
+                            elt.roles)
+                    else
+                        this.add_association(
+                            class_a.get_classid(),
+                            class_b.get_classid(),
+                            elt.name,
+                            elt.multiplicity,
+                            elt.roles)
                 if elt.type is "generalization"
                     class_parent = this.find_class_by_name(elt.parent)
                     classes_children = elt.classes.map(
