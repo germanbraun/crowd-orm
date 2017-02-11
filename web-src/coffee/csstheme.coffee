@@ -103,9 +103,15 @@ css_links =
         'stroke': '#000',
         'stroke-width': 2
 
+css_assoc_links =
+    '.connection' :
+        'stroke': '#000',
+        'stroke-width': 2
+        'stroke-dasharray': '5,5'
 
 exports = exports ? this
 exports.csstheme = {}
 exports.csstheme.css_class = css_class
 exports.csstheme.css_class_unsatisfiable = css_class_unsatisfiable
 exports.csstheme.css_links = css_links
+exports.csstheme.css_assoc_links = css_assoc_links
