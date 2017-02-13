@@ -22,3 +22,93 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+namespace Wicom\Translator\MetaStrategies;
+
+use function \load;
+load('metastrategy.php');
+load('meta2lang.php');
+load('objecttype.php', '../metamodel/');
+load('subsumption.php', '../metamodel/');
+load('relationship.php', '../metamodel/');
+load('objecttypecardinality.php', '../metamodel/');
+load('attribute.php', '../metamodel/');
+use Wicom\Translator\Metamodel\ObjectType;
+use Wicom\Translator\Metamodel\Relationship;
+use Wicom\Translator\Metamodel\Subsumption;
+use Wicom\Translator\Metamodel\Objecttypecardinality;
+use Wicom\Translator\Metamodel\Attribute;
+
+/*
+ JSON EER example for static entities
+
+ {
+ "entities" : [{"name" : "Phone"}, {"name" : "CellPhone"}, {"name" : "FixedPhone"}],
+ "links" : [],
+ }
+
+ */
+
+class Meta2EER extends Meta2Lang{
+
+	/**
+	 Translate a given JSON String representing an metamodel instance into a new JSON string of an EER class diagram.
+
+	 @param json JSON metamodel string
+	 @return a JSON EER string.
+
+	 @see Meta2Lang class for description about the JSON format.
+	 */
+
+
+	public $eer;
+
+	function __construct(){
+		$this->eer = ["entities" => [],
+				"links" => []
+				
+		];
+	}
+
+
+	function create_modelKF($json_str){
+		$json = json_decode($json_str, true);
+
+		print_r($json);
+
+		$this->identifyEntitiesEER($json);
+
+		 
+	}
+	
+	function identifyEntitiesEER($json){
+		$js_entities = $json["Object type"];
+		
+		 
+		foreach ($js_entities as $entity){
+			$name = $entitiy->$equivEEREntity($entity);
+			
+/*			$js_attr = $json["Attribute"];
+		
+			if (!empty($js_attr)){
+				foreach ($js_attr as $attr){
+					$attr_obj = new Attribute($class["name"],$attr["name"],$attr["datatype"]);
+					array_push($this->meta["Attribute"],$attr_obj->get_json_array());
+				}
+			}
+			else {*/
+				
+				array_push($this->eer["entities"],$name);
+			}
+		
+		}
+
+	
+	
+	
+	
+	
+	
+}
+
+?>

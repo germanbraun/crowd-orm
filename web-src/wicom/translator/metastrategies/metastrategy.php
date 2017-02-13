@@ -27,7 +27,7 @@ namespace Wicom\Translator\MetaStrategies;
    @see Metamodel translator class for description about the JSON format.
 */
 abstract class MetaStrategy{
-    function __construction(){
+    function __construct(){
         
     }
 

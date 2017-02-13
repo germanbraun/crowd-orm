@@ -7,7 +7,7 @@ Grupo de Investigación en Lenguajes e Inteligencia Artificial (GILIA) -
 Facultad de Informática
 Universidad Nacional del Comahue
 
-metamodel.php
+meta2eer.php
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -23,13 +23,33 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-namespace Wicom\Translator\Metamodel;
+namespace Wicom\Translator\MetaStrategies;
 
+/**
+ @see Metamodel translator class for description about the JSON format.
+ */
+abstract class Meta2Lang{
+	function __construct(){
 
-	abstract class Metamodel{
- 		function get_json_array(){	
- 			
- 		}
-	
 	}
+
+	/**
+	 Translate a given JSON String representing an metamodel instance into a new JSON string represeting a graphical
+	 language (ORM, UML, EER):
+
+	 (a) Fillottrani, Keet. Conceptual Model Interoperability: A Metamodel-driven Approach. 2014.
+	 (b) Fillottrani, Keet. KF metamodel formalization. 2014.
+
+	 @param json a JSON metamodel string
+	 @return a JSON string.
+
+	 @see Translator class for description about the JSON format.
+	 */
+
+	abstract function create_modelKF($json);
+	
+}
+
+
+
 ?>
