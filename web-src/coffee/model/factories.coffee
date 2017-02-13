@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 uml = joint.shapes.uml
+erd = joint.shapes.erd
 
 # *Abstract class.*
 #
@@ -155,9 +156,34 @@ class UMLFactory extends Factory
 
 # @todo ERDFactory is not yet implemented. This factory is beyond the scope for this prototype.
 class ERDFactory extends Factory
+    
     constructor: () ->
     
-    create_class: () ->
+    # @overload create_class(class_name, css_class=null)
+    #     @param [hash] css_class A CSS class definition in a
+    #     Javascript hash. See the JointJS documentation and demos.
+    # 
+    # @return [joint.shapes.erd.Entity] 
+    create_class: (class_name, css_class=null) ->
+        params =
+            position: {x: 20, y: 20}
+            size: {width: 100, height: 50}
+            name: class_name
+            attributes: []
+            methods: []
+            attrs:
+                '.uml-class-name-rect':
+                    fill: '#ffffff'
+                    stroke: '#000000'
+                '.uml-class-name-text':
+                    fill: '#000000'                    
+
+        if css_class?
+            params.attrs = css_class
+
+        newentity = new erd.Entity( params )
+            
+        return newentity
         
 
 # If exports doesn't exists, use "this".
