@@ -58,6 +58,7 @@ require_once('template.php');
 		insert_template("editclass");
 		insert_template("classoptions");
 		insert_template("relationoptions");
+		insert_template("isaoptions");
 		insert_template("trafficlight");
 		insert_template("insertowllink");
 		insert_template("importjson");
@@ -67,6 +68,7 @@ require_once('template.php');
 		<div id="editclass"></div>
 		<div id="classoptions"></div>
 		<div id="relationoptions"></div>
+		<div id="isaoptions"></div>
 		
  	    </div> <!-- /main ui-content -->
 
@@ -74,8 +76,7 @@ require_once('template.php');
 	
 	    <div data-role="footer">
 		<address>
-		    <a href="mailto:christian@Harmonia">Giménez, Christian</a>,
-		    10 feb 2016
+		    <a href="mailto:crowd@Harmonia">Facultad de Informática, Universidad Nacional del Comahue (Argentina)</a>
 		</address>
 		
 	    </div><!-- /footer -->

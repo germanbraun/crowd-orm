@@ -92,6 +92,18 @@ class MyModel
     to_json: () ->
         name: @name
 
+    # Simply update the coordinates of this object to its proper position.
+    # Useful when the object has other dependants, that should move accordingly
+    # to one or another.
+    #
+    # Consider it could be called when the user change the position of the
+    # JointJS Object or any associated MyModel/Joint object to update the
+    # position of this object accordingly to them. So, this is also an
+    # **event handler** .
+    # 
+    # Redefine this function if necessary.
+    update_position: () ->        
+
 
 # A Class from our model diagram.
 class Class extends MyModel 
@@ -102,6 +114,7 @@ class Class extends MyModel
         super(name)
         @joint = null
         @unsatisfiable = false
+        @on_change_objs = []
 
     get_name: () ->
         return @name
@@ -109,14 +122,12 @@ class Class extends MyModel
     set_name: (@name) ->
         if @joint != null
              @joint[0].set("name", @name)
-        
-        
+       
     get_attrs: () ->
         return @attrs
 
     get_methods: () ->
         return @methods
-
 
     # Set if this class is unsatisfiable. Changing its appearance if `csstheme`
     # is given.
@@ -139,10 +150,9 @@ class Class extends MyModel
             else
                 @joint[0].set('attrs', csstheme.css_class)
 
-    #
     # If the joint model wasn't created, make it.
-    #
-    # @param factory a Factory subclass instance.
+    # 
+    # @see MyModel#create_joint
     create_joint: (factory, csstheme = null) ->
         unless @joint?
             @joint = []
@@ -165,6 +175,44 @@ class Class extends MyModel
         if @joint?
             json.position = @joint[0].position()
         return json
+
+    # I attach myself and my event handlers into the joint model
+    # for answering myself whenever some important changes happens.
+    #
+    # If I have already attached, I don't attach again.
+    #
+    # This will attach for:
+    #
+    # - change:position : {Class#notify_change_position}
+    #
+    attach_my_event_handlers: () ->
+        if @joint?
+            unless @joint[0].mymodel_class?
+                @joint[0].mymodel_class = this
+                @joint[0].on('change:position', () ->
+                    @mymodel_class.notify_change_position(this);
+                )
+
+    # Attach an object for notifying whenever the class changes position.
+    #
+    # @param [MyModel] object has to answer to {MyModel#update_position}.
+    # @see #notify_change_position
+    # @see MyModel#update_position
+    attach_on_change_position: (object) ->
+        this.attach_my_event_handlers()
+
+        @on_change_objs.push(object)
+
+    # **Event handler** for notifying all objects attached that the position has been changed.
+    #
+    # It will call update_position() to all objects attached. 
+    #
+    # @param [joint.dia.Element] model The Joint element that has recieved the event.
+    # @see MyModel#update_position
+    notify_change_position: (model) ->
+        @on_change_objs.forEach( (obj, indx, arr) ->
+            obj.update_position()
+        )   
                
 
 # A Link between two classes or more classes.
@@ -175,9 +223,13 @@ class Link extends MyModel
     # @param classes {Array<Class>} An array of Class objects,
     #   the first class is the "from" and the second is the "to" class
     #   in a two-linked relation.
-    constructor: (@classes) ->
-        super(Link.get_new_name())
+    constructor: (@classes, name=null) ->
+        if name?
+            super(name)
+        else
+            super(Link.get_new_name())
         @mult = [null, null]
+        @roles = [null, null]
 
     # Set the multiplicity.
     #
@@ -188,6 +240,11 @@ class Link extends MyModel
     # @param [array] mult An array that describes the multiplicity in strings.
     set_mult : (@mult) ->
         this.change_to_null(m,i) for m,i in @mult
+
+    # Change the from and to roles.
+    #
+    # @param [array] roles An array with two strings, the from and to roles.
+    set_roles: (@roles) ->
 
     change_to_null : (mult, index) ->
         if (mult == "0..*") or (mult == "0..n")
@@ -234,10 +291,13 @@ class Link extends MyModel
             myclass.get_name()
         )
         json.multiplicity = @mult
+        json.roles = @roles
         json.type = "association"
 
         return json
 
+    #
+    # @see MyModel#create_joint
     create_joint: (factory, csstheme = null) ->        
         if @joint == null
             @joint = []
@@ -247,14 +307,16 @@ class Link extends MyModel
                     @classes[1].get_classid(),
                     @name,
                     csstheme.css_links,
-                    @mult))
+                    @mult,
+                    @roles))
             else
                 @joint.push(factory.create_association(
                     @classes[0].get_classid(),
                     @classes[1].get_classid(),
                     @name
                     null,
-                    @mult))
+                    @mult,
+                    @roles))
 
 Link.get_new_name = () ->
     if Link.name_number == undefined
@@ -279,7 +341,8 @@ class Generalization extends Link
             # If it was created before but now we have a new child.
             if factory != null then this.create_joint(factory, csstheme);
         return @joint
-        
+
+    # @see MyModel#create_joint
     create_joint: (factory, csstheme = null) ->
         if csstheme == null
             csstheme =
@@ -357,12 +420,113 @@ class Generalization extends Link
         return json
 
 
+# A link with association class.
+#
+# Also manage the association link, wich is the link that goes through the
+# middle of the link with to the association class; the association class, which
+# represent the association and is at the middle of the association link.
+#
+class LinkWithClass extends Link
+   
+    constructor: (@classes, name) ->
+        super(@classes, name)
+        @mult = [null,null]
+
+        @assoc_class = new Class(name)
+        @j_assoc_link = null
+        # Easy access to the assoc_class.get_joint().
+        @j_assoc_class = null
+
+    # As {Link#create_joint}, but it also creates the association link and class.
+    #
+    # Also, inherit the same parameters.
+    #
+    # @return [Array] A list of joint objects created by the factory given.
+    # @see MyModel#create_joint
+    create_joint: (factory, csstheme = null) ->
+        super(factory, csstheme)
+
+        # Easy access to the Joint of associated class.
+        #
+        # A better approach has to be used instead of this, but for now it should work.
+        # 
+        # @todo craete a Class subclass "AssociateClass" and delegate some methods instead of asking for the joint.
+        @j_assoc_class = @assoc_class.get_joint(factory, csstheme)[0]
+        
+        @j_assoc_link = factory.create_association_link(csstheme.css_assoc_links)
+        # @j_assoc_class = factory.create_association_class(@name, csstheme.css_class)
+
+        @joint.push(@j_assoc_link)
+        @joint.push(@j_assoc_class)
+
+        # It doesn't work. It is the scope of "this" or maybe another problem.
+        # @joint[0].on('change:attrs', this.update_position)
+        # @classes[0].get_joint()[0].on('change:position', this.update_position)
+        # @classes[1].get_joint()[0].on('change:position', this.update_position)
+        @classes[0].attach_on_change_position(this)
+        @classes[1].attach_on_change_position(this)
+
+    # Update position of the association link and association class
+    # according tot he target and source classes (it must be half a way).
+    update_position: () ->
+        if (@j_assoc_link?) and (@j_assoc_class?)
+            # For some misterious reason, you have to add some joint elements ids
+            # on source and target. If not it will not associate the link with the
+            # Element provided, instead it will still points to (10,10) coordinates.
+            #
+            # For this reason, we have to initialize with some ids that already
+            # has been loaded into the graph object.
+            @j_assoc_link.set('source',
+                id: @classes[0].get_joint()[0].id
+            )
+            @j_assoc_link.set('target',
+                id: @classes[1].get_joint()[0].id
+            )
+
+            # Now we can proceed asigning the source and target accordingly
+            # Calculate the middle of the association's line, translate the
+            # association class to that middle and a bit down.
+            # Finally, set it to the source of the dashed line. Its target is
+            # the association class.
+            target_pos = @classes[1].get_joint()[0].position()            
+            source_pos = @classes[0].get_joint()[0].position()
+            target_size = @classes[1].get_joint()[0].attributes.size
+            source_size = @classes[0].get_joint()[0].attributes.size
+            middlex = Math.abs(target_pos.x + source_pos.x + target_size.width/2 + source_size.width/2  ) / 2
+            middley = Math.abs(target_pos.y + source_pos.y + target_size.height/2 + source_size.height/2) / 2
+
+            @j_assoc_class.position(middlex, middley + 100)
+            @j_assoc_link.set('source',
+                x: middlex,
+                y: middley
+            )
+            @j_assoc_link.set('target',
+                id: @j_assoc_class.id
+            )
+
+    # Exports to JSON
+    #
+    # Also adds the key "associated_class" and add the JSON of the associated class.
+    # 
+    # @return [object] The JSON object.
+    # 
+    # @see MyModel#to_json
+    # @see Link#to_json
+    to_json: () ->
+        json = super()
+        json.associated_class = @assoc_class.to_json()
+
+        return json
+            
+    
+
 exports = exports ? this
        
 exports.MyModel = MyModel
 exports.Class = Class
 exports.Link = Link
 exports.Generalization = Generalization
+exports.LinkWithClass = LinkWithClass
 
 
 
