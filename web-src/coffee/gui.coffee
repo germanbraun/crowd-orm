@@ -21,7 +21,7 @@
 class GUI
     constructor: (@graph, @paper) ->
         @urlprefix = ""
-        @diag = new Diagram(@graph)
+        @diag = new UMLDiagram(@graph)
         @state = gui.state_inst.selection_state()
         @crearclase = new CreateClassView({el: $("#crearclase")});
         @editclass = new EditClassView({el: $("#editclass")})
@@ -45,8 +45,12 @@ class GUI
     set_urlprefix : (str) ->
         @urlprefix = str
 
-    ##
     # What to do when the user clicked on a cellView.
+    # 
+    # @param cellview [joint.dia.CellView] The cell view that recieves the click event.
+    # @param event [Event] The event object representation. {https://developer.mozilla.org/en-US/docs/Web/API/Event/Event}
+    # @param x [int] Where's the X coordinate position where the mouse has clicked.
+    # @param y [int] Where's the Y coordinate position where the mouse has clicked.
     on_cell_clicked: (cellview, event, x, y) ->
         @state.on_cell_clicked(cellview, event, x, y, this)
 
@@ -114,8 +118,17 @@ class GUI
     # @param class_b_id {string}
     # @param name {string} optional. The association name.
     # @param mult {array} optional. An array of two string with the cardinality from class and to class b.
-    add_association: (class_a_id, class_b_id, name=null, mult=null) ->
-        @diag.add_association(class_a_id, class_b_id, name, mult)
+    add_association: (class_a_id, class_b_id, name=null, mult=null, roles=null) ->
+        @diag.add_association(class_a_id, class_b_id, name, mult, roles)
+        this.set_selection_state()
+
+    # Idem a {GUI#add_association} but includes an association class.
+    #
+    # Some parameters are not optional.
+    #
+    # @see #add_association.
+    add_association_class: (class_a_id, class_b_id, name, mult=null, roles=null) ->
+        @diag.add_association_class(class_a_id, class_b_id, name, mult, roles)
         this.set_selection_state()
 
     # Add a Generalization link and then set the selection state.
@@ -259,10 +272,17 @@ class GUI
     # @param class_id {string} The id of the class that triggered it and thus,
     #   the starting class of the association.
     # @param mult {array} An array of two strings representing the cardinality from and to.
-    set_association_state: (class_id, mult) ->
+    # @param name [String] A string describing the name of the relation.
+    # @param with_class [boolean] If true, this is an association with class.
+    set_association_state: (class_id, mult, roles,  name=null, with_class=false) ->
         @state = gui.state_inst.association_state()
         @state.set_cellStarter(class_id)
         @state.set_cardinality(mult)
+        @state.set_roles(roles)
+        @state.set_name(name)
+        # set_with_class needs a name,
+        # if name=null it will set it to false nevertheless
+        @state.set_with_class(with_class)
 
     # Change to the IsA GUI State so the user can select the child for the parent.
     #

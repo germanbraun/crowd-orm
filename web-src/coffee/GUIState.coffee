@@ -65,15 +65,68 @@ class AssociationState extends State
     constructor: () ->
         @cell_starter = null
         @mult = null
+        @with_class = false
+        @name = null
+        @roles = null
+
+    # Reset the state restoring its default values.
+    reset: () ->
+        @cell_starter = null
+        @with_class = false
+        @name = null
 
     set_cellStarter: (@cell_starter) ->
 
+    # Set the association's multiplicity that the user gave.
+    # 
+    # @param mult [Array] An array with two strings. 
     set_mult: (@mult) ->
+        
+    # Set the association's roles that the user gave.
+    # 
+    # @param roles [Array] An array with two strings.
+    set_roles: (@roles) ->
     set_cardinality: (@mult) ->
+    set_name: (@name) ->
 
+    # Create an association with class? 
+    #
+    # By default is false. Set to true if you have setted the name before.
+    #
+    # @param with_class [boolean] True if an association with class is needed.
+    # @see #enable_with_class
+    set_with_class: (with_class) ->
+        if @name?
+            @with_class = with_class
+        else
+            @with_class = false
+    # Ensure to create an association with class.
+    #
+    # `associationstate.enable_with_class("a name")` is the same as:
+    # 
+    # @example Same as
+    #   associationstate.set_name("a name")
+    #   associationstate.set_with_class(true)
+    #
+    # @param name [String] The name for the association class.
+    # @see #set_with_class
+    enable_with_class: (@name) ->
+        @with_class = true
+
+    # What to do when the user clicks on another cell.
+    #
+    # @param cell_view [joint.dia.CellView] The cell view that recieves the click event.
+    # @param event [Event] The event object representation. {https://developer.mozilla.org/en-US/docs/Web/API/Event/Event}
+    # @param x [int] Where's the X coordinate position where the mouse has clicked.
+    # @param y [int] Where's the Y coordinate position where the mouse has clicked.
+    # @param gui [GUI] A the current GUI instance.
     on_cell_clicked: (cell_view, event, x, y, gui) ->
-        gui.add_association(@cell_starter, cell_view.model.id, null, @mult)
-        @cell_starter = null
+        if @with_class
+            gui.add_association_class(@cell_starter, cell_view.model.id, @name, @mult, @roles)
+        else
+            gui.add_association(@cell_starter, cell_view.model.id, @name, @mult, @roles)
+
+        this.reset()
 
 
 # IsA state, the user can select another class for
