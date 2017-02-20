@@ -58,18 +58,27 @@ load('entitytype.php');
 		 * Generate ORM entity types from metamodel object types
 		 */
 		
-		function equivORMEntityType($objtype){
-			return ["name" => $objtype["name"]]; 
+		function equivORMEntityType(){
+			return ["name" => $this->objectTypeName]; 
 			
 		}
 		
 		/**
-		 * Generate EER entity types from metamodel object types
+		 * Generate EER entity from metamodel object types
 		 */
 		
-		function equivEEREntity($objtype){
-			return $objtype;
+		function equivEEREntity(){
+			return ["name" => $this->objectTypeName, "attrs" => []];
 				
+		}
+		
+		/**
+		 * Generate UML classes from metamodel object types
+		 */
+		
+		function equivUMLClass(){
+			return ["name" => $this->objectTypeName, "attrs" => [], "methods" => []];
+		
 		}
 
 

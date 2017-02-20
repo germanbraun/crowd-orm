@@ -57,10 +57,23 @@ load('attributeproperty.php');
 		}
 		
 		
-		function transformationORM($metajson){
-		
-		
+		function equivEERAttr(){
+			return ["name" => $this->objectAttrName];
+			
 		}
+		
+		
+		function transformationORMAttr(){
+			return [["value type name" => $this->objectAttrName, "datatype" => $this->objAttrDataType],
+					["name" => $this->objClassAttr . $this->objectAttrName, 
+					 "entity type" => [$this->objClassAttr,$this->objectAttrName],
+					 "multiplicity" => ["0..*","1..*"],
+					 "type" => "binary predicate"
+					]
+			];
+		}
+			
+
 
 	}
 

@@ -43,7 +43,9 @@ use Wicom\Translator\Metamodel\Attribute;
  JSON EER example for static entities
 
  {
- "entities" : [{"name" : "Phone"}, {"name" : "CellPhone"}, {"name" : "FixedPhone"}],
+ "entities" : [{"name" : "Phone", "attrs":[]}, 
+ 			   {"name" : "CellPhone", "attrs":[]}, 
+ 			   {"name" : "FixedPhone", "attrs":[]}],
  "links" : [],
  }
 
@@ -81,28 +83,58 @@ class Meta2EER extends Meta2Lang{
 		 
 	}
 	
+	
+	private function getEntityNamefromAttr($js_attr,$entity){
+		$attrforentity = []; 
+		
+		foreach ($js_attr as $attr){
+			if ($attr["class name"] == $entity["name"]){
+				array_push($attrforentity,$attr);
+			}
+		}
+		return $attrforentity;
+	}
+	
 	function identifyEntitiesEER($json){
 		$js_entities = $json["Object type"];
+		$js_attr = $json["Attribute"];
 		
-		 
-		foreach ($js_entities as $entity){
-			$name = $entitiy->$equivEEREntity($entity);
+		
+		if (!empty($js_attr)){
 			
-/*			$js_attr = $json["Attribute"];
-		
-			if (!empty($js_attr)){
-				foreach ($js_attr as $attr){
-					$attr_obj = new Attribute($class["name"],$attr["name"],$attr["datatype"]);
-					array_push($this->meta["Attribute"],$attr_obj->get_json_array());
+			foreach ($js_entities as $entity){
+				$entity_obj = new ObjectType($entity["name"]);
+				$eerentity = $entity_obj->equivEEREntity();
+				$attr = $this->getEntityNamefromAttr($js_attr,$entity);
+				
+				if (!empty($attr)){
+					foreach ($attr as $attr2){
+						$attr_obj = new Attribute($attr2["class name"],$attr2["attribute name"],$attr2["datatype"]);
+						$attr_eer = $attr_obj->equivEERAttr();
+						array_push($eerentity["attrs"],$attr_eer);
+					}
+					array_push($this->eer["entities"],$eerentity);
+				}
+				else {
+					array_push($this->eer["entities"],$eerentity);
 				}
 			}
-			else {*/
-				
-				array_push($this->eer["entities"],$name);
-			}
-		
 		}
+		else {
+				foreach ($js_entities as $entity){
+					$entity_obj = new ObjectType($entity["name"]);
+					$eerentity = $entity_obj->equivEEREntity($entity);
+					array_push($this->eer["entities"],$eerentity);
+				}
+		}
+		
+	}
 
+	
+	function get_json(){
+		return json_encode($this->eer,true);
+		 
+	}
 	
 	
 	

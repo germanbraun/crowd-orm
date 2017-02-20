@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 # gui.coffee --
 # Copyright (C) 2016 Giménez, Christian
 
@@ -391,5 +389,3 @@ exports.gui.show_error = (jqXHR, status, text) ->
     exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
 
 exports.gui.GUI = GUI
-
->>>>>>> master

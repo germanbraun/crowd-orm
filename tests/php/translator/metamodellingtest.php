@@ -27,9 +27,12 @@ require_once("common.php");
 
 // use function \load;
 load("umlmeta.php", "wicom/translator/metastrategies/");
+load("meta2eer.php", "wicom/translator/metastrategies/");
+load("meta2orm.php", "wicom/translator/metastrategies/");
 
 use Wicom\Translator\Metastrategies\UMLMeta;
-
+use Wicom\Translator\Metastrategies\Meta2ORM;
+use Wicom\Translator\Metastrategies\Meta2EER;
 
 
 
@@ -208,7 +211,8 @@ EOT;
 	}
 	
 	
-	##
+	## ORM
+	
 	# Test translation from metamodel object types to ORM entity types.
 	public function testMetamodelObjectType2ORM(){
 		$json = <<< EOT
@@ -226,20 +230,21 @@ EOT;
 
 		$expected = <<< EOT
 {
-"entity type" : [{"name" : "PhoneCall"},
-			     {"name" : "Phone"},
-				 {"name" : "CellPhone"},
-		         {"name" : "FixedPhone"}],
+"entity types" : [{"name" : "PhoneCall"},
+			      {"name" : "Phone"},
+				  {"name" : "CellPhone"},
+		          {"name" : "FixedPhone"}],
+"value types" : [],
 "links" : []
 }
 EOT;
 		
-		$strategy = new UMLMeta();
-		$strategy->create_metamodel($json);
-		print_r($strategy->meta);
+		$strategy = new Meta2ORM();
+		$strategy->create_modelKF($json);
+		print_r($strategy->orm);
 		$this->assertJsonStringEqualsJsonString($expected, $strategy->get_json(),true);
 		
-		}
+	}
 		
 	##
 	# Test translation from metamodel object types and attributes to ORM entity types and data types.
@@ -259,25 +264,36 @@ EOT;
 
 		$expected = <<< EOT
 {
-"entity type" : [{"name" : "PhoneCall"},
-			     {"name" : "Phone"}],
-"value type" : [{"entity name" : "PhoneCall", "value type name" : "date", "datatype" : "String"},
-				{"entity name" : "Phone", "value type name" : "location", "datatype" : "String"},
-				{"entity name" : "Phone", "value type name" : "owner", "datatype" : "String"}],
-"links" : [{"name" : "has",
+"entity types" : [{"name" : "PhoneCall"},
+			      {"name" : "Phone"}],
+"value types" :  [{"value type name" : "date", "datatype" : "String"},
+				  {"value type name" : "location", "datatype" : "String"},
+				  {"value type name" : "owner", "datatype" : "String"}],
+"links" : [{"name" : "PhoneCalldate",
 			"entity type" : ["PhoneCall", "date"],
 			"multiplicity" : ["0..*","1..*"],
 			"type" : "binary predicate"
-			}]
+		   },
+		   {"name" : "Phonelocation",
+			"entity type" : ["Phone", "location"],
+			"multiplicity" : ["0..*","1..*"],
+			"type" : "binary predicate"
+		   },
+		   {"name" : "Phoneowner",
+			"entity type" : ["Phone", "owner"],
+			"multiplicity" : ["0..*","1..*"],
+			"type" : "binary predicate"
+		   }	
+		  ]
 }
 EOT;
 		
-			$strategy = new UMLMeta();
-			$strategy->create_metamodel($json);
-			print_r($strategy->meta);
+			$strategy = new Meta2ORM();
+			$strategy->create_modelKF($json);
+			print_r($strategy->orm);
 			$this->assertJsonStringEqualsJsonString($expected, $strategy->get_json(),true);
 		
-		}
+	}
 	
 		
 	##
@@ -309,11 +325,82 @@ EOT;
 }
 EOT;
 		
-		$strategy = new UMLMeta();
-		$strategy->create_metamodel($json);
-		print_r($strategy->meta);
+		$strategy = new Meta2ORM();
+		$strategy->create_modelKF($json);
+		print_r($strategy->orm);
 		$this->assertJsonStringEqualsJsonString($expected, $strategy->get_json(),true);
 		
-		}
+	}
+		
+		
+	## ERD
+	
+	# Test translation from metamodel object types to EER entities.
+		public function testMetamodelObjectType2EER(){
+			$json = <<< EOT
+{
+"Object type": [{"name":"PhoneCall"},
+		    	{"name":"Phone"},
+				{"name":"CellPhone"},
+				{"name":"FixedPhone"}],
+"Subsumption" : [],
+"Association" : [],
+"Object type cardinality" : [],
+"Attribute"   : []
+}
+EOT;
+		
+			$expected = <<< EOT
+{
+"entities" : [{"name" : "PhoneCall", "attrs" : []},
+			  {"name" : "Phone", "attrs" : []},
+			  {"name" : "CellPhone", "attrs" : []},
+		      {"name" : "FixedPhone", "attrs" : []}],
+"links" : []
+}
+EOT;
+		
+			$strategy = new Meta2EER();
+			$strategy->create_modelKF($json);
+			print_r($strategy->eer);
+			$this->assertJsonStringEqualsJsonString($expected, $strategy->get_json(),true);
+		
+	}
+
+	
+	##
+	# Test translation from metamodel object types to EER entities with attributes.
+	public function testMetamodelObjectType2EERwithAttrs(){
+		$json = <<< EOT
+{
+"Object type": [{"name":"PhoneCall"},
+		    	{"name":"Phone"},
+				{"name":"CellPhone"},
+				{"name":"FixedPhone"}],
+"Subsumption" : [],
+"Association" : [],
+"Object type cardinality" : [],
+"Attribute"   : [{"class name" : "Phone", "attribute name" : "location", "datatype" : "String"},
+				 {"class name" : "Phone", "attribute name" : "owner", "datatype" : "String"},
+				 {"class name" : "PhoneCall", "attribute name" : "date", "datatype" : "String"}]
+}
+EOT;
+	
+		$expected = <<< EOT
+{
+"entities" : [{"name" : "PhoneCall", "attrs" : [{"name" : "date"}]},
+			  {"name" : "Phone", "attrs" : [{"name" : "location"}, {"name" : "owner"}]},
+			  {"name" : "CellPhone", "attrs" : []},
+		      {"name" : "FixedPhone", "attrs" : []}],
+"links" : []
+}
+EOT;
+	
+		$strategy = new Meta2EER();
+		$strategy->create_modelKF($json);
+		print_r($strategy->eer);
+		$this->assertJsonStringEqualsJsonString($expected, $strategy->get_json(),true);
+	
+	}
 	
 }

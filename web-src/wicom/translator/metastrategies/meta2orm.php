@@ -42,10 +42,10 @@ use Wicom\Translator\Metamodel\Attribute;
 
 
 /*
- JSON EER example for static entities
+ JSON ORM example for static entities
 
  {
- "entities" : [{"name" : "Phone"}, {"name" : "CellPhone"}, {"name" : "FixedPhone"}],
+ "entity types" : [{"name" : "Phone"}, {"name" : "CellPhone"}, {"name" : "FixedPhone"}],
  "links" : [],
  }
 
@@ -63,11 +63,12 @@ class Meta2ORM extends Meta2Lang{
 	 */
 
 
-	public $eer;
+	public $orm;
 
 	function __construct(){
-		$this->eer = ["entities type" => [],
-				"links" => []
+		$this->orm = ["entity types" => [],
+				      "value types" => [], 
+					  "links" => []
 
 		];
 	}
@@ -79,29 +80,58 @@ class Meta2ORM extends Meta2Lang{
 	
 		$this->identifyEntitiesORM($json);
 	
-			
+	}
+	
+	private function getEntityNamefromAttr($js_attr,$entity){
+		$attrforentity = [];
+	
+		foreach ($js_attr as $attr){
+			if ($attr["class name"] == $entity["name"]){
+				array_push($attrforentity,$attr);
+			}
+		}
+		return $attrforentity;
 	}
 	
 	function identifyEntitiesORM($json){
 		$js_entities = $json["Object type"];
-	
-			
-		foreach ($js_entities as $entity){
-			$name = $entitiy->$equivORMEntity($entity);
+		$js_attr = $json["Attribute"];
+		
+		if (!empty($js_attr)){
 				
-			/*			$js_attr = $json["Attribute"];
-	
-			if (!empty($js_attr)){
-			foreach ($js_attr as $attr){
-			$attr_obj = new Attribute($class["name"],$attr["name"],$attr["datatype"]);
-			array_push($this->meta["Attribute"],$attr_obj->get_json_array());
+			foreach ($js_entities as $entity){
+				$entity_obj = new ObjectType($entity["name"]);
+				$ormentity = $entity_obj->equivORMEntityType();
+				$attr = $this->getEntityNamefromAttr($js_attr,$entity);
+		
+				if (!empty($attr)){
+					foreach ($attr as $attr2){
+						$attr_obj = new Attribute($attr2["class name"],$attr2["attribute name"],$attr2["datatype"]);
+						$attr_orm = $attr_obj->transformationORMAttr();
+						array_push($this->orm["value types"],$attr_orm[0]);
+						array_push($this->orm["links"],$attr_orm[1]);
+
+					}
+					array_push($this->orm["entity types"],$ormentity);
+				}
+				else {
+					array_push($this->orm["entity types"],$ormentity);
+				}
 			}
-			}
-			else {*/
-	
-			array_push($this->orm["entities"],$name);
 		}
+		else {
+			foreach ($js_entities as $entity){
+				$entity_obj = new ObjectType($entity["name"]);
+				$ormentity = $entity_obj->equivORMEntityType();
+				array_push($this->orm["entity types"],$ormentity);
+			 }
+		}
+			
+	}
 	
+	function get_json(){
+		return json_encode($this->orm,true);
+			
 	}
 	
 
