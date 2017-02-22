@@ -55,6 +55,13 @@ load('relationship.php');
 			$this->childrenSub = $children;
 			
 		}
+		
+		function equivORMSubsumption(){
+			return ["entity type" => $this->childrenSub, "multiplicity" => null, "name" => $this->objectSubName,
+					"type" => "subtype", "parent" => $this->parentSub, "constraint" => []
+			];
+			
+		}
 
 		function get_json_array(){
 				return ["name" => $this->objectSubName,

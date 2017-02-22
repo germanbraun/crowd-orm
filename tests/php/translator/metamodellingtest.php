@@ -313,12 +313,13 @@ EOT;
 EOT;
 		$expected = <<< EOT
 {
-"entity type" : [{"name" : "Phone"},
+"entity types" : [{"name" : "Phone"},
 			     {"name" : "CellPhone"}],
+"value types" : [],
 "links" : [{"entity type" : ["CellPhone"],
 			"multiplicity" : null,
 			"name" : "r1",
-			"type" : "subtype",
+			"type" : "subtype",   
 			"parent" : "Phone",
 			"constraint" : []
 		   }]
