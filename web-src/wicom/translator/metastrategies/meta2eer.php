@@ -129,7 +129,6 @@ class Meta2EER extends Meta2Lang{
 		}
 		
 	}
-	
 
 	
 	function get_json(){

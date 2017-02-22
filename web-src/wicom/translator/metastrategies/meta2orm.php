@@ -46,7 +46,6 @@ use Wicom\Translator\Metamodel\Attribute;
 
  {
  "entity types" : [{"name" : "Phone"}, {"name" : "CellPhone"}, {"name" : "FixedPhone"}],
- "value types" : [],
  "links" : [],
  }
 
@@ -80,7 +79,6 @@ class Meta2ORM extends Meta2Lang{
 		print_r($json);
 	
 		$this->identifyEntitiesORM($json);
-		$this->identifySubsumption($json);
 	
 	}
 	
@@ -129,18 +127,6 @@ class Meta2ORM extends Meta2Lang{
 			 }
 		}
 			
-	}
-	
-	function identifySubsumption($json){
-		$js_sub = $json["Subsumption"];
-		
-		foreach ($js_sub as $sub){
-			$sub_obj = new Subsumption($sub["name"],$sub["parent"],$sub["children"]);
-			$sub_orm = $sub_obj->equivORMSubsumption();
-			array_push($this->orm["links"],$sub_orm);
-			
-		}
-		
 	}
 	
 	function get_json(){
