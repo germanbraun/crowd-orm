@@ -1,4 +1,4 @@
-# gui.coffee --
+# guiuml.coffee --
 # Copyright (C) 2016 Giménez, Christian
 
 # This program is free software: you can redistribute it and/or modify
@@ -18,10 +18,10 @@
 #
 # Central GUI *do-it-all* class...
 #
-class GUI
-    constructor: (@graph, @paper) ->
+class GUIUML extends GUIIMPL
+    constructor: (@graph,@paper) ->
         @urlprefix = ""
-        @diag = new Diagram(@graph)
+        @diag = new UMLDiagram(@graph)
         @state = gui.state_inst.selection_state()
         @crearclase = new CreateClassView({el: $("#crearclase")});
         @editclass = new EditClassView({el: $("#editclass")})
@@ -75,8 +75,12 @@ class GUI
     # @param hash_data {Hash} data information for creating the Class. Use `name`, `attribs` and `methods` keys.
     # @see Class
     # @see Diagram#add_class
-    add_class: (hash_data) ->
-        @diag.add_class(hash_data)
+    
+    create_object_type: (hash_data) ->
+		@diag.add_class(hash_data)
+		 	
+#    add_class: (hash_data) ->
+#        @diag.add_class(hash_data)
 
     #
     # Delete a class from the diagram.
@@ -368,5 +372,5 @@ exports.gui.update_translation = (data) ->
 exports.gui.show_error = (jqXHR, status, text) ->
     exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
 
-exports.gui.GUI = GUI
+exports.gui.GUIUML = GUIUML
 

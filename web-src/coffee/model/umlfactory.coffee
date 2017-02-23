@@ -1,4 +1,4 @@
-# factories.coffee --
+# umlfactory.coffee --
 # Copyright (C) 2016 Giménez, Christian
 
 # This program is free software: you can redistribute it and/or modify
@@ -163,26 +163,20 @@ class UMLFactory extends Factory
     create_association_class: (class_name, css_class = null) ->
         return this.create_class(class_name, css_class)
 
-    # Create an association link only (the one dashed one that appears between
+
+	# Create an association link only (the one dashed one that appears between
     # the UML association and the UML association class).
     #
     # @return [joint.dia.Link] a Joint Link object.
-    create_association_link: (css_assoc_links = {"stroke-dasharray": "5,5"}) ->
-        # For some misterious reason, you have to add some joint elements ids
-        # on source and target. If not it will not associate the link with the
-        # Element provided, instead it will still points to (10,10) coordinates.
-        
+	create_association_link(css_assoc_links) ->
 		link = new joint.dia.Link(
-            source: {x: 10, y: 10},
-            target: {x: 100, y: 100},
-            attrs: css_assoc_links
+			source: {x: 10, y: 10},
+			target: {x: 100, y: 100},
+			attrs: css_assoc_links
         )
-
-        return link
-
+		return link
 
 
-# If exports doesn't exists, use "this".
 
 exports = exports ? this
 exports.UMLFactory = UMLFactory

@@ -403,4 +403,4 @@ class ERDiagram extends Diagram
         
 exports = exports ? this
 
-exports.UMLDiagram = UMLDiagram
+exports.ERDiagram = ERDiagram

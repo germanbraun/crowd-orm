@@ -237,7 +237,6 @@ class ERDFactory extends Factory
         
 
 # If exports doesn't exists, use "this".
-}
 exports = exports ? this
 
 exports.Factory = Factory

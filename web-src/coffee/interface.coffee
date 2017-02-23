@@ -22,12 +22,12 @@
 
 window.onload = () ->
     # Un poco de aliasing para acortar el código.
-    uml = joint.shapes.uml;
+#    uml = joint.shapes.uml;
 
     graph = new joint.dia.Graph
     paper = new joint.dia.Paper(
         el: $('#container')
-        width: 1000
+        width: 2000
         height: 1000
         model: graph
         gridSize: 1
@@ -62,6 +62,6 @@ window.onload = () ->
     exports.guiinst = guiinst
 
     # Create a first example class
-    newclass = new Class("Class", [], [])
-    guiinst.add_class(newclass)
+#    newclass = new Class("Class", [], [])
+#    guiinst.add_class(newclass)
 
