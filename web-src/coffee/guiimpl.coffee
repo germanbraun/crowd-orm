@@ -20,7 +20,7 @@
 #
 class GUIIMPL
     constructor: (@graph,@paper) ->
-
+    	gui.set_current_instance(this);
 
     set_urlprefix : (str) ->
         
@@ -48,6 +48,7 @@ class GUIIMPL
     # @param hash_data {Hash} data information for creating the Class. Use `name`, `attribs` and `methods` keys.
     # @see Class
     # @see Diagram#add_class
+    
     add_class: (hash_data) ->
       
 
@@ -238,14 +239,14 @@ class GUIIMPL
     reset_all: () ->
 
 
-#exports = exports ? this
+exports = exports ? this
 
-#if exports.gui == undefined
-#    exports.gui = {}
+if exports.gui == undefined
+    exports.gui = {}
 
-#exports.gui.gui_instance = null
-#exports.gui.set_current_instance = (gui_instance) ->
-#    exports.gui.gui_instance = gui_instance
+exports.gui.gui_instance = null
+exports.gui.set_current_instance = (gui_instance) ->
+    exports.gui.gui_instance = gui_instance
 
     
 
@@ -265,6 +266,7 @@ class GUIIMPL
 #    exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
 
 exports = exports ? this
-
 exports.gui.GUIIMPL = GUIIMPL
+#exports.gui.guiuml.GUIUML = GUIUML
+#exports.gui.guieer.GUIEER = GUIEER
 

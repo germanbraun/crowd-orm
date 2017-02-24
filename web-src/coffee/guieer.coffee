@@ -76,7 +76,7 @@ class GUIEER extends GUIIMPL
     # @see Class
     # @see Diagram#add_class
     add_class: (hash_data) ->
-        @diag.add_class(hash_data)
+    	@diag.add_class(hash_data)
 
     #
     # Delete a class from the diagram.

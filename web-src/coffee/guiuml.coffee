@@ -76,11 +76,8 @@ class GUIUML extends GUIIMPL
     # @see Class
     # @see Diagram#add_class
     
-    create_object_type: (hash_data) ->
-		@diag.add_class(hash_data)
-		 	
-#    add_class: (hash_data) ->
-#        @diag.add_class(hash_data)
+    add_class: (hash_data) ->
+    	@diag.add_class(hash_data)
 
     #
     # Delete a class from the diagram.
@@ -372,5 +369,6 @@ exports.gui.update_translation = (data) ->
 exports.gui.show_error = (jqXHR, status, text) ->
     exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
 
+exports = exports ? this
 exports.gui.GUIUML = GUIUML
 

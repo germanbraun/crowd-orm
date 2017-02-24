@@ -35,7 +35,7 @@ window.onload = () ->
 
     guiinst = new gui.GUI(graph, paper)
     gui.set_current_instance(guiinst)
-
+ 
     # Interface
     
     # Events for the Paper
@@ -62,6 +62,9 @@ window.onload = () ->
     exports.guiinst = guiinst
 
     # Create a first example class
-#    newclass = new Class("Class", [], [])
-#    guiinst.add_class(newclass)
+    newclass = new Class("Classssssss", [], [])
+    console.log(newclass)
+    guiinst.current_gui.add_class(newclass)
+    guiinst.current_gui.traffic_light_green()
+
 

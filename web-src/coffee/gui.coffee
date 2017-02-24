@@ -15,33 +15,21 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # @namespace gui
-#
-# Central GUI *do-it-all* class...
-#
+## Central GUI *do-it-all* class...
 class GUI
-    constructor: (@graph, @paper) ->
-    	@diag = new GUIUML(@graph,@paper)
-    	@state = gui.state_inst.selection_state(this)
+	constructor: (@graph, @paper) ->
+		@current_gui = new GUIUML(@graph,@paper)
+		gui.set_current_instance(this)
 
-	change_state_eer: (@graph,@paper) ->
-		@current_state = new GUIEER(@graph,@paper)
-		@state = gui.set_current_instance(this)
-		
-    # Change the interface into a "selection" state.
-#    set_selection_state: () ->
-#        @state = gui.state_inst.selection_state()
-
-	create_object_type() ->
-
+	add_class: () ->
 
 exports = exports ? this
-
 if exports.gui == undefined
-    exports.gui = {}
-
+		exports.gui = {}
+		
 exports.gui.gui_instance = null
 exports.gui.set_current_instance = (gui_instance) ->
-    exports.gui.gui_instance = gui_instance
-
+		exports.gui.gui_instance = gui_instance
 
 exports.gui.GUI = GUI
+	
