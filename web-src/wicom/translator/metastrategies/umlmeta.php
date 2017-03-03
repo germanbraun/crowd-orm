@@ -96,7 +96,7 @@ class UMLMeta extends MetaStrategy{
     function create_metamodel($json_str){
         $json = json_decode($json_str, true);
         
-        print_r($json);
+ //       print_r($json);
 
         $this->identifyClasses($json);
         $this->identifySubsumption($json);

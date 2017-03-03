@@ -19,9 +19,21 @@
 class GUI
 	constructor: (@graph, @paper) ->
 		@current_gui = new GUIUML(@graph,@paper)
+		@prev_gui = new GUIEER(@graph,@paper)
 		gui.set_current_instance(this)
+		gui.set_current_gui(this.current_gui)
 
-	add_class: () ->
+	to_erd: () ->
+
+	to_metamodel: () ->
+
+	update_metamodel: () ->
+
+	translate_owllink: () ->
+
+	update_translation: () ->
+
+	add_object_type: () ->
 
 exports = exports ? this
 if exports.gui == undefined
@@ -30,6 +42,9 @@ if exports.gui == undefined
 exports.gui.gui_instance = null
 exports.gui.set_current_instance = (gui_instance) ->
 		exports.gui.gui_instance = gui_instance
+
+exports.gui.set_current_gui = (gui_instance) ->
+		exports.gui.current_gui = gui_instance.current_gui 
 
 exports.gui.GUI = GUI
 	

@@ -38,6 +38,31 @@ use Wicom\Translator\Metastrategies\Meta2EER;
 
 class MetamodellingTest extends PHPUnit_Framework_TestCase
 {
+	
+	##
+	# Test if we can generate the metamodel equivalent to the given UML diagram with classes and subsumptions
+	public function testUMLClass(){
+		$json = <<< EOT
+{"classes":[{"name":"Classssssss","attrs":[],"methods":[],"position":{"x":20,"y":20}}],"links":[]}
+EOT;
+	
+		$expected = <<< EOT
+{
+"Object type" : [{"name" : "Classssssss"}],
+"Subsumption" : [],
+"Association" : [],
+"Object type cardinality" : [],
+"Attribute" : []
+}
+EOT;
+	
+		$strategy = new UMLMeta();
+		$strategy->create_metamodel($json);
+		print_r($strategy->meta);
+		$this->assertJsonStringEqualsJsonString($expected, $strategy->get_json(),true);
+	
+	}
+	
 
 	##
 	# Test if we can generate the metamodel equivalent to the given UML diagram with classes and subsumptions

@@ -5,7 +5,7 @@
    
    Author: GILIA
 
-   crowd.php
+   metamodel.php
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -41,46 +41,28 @@ require_once '../../common/import_functions.php';
 load('translator.php', '../../wicom/translator/');
 load('owllinkdocument.php', '../../wicom/translator/documents/');
 load('crowd_uml.php','../../wicom/translator/strategies/');
+load('umlmeta.php','../../wicom/translator/metastrategies/');
+load('metastrategy.php','../../wicom/translator/metastrategies/');
 load('owllinkbuilder.php', '../../wicom/translator/builders/');
-load('htmlbuilder.php', '../../wicom/translator/builders/');
+
 
 use Wicom\Translator\Translator;
-use Wicom\Translator\Strategies\UMLcrowd;
+use Wicom\Translator\MetaStrategies\MetaStrategy;
+use Wicom\Translator\MetaStrategies\UMLMeta;
 use Wicom\Translator\Builders\OWLlinkBuilder;
-use Wicom\Translator\Builders\HTMLBuilder;
-
-$format = 'owllinkCROWD';
-if (array_key_exists('format',$_REQUEST)){
-    $format = $_REQUEST['format'];
-    console.log($format);
-}
 
 if ( ! array_key_exists('json', $_POST)){
-    echo "
+	echo "
 There's no \"json\" parameter :-(
 Use, for example:
 
-    curl -d 'json={\"classes\": [{\"attrs\":[], \"methods\":[], \"name\": \"Hi World\"}]}' http://host.com/translator/crowd.php";
+    curl -d 'json={\"classes\": [{\"attrs\":[], \"methods\":[], \"name\": \"Hi World\"}]}' http://host/translator/metamodel.php";
 }else{
-    $builder = null;
-
-    console.log($format);
-    
-    switch ($format){
-    case "owllinkCROWD" :
-        $builder = new OWLlinkBuilder();
-        break;
-    case "html" :
-        $builder = new HTMLBuilder();
-        break;
-    default: console.log($format);
-        die("Format not recognized");
-    }
-
-    $trans = new Translator(new UMLcrowd(), $builder);
-    $res = $trans->to_owllink($_POST['json']);
-    print_r($res);
+     
+    $strategy = new UMLMeta();
+    $strategy->create_metamodel($_POST['json']);
+    $res = $strategy->get_json();
+	print_r($res);
 }
 
 ?>
-

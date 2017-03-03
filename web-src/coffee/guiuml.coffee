@@ -19,7 +19,7 @@
 # Central GUI *do-it-all* class...
 #
 class GUIUML extends GUIIMPL
-    constructor: (@graph,@paper) ->
+	constructor: (@graph,@paper) ->
         @urlprefix = ""
         @diag = new UMLDiagram(@graph)
         @state = gui.state_inst.selection_state()
@@ -33,15 +33,37 @@ class GUIUML extends GUIIMPL
         @errorwidget = new ErrorWidgetView({el: $("#errorwidget_placer")})
         @importjsonwidget = new ImportJSONView({el: $("#importjsonwidget_placer")})
         @exportjsonwidget = new ExportJSONView({el: $("#exportjson_placer")})
+        @meta2erd = new CreateERDView({el: $("#crearclase")})
+        @meta2orm = new CreateORMView({el: $("#crearclase")})
         
         @serverconn = new ServerConnection( (jqXHR, status, text) ->
-            exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
+            exports.gui.current_gui.show_error(status + ": " + text , jqXHR.responseText)
         )
                 
         $("#diagram-page").enhanceWithin()
         $("#details-page").enhanceWithin()
         gui.set_current_instance(this);
 
+
+#	switch_gui : (gui_instance) ->
+#		gui = @meta2erd.get_gui()
+#		if gui == "ERD"
+#			gui_instance.uml = gui_instance.current_gui
+#			gui_instance.current_gui = gui_instance.erd
+	
+	   ##
+    # Event handler for translate diagram to OWLlink using Ajax
+    # and the api/translate/berardi.php translator URL.
+#    translate_owllink: () ->
+#        format = @crearclase.get_translation_format()
+#        $.mobile.loading("show", 
+#            text: "Consulting server...",
+#            textVisible: true,
+#            textonly: false
+#        )
+#        json = this.diag_to_json()
+#        @serverconn.request_translation(json, format, gui.update_translation)
+		
     set_urlprefix : (str) ->
         @urlprefix = str
 
@@ -76,7 +98,7 @@ class GUIUML extends GUIIMPL
     # @see Class
     # @see Diagram#add_class
     
-    add_class: (hash_data) ->
+    add_object_type: (hash_data) ->
     	@diag.add_class(hash_data)
 
     #
@@ -187,6 +209,7 @@ class GUIUML extends GUIIMPL
     set_satisfiable: (classes_list) ->
         @diag.set_satisfiable(classes_list)
         
+        
     #
     # Send a POST to the server for checking if the diagram is
     # satisfiable.
@@ -212,21 +235,29 @@ class GUIUML extends GUIIMPL
     # string.
     # @see CreateClassView#get_translation_format
     update_translation: (data) ->
-        format = @crearclase.get_translation_format()
-        if format == "html" 
-            $("#html-output").html(data)
-            $("#html-output").show()
-            $("#owllink_source").hide()
-        else
-            $("#owllink_source").text(data)
-            $("#owllink_source").show()
-            $("#html-output").hide()
+    	console.log(data)
+    	format = @crearclase.get_translation_format()
+    	if format == "html"
+    		$("#html-output").html(data)
+    		$("#html-output").show()
+    		$("#owllink_source").hide()
+    	else
+    		$("#owllink_source").text(data)
+    		$("#owllink_source").show()
+    		$("#html-output").hide()
+    	$.mobile.loading("hide")
+    	gui.current_gui.change_to_details_page()
         
-        # Goto the Translation text
-        $.mobile.loading("hide")
-        this.change_to_details_page()
-        
-        console.log(data)
+  
+    update_metamodel: (data) ->
+    	console.log(data)
+    	$("#owllink_source").text(data) 
+    	$("#owllink_source").show() 
+    	$("#html-output").hide()
+    	$.mobile.loading("hide")
+    	gui.current_gui.change_to_details_page() 
+
+    	
 
     ##
     # Event handler for translate diagram to OWLlink using Ajax
@@ -238,17 +269,15 @@ class GUIUML extends GUIIMPL
             textVisible: true,
             textonly: false
         )
-        json = this.diag_to_json()
-        @serverconn.request_translation(json, format, gui.update_translation)
-
-
-    change_to_details_page: () ->
-        $.mobile.changePage("#details-page",
-            transition: "slide")
-    change_to_diagram_page: () ->
-        $.mobile.changePage("#diagram-page",
-            transition: "slide",
-            reverse: true)
+        json = @diag.to_json()
+        @serverconn.request_translation(JSON.stringify(json), format, gui.update_translation)
+        
+   
+	change_to_details_page: () -> 
+		$.mobile.changePage("#details-page", transition: "slide")
+            
+	change_to_diagram_page: () ->
+        $.mobile.changePage("#diagram-page", transition: "slide", reverse: true)
     #
     # Hide the left side "Tools" toolbar
     # 
@@ -342,6 +371,19 @@ class GUIUML extends GUIIMPL
         @diag.reset()
         @owllinkinsert.set_owllink("")
         this.hide_toolbar()
+
+
+	to_metamodel: () -> 
+		$.mobile.loading("show", text: "Metamodelling...", textVisible: true, textonly: false) 
+		json = JSON.stringify(@diag.to_json())
+		@serverconn.request_metamodel_translation(json,gui.current_gui.update_metamodel)
+		
+
+	to_erd: () -> 
+		$.mobile.loading("show", text: "Generating ER Diagram...", textVisible: true, textonly: false) 
+		json = JSON.stringify(@diag.to_json())
+		@serverconn.request_meta2erd_translation(json,gui.current_gui.update_metamodel)
+
 
 exports = exports ? this
 

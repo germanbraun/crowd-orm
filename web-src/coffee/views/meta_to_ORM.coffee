@@ -1,5 +1,5 @@
-# create_class.coffee --
-# Copyright (C) 2016 Giménez, Christian
+# meta_to_ORM.coffee --
+# Copyright (C) 2017 GILIA
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -17,15 +17,17 @@
 
 # Provides elements and events needed for displaying the interface for
 # creating a new class.
-CreateClassView = Backbone.View.extend(    
-        initialize: () ->
+CreateORMView = Backbone.View.extend(    
+	initialize: () ->
         	this.render()
     
         render: () ->
             template = _.template( $("#template_tools_navbar").html(), {} )
             this.$el.html(template)
 
-        events: 
+        events:
+        	"click a#meta_orm_button" :
+        		"to_orm"
         	"click a#crearclase_button" :
                 "create_class"
             "click a#translate_button" :
@@ -39,7 +41,11 @@ CreateClassView = Backbone.View.extend(
             "click a#exportjson_open_dialog":
                 "export_json"
 
-        create_class: (event) ->
+        get_gui: () -> $("#gui_select")[0].value
+			
+		to_orm: (event) -> gui.current_gui.translate_meta_orm()
+			
+		create_class: (event) ->
             # alert("Creando: " + $("#crearclase_input").val() + "...")
             gui.current_gui.add_object_type(
                 name: $("#crearclase_input").val()
@@ -65,8 +71,7 @@ CreateClassView = Backbone.View.extend(
             gui.gui_instance.show_import_json()
         export_json: () ->
             gui.gui_instance.show_export_json()
-
-                
+             
 );
 
         

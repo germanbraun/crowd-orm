@@ -75,7 +75,7 @@ class UMLDiagram extends Diagram
     # Add a Generalization link.
     #
     # If a generalziation already exists for the same parent, just add the class
-    # into the same Generalizatino instance. Constraints are ignored in this case.
+    # into the same Generalization instance. Constraints are ignored in this case.
     #
     # This methods try to normalize all parameters  and then call add_generalization_objs().
     #

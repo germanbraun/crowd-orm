@@ -1,5 +1,5 @@
-# create_class.coffee --
-# Copyright (C) 2016 Giménez, Christian
+# meta_to_ERD.coffee --
+# Copyright (C) 2017 GILIA
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -17,7 +17,7 @@
 
 # Provides elements and events needed for displaying the interface for
 # creating a new class.
-CreateClassView = Backbone.View.extend(    
+CreateUMLView = Backbone.View.extend(    
         initialize: () ->
         	this.render()
     
@@ -25,7 +25,9 @@ CreateClassView = Backbone.View.extend(
             template = _.template( $("#template_tools_navbar").html(), {} )
             this.$el.html(template)
 
-        events: 
+        events:
+        	"click a#change_gui" :
+        		"go_to_erd"
         	"click a#crearclase_button" :
                 "create_class"
             "click a#translate_button" :
@@ -38,7 +40,10 @@ CreateClassView = Backbone.View.extend(
                 "import_json"
             "click a#exportjson_open_dialog":
                 "export_json"
-
+			
+		get_gui: () ->
+			$("#gui_select")[0].value
+			
         create_class: (event) ->
             # alert("Creando: " + $("#crearclase_input").val() + "...")
             gui.current_gui.add_object_type(
@@ -72,4 +77,4 @@ CreateClassView = Backbone.View.extend(
         
 
 exports = exports ? this
-exports.CreateClassView = CreateClassView
+exports.CreateUMLView = CreateUMLView

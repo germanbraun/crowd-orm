@@ -178,7 +178,7 @@ class ERDiagram extends Diagram
     # @return The new class
     # @see Class
     # @see GUI#add_class
-    add_class: (hash_data) ->
+    add_entity: (hash_data) ->
         if hash_data.attribs == undefined
             hash_data.attribs = []
         if hash_data.methods == undefined

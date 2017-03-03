@@ -23,6 +23,11 @@
 
 namespace Wicom\Translator\Builders;
 
+use function \load;
+load("documents.php");
+
+use Wicom\Translator\Documents\Document;
+
 /**
    I set the common behaviour for every DocumentBuilder subclass.
 

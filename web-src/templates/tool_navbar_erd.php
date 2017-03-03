@@ -5,7 +5,7 @@
    
    Author: Giménez, Christian   
 
-   tools_navbar.php
+   tools_navbar_erd.php
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@
     <a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all" type="button" id="translate_button">Translate</a>
     
     <label>Go through Metamodel</label>
-    <a class="ui-btn ui-icon-plus ui-btn-icon-left ui-corner-all" type="button" id="meta_erd_button">Meta > ERD</a>
+    <a class="ui-btn ui-icon-plus ui-btn-icon-left ui-corner-all" type="button" id="meta_uml_button">Meta > UML</a>
     <a class="ui-btn ui-icon-plus ui-btn-icon-left ui-corner-all" type="button" id="meta_orm_button">Meta > ORM</a>
     
     <label>New Class</label>
@@ -48,4 +48,3 @@
     <label>Export JSON</label>
     <a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all" type="button" id="exportjson_open_dialog">Export JSON</a>
 </div>
-

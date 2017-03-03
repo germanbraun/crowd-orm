@@ -1,5 +1,5 @@
-# create_class.coffee --
-# Copyright (C) 2016 Giménez, Christian
+# meta_to_ERD.coffee --
+# Copyright (C) 2017 GILIA
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -15,31 +15,30 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-# Provides elements and events needed for displaying the interface for
-# creating a new class.
-CreateClassView = Backbone.View.extend(    
-        initialize: () ->
+# Provides elements and events needed for displaying the interface for ERD.
+CreateERDView = Backbone.View.extend(    
+	initialize: () ->
         	this.render()
     
         render: () ->
-            template = _.template( $("#template_tools_navbar").html(), {} )
+            template = _.template( $("#template_tools_navbar_erd").html(), {} )
             this.$el.html(template)
 
-        events: 
-        	"click a#crearclase_button" :
+        events:
+        	"click a#meta_erd_button" :
+        		"meta_to_erd"
+			"click a#crearclase_button" :
                 "create_class"
-            "click a#translate_button" :
-                "translate_owllink"
-            "click a#insertowllink_button":
-                "insert_owllink"
-            "click a#resetall_button":
-                "reset_all"
-            "click a#importjson_open_dialog":
-                "import_json"
-            "click a#exportjson_open_dialog":
-                "export_json"
-
-        create_class: (event) ->
+	
+	 	get_gui: () -> 
+ 			$("#gui_select")[0].value
+ 
+ 	
+ 		meta_to_erd: (event) ->
+ 			console.log(event)
+ 			gui.current_gui.to_erd()
+			
+		create_class: (event) ->
             # alert("Creando: " + $("#crearclase_input").val() + "...")
             gui.current_gui.add_object_type(
                 name: $("#crearclase_input").val()
@@ -66,10 +65,9 @@ CreateClassView = Backbone.View.extend(
         export_json: () ->
             gui.gui_instance.show_export_json()
 
-                
 );
 
         
 
 exports = exports ? this
-exports.CreateClassView = CreateClassView
+exports.CreateERDView = CreateERDView

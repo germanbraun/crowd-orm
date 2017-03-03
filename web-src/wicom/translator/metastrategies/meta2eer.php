@@ -76,8 +76,6 @@ class Meta2EER extends Meta2Lang{
 	function create_modelKF($json_str){
 		$json = json_decode($json_str, true);
 
-		print_r($json);
-
 		$this->identifyEntitiesEER($json);
 
 		 

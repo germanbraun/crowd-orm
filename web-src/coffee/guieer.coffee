@@ -33,6 +33,8 @@ class GUIEER extends GUIIMPL
         @errorwidget = new ErrorWidgetView({el: $("#errorwidget_placer")})
         @importjsonwidget = new ImportJSONView({el: $("#importjsonwidget_placer")})
         @exportjsonwidget = new ExportJSONView({el: $("#exportjson_placer")})
+        @meta2uml = new CreateUMLView({el: $("#meta2uml")})
+        @meta2orm = new CreateORMView({el: $("#meta2orm")})
         
         @serverconn = new ServerConnection( (jqXHR, status, text) ->
             exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
@@ -41,10 +43,18 @@ class GUIEER extends GUIIMPL
         $("#diagram-page").enhanceWithin()
         $("#details-page").enhanceWithin()
         gui.set_current_instance(this);
+        
+    
+#    switch_gui : (gui_instance) ->
+#		gui = @meta2uml.get_gui()
+#		if gui == "UML"
+#			gui_instance.erd = gui_instance.current_gui
+#			gui_instance.current_gui = gui_instance.uml
 
     set_urlprefix : (str) ->
         @urlprefix = str
 
+	change_gui_erd: () ->
     ##
     # What to do when the user clicked on a cellView.
     on_cell_clicked: (cellview, event, x, y) ->
@@ -75,8 +85,8 @@ class GUIEER extends GUIIMPL
     # @param hash_data {Hash} data information for creating the Class. Use `name`, `attribs` and `methods` keys.
     # @see Class
     # @see Diagram#add_class
-    add_class: (hash_data) ->
-    	@diag.add_class(hash_data)
+    add_object_type: (hash_data) ->
+    	@diag.add_entity(hash_data)
 
     #
     # Delete a class from the diagram.
