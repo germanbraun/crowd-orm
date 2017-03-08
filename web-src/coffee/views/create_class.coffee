@@ -38,10 +38,17 @@ CreateClassView = Backbone.View.extend(
                 "import_json"
             "click a#exportjson_open_dialog":
                 "export_json"
+            "click a#meta_erd_button" : "meta_to_erd"
 
+        
+        meta_to_erd: (event) -> 
+        	console.log(event) 
+        	guiinst.to_erd()
+        
+        
         create_class: (event) ->
             # alert("Creando: " + $("#crearclase_input").val() + "...")
-            gui.current_gui.add_object_type(
+            guiinst.add_object_type(
                 name: $("#crearclase_input").val()
             )
 

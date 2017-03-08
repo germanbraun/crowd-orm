@@ -33,8 +33,8 @@ class GUIUML extends GUIIMPL
         @errorwidget = new ErrorWidgetView({el: $("#errorwidget_placer")})
         @importjsonwidget = new ImportJSONView({el: $("#importjsonwidget_placer")})
         @exportjsonwidget = new ExportJSONView({el: $("#exportjson_placer")})
-        @meta2erd = new CreateERDView({el: $("#crearclase")})
-        @meta2orm = new CreateORMView({el: $("#crearclase")})
+#        @meta2erd = new CreateERDView({el: $("#crearclase")})
+#        @meta2orm = new CreateORMView({el: $("#crearclase")})
         
         @serverconn = new ServerConnection( (jqXHR, status, text) ->
             exports.gui.current_gui.show_error(status + ": " + text , jqXHR.responseText)
@@ -45,31 +45,18 @@ class GUIUML extends GUIIMPL
         gui.set_current_instance(this);
 
 
-#	switch_gui : (gui_instance) ->
-#		gui = @meta2erd.get_gui()
-#		if gui == "ERD"
-#			gui_instance.uml = gui_instance.current_gui
-#			gui_instance.current_gui = gui_instance.erd
-	
-	   ##
-    # Event handler for translate diagram to OWLlink using Ajax
-    # and the api/translate/berardi.php translator URL.
-#    translate_owllink: () ->
-#        format = @crearclase.get_translation_format()
-#        $.mobile.loading("show", 
-#            text: "Consulting server...",
-#            textVisible: true,
-#            textonly: false
-#        )
-#        json = this.diag_to_json()
-#        @serverconn.request_translation(json, format, gui.update_translation)
-		
-    set_urlprefix : (str) ->
-        @urlprefix = str
+
+	set_urlprefix: (str) -> @urlprefix = str
+
+
+#	switch_to_erd: () ->
+#		gui.set_prev_gui(gui.gui_instance)
+#		gui.set_current_gui(gui.gui_instance)
+#		gui.set_current_instance(gui.gui_instance)
 
     ##
     # What to do when the user clicked on a cellView.
-    on_cell_clicked: (cellview, event, x, y) ->
+	on_cell_clicked: (cellview, event, x, y) ->
         @state.on_cell_clicked(cellview, event, x, y, this)
 
     ##
@@ -255,7 +242,8 @@ class GUIUML extends GUIIMPL
     	$("#owllink_source").show() 
     	$("#html-output").hide()
     	$.mobile.loading("hide")
-    	gui.current_gui.change_to_details_page() 
+    	change_to_details_page()
+ 
 
     	
 
@@ -376,13 +364,16 @@ class GUIUML extends GUIIMPL
 	to_metamodel: () -> 
 		$.mobile.loading("show", text: "Metamodelling...", textVisible: true, textonly: false) 
 		json = JSON.stringify(@diag.to_json())
-		@serverconn.request_metamodel_translation(json,gui.current_gui.update_metamodel)
+		@serverconn.request_metamodel_translation(json,this.update_metamodel)
 		
 
-	to_erd: () -> 
-		$.mobile.loading("show", text: "Generating ER Diagram...", textVisible: true, textonly: false) 
+	to_erd: (gui_instance) -> 
+		$.mobile.loading("show", text: "Generating ER Diagram...", textVisible: true, textonly: false)
+		gui_instance.switch_to_erd() 
 		json = JSON.stringify(@diag.to_json())
-		@serverconn.request_meta2erd_translation(json,gui.current_gui.update_metamodel)
+		@serverconn.request_meta2erd_translation(json,(data)-> 
+			gui_instance.update_metamodel(data)
+		)
 
 
 exports = exports ? this
@@ -394,7 +385,11 @@ exports.gui.gui_instance = null
 exports.gui.set_current_instance = (gui_instance) ->
     exports.gui.gui_instance = gui_instance
 
-    
+#exports.gui.switch_to_erd = (gui_instance) -> 
+#	gui_instance.aux_gui = gui_instance.current_gui
+#	gui_instance.current_gui = gui_instance.prev_gui
+#	gui_instance.prev_gui = gui_instance.aux_gui
+#	exports.gui.set_current_instance(gui_instance)
 
 # @namespace gui
 #

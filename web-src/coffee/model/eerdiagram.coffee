@@ -181,9 +181,8 @@ class ERDiagram extends Diagram
     add_entity: (hash_data) ->
         if hash_data.attribs == undefined
             hash_data.attribs = []
-        if hash_data.methods == undefined
-            hash_data.methods = []
-        
+        if hash_data.attribs == undefined
+        	hash_data.attribs = []
         newclass = new Class(hash_data.name, hash_data.attribs, hash_data.methods)
         this.agregar_clase(newclass)
         return newclass

@@ -26,6 +26,7 @@ class GUIIMPL
 	
 	to_metamodel: () ->
 
+	switch_to_erd: () ->
 
 	to_erd: () ->
 		
@@ -245,7 +246,6 @@ class GUIIMPL
     # Reset the diagram and the "OWLlink Insert" input field.
 	reset_all: () ->
 
-	update_metamodel: () ->
 
 
 exports = exports ? this

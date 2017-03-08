@@ -27,20 +27,29 @@ class UMLFactory extends Factory
     #     Javascript hash. See the JointJS documentation and demos.
     # 
     # @return [joint.shapes.uml.Class] 
-    create_class: (class_name, css_class=null) ->
+    create_class: (class_name, attr, method, css_class=null) ->
         params =
             position: {x: 20, y: 20}
             size: {width: 100, height: 50}
             name: class_name
-            attributes: []
-            methods: []
+            attributes: attr
+            methods: method
             attrs:
                 '.uml-class-name-rect':
                     fill: '#ffffff'
                     stroke: '#000000'
                 '.uml-class-name-text':
-                    fill: '#000000'                    
-
+                    fill: '#000000'
+                '.uml-class-attrs-rect':
+                    fill: '#ffffff'
+                    stroke: '#000000'
+                '.uml-class-attrs-text':
+                    fill: '#000000'                     
+                '.uml-class-methods-rect':
+                    fill: '#ffffff'
+                    stroke: '#000000'
+                '.uml-class-methods-text':
+                    fill: '#000000'    
         if css_class?
             params.attrs = css_class
 

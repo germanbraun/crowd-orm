@@ -35,7 +35,7 @@ window.onload = () ->
 
     guiinst = new gui.GUI(graph, paper)
     gui.set_current_instance(guiinst)
-    gui.current_gui = gui.set_current_gui(guiinst)
+ #   gui.current_gui = gui.set_current_gui(guiinst)
     
  
     # Interface
@@ -65,9 +65,8 @@ window.onload = () ->
     exports.current_gui = gui.current_gui
 
     # Create a first example class
-    newclass = new Class("Classssssss", [], [])
+    newclass = new Class("Classssssss", ["metodo()"], ["hola:STRING"])
     console.log(newclass)
-    gui.current_gui.add_object_type(newclass)
-    gui.current_gui.traffic_light_green()
+    guiinst.add_object_type(newclass)
 
 

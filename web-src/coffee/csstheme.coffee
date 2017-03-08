@@ -26,31 +26,31 @@ css_class =
         stroke: "#000"
         'stroke-width': 0.5
     '.uml-class-attrs-rect' : 
-        fill: "#ddf"
+        fill: "#fff"
         stroke: "#000"
         'stroke-width': 0.5
-        visibility: 'collapse'
-        display: 'none'
+#        visibility: 'collapse'
+#        display: 'none'
     '.uml-class-methods-rect' : 
-        fill: "#ddf"
+        fill: "#fff"
         stroke: "#000"
         'stroke-width': 0.5
-        visibility: 'collapse'
-        display: 'none'
+#        visibility: 'collapse'
+#        display: 'none'
     '.uml-class-name-text' :
         fill: "#000"
-    '.uml-class-attrs-text': 
+    '.uml-class-attrs-text':
         ref: '.uml-class-attrs-rect',
         'ref-y': 0.5
         'y-alignment': 'middle'
-        visibility: 'collapse'
-        display: 'none'
+#        visibility: 'collapse'
+#        display: 'none'
     '.uml-class-methods-text':
         ref: '.uml-class-methods-rect',
         'ref-y': 0.5
         'y-alignment': 'middle'
-        visibility: 'collapse'
-        display: 'none'
+#        visibility: 'collapse'
+#        display: 'none'
 
 # [JointJS special
 # attributes](http://jointjs.com/api#SpecialAttributes) 

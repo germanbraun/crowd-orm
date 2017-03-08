@@ -23,7 +23,7 @@ class GUIEER extends GUIIMPL
         @urlprefix = ""
         @diag = new ERDiagram(@graph)
         @state = gui.state_inst.selection_state()
-        @crearclase = new CreateClassView({el: $("#crearclase")});
+        @crearclase = new CreateClassView({el: $("#crearclase1")});
         @editclass = new EditClassView({el: $("#editclass")})
         @classoptions = new ClassOptionsView({el: $("#classoptions")})
         @relationoptions = new RelationOptionsView({el: $("#relationoptions")})
@@ -33,11 +33,11 @@ class GUIEER extends GUIIMPL
         @errorwidget = new ErrorWidgetView({el: $("#errorwidget_placer")})
         @importjsonwidget = new ImportJSONView({el: $("#importjsonwidget_placer")})
         @exportjsonwidget = new ExportJSONView({el: $("#exportjson_placer")})
-        @meta2uml = new CreateUMLView({el: $("#meta2uml")})
-        @meta2orm = new CreateORMView({el: $("#meta2orm")})
+#        @meta2uml = new CreateUMLView({el: $("#meta2uml")})
+#        @meta2orm = new CreateORMView({el: $("#meta2orm")})
         
         @serverconn = new ServerConnection( (jqXHR, status, text) ->
-            exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
+            exports.gui.current_gui.show_error(status + ": " + text , jqXHR.responseText)
         )
                 
         $("#diagram-page").enhanceWithin()
@@ -54,7 +54,6 @@ class GUIEER extends GUIIMPL
     set_urlprefix : (str) ->
         @urlprefix = str
 
-	change_gui_erd: () ->
     ##
     # What to do when the user clicked on a cellView.
     on_cell_clicked: (cellview, event, x, y) ->
@@ -352,6 +351,19 @@ class GUIEER extends GUIIMPL
         @owllinkinsert.set_owllink("")
         this.hide_toolbar()
 
+
+    update_metamodel: (data) ->
+    	console.log(data)
+    	$("#owllink_source").text(data) 
+    	$("#owllink_source").show() 
+    	$("#html-output").hide()
+    	$.mobile.loading("hide")
+    	this.change_to_details_page()
+
+
+
+
+
 exports = exports ? this
 
 if exports.gui == undefined
@@ -361,7 +373,11 @@ exports.gui.gui_instance = null
 exports.gui.set_current_instance = (gui_instance) ->
     exports.gui.gui_instance = gui_instance
 
-    
+exports.gui.switch_to_erd = (gui_instance) -> 
+	gui_instance.aux_gui = gui_instance.current_gui
+	gui_instance.current_gui = gui_instance.prev_gui
+	gui_instance.prev_gui = gui_instance.aux_gui
+	exports.gui.set_current_instance(gui_instance)    
 
 # @namespace gui
 #
