@@ -26,6 +26,9 @@ namespace Wicom\DB;
 use function \load;
 load("config.php", "../../config/");
 
+use \mysqli;
+use \mysqli_result;
+
 /**
    A DB connection.
 
@@ -37,38 +40,141 @@ class DbConn{
        The DB connection. Needed by the mysql_connect() PHP function.
      */
     protected $conn = null;
-    
+
+    /**
+       Last query's results.
+    */
+    protected $last_results = null;
+
+    /**
+       Create a new DbConn instance. Create database and tables if needed.
+
+       We don't ask for parameters because it cames from globals parameters. 
+
+       > Yes, I know, is not the best way, but life's short!
+     */
     function __construct(){
-        $this->create_tables();
+        // Create connection
         
-        $this->conn = mysql_connect(
-            $GLOBALS['db']['host'],
-            $GLOBALS['db']['user'],
-            $GLOBALS['db']['password']);
-        if (!$this->conn){
+        $this->conn = new mysqli(
+            $GLOBALS['config']['db']['host'],
+            $GLOBALS['config']['db']['user'],
+            $GLOBALS['config']['db']['password']);
+      
+        if ($this->conn->connect_errno){
             die('Could not connect to the DB. Ask your administrator.');
         }
+
+        // Create tables if needed       
+        $this->create_database();
     }
 
     /**
-       Create all tables if don't exists.
+       Create all tables if they don't exists. Also select the database.
      */
-    function create_tables(){
-        $dbname = $GLOBALS['db']['database'];
-        mysql_query("CREATE DATABASE IF NOT EXISTS '$dbname'; use '$dbname';");
-        mysql_query('CREATE TABLE IF NOT EXISTS users (name CHAR(20), pass CHAR(20), PRIMARY KEY (name));');
-        mysql_query('CREATE TABLE IF NOT EXISTS model (name CHAR(20), owner CHAR(20), json LONGTEXT, PRIMARY KEY (name, owner), FOREIGN KEY (owner) REFERENCES users(name) );');
-        
+    function create_database(){
+        $dbname = $GLOBALS['config']['db']['database'];
+        $this->conn->query("CREATE DATABASE IF NOT EXISTS '$dbname';");
+        $this->conn->select_db($dbname);
+        $this->conn->query('CREATE TABLE IF NOT EXISTS users (name CHAR(20), pass CHAR(20), PRIMARY KEY (name));');
+        $this->conn->query('CREATE TABLE IF NOT EXISTS model (name CHAR(20), owner CHAR(20), json LONGTEXT, PRIMARY KEY (name, owner), FOREIGN KEY (owner) REFERENCES users(name) );');        
+    }
+
+    /**
+       Close connection.
+    */
+    function close(){
+        $this->conn->close();
     }
 
     /**
        Send a query to the DB.
 
        @param $sql a String.
+       @return A mysqli_result instance. You can use the res_field() and other res_* messages implemented in this class.
+       @see http://php.net/manual/en/class.mysqli-result.php
      */
-    function query($sql){
-        
-        mysql_query('$sql');
+    function query($sql){        
+        $this->last_results = $this->conn->query('$sql');
+
+        return $this->last_results;
     }
+
+    /**
+       @name Last Query's Results Retrieving Functions
+       
+       Functions to retrieve the last query results functions.
+     */
+    //@{
+
+    /**
+       Retrieve all the field values.
+       
+       @return a Array with mixed elements (depends on the query).
+       @return false if the field doesn't exists.
+     */
+    function res_field($field){
+        if (!$this->field_exists($field)){
+            // Field doesn't exists!
+            return false;
+        }
+        
+        $this->last_results->data_seek(0);
+
+        $lstout = [];
+        while ($row = $this->last_results->fetch_assoc()){
+            $lstout[] = ($row[$field]); // push
+        }
+
+        return $lstout;        
+    }
+
+    /**
+       This field name exists in the last results?
+       
+       @return true if it does, false otherwise.
+     */
+    protected function field_exists($fieldname){
+        $fields = $this->last_resutls->fetch_fields();
+        $amount = count($fields);
+        
+        $i = 0;        
+        while (($i < $amount) and ($fields[i].name != $fieldname)){
+            $i++;
+        }
+
+        if ($fields[i].name == $fieldname){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+       Retrieve the n-th row from the last results.
+
+       @param num A positive integer from cero (inclusive) and the amount of rows minus one inclusive.
+       @return An associative Array where its keys are the field names and its values are the field value. False if the row number is out of boundaries.
+       @see http://php.net/manual/en/mysqli-result.fetch-assoc.php
+     */
+    function res_nth_row($num){
+        if (!$this->last_results->data_seek($num)){
+            return false;
+        }
+
+        return $this->fetch_assoc();
+    }
+
+    /**
+       Retrieve the mysqli_result instance of the last query.
+
+       @return a mysqli_result instance.
+       @see http://php.net/manual/en/class.mysqli-result.php
+     */
+    function get_last_results(){
+        return $this->last_results;
+    }
+    //@}
+    
 }
 ?>
