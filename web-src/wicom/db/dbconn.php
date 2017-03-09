@@ -65,6 +65,8 @@ class DbConn{
             die('Could not connect to the DB. Ask your administrator.');
         }
 
+        $this->conn->set_charset($GLOBALS['config']['db']['charset']);
+
         // Create tables if needed       
         $this->create_database();
     }
@@ -94,8 +96,15 @@ class DbConn{
        @return A mysqli_result instance. You can use the res_field() and other res_* messages implemented in this class.
        @see http://php.net/manual/en/class.mysqli-result.php
      */
-    function query($sql){        
-        $this->last_results = $this->conn->query('$sql');
+    function query($sql, $params=[]){
+        // Escape params for security reasons (no SQL Injections!)
+        $escaped_params = [];
+        foreach ($params as $p){
+            $escaped_params[] = $this->conn->escape_string($p);
+        }        
+        $sql_processed = vsprintf($sql, $escaped_params);
+        
+        $this->last_results = $this->conn->query($sql_processed);
 
         return $this->last_results;
     }

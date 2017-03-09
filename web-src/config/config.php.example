@@ -60,6 +60,8 @@ $GLOBALS['config']['db']['password'] = 'DB password here';
    Database name.
  */
 $GLOBALS['config']['db']['database'] = 'crowd';
+
+$GLOBALS['config']['db']['charset'] = 'utf8';
 //@}
 
 ?>
