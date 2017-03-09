@@ -55,7 +55,7 @@ CreateClassView = Backbone.View.extend(
         # Event handler for translate diagram to OWLlink using Ajax
         # and the api/translate/berardi.php translator URL.
         translate_owllink: (event) ->
-            gui.current_gui.translate_owllink()
+            guiinst.translate_owllink()
 
         # Which is the current translation format selected by the
         # user?
@@ -65,13 +65,13 @@ CreateClassView = Backbone.View.extend(
             $("#format_select")[0].value
 
         insert_owllink: () ->
-            gui.gui_instance.show_insert_owllink()
+            guiinst.show_insert_owllink()
         reset_all: () ->
-            gui.gui_instance.reset_all()
+            guiinst.reset_all()
         import_json: () ->
-            gui.gui_instance.show_import_json()
+            guiinst.show_import_json()
         export_json: () ->
-            gui.gui_instance.show_export_json()
+            guiinst.show_export_json()
 
                 
 );

@@ -44,6 +44,21 @@ class GUI
 
 	add_object_type: (name) ->
 		@current_gui.add_object_type(name)
+		
+
+    # Update and show the "Export JSON String" section.
+	show_export_json: () ->
+         @current_gui.show_export_json()
+
+    # Refresh the content of the "Export JSON String" section.
+    #
+    # No need to show it.
+	refresh_export_json: () ->
+		@current_gui.refresh_export_json()
+		
+
+	on_cell_clicked: (cellview, event, x, y) ->
+		@current_gui.on_cell_clicked(cellview,event,x,y)
 
 exports = exports ? this
 if exports.gui == undefined

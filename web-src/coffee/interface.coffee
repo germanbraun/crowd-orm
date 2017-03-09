@@ -35,7 +35,6 @@ window.onload = () ->
 
     guiinst = new gui.GUI(graph, paper)
     gui.set_current_instance(guiinst)
- #   gui.current_gui = gui.set_current_gui(guiinst)
     
  
     # Interface
@@ -45,7 +44,7 @@ window.onload = () ->
     # A Cell was clicked: select it.
     paper.on("cell:pointerclick",
         (cellView, evt, x, y) ->
-            gui.current_gui.on_cell_clicked(cellView, evt, x, y)
+            guiinst.on_cell_clicked(cellView, evt, x, y)
     )
 
     # paper.on("cell:pointerdblclick",
@@ -62,10 +61,9 @@ window.onload = () ->
     exports.graph = graph
     exports.paper = paper
     exports.guiinst = guiinst
-    exports.current_gui = gui.current_gui
 
     # Create a first example class
-    newclass = new Class("Classssssss", ["metodo()"], ["hola:STRING"])
+    newclass = new Class("Classssssss", ["attribute":"STRING"], ["method"])
     console.log(newclass)
     guiinst.add_object_type(newclass)
 
