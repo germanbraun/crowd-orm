@@ -72,6 +72,24 @@ class Model {
         $this->json = $json;
     }
 
+
+    /**
+       @name Database related
+     */
+    ///@{
+    
+    /**
+       Save into the DB.
+     */
+    function save(){
+    }
+
+    /**
+       Update the json from the DB.
+     */
+    function update(){
+    }
+    
     /**
        Retrieve from the database the Model given by the name and its owner.
 
@@ -80,8 +98,23 @@ class Model {
        @return a Model instance or null if it doesn't exists.
      */
     public static function retrieve($name, $owner_name){
-        
+        $conn = new DbConn();
+
+        $conn->query("SELECT * FROM models WHERE name=\"%s\" AND owner=\"%s\";" , [$name, $owner_name]);
+
+        $row = $conn->res_nth_row(0);
+        if ($row) {
+            $model = new Model($name, $owner_name);
+            $model->set_json($row['json']);
+            
+            return $model;
+        }else{
+            // No model founded.
+            return null;
+        }        
     }
+
+    ///@}
     
 }
 
