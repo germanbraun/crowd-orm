@@ -96,13 +96,17 @@ class User{
        @return An array of strings with the model's names.
      */
     protected function retrieve_model_list(){
-        
+        return [];
     }
 
     /**
        Save or update the DB information regarded to this instance.
-
+    */
     function save(){
+        $conn = new DbConn();
+        $conn->query("INSERT INTO users(name, pass) VALUES (\"%s\", \"%s\") ON DUPLICATE KEY UPDATE pass=\"%s\";",
+                     [$this->user, $this->pass, $this->pass]);
+        $conn->close();
     }
 
     /**
@@ -119,7 +123,7 @@ class User{
         $row = $conn->res_nth_row(0);
         if (!$row){
             // No user founded!
-            return null
+            return null;
         }
 
         $user = new User($name, $row['pass']);
@@ -127,7 +131,6 @@ class User{
     }
     
     ///@}
-        
 }
 
 

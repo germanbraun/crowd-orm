@@ -95,7 +95,7 @@ class Model {
         $conn = new DbConn();
         $conn->query(
             "INSERT INTO model(name, owner, json) VALUES \"%s\", \"%s\", \"%s\" ON DUPLICATE KEY UPDATE json=\"%s\";",
-            [$this->name, $this->owner->get_name(), $this->json]);        
+            [$this->name, $this->owner->get_name(), $this->json, $this->json]);        
         $conn->close();
     }
 
