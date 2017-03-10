@@ -42,10 +42,35 @@ class GUI
 
 	update_translation: () ->
 
-	add_object_type: (name) ->
-		@current_gui.add_object_type(name)
-		
+	add_object_type: (name) -> @current_gui.add_object_type(name)
+	
+	edit_class_name: (class_id, name) -> @current_gui.edit_class_name(class_id, name)
+	
+	delete_class: (class_id) -> @current_gui.delete_class(class_id)
 
+	set_isa_state: (class_id, disjoint, covering) -> 
+	    @current_gui.set_isa_state(class_id, disjoint, covering)		
+
+    set_options_classid: (model_id) ->
+    	@current_gui.set_options_classid(model_id)
+    	
+    hide_options: () ->
+    	@current_gui.hide_options()
+
+
+#    hide_diagram_page: () -> @current_gui.hide_diagram_page()
+    
+#    show_diagram_page: () -> @current_gui.show_diagram_page()
+    	
+    set_editclass_classid: (model_id) ->
+    	@current_gui.set_editclass_classid(model_id)
+    	
+    set_selection_state: () ->
+    	@current_gui.set_selection_state()
+
+    add_generalization: (class_parent_id, class_child_id, disjoint, covering) ->
+    	@current_gui.add_generalization(class_parent_id, class_child_id, disjoint, covering)
+        	
     # Update and show the "Export JSON String" section.
 	show_export_json: () ->
          @current_gui.show_export_json()
@@ -57,8 +82,11 @@ class GUI
 		@current_gui.refresh_export_json()
 		
 
-	on_cell_clicked: (cellview, event, x, y) ->
-		@current_gui.on_cell_clicked(cellview,event,x,y)
+	on_cell_clicked: (cellview, event, x, y) -> @current_gui.on_cell_clicked(cellview,event,x,y) 
+	
+	import_jsonstr: (data) -> @current_gui.import_jsonsrt(data)
+
+#    import_json: (json_obj) -> @current_gui.import_json(json_obj)
 
 exports = exports ? this
 if exports.gui == undefined

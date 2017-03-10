@@ -179,11 +179,10 @@ class ERDiagram extends Diagram
     # @see Class
     # @see GUI#add_class
     add_entity: (hash_data) ->
-        if hash_data.attribs == undefined
-            hash_data.attribs = []
-        if hash_data.attribs == undefined
-        	hash_data.attribs = []
-        newclass = new Class(hash_data.name, hash_data.attribs, hash_data.methods)
+        if hash_data.attrs == undefined
+            hash_data.attrs = []
+
+        newclass = new Class(hash_data.name, hash_data.attrs, hash_data.methods)
         this.agregar_clase(newclass)
         return newclass
 
@@ -358,9 +357,9 @@ class ERDiagram extends Diagram
     # 
     # @todo Better programmed it would be if we pass a JSON part to the constructor of each model class. Leaving the responsability of each MyModel class to create itself.
     import_json: (json) ->
-        json.classes.forEach(
+        json.entities.forEach(
             (elt, index, arr) ->
-                c = this.add_class(elt)
+                c = this.add_entity(elt)
                 c.get_joint()[0].position(
                     elt.position.x,
                     elt.position.y)

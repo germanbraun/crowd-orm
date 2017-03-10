@@ -33,8 +33,6 @@ class GUIUML extends GUIIMPL
         @errorwidget = new ErrorWidgetView({el: $("#errorwidget_placer")})
         @importjsonwidget = new ImportJSONView({el: $("#importjsonwidget_placer")})
         @exportjsonwidget = new ExportJSONView({el: $("#exportjson_placer")})
-#        @meta2erd = new CreateERDView({el: $("#crearclase")})
-#        @meta2orm = new CreateORMView({el: $("#crearclase")})
         
         @serverconn = new ServerConnection( (jqXHR, status, text) ->
             exports.gui.current_gui.show_error(status + ": " + text , jqXHR.responseText)
@@ -49,10 +47,6 @@ class GUIUML extends GUIIMPL
 	set_urlprefix: (str) -> @urlprefix = str
 
 
-#	switch_to_erd: () ->
-#		gui.set_prev_gui(gui.gui_instance)
-#		gui.set_current_gui(gui.gui_instance)
-#		gui.set_current_instance(gui.gui_instance)
 
     ##
     # What to do when the user clicked on a cellView.
@@ -271,6 +265,14 @@ class GUIUML extends GUIIMPL
     # 
     hide_toolbar: () ->
         $("#tools-panel [data-rel=close]").click()
+        
+
+#    hide_diagram_page: () ->
+#    	$("#diagram-page").hide()
+    	
+#    show_diagram_page: () ->
+#    	$("#diagram-page").show()
+    
 
     # Change the interface into a "new association" state.
     #
@@ -369,7 +371,9 @@ class GUIUML extends GUIIMPL
 
 	to_erd: (gui_instance) -> 
 		$.mobile.loading("show", text: "Generating ER Diagram...", textVisible: true, textonly: false)
-		gui_instance.switch_to_erd() 
+#		gui_instance.hide_diagram_page()
+		gui_instance.switch_to_erd()
+#		gui_instance.show_diagram_page() 
 		json = JSON.stringify(@diag.to_json())
 		@serverconn.request_meta2erd_translation(json,(data)-> 
 			gui_instance.update_metamodel(data)

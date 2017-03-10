@@ -68,68 +68,7 @@ require_once('template.php');
 		insert_template("insertowllink");
 		insert_template("importjson");
 		insert_template("exportjson");
-		insert_template("tool_navbar_erd");
-		?>			
-   		
-		<div id="editclass"></div>
-		<div id="classoptions"></div>
-		<div id="relationoptions"></div>
-		<div id="isaoptions"></div>
-		
- 	    </div> <!-- /main ui-content -->
-
-	    <!-- ---------------------------------------------------------------------- -->
-	
-	    <div data-role="footer">
-		<address>
-		    <a href="mailto:crowd@Harmonia">Facultad de Informática, Universidad Nacional del Comahue (Argentina)</a>
-		</address>
-		
-	    </div><!-- /footer -->
-	</div> <!-- /page -->
-	
-	
-	<div data-role="page" id="diagram-page">
-	    <div data-role="panel" data-display="overlay" data-position="left" id="tools-panel" class="comandos ui-corner-all" id="comandos">
-		<div style="text-align: right">
-		    <a href="#comandos" data-rel="close" class="ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all ui-btn-inline ui-mini">Close</a>
-		</div>
-		<div id="crearclase"></div>
-	    </div><!-- /panel -->
-
-	    <div data-role="header" class="wicom-header">
-		<h1 class="crowd-header">c r o w d</h1>
-		<div id="trafficlight"></div>
-		<div data-role="navbar">
-		    <ul>
-			<li><a href="#tools-panel" data-transition="slide" class="ui-btn ui-icon-bars ui-btn-icon-left">ERD</a></li>
-			<li><a href="#details-page" data-transition="slide" class="ui-btn ui-btn-icon-right ui-icon-forward">Details</a></li>
-		    </ul>
-		</div>
-	    </div> <!-- /header -->
-
-	    <!-- ---------------------------------------------------------------------- -->
-	    
-	    <div role="main" class="ui-content">
-		<div id="errorwidget_placer"></div>
-		<div id="importjsonwidget_placer"></div>
-		<div id="container"></div>
-	    	    
-		
-		<!-- ---------------------------------------------------------------------- -->
-		<!-- Templates -->
-		<?php
-		insert_template("errorwidget");
-/*		insert_template("tools_navbar"); */
-		insert_template("editclass");
-		insert_template("classoptions");
-		insert_template("relationoptions");
-		insert_template("isaoptions");
-		insert_template("trafficlight");
-		insert_template("insertowllink");
-		insert_template("importjson");
-		insert_template("exportjson");
-		insert_template("tool_navbar_erd");
+		insert_template("tools_navbar_erd");
 		?>			
    		
 		<div id="editclass"></div>
@@ -198,5 +137,6 @@ require_once('template.php');
 	    
 	    <div data-role="footer"></div>
 	</div> <!-- /page -->
+
     </body>
 </html>

@@ -177,6 +177,10 @@ class GUIIMPL
 	hide_toolbar: () ->
 
 
+#    hide_diagram_page: () ->
+
+
+#    show_diagram_page: () ->
     # Change the interface into a "new association" state.
     #
     # @param class_id {string} The id of the class that triggered it and thus,

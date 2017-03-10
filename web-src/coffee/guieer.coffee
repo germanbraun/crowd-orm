@@ -85,6 +85,7 @@ class GUIEER extends GUIIMPL
     # @see Class
     # @see Diagram#add_class
     add_object_type: (hash_data) ->
+    	console.log(hash_data.name)
     	@diag.add_entity(hash_data)
 
     #
@@ -263,6 +264,13 @@ class GUIEER extends GUIIMPL
     hide_toolbar: () ->
         $("#tools-panel [data-rel=close]").click()
 
+
+#    hide_diagram_page: () ->
+#    	$("#diagram-page-eer").hide()
+    	
+#    show_diagram_page: () ->
+#    	$("#diagram-page-eer").show()
+    	
     # Change the interface into a "new association" state.
     #
     # @param class_id {string} The id of the class that triggered it and thus,

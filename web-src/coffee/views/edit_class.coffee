@@ -48,7 +48,7 @@ EditClassView = Backbone.View.extend(
     
     edit_class: (event) ->
         name = $("#editclass_input").val()
-        guiinst.edit_class_name(@classid, name)
+        gui.gui_instance.edit_class_name(@classid, name)
         # Hide the form.
         gui.gui_instance.hide_options()
 

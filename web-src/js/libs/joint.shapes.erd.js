@@ -29,7 +29,7 @@ joint.shapes.erd.Entity = joint.dia.Element.extend({
                 display: 'none'
             },
             text: {
-                text: 'Entity',
+                text: [],
                 'font-family': 'Arial', 'font-size': 14,
                 ref: '.outer', 'ref-x': .5, 'ref-y': .5,
                 'x-alignment': 'middle', 'y-alignment': 'middle'
