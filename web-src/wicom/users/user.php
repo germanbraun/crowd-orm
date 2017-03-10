@@ -46,10 +46,30 @@ class User{
     }
 
     /**
+       @name Getters
+     */
+    ///@{
+    function get_name(){
+        return $this->name;
+    }
+
+
+    /**
        Retrieve all model list from the DB.
      */
     function get_model_list(){
         return $this->model_list;
+    }
+    ///@}
+
+    /**
+       Is the given password the same as the user's one?
+
+       @param $pass a String
+       @return true or false. 
+     */
+    function check_password($pass){
+        return $this->pass == $pass;
     }
 
     /**
@@ -65,6 +85,12 @@ class User{
     }
 
     /**
+       @name Database related
+    */
+    ///@{   
+    
+
+    /**
        Search on the model table of the DB for the user's tables.
        
        @return An array of strings with the model's names.
@@ -74,15 +100,33 @@ class User{
     }
 
     /**
+       Save or update the DB information regarded to this instance.
+
+    function save(){
+    }
+
+    /**
        Search for the given user on the DB.
        
        @param $name The user's name to search.
        @return a User instance if exists, null otherwise.
      */
     public static function retrieve($name){
-        
-    }
+        $conn = new DbConn();
+        $conn->query("SELECT * FROM users WHERE name=\"%s\"", [$name]);       
+        $conn->close();
 
+        $row = $conn->res_nth_row(0);
+        if (!$row){
+            // No user founded!
+            return null
+        }
+
+        $user = new User($name, $row['pass']);
+        return $user;
+    }
+    
+    ///@}
         
 }
 

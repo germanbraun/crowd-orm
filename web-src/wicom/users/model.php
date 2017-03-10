@@ -23,6 +23,13 @@
 
 namespace Wicom\Users;
 
+use function \load;
+load("dbconn.php", "../db/");
+load("user.php");
+
+use Wicom\DB\DbConn;
+use Wicom\Users\User;
+
 /**
    A user Model.
 
@@ -34,7 +41,7 @@ class Model {
      */
     protected $name = null;
     /**
-       Owner of the model.
+       Owner of the model. A User instance.
      */
     protected $owner = null;
     /**
@@ -82,6 +89,14 @@ class Model {
        Save into the DB.
      */
     function save(){
+        // Save or update the owner if it doesn't exists
+        $this->owner->save();
+        
+        $conn = new DbConn();
+        $conn->query(
+            "INSERT INTO model(name, owner, json) VALUES \"%s\", \"%s\", \"%s\" ON DUPLICATE KEY UPDATE json=\"%s\";",
+            [$this->name, $this->owner->get_name(), $this->json]);        
+        $conn->close();
     }
 
     /**
@@ -99,19 +114,28 @@ class Model {
      */
     public static function retrieve($name, $owner_name){
         $conn = new DbConn();
-
         $conn->query("SELECT * FROM models WHERE name=\"%s\" AND owner=\"%s\";" , [$name, $owner_name]);
-
+        $conn->close();
+        
         $row = $conn->res_nth_row(0);
-        if ($row) {
-            $model = new Model($name, $owner_name);
-            $model->set_json($row['json']);
-            
-            return $model;
-        }else{
+        if (!$row) {
             // No model founded.
             return null;
-        }        
+        }
+
+        // Search for owner.
+        $owner = User::retrieve($owner_name);
+        if ($owner == null){
+            // Doesn't exists any wwner with that name
+            return null;
+        }
+
+        // Create instance and return it
+        $model = new Model($name, $owner);
+        $model->set_json($row['json']);
+        
+       
+        return $model;
     }
 
     ///@}
