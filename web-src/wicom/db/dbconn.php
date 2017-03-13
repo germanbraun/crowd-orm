@@ -76,10 +76,16 @@ class DbConn{
      */
     function create_database(){
         $dbname = $GLOBALS['config']['db']['database'];
-        $this->conn->query("CREATE DATABASE IF NOT EXISTS '$dbname';");
+        if (!$this->query("CREATE DATABASE IF NOT EXISTS %s;", [$dbname])){
+            die("Database could not be created.");
+        }
         $this->conn->select_db($dbname);
-        $this->conn->query('CREATE TABLE IF NOT EXISTS users (name CHAR(20), pass CHAR(20), PRIMARY KEY (name));');
-        $this->conn->query('CREATE TABLE IF NOT EXISTS model (name CHAR(20), owner CHAR(20), json LONGTEXT, PRIMARY KEY (name, owner), FOREIGN KEY (owner) REFERENCES users(name) );');        
+        if (!$this->query('CREATE TABLE IF NOT EXISTS users (name CHAR(20), pass CHAR(20), PRIMARY KEY (name));')){
+            die("Tables in the database could not be created.");
+        }
+        if (!$this->query('CREATE TABLE IF NOT EXISTS model (name CHAR(20), owner CHAR(20), json LONGTEXT, PRIMARY KEY (name, owner), FOREIGN KEY (owner) REFERENCES users(name) );')){
+            die("Tables in the database could not be created.");
+        }
     }
 
     /**
@@ -104,6 +110,11 @@ class DbConn{
         }        
         $sql_processed = vsprintf($sql, $escaped_params);
         
+        /*
+          print($sql_processed);
+          print("\n");
+        */
+        
         $this->last_results = $this->conn->query($sql_processed);
 
         return $this->last_results;
@@ -123,6 +134,10 @@ class DbConn{
        @return false if the field doesn't exists.
      */
     function res_field($field){
+        if (!$this->last_results){
+            return false;
+        }
+        
         if (!$this->field_exists($field)){
             // Field doesn't exists!
             return false;
@@ -144,6 +159,10 @@ class DbConn{
        @return true if it does, false otherwise.
      */
     protected function field_exists($fieldname){
+        if (!$this->last_results){
+            return false;
+        }
+        
         $fields = $this->last_resutls->fetch_fields();
         $amount = count($fields);
         
@@ -167,11 +186,15 @@ class DbConn{
        @see http://php.net/manual/en/mysqli-result.fetch-assoc.php
      */
     function res_nth_row($num){
+        if (!$this->last_results){
+            return false;
+        }
+        
         if (!$this->last_results->data_seek($num)){
             return false;
         }
 
-        return $this->fetch_assoc();
+        return $this->last_results->fetch_assoc();
     }
 
     /**

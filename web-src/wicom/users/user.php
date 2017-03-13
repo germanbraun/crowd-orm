@@ -101,12 +101,16 @@ class User{
 
     /**
        Save or update the DB information regarded to this instance.
+
+       @return true if saving or update was successful.
     */
     function save(){
         $conn = new DbConn();
         $conn->query("INSERT INTO users(name, pass) VALUES (\"%s\", \"%s\") ON DUPLICATE KEY UPDATE pass=\"%s\";",
-                     [$this->user, $this->pass, $this->pass]);
+                     [$this->name, $this->pass, $this->pass]);
         $conn->close();
+
+        return $conn->get_last_results() != false;
     }
 
     /**
