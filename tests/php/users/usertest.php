@@ -26,8 +26,10 @@ require_once("common.php");
 // use function \load;
 load("config.php", "config/");
 load("user.php", "wicom/users/");
+load("model.php", "wicom/users/");
 
 use Wicom\Users\User;
+use Wicom\Users\Model;
 
 class UserTest extends PHPUnit_Framework_TestCase
 {
@@ -58,8 +60,32 @@ class UserTest extends PHPUnit_Framework_TestCase
         
         $user = User::retrieve("alice");
 
-        $this->assertEquals($user->get_name(), "alice");
+        $this->assertNotNull($user);
+        $this->assertEquals("alice", $user->get_name());
         $this->assertTrue($user->check_password("alicepass"));
+    }
+
+    /**
+       Test two functions in one: 
+
+       * User::retrieve_model_list()
+       * User::get_model_list()
+     */
+    public function test_retrieve_model_list(){
+        $user = new User('alice');
+        $model = new Model('model_a', $user);
+        $model->save();
+        $model = new Model('model_b', $user);
+        $model->save();
+        $model = new Model('model_test', $user);
+        $model->save();
+
+        $actual = $user->get_model_list();
+        $expected = ['model_a', 'model_b', 'model_test'];
+
+        foreach ($expected as $str){
+            $this->assertContains($str, $actual);
+        }
     }
 }
 ?>

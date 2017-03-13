@@ -93,10 +93,14 @@ class User{
     /**
        Search on the model table of the DB for the user's tables.
        
-       @return An array of strings with the model's names.
+       @return An array of strings with the model's names. false if there was problems.
      */
     protected function retrieve_model_list(){
-        return [];
+        $conn = new DbConn();
+        $conn->query("SELECT name FROM model WHERE owner = '%s';", [$this->name]);
+        $conn->close();
+        
+        return $conn->res_field("name");
     }
 
     /**

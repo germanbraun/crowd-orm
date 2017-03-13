@@ -163,15 +163,15 @@ class DbConn{
             return false;
         }
         
-        $fields = $this->last_resutls->fetch_fields();
+        $fields = $this->last_results->fetch_fields();
         $amount = count($fields);
         
-        $i = 0;        
-        while (($i < $amount) and ($fields[i].name != $fieldname)){
+        $i = 0;
+        while (($i < $amount) and ($fields[$i]->name != $fieldname)){
             $i++;
         }
 
-        if ($fields[i].name == $fieldname){
+        if ($fields[$i]->name == $fieldname){
             return true;
         }else{
             return false;
