@@ -94,9 +94,10 @@ class Model {
         
         $conn = new DbConn();
         $conn->query(
-            "INSERT INTO model(name, owner, json) VALUES \"%s\", \"%s\", \"%s\" ON DUPLICATE KEY UPDATE json=\"%s\";",
+            "INSERT INTO model(name, owner, json) VALUES (\"%s\", \"%s\", \"%s\") ON DUPLICATE KEY UPDATE json=\"%s\";",
             [$this->name, $this->owner->get_name(), $this->json, $this->json]);        
         $conn->close();
+        return $conn->get_last_results() != false;
     }
 
     /**
@@ -114,7 +115,7 @@ class Model {
      */
     public static function retrieve($name, $owner_name){
         $conn = new DbConn();
-        $conn->query("SELECT * FROM models WHERE name=\"%s\" AND owner=\"%s\";" , [$name, $owner_name]);
+        $conn->query("SELECT * FROM model WHERE name=\"%s\" AND owner=\"%s\";" , [$name, $owner_name]);
         $conn->close();
         
         $row = $conn->res_nth_row(0);
