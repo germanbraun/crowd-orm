@@ -21,5 +21,31 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+require_once('../../common/import_functions.php');
+
+load('model.php', '../../wicom/users/');
+load('common.php', '../../wicom/users/');
+
+use Wicom\Users\Model;
+
+session_start();
+
+if (!array_key_exists('username', $_SESSION) and
+    ($_SESSION['username'] != null)){
+    die('Session has not been started.');
+}
+if ((!array_key_exists('model_name', $_REQUEST))){
+    die('Missing parameters.');
+}
+
+$model = Model::retrieve($_REQUEST['model_name'], $_SESSION['username']);
+
+if ($model == null){
+    die('Model not founded.');
+}
+
+// Model exists, retrieve the JSON.
+echo $model->get_json();
+
 
 ?>

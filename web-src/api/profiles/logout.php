@@ -21,5 +21,11 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+require_once('../../common/import_functions.php');
 
+load('common.php', '../../wicom/users/');
+
+logout_user();
+
+echo "Done."
 ?>
