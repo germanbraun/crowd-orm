@@ -31,6 +31,7 @@ class GUI
         @trafficlight = new TrafficLightsView({el: $("#trafficlight")})
         @owllinkinsert = new OWLlinkInsertView({el: $("#owllink_placer")})
         @errorwidget = new ErrorWidgetView({el: $("#errorwidget_placer")})
+        @loginwidget = new LoginWidgetView({el: $("#loginwidget_placer")})
         @importjsonwidget = new ImportJSONView({el: $("#importjsonwidget_placer")})
         @exportjsonwidget = new ExportJSONView({el: $("#exportjson_placer")})
         
@@ -149,6 +150,18 @@ class GUI
     show_error: (status, error) ->
         $.mobile.loading("hide")
         @errorwidget.show(status, error)
+
+    #
+    # Show the login popup.
+    # 
+    show_login: () ->
+        @loginwidget.show()
+
+    #
+    # Hide the login popup.
+    # 
+    hide_login: () ->
+        @loginwidget.hide()
 
     #
     # Put the traffic light on green.
