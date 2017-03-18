@@ -82,12 +82,15 @@ class GUI
 		@current_gui.refresh_export_json()
 		
 
-	on_cell_clicked: (cellview, event, x, y) -> @current_gui.on_cell_clicked(cellview,event,x,y) 
+	on_cell_clicked: (cellview, event, x, y) -> @current_gui.on_cell_clicked(cellview,event,x,y)
 	
-	import_jsonstr: (data) -> @current_gui.import_jsonsrt(data)
+	import_json: (json_obj) -> @current_gui.import_json(json_obj)
 
-#    import_json: (json_obj) -> @current_gui.import_json(json_obj)
-
+	import_jsonstr: (data) -> @current_gui.import_jsonstr(data)
+	
+	show_import_json: () -> @current_gui.show_import_json()
+        
+        
 exports = exports ? this
 if exports.gui == undefined
 		exports.gui = {}

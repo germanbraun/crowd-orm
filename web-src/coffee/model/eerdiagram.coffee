@@ -181,6 +181,8 @@ class ERDiagram extends Diagram
     add_entity: (hash_data) ->
         if hash_data.attrs == undefined
             hash_data.attrs = []
+        if hash_data.methods == undefined
+            hash_data.methods = []
 
         newclass = new Class(hash_data.name, hash_data.attrs, hash_data.methods)
         this.agregar_clase(newclass)
@@ -360,9 +362,10 @@ class ERDiagram extends Diagram
         json.entities.forEach(
             (elt, index, arr) ->
                 c = this.add_entity(elt)
-                c.get_joint()[0].position(
-                    elt.position.x,
-                    elt.position.y)
+#                if c.get_joint()[0].position?
+#                	c.get_joint()[0].position(
+#                    elt.position.x,
+#                    elt.position.y)
         this)
         # associations
         json.links.forEach(

@@ -376,7 +376,7 @@ class GUIUML extends GUIIMPL
 #		gui_instance.show_diagram_page() 
 		json = JSON.stringify(@diag.to_json())
 		@serverconn.request_meta2erd_translation(json,(data)-> 
-			gui_instance.update_metamodel(data)
+			gui_instance.import_jsonstr(data)
 		)
 
 

@@ -68,7 +68,7 @@ require_once('template.php');
 		insert_template("insertowllink");
 		insert_template("importjson");
 		insert_template("exportjson");
-		insert_template("tools_navbar_erd");
+		insert_template("tools_navbar");
 		?>			
    		
 		<div id="editclass"></div>

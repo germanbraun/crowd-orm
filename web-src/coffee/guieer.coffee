@@ -31,7 +31,7 @@ class GUIEER extends GUIIMPL
         @trafficlight = new TrafficLightsView({el: $("#trafficlight")})
         @owllinkinsert = new OWLlinkInsertView({el: $("#owllink_placer")})
         @errorwidget = new ErrorWidgetView({el: $("#errorwidget_placer")})
-        @importjsonwidget = new ImportJSONView({el: $("#importjsonwidget_placer")})
+        @importjsonwidget = new ImportJSONView({el: $("#importjsonwidget_placer1")})
         @exportjsonwidget = new ExportJSONView({el: $("#exportjson_placer")})
 #        @meta2uml = new CreateUMLView({el: $("#meta2uml")})
 #        @meta2orm = new CreateORMView({el: $("#meta2orm")})
