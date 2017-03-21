@@ -85,7 +85,7 @@ class GUIEER extends GUIIMPL
     # @see Class
     # @see Diagram#add_class
     add_object_type: (hash_data) ->
-    	console.log(hash_data.name)
+    	this.hide_toolbar()
     	@diag.add_entity(hash_data)
 
     #

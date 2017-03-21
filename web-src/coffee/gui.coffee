@@ -57,6 +57,7 @@ class GUI
     hide_options: () ->
     	@current_gui.hide_options()
 
+    hide_toolbar: () -> @current_gui.hide_toolbar()
 
 #    hide_diagram_page: () -> @current_gui.hide_diagram_page()
     

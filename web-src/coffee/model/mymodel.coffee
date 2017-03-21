@@ -162,11 +162,9 @@ class Class extends MyModel
                 else
                     cssclass = csstheme.css_class
                     
-                @joint.push(
-                    factory.create_class(@name, @attrs, @methods, cssclass))
+                    @joint.push(factory.create_class(@name, @attrs, @methods, cssclass))
             else
-                @joint.push(
-                    factory.create_class(@name, @attrs, @methods))
+                @joint.push(factory.create_class(@name, @attrs, @methods))
 
     to_json: () ->
         json = super()

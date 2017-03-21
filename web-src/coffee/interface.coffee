@@ -63,7 +63,7 @@ window.onload = () ->
     exports.guiinst = guiinst
 
     # Create a first example class
-    newclass = new Class("Classssssss", ["attribute : STRING"], ["method"])
+    newclass = new Class("Classssssss", [], [])
     console.log(newclass)
     guiinst.add_object_type(newclass)
 

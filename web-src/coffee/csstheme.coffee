@@ -25,16 +25,19 @@ css_class =
         fill: "#fff"
         stroke: "#000"
         'stroke-width': 0.5
+        filter: { name: 'dropShadow',  args: { dx: 0.5, dy: 2, blur: 2, color: '#333333' }}
     '.uml-class-attrs-rect' : 
         fill: "#fff"
         stroke: "#000"
         'stroke-width': 0.5
+        filter: { name: 'dropShadow',  args: { dx: 0.5, dy: 2, blur: 2, color: '#333333' }}        
 #        visibility: 'collapse'
 #        display: 'none'
     '.uml-class-methods-rect' : 
         fill: "#fff"
         stroke: "#000"
         'stroke-width': 0.5
+        filter: { name: 'dropShadow',  args: { dx: 0.5, dy: 2, blur: 2, color: '#333333' }}        
 #        visibility: 'collapse'
 #        display: 'none'
     '.uml-class-name-text' :

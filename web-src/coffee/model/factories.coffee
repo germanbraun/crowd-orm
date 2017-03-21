@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 uml = joint.shapes.uml
+
 erd = joint.shapes.erd
 
 # *Abstract class.*
@@ -191,16 +192,16 @@ class UMLFactory extends Factory
     # the UML association and the UML association class).
     #
     # @return [joint.dia.Link] a Joint Link object.
-    create_association_link: (css_assoc_links = {"stroke-dasharray": "5,5"}) ->
+#    create_association_link: (css_assoc_links = {"stroke-dasharray": "5,5"}) ->
         # For some misterious reason, you have to add some joint elements ids
-        # on source and target. If not it will not associate the link with the
+        # on source and target. If not it will not as   params.attrs = css_class sociate the link with the
         # Element provided, instead it will still points to (10,10) coordinates.
-        link = new joint.dia.Link(
-            source: {x: 10, y: 10},
-            target: {x: 100, y: 100},
-            attrs: css_assoc_links
-        )
-        return link
+#        link = new joint.dia.Link(
+#            source: {x: 10, y: 10},
+#            target: {x: 100, y: 100},
+#            attrs: css_assoc_links
+#        )
+#        return link
 
 
 # @todo ERDFactory is not yet implemented. This factory is beyond the scope for this prototype.
@@ -218,7 +219,7 @@ class ERDFactory extends Factory
             position: {x: 20, y: 20}
             attrs: {
             	text: {
-            		fill: "#ffff",
+            		fill: "#ffffff",
             		text: class_name,
             		'letter-spacing': 0,
             		style: { 'text-shadow': '1px 0 1px #333333' }
@@ -230,8 +231,8 @@ class ERDFactory extends Factory
             		}	
             }
             
-       	if css_class?
-       		params.attrs = css_class
+#       	if css_class?
+#       		params.attrs = css_class
        	
        	newclass = new erd.Entity( params )
             

@@ -80,6 +80,7 @@ class GUIUML extends GUIIMPL
     # @see Diagram#add_class
     
     add_object_type: (hash_data) ->
+    	this.hide_toolbar()
     	@diag.add_class(hash_data)
 
     #
@@ -371,13 +372,13 @@ class GUIUML extends GUIIMPL
 
 	to_erd: (gui_instance) -> 
 		$.mobile.loading("show", text: "Generating ER Diagram...", textVisible: true, textonly: false)
-#		gui_instance.hide_diagram_page()
+		gui_instance.hide_toolbar()
 		gui_instance.switch_to_erd()
-#		gui_instance.show_diagram_page() 
 		json = JSON.stringify(@diag.to_json())
 		@serverconn.request_meta2erd_translation(json,(data)-> 
 			gui_instance.import_jsonstr(data)
 		)
+		$.mobile.loading("hide")
 
 
 exports = exports ? this

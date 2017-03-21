@@ -367,7 +367,7 @@ class ERDiagram extends Diagram
 #                    elt.position.x,
 #                    elt.position.y)
         this)
-        # associations
+        # relationships
         json.links.forEach(
             (elt, index, arr) ->
                 if elt.type is "association"

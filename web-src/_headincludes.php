@@ -18,7 +18,7 @@ if ($environment == 'production'){
     <script src="./js/libs/lodash.min.js"></script>
     <script src="./js/libs/backbone-min.js"></script>
     <script src="./js/libs/joint.min.js"></script>
-    <!-- script src="./js/libs/joint.shapes.erd.min.js"></script -->
+    <script src="./js/libs/joint.shapes.erd.min.js"></script>
     <script src="./js/libs/joint.shapes.uml.min.js"></script>
 <?php
 }else{
@@ -34,7 +34,7 @@ if ($environment == 'production'){
     <script src="./js/libs/lodash.min.js"></script>
     <script src="./js/libs/backbone.js"></script>
     <script src="./js/libs/joint.js"></script>
-    <!-- script src="./js/libs/joint.shapes.erd.js"></script -->
+    <script src="./js/libs/joint.shapes.erd.js"></script>
     <script src="./js/libs/joint.shapes.uml.js"></script>
 <?php 
 }
