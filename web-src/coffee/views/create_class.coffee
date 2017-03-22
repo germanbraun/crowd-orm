@@ -47,7 +47,6 @@ CreateClassView = Backbone.View.extend(
         
         
         create_class: (event) ->
-            # alert("Creando: " + $("#crearclase_input").val() + "...")
             guiinst.add_object_type(
                 name: $("#crearclase_input").val()
             )

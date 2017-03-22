@@ -17,7 +17,7 @@ joint.shapes.erd.Entity = joint.dia.Element.extend({
     defaults: joint.util.deepSupplement({
 
         type: 'erd.Entity',
-        size: { width: 150, height: 60 },
+        size: { width: 100, height: 50 },
         attrs: {
             '.outer': {
                 fill: '#2ECC71', stroke: '#27AE60', 'stroke-width': 2,

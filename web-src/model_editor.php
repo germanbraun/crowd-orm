@@ -7,7 +7,7 @@ require_once('template.php');
 	<?php
 	include '_headincludes.php';
 	?>
-	<title>Design</title>
+	<title>crowd, the ontologist</title>
 
 	<script src="./js/csstheme.js"></script>
 	<script src="./js/backbone_views.js"></script>
@@ -29,7 +29,7 @@ require_once('template.php');
 
     <body>
 	<div data-role="page" id="diagram-page">
-	    <div data-role="panel" data-display="overlay" data-position="left" id="tools-panel" class="comandos ui-corner-all" id="comandos">
+	    <div data-role="panel" data-display="reveal" data-position="left" id="tools-panel" class="comandos ui-corner-all" id="comandos">
 		<div style="text-align: right">
 		    <a href="#comandos" data-rel="close" class="ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all ui-btn-inline ui-mini">Close</a>
 		</div>
@@ -42,7 +42,8 @@ require_once('template.php');
 		<div data-role="navbar">
 		    <ul>
 			<li><a href="#tools-panel" data-transition="slide" class="ui-btn ui-icon-bars ui-btn-icon-left">UML</a></li>
-			<li><a href="#details-page" data-transition="slide" class="ui-btn ui-btn-icon-right ui-icon-forward">Details</a></li>
+			<li><a href="#details-page" data-transition="slide" class="ui-btn ui-btn-icon-right ui-icon-forward">Reasoning Details</a></li>
+			<li><a href="#verbalisation-page" data-transition="slide" class="ui-btn ui-btn-icon-right ui-icon-forward">Verbalisation</a></li>
 		    </ul>
 		</div>
 	    </div> <!-- /header -->
@@ -92,7 +93,7 @@ require_once('template.php');
 	<!-- Details page -->
 	<div data-role="page" id="details-page">
 	    <div data-role="header" class="wicom-header">
-		<h1>Details</h1>
+		<h1>Reasoning Details</h1>
 		<div data-role="navbar">
 		    <ul>
 			<li><a class="ui-btn ui-icon-back ui-btn-icon-left" href="#" data-rel="back">Back</a></li>
@@ -137,6 +138,42 @@ require_once('template.php');
 	    
 	    <div data-role="footer"></div>
 	</div> <!-- /page -->
+	
+	
+	
+    <!-- ---------------------------------------------------------------------- -->
+	<!-- Verbalisation page -->
+	<div data-role="page" id="verbalisation-page">
+	    <div data-role="header" class="wicom-header">
+		<h1>Verbalisation</h1>
+		<div data-role="navbar">
+		    <ul>
+			<li><a class="ui-btn ui-icon-back ui-btn-icon-left" href="#" data-rel="back">Back</a></li>
+		    </ul>
+		</div>
+	    </div>
+
+	    <div role="main_verbalisation" class="ui-content">
+		<div id="verbalisation_panel">
+		    <h1 id="verbalisation">Verbalisation</h1>
+		    <div id="verbalisation_details">
+			<h3 class="ui-bar ui-bar-a ui-corner-all">Verbalisation Output</h3>
+			<div class="ui-body">
+			    <div id="html-output"></div>
+			    <textarea cols="10" id="source_verbalisation">Verbalisation Here!</textarea>
+		    	    <a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all" type="button" id="verbalise_button"
+			    onclick="">Verbalise Again</a>
+			</div>
+		    </div>
+		</div>
+	    </div>
+	    
+	    <div data-role="footer"></div>
+	</div> <!-- /page -->
+	
+	
+<!-- ERD diagram page -->	
+	
 
     </body>
 </html>

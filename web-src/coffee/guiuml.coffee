@@ -268,11 +268,9 @@ class GUIUML extends GUIIMPL
         $("#tools-panel [data-rel=close]").click()
         
 
-#    hide_diagram_page: () ->
-#    	$("#diagram-page").hide()
+    hide_umldiagram_page: () -> $("#diagram-page").css("display","none")
     	
-#    show_diagram_page: () ->
-#    	$("#diagram-page").show()
+    show_umldiagram_page: () -> $("#diagram-page").css("display","block")
     
 
     # Change the interface into a "new association" state.

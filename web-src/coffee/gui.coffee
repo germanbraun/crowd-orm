@@ -29,10 +29,12 @@ class GUI
 
 	to_metamodel: () ->
 
-	switch_to_erd: () ->
+	switch_to_erd: () -> 
+#	    @current_gui.hide_umldiagram_page()
 	    @aux_gui = @current_gui
 	    @current_gui = @prev_gui
 	    @prev_gui = @aux_gui
+#	    @current_gui.show_eerdiagram_page()
 	
 	update_metamodel: (data) ->
 		@current_gui.update_metamodel(data)
@@ -59,9 +61,13 @@ class GUI
 
     hide_toolbar: () -> @current_gui.hide_toolbar()
 
-#    hide_diagram_page: () -> @current_gui.hide_diagram_page()
+    hide_umldiagram_page: () -> @current_gui.hide_umldiagram_page()
     
-#    show_diagram_page: () -> @current_gui.show_diagram_page()
+    show_umldiagram_page: () -> @current_gui.show_umldiagram_page()
+
+    hide_eerdiagram_page: () -> @current_gui.eerdiagram_page()
+    
+    show_eerdiagram_page: () -> @current_gui.eerdiagram_page()
     	
     set_editclass_classid: (model_id) ->
     	@current_gui.set_editclass_classid(model_id)

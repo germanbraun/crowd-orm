@@ -265,11 +265,9 @@ class GUIEER extends GUIIMPL
         $("#tools-panel [data-rel=close]").click()
 
 
-#    hide_diagram_page: () ->
-#    	$("#diagram-page-eer").hide()
+    hide_eerdiagram_page: () -> $("#diagram-eer-page").css("display","none")
     	
-#    show_diagram_page: () ->
-#    	$("#diagram-page-eer").show()
+    show_eerdiagram_page: () -> $("#diagram-eer-page").css("display","block")
     	
     # Change the interface into a "new association" state.
     #
