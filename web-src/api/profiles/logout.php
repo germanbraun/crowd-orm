@@ -25,7 +25,10 @@ require_once('../../common/import_functions.php');
 
 load('common.php', '../../wicom/users/');
 
+session_start();
+$username = $_SESSION['username'];
+
 logout_user();
 
-echo "Done."
+printf('{"username": "%s", "logged": false, "message": "Logged out."}', $username);
 ?>

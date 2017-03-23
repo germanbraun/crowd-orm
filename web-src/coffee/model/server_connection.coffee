@@ -40,6 +40,19 @@ class ServerConnection
             error: @error_callback
             )
 
+    # Send to the server a logout request.
+    #
+    # @param [function] callback_function A function to execute when the POST is successful.
+    request_logout: (callback_function) ->
+        url = @urlprefix + "api/profiles/logout.php"
+        console.log("Requesting at " + url)
+        $.ajax(
+            type: "GET",
+            url: url,
+            success: callback_function,
+            error: @error_callback
+            )
+
     # Send to the server a "is satisfiable" request
     #
     # @param [String] json String with the JSON data.

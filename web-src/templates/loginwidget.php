@@ -28,9 +28,16 @@
     </div>
     <div data-role="main" class="ui-content login-content">
 	<form>
-	    <input type="text" id="login_username" data-mini="true" />
+	    <div id="loginForm">
+	    <input type="text" id="login_username" data-mini="true" />	    
 	    <input type="password" id="login_password" data-mini="true" />
 	    <a class="ui-btn ui-corner-all ui-icon-check" type="button" id="login_login_btn">Login</a>
+	    </div>
+	    <div id="logoutForm">
+		<p>Are you sure?</p>
+		<div id="logout_username"></div>
+		<a class="ui-btn ui-corner-all ui-icon-check" type="button" id="logout_logout_btn">Logout</a>
+	    </div>
 	    <a class="ui-btn ui-corner-all ui-icon-back" type="button" id="login_cancel_btn">Cancel</a>
 	</form>
     </div>

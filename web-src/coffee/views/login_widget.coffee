@@ -17,6 +17,7 @@
 
 LoginWidgetView = Backbone.View.extend(
     initialize: () ->
+        @doing_login = true
         this.render()
         # We need to initialize the login-popup div because
         # jquery-mobile.js script is loaded before this script.
@@ -24,11 +25,16 @@ LoginWidgetView = Backbone.View.extend(
         #this.$el.hide()
         $("a#login_cancel_btn").on("click", this.hide)
         $("a#login_login_btn").on("click", this.do_login)
+        $("a#logout_logout_btn").on("click", this.do_logout)
     render: () ->
         template = _.template( $("#template_loginwidget").html() )
         this.$el.html( template() )
+        this.set_doing_login(@doing_login)
+
     show: () ->
         $(".login-popup").popup("open")
+        this.set_doing_login(@doing_login)
+
     # events:
         # "click a#login_cancel_btn" : this.hide
         # "click a#login_login_btn" : "do_login"
@@ -40,7 +46,24 @@ LoginWidgetView = Backbone.View.extend(
         gui.gui_instance.do_login(
             $("#login_username").val(),
             $("#login_password").val())
-        
+
+    do_logout: (event) ->
+        console.log("do_logout")
+        gui.gui_instance.hide_login()
+        gui.gui_instance.do_logout()
+
+    # Is this widget doing login or logout?
+    #
+    # Affects the next time it is called the show().
+    # 
+    # @param doing_login {boolean} If true, the next time the dialog is shown it will display the login widgets.
+    set_doing_login: (@doing_login) ->
+        if @doing_login
+            $("#logoutForm").hide()
+            $("#loginForm").show()
+        else
+            $("#loginForm").hide()
+            $("#logoutForm").show()
 
 )
 

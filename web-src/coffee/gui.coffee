@@ -176,6 +176,8 @@ class GUI
             pass,
             gui.update_login)
 
+    # Callback for the ServerConnection
+    # 
     # Update the interface according to a succesful login.
     #
     # @param data {String} The information about the login answer in JSON format.
@@ -191,12 +193,27 @@ class GUI
             loginbutton.html(@login.username + "(Logged in)")
             loginbutton[0].classList.remove("ui-icon-user")
             loginbutton[0].classList.add("ui-icon-action")
+            @loginwidget.set_doing_login(false)
         else
             loginbutton = $("#loginButton")
             loginbutton.html("Login")
             loginbutton[0].classList.remove("ui-icon-action")
             loginbutton[0].classList.add("ui-icon-user")
+            @loginwidget.set_doing_login(true)
 
+    # Clear the login and reset the interface. Send information to the server.
+    do_logout: () ->
+        @serverconn.request_logout(gui.update_logout)
+
+    # Callback for the ServerConnection.
+    # 
+    # Update the interface and JS as if the user has recently logged out.
+    #
+    # @param data {String} The information returned from the server.
+    update_logout: (data) ->
+        console.log(data)
+        @login = null
+        this.set_logged_in()
 
     #
     # Put the traffic light on green.
@@ -438,6 +455,9 @@ exports.gui.show_error = (jqXHR, status, text) ->
 
 exports.gui.update_login = (data) ->
     exports.gui.gui_instance.update_login(data)
+
+exports.gui.update_logout = (data) ->
+    exports.gui.gui_instance.update_logout(data)
 
 exports.gui.GUI = GUI
 
