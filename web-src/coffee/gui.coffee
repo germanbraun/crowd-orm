@@ -34,6 +34,8 @@ class GUI
         @loginwidget = new LoginWidgetView({el: $("#loginwidget_placer")})
         @importjsonwidget = new ImportJSONView({el: $("#importjsonwidget_placer")})
         @exportjsonwidget = new ExportJSONView({el: $("#exportjson_placer")})
+
+        @login = null
         
         @serverconn = new ServerConnection( (jqXHR, status, text) ->
             exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
@@ -162,6 +164,39 @@ class GUI
     # 
     hide_login: () ->
         @loginwidget.hide()
+
+    # Do the login steps connecting to the server and verifying the username
+    # and password.
+    #
+    # @param username {String} The username.
+    # @param pass {String} The password.
+    do_login: (username, pass) ->
+        @serverconn.request_login(
+            username,
+            pass,
+            gui.update_login)
+
+    # Update the interface according to a succesful login.
+    #
+    # @param data {String} The information about the login answer in JSON format.
+    update_login: (data) ->
+        console.log(data)
+        @login = JSON.parse(data)
+        this.set_logged_in()
+
+    # According to the information about @login, update the interface.
+    set_logged_in: () ->
+        if @login?
+            loginbutton = $("#loginButton")
+            loginbutton.html(@login.username + "(Logged in)")
+            loginbutton[0].classList.remove("ui-icon-user")
+            loginbutton[0].classList.add("ui-icon-action")
+        else
+            loginbutton = $("#loginButton")
+            loginbutton.html("Login")
+            loginbutton[0].classList.remove("ui-icon-action")
+            loginbutton[0].classList.add("ui-icon-user")
+
 
     #
     # Put the traffic light on green.
@@ -400,6 +435,9 @@ exports.gui.update_translation = (data) ->
 
 exports.gui.show_error = (jqXHR, status, text) ->
     exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
+
+exports.gui.update_login = (data) ->
+    exports.gui.gui_instance.update_login(data)
 
 exports.gui.GUI = GUI
 

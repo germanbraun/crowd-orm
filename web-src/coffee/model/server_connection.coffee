@@ -23,11 +23,27 @@ class ServerConnection
     set_urlprefix : (str) ->
         @urlprefix = str
 
+    # Send to the server a login request.
+    #
+    # @param [Stirng] username The username.
+    # @param [String] pass The password.
+    # @param [function] callback_function A function to execute when the POST is successful.
+    request_login: (username, pass, callback_function) ->
+        postdata = "username=" + username + "&password=" + pass
+        url = @urlprefix + "api/profiles/login.php"
+        console.log("Requesting at " + url)
+        $.ajax(
+            type: "POST",
+            url: url,
+            data: postdata,
+            success: callback_function,
+            error: @error_callback
+            )
+
     # Send to the server a "is satisfiable" request
     #
     # @param [String] json String with the JSON data.
-    # @param [function] callback_function a function to execute when
-    #     the POST is done.
+    # @param [function] callback_function a function to execute when the POST is done.
     request_satisfiable: (json, callback_function) ->
         postdata = "json=" + json
         url = @urlprefix + "api/querying/satisfiable.php"

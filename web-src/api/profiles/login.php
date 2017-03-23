@@ -44,7 +44,7 @@ use Wicom\Users\User;
 session_start();
 if (array_key_exists('username', $_SESSION) and
     ($_SESSION['username'] != null)){
-    die('Session already initialized.');
+    die(sprintf('{"username": "%s", "logged": true, "message": "Session already initialized."}', $_SESSION['username']));
 }
 
 if ((!array_key_exists('username', $_REQUEST)) or
@@ -59,10 +59,12 @@ if (($user != null) and ($user->check_password($_REQUEST['password']))){
     // Username and password are registered, accept login.
     session_reset();
     $_SESSION['username'] = $user->get_name();
-    echo "Logged in.";
+    printf('{"username": "%s", "logged": true, "message": "Logged in."}',
+           $_SESSION['username']);
 }else{
     logout_user();
-    echo "Not logged in.";
+    printf('{"username": "%s", "logged": false, "message": "Not logged in."}',
+           $_SESSION['username']);
 }
 
 session_commit();

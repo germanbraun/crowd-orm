@@ -35,8 +35,13 @@ LoginWidgetView = Backbone.View.extend(
     hide: (event) ->
         $(".login-popup").popup("close")
     do_login: (event) ->
-        gui.instance.login_hide()
         console.log("do_login")
+        gui.gui_instance.hide_login()
+        gui.gui_instance.do_login(
+            $("#login_username").val(),
+            $("#login_password").val())
+        
+
 )
 
         
