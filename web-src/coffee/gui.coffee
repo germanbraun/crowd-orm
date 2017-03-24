@@ -441,8 +441,12 @@ class GUI
 
     # Display the saveloadjson Popup in the save state.
     show_save_json: () ->
-        @saveloadjsonwidget.is_loading = false
-        @saveloadjsonwidget.show()
+        $.mobile.loading("show",
+            text: "Retrieving models list...",
+            textVisible: true,
+            textonly: false
+        )
+        @serverconn.request_model_list(gui.update_saveloadjsonwidget)
 
     # Display the saveloadjson Popup in the load state.
     #
