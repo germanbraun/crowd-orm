@@ -43,5 +43,11 @@
     <a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all" type="button" id="importjson_open_dialog">Import JSON</a>
     <label>Export JSON</label>
     <a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all" type="button" id="exportjson_open_dialog">Export JSON</a>
+    <hr/>
+    <p>Profile</p>
+    <div data-role="controlgroup" data-type="horizontal">
+	<a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all ui-btn-inline ui-mini" type="button" id="savejson">Save</a>
+	<a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all ui-btn-inline ui-mini" type="button" id="savejson">Load</a>
+    </div>
 </div>
 

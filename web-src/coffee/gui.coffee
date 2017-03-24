@@ -34,6 +34,7 @@ class GUI
         @loginwidget = new LoginWidgetView({el: $("#loginwidget_placer")})
         @importjsonwidget = new ImportJSONView({el: $("#importjsonwidget_placer")})
         @exportjsonwidget = new ExportJSONView({el: $("#exportjson_placer")})
+        @saveloadjsonwidget = new SaveLoadJson({el: $("#saveloadjson_placer")})
 
         @login = null
         
@@ -188,6 +189,8 @@ class GUI
             this.set_logged_in()
         else
             @login = null
+            # For some reason it won't show the error message if not wait for
+            # one second.
             setTimeout(() ->
                 gui.gui_instance.show_error("Problems When Logging In", data)
             ,1000)
@@ -433,6 +436,37 @@ class GUI
         @owllinkinsert.set_owllink("")
         this.hide_toolbar()
 
+    # Display the saveloadjson Popup in the save state.
+    show_save_json: () ->
+        @saveloadjsonwidget.is_loading = false
+        @saveloadjsonwidget.show()
+
+    # Display the saveloadjson Popup in the load state.
+    #
+    # But first, we must retrieve the model list.
+    show_load_json: () ->
+        $.mobile.loading("show",
+            text: "Retrieving models list...",
+            textVisible: true,
+            textonly: false
+        )
+        @serverconn.request_model_list(gui.update_saveloadjsonwidget)
+
+    # Display the loadjson but without retrieving the model list.
+    #
+    # @param list {Array} A list of Strings with the names of the models.
+    show_load_json_with_list: (list) ->
+        $.mobile.loading("hide")
+        @saveloadjsonwidget.is_loading = true
+        @saveloadjsonwidget.set_jsonlist(list)
+        @saveloadjsonwidget.show()
+
+    # Hide the saveloadjson Popup.
+    #
+    # Maybe the user canceled?
+    hide_saveloadjson: () ->
+        @saveloadjsonwidget.hide()
+
 exports = exports ? this
 
 if exports.gui == undefined
@@ -464,6 +498,10 @@ exports.gui.update_login = (data) ->
 
 exports.gui.update_logout = (data) ->
     exports.gui.gui_instance.update_logout(data)
+
+exports.gui.update_saveloadjsonwidget = (data) ->
+    list = JSON.parse(data)
+    exports.gui.gui_instance.show_load_json_with_list(list)
 
 exports.gui.GUI = GUI
 

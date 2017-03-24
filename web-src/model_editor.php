@@ -47,6 +47,7 @@ require_once('template.php');
 	    
 	    <div role="main" class="ui-content">
 		<div id="errorwidget_placer"></div>
+		<div id="saveloadjson_placer"></div>
 		<div id="loginwidget_placer"></div>
 		<div id="importjsonwidget_placer"></div>
 		<div id="container"></div>
@@ -66,6 +67,7 @@ require_once('template.php');
 		insert_template("insertowllink");
 		insert_template("importjson");
 		insert_template("exportjson");
+		insert_template("saveloadjsonwidget");
 		?>			
    		
 		<div id="editclass"></div>
