@@ -47,7 +47,6 @@ require_once('template.php');
 	    
 	    <div role="main" class="ui-content">
 		<div id="errorwidget_placer"></div>
-		<div id="saveloadjson_placer"></div>
 		<div id="loginwidget_placer"></div>
 		<div id="importjsonwidget_placer"></div>
 		<div id="container"></div>
@@ -133,6 +132,24 @@ require_once('template.php');
 		    </div>
 		</div>
 	    </div>
+	    
+	    <div data-role="footer"></div>
+	</div> <!-- /page -->
+	<!-- -------------------------------------------------------------------------------- -->
+	<!-- User Details Page -->
+	<div data-role="page" id="user-page">
+	    <div data-role="header" class="wicom-header">
+		<h1>User</h1>
+		<div data-role="navbar">
+		    <ul>
+			<li><a class="ui-btn ui-icon-back ui-btn-icon-left" href="#" data-rel="back">Back</a></li>
+		    </ul>
+		</div> <!-- /navbar -->
+	    </div> <!-- /header -->
+
+	    <div role="main" class="ui-content">
+		<div id="saveloadjson_placer"></div>
+	    </div> <!-- /main -->
 	    
 	    <div data-role="footer"></div>
 	</div> <!-- /page -->

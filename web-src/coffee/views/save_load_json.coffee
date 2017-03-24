@@ -22,49 +22,29 @@ SaveLoadJson = Backbone.View.extend(
             @is_loading = true
             @jsonlist = []
             this.render()
-            this.$el.find(".saveloadjsonwidget-popup").popup()
-            $("a#saveloadjson_cancel_btn").on("click", this.hide)
+            # $("a#saveloadjson_cancel_btn").on("click", this.hide)
 
         render: () ->
             template = _.template( $("#template_saveloadjsonwidget").html(), {} )
             this.$el.html(template)
 
         events: 
-        	"click a#saveloadjson_cancel_btn" :
-                "hide"
             "click a#savejson_save_btn" :
                 "save"
 
         set_jsonlist: (list) ->
             @jsonlist = list
-            $("#modelList").html(this.retrieve_html_list())
-
-        show: () ->
-            $(".saveloadjsonwidget-popup").popup("open")
-            this.set_load_save()
-
-        hide: (event) ->
-            $(".saveloadjsonwidget-popup").popup("close")
+            $("#modelList").html('')
+            # As appears on http://api.jquerymobile.com/enhanceWithin/
+            $(this.retrieve_html_list()).appendTo("#modelList").enhanceWithin()
+            $("#modelList").listview()
+            $("#modelList").listview("refresh")
 
         retrieve_html_list: () ->
             lst_str = @jsonlist.map( (value, index, arr) ->
                 '<li><a href="#">' + value + '</a></li>'
             )
             lst_str.join(' ')
-
-        # Set to load or save depending on @is_loading hiding the needed
-        # widgets.
-        set_load_save: () ->
-            if @is_loading
-                $("#savejson-header").hide()
-                $("#savejson-form").hide()
-                $("#loadjson-header").show()
-                $("#loadjson-form").show()
-            else
-                $("#savejson-header").show()
-                $("#savejson-form").show()
-                $("#loadjson-header").hide()
-                $("#loadjson-form").hide()
 
         save: () ->
             gui.gui_instance.save_model()

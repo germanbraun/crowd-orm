@@ -335,6 +335,9 @@ class GUI
         $.mobile.changePage("#diagram-page",
             transition: "slide",
             reverse: true)
+    change_to_user_page: () ->
+        $.mobile.changePage("#user-page",
+            transition: "slide")
     #
     # Hide the left side "Tools" toolbar
     # 

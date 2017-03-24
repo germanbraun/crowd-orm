@@ -22,20 +22,15 @@
  */
 
 ?>
-<div id="saveloadjsonwidget" class="saveloadjsonwidget-popup" data-dismissible="false" data-role="popup">
-    <div data-role="header" class="saveloadjsonwidget-header">
-	<h1 id="savejson-header">Save</h1>
-	<h1 id="loadjson-header">Load</h1>
-    </div>
-    <div data-role="main" class="ui-content login-content">
-	<form id="savejson-form">
-	    <input type="text" id="savejson_name" data-mini="true" />
-	    <a class="ui-btn ui-corner-all ui-icon-check" type="button" id="savejson_save_btn">Save</a>
-	</form>
-	<form id="loadjson-form">
-	    <ul data-role="listview" id="modelList">
-	    </ul>
-	</form>
-	<a class="ui-btn ui-corner-all ui-icon-back" type="button" id="saveloadjson_cancel_btn">Cancel</a>
-    </div>
+<div id="saveloadjsonwidget" class="saveloadjsonwidget">
+    <h1 id="savejson-header">Save</h1>
+    <form id="savejson-form">
+	<input type="text" id="savejson_name" data-mini="true" />
+	<a class="ui-btn ui-corner-all ui-icon-check" type="button" id="savejson_save_btn">Save</a>
+    </form>
+    <h1 id="loadjson-header">Load</h1>
+    <form id="loadjson-form">
+	<ul data-role="listview" id="modelList" data-inset="true" data-autodividers="true" data-filter="true" data-filter-placeholder="Model...">
+	</ul>
+    </form>
 </div>
