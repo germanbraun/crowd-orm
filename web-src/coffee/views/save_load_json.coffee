@@ -49,7 +49,8 @@ SaveLoadJson = Backbone.View.extend(
             lst_str.join(' ')
 
         save: () ->
-            gui.gui_instance.save_model()
+            modelname = $("#savejson_name").val()
+            gui.gui_instance.save_model(modelname)
 
         load_model: (event) ->
             modelname = event.target.text

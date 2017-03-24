@@ -35,6 +35,24 @@ class ServerConnection
             success: callback_function,
             error: @error_callback
             )
+
+    # Send to the server the JSON representatino of the model.
+    #
+    # @param modelname {string} The model to load
+    # @param json {string} The JSON representation.
+    # @param callback_function {function} A function to execute when the server answer successfully
+    send_model: (modelname, json, callback_function) ->
+        url = @urlprefix + "api/profiles/save_model.php"
+        postdata = "model_name=" + modelname + "&json=" + json
+        console.log("Requesting at " + url)
+        $.ajax(
+            type: "POST",
+            url: url,
+            data: postdata,
+            success: callback_function,
+            error: @error_callback
+            )
+            
     # Send to the server e request for retrieving the model list.
     #
     # @param modelname {string} The model to load

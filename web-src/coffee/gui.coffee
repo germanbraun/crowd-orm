@@ -473,6 +473,17 @@ class GUI
     hide_saveloadjson: () ->
         @saveloadjsonwidget.hide()
 
+    save_model: (modelname) ->
+        $.mobile.loading("show",
+            text: "Sending to the server..."
+            textVisible: true
+            textonly: false
+        )
+        jsonstr = this.diag_to_json()
+        @serverconn.send_model(modelname, jsonstr, gui.model_sended)
+        this.change_to_diagram_page()
+            
+
     # Retrieve the model from the server and import it.
     #
     # @param modelname {String} The modelname to import.
@@ -530,6 +541,11 @@ exports.gui.update_model = (data) ->
     console.log("Model retrieved...")
     console.log(data)
     gui.gui_instance.import_jsonstr(data)
+
+exports.gui.model_sended = (data) ->
+    $.mobile.loading("hide")
+    console.log("Model sended...")
+    console.log(data)
 
 exports.gui.GUI = GUI
 
