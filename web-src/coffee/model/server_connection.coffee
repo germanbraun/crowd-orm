@@ -35,6 +35,21 @@ class ServerConnection
             success: callback_function,
             error: @error_callback
             )
+    # Send to the server e request for retrieving the model list.
+    #
+    # @param modelname {string} The model to load
+    # @param callback_function {function} A function to execute when the server answer successfully
+    request_model: (modelname, callback_function) ->
+        url = @urlprefix + "api/profiles/retrieve_model.php"
+        postdata = "model_name=" + modelname
+        console.log("Requesting at " + url)
+        $.ajax(
+            type: "POST",
+            url: url,
+            data: postdata,
+            success: callback_function,
+            error: @error_callback
+            )
 
     # Send to the server a login request.
     #

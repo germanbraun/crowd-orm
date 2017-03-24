@@ -469,6 +469,17 @@ class GUI
     hide_saveloadjson: () ->
         @saveloadjsonwidget.hide()
 
+    # Retrieve the model from the server and import it.
+    #
+    # @param modelname {String} The modelname to import.
+    load_model: (modelname) ->
+        $.mobile.loading("show",
+            text: "Retrieving model..."
+            textVisible: true,
+            textonly: false
+        )
+        @serverconn.request_model(modelname, gui.update_model)
+
 exports = exports ? this
 
 if exports.gui == undefined
@@ -509,6 +520,12 @@ exports.gui.update_saveloadjsonwidget = (data) ->
         console.log(error)
         gui.gui_instance.show_error("Couldn't retrieve models list.", data)
     exports.gui.gui_instance.show_load_json_with_list(list)
+
+exports.gui.update_model = (data) ->
+    $.mobile.loading("hide")
+    console.log("Model retrieved...")
+    console.log(data)
+    gui.gui_instance.import_jsonstr(data)
 
 exports.gui.GUI = GUI
 

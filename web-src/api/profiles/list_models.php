@@ -44,5 +44,5 @@ if ($user == null){
 
 // Model exists, retrieve the JSON.
 
-json_encode($user->get_model_list());
+echo json_encode($user->get_model_list());
 ?>

@@ -43,6 +43,9 @@ class User{
         $this->name = $name;
         $this->pass = $pass;
         $this->model_list = $this->retrieve_model_list();
+        if (!$this->model_list){
+            $this->model_list = [];
+        }                       
     }
 
     /**
@@ -56,6 +59,8 @@ class User{
 
     /**
        Retrieve all model list from the DB.
+
+       @return Array of strings.
      */
     function get_model_list(){
         return $this->model_list;
