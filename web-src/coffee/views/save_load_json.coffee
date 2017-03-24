@@ -31,6 +31,8 @@ SaveLoadJson = Backbone.View.extend(
         events: 
             "click a#savejson_save_btn" :
                 "save"
+            "click #modelList a":
+                "load_model"
 
         set_jsonlist: (list) ->
             @jsonlist = list
@@ -48,6 +50,10 @@ SaveLoadJson = Backbone.View.extend(
 
         save: () ->
             gui.gui_instance.save_model()
+
+        load_model: (event) ->
+            modelname = event.target.text
+            gui.gui_instance.load_model(modelname)
 );
 
 exports = exports ? this

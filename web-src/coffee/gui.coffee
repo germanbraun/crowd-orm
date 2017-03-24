@@ -460,9 +460,8 @@ class GUI
     # @param list {Array} A list of Strings with the names of the models.
     show_load_json_with_list: (list) ->
         $.mobile.loading("hide")
-        @saveloadjsonwidget.is_loading = true
         @saveloadjsonwidget.set_jsonlist(list)
-        @saveloadjsonwidget.show()
+        this.change_to_user_page()
 
     # Hide the saveloadjson Popup.
     #
@@ -503,7 +502,12 @@ exports.gui.update_logout = (data) ->
     exports.gui.gui_instance.update_logout(data)
 
 exports.gui.update_saveloadjsonwidget = (data) ->
-    list = JSON.parse(data)
+    try
+        list = JSON.parse(data)
+    catch error
+        $.mobile.loading("hide")
+        console.log(error)
+        gui.gui_instance.show_error("Couldn't retrieve models list.", data)
     exports.gui.gui_instance.show_load_json_with_list(list)
 
 exports.gui.GUI = GUI

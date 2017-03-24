@@ -23,6 +23,19 @@ class ServerConnection
     set_urlprefix : (str) ->
         @urlprefix = str
 
+    # Send to the server e request for retrieving the model list.
+    #
+    # @param callback_function {function} A function to execute when the server answer successfully
+    request_model_list: (callback_function) ->
+        url = @urlprefix + "api/profiles/list_models.php"
+        console.log("Requesting at " + url)
+        $.ajax(
+            type: "GET",
+            url: url,
+            success: callback_function,
+            error: @error_callback
+            )
+
     # Send to the server a login request.
     #
     # @param [Stirng] username The username.
