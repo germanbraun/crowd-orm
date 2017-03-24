@@ -23,14 +23,23 @@
 
 ?>
 <div id="saveloadjsonwidget" class="saveloadjsonwidget">
-    <h1 id="savejson-header">Save</h1>
-    <form id="savejson-form">
-	<input type="text" id="savejson_name" data-mini="true" />
-	<a class="ui-btn ui-corner-all ui-icon-check" type="button" id="savejson_save_btn">Save</a>
-    </form>
-    <h1 id="loadjson-header">Load</h1>
-    <form id="loadjson-form">
-	<ul data-role="listview" id="modelList" data-inset="true" data-autodividers="true" data-filter="true" data-filter-placeholder="Model...">
-	</ul>
-    </form>
+    <div data-role="collapsible" data-collapsed="true"
+	 data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
+	<h1 id="savejson-header">Save</h1>
+	<form id="savejson-form">
+	    <label>Model name</label>
+	    <input type="text" id="savejson_name" data-mini="true" />
+	    <a class="ui-btn ui-corner-all ui-icon-check" type="button" id="savejson_save_btn">Save</a>
+	</form>
+    </div>
+
+    <div data-role="collapsible" data-collapsed="true"
+	 data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
+	<h1 id="loadjson-header">Load</h1>
+	<form id="loadjson-form">
+	    <ul data-role="listview" id="modelList" data-inset="true"
+		data-autodividers="true" data-filter="true" data-filter-placeholder="Model...">
+	    </ul>
+	</form>
+    </div>
 </div>
