@@ -184,7 +184,13 @@ class GUI
     update_login: (data) ->
         console.log(data)
         @login = JSON.parse(data)
-        this.set_logged_in()
+        if @login.logged
+            this.set_logged_in()
+        else
+            @login = null
+            setTimeout(() ->
+                gui.gui_instance.show_error("Problems When Logging In", data)
+            ,1000)
 
     # According to the information about @login, update the interface.
     set_logged_in: () ->
