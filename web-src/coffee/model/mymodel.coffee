@@ -166,10 +166,20 @@ class Class extends MyModel
             else
                 @joint.push(factory.create_class(@name, @attrs, @methods))
 
+
     to_json: () ->
         json = super()
-        json.attrs = @attrs.toSource() if @attrs != null     
-        json.methods = @methods.toSource() if @methods != null
+        array = []
+        if @attrs?
+        	@attrs.forEach( (cv,index,@attrs) -> 
+        		dots = @attrs[index].split ":"
+        		name_attr = dots[0]
+        		datatype_attr = dots[1]
+        		array.push({name : name_attr, datatype : datatype_attr})
+        		return array
+        		)
+        json.attrs = array
+        json.methods = @methods #.toSource() if @methods != null
         if @joint?
             json.position = @joint[0].position()
         return json

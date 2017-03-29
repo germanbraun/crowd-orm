@@ -119,7 +119,7 @@ class GUIUML extends GUIIMPL
     # @param class_b_id {string}
     # @param name {string} optional. The association name.
     # @param mult {array} optional. An array of two string with the cardinality from class and to class b.
-    add_association: (class_a_id, class_b_id, name=null, mult=null) ->
+    add_relationship: (class_a_id, class_b_id, name=null, mult=null) ->
         @diag.add_association(class_a_id, class_b_id, name, mult)
         this.set_selection_state()
 
@@ -129,7 +129,7 @@ class GUIUML extends GUIIMPL
     # @param class_child_id {string} The child class Id.
     # 
     # @todo Support various children on parameter class_child_id.
-    add_generalization: (class_parent_id, class_child_id, disjoint=false, covering=false) ->
+    add_subsumption: (class_parent_id, class_child_id, disjoint=false, covering=false) ->
         @diag.add_generalization(class_parent_id, class_child_id, disjoint, covering)
         this.set_selection_state()
 
@@ -203,7 +203,7 @@ class GUIUML extends GUIIMPL
         )
         @serverconn.request_satisfiable(
             this.diag_to_json(),
-            gui.update_satisfiable # Be careful with the context
+            gui_instance.update_satisfiable # Be careful with the context
             # change! this will have another object...
             )
 
@@ -228,7 +228,7 @@ class GUIUML extends GUIIMPL
     		$("#owllink_source").show()
     		$("#html-output").hide()
     	$.mobile.loading("hide")
-    	gui.current_gui.change_to_details_page()
+    	gui_instance.change_to_details_page()
         
   
     update_metamodel: (data) ->

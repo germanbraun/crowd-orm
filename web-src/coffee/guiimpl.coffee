@@ -89,7 +89,7 @@ class GUIIMPL
     # @param class_b_id {string}
     # @param name {string} optional. The association name.
     # @param mult {array} optional. An array of two string with the cardinality from class and to class b.
-    add_association: (class_a_id, class_b_id, name=null, mult=null) ->
+    add_relationship: (class_a_id, class_b_id, name, mult) ->
        
 
     # Add a Generalization link and then set the selection state.
@@ -98,7 +98,7 @@ class GUIIMPL
     # @param class_child_id {string} The child class Id.
     # 
     # @todo Support various children on parameter class_child_id.
-    add_generalization: (class_parent_id, class_child_id, disjoint=false, covering=false) ->
+    add_subsumption: (class_parent_id, class_child_id, disjoint, covering) ->
         
 
     #

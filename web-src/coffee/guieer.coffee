@@ -24,17 +24,15 @@ class GUIEER extends GUIIMPL
         @diag = new ERDiagram(@graph)
         @state = gui.state_inst.selection_state()
         @crearclase = new CreateClassView({el: $("#crearclase1")});
-        @editclass = new EditClassView({el: $("#editclass")})
-        @classoptions = new ClassOptionsView({el: $("#classoptions")})
-        @relationoptions = new RelationOptionsView({el: $("#relationoptions")})
-        @isaoptions = new IsaOptionsView({el: $("#isaoptions")})
+        @editclass = new EditClassView({el: $("#editclass1")})
+        @classoptions = new ClassOptionsView({el: $("#classoptions1")})
+        @relationoptions = new RelationOptionsView({el: $("#relationoptions1")})
+        @isaoptions = new IsaOptionsView({el: $("#isaoptions1")})
         @trafficlight = new TrafficLightsView({el: $("#trafficlight")})
         @owllinkinsert = new OWLlinkInsertView({el: $("#owllink_placer")})
         @errorwidget = new ErrorWidgetView({el: $("#errorwidget_placer")})
         @importjsonwidget = new ImportJSONView({el: $("#importjsonwidget_placer1")})
-        @exportjsonwidget = new ExportJSONView({el: $("#exportjson_placer")})
-#        @meta2uml = new CreateUMLView({el: $("#meta2uml")})
-#        @meta2orm = new CreateORMView({el: $("#meta2orm")})
+        @exportjsonwidget = new ExportJSONView({el: $("#exportjson_placer1")})
         
         @serverconn = new ServerConnection( (jqXHR, status, text) ->
             exports.gui.current_gui.show_error(status + ": " + text , jqXHR.responseText)
@@ -124,7 +122,7 @@ class GUIEER extends GUIIMPL
     # @param class_b_id {string}
     # @param name {string} optional. The association name.
     # @param mult {array} optional. An array of two string with the cardinality from class and to class b.
-    add_association: (class_a_id, class_b_id, name=null, mult=null) ->
+    add_relationship: (class_a_id, class_b_id, name=null, mult=null) ->
         @diag.add_association(class_a_id, class_b_id, name, mult)
         this.set_selection_state()
 
@@ -134,7 +132,7 @@ class GUIEER extends GUIIMPL
     # @param class_child_id {string} The child class Id.
     # 
     # @todo Support various children on parameter class_child_id.
-    add_generalization: (class_parent_id, class_child_id, disjoint=false, covering=false) ->
+    add_subsumption: (class_parent_id, class_child_id, disjoint=false, covering=false) ->
         @diag.add_generalization(class_parent_id, class_child_id, disjoint, covering)
         this.set_selection_state()
 

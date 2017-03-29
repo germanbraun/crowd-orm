@@ -40,11 +40,18 @@ class GUI
 		@current_gui.update_metamodel(data)
 
 	translate_owllink: () ->
-		@current_gui.translate_owllink(this)
+		@current_gui.translate_owllink()
 
 	update_translation: () ->
 
-	add_object_type: (name) -> @current_gui.add_object_type(name)
+	add_object_type: (name) -> 
+	    @current_gui.add_object_type(name)
+
+    add_relationship: (class_a_id, class_b_id, name, mult) -> 
+        @current_gui.add_relationship(class_a_id, class_b_id, name, mult)
+
+    add_subsumption: (class_parent_id, class_child_id, disjoint, covering) -> 
+    	@current_gui.add_subsumption(class_parent_id, class_child_id, disjoint, covering)
 	
 	edit_class_name: (class_id, name) -> @current_gui.edit_class_name(class_id, name)
 	
@@ -55,7 +62,10 @@ class GUI
 
     set_options_classid: (model_id) ->
     	@current_gui.set_options_classid(model_id)
-    	
+
+
+    set_association_state: (class_id, mult) -> @current_gui.set_association_state(class_id, mult)
+    	    	
     hide_options: () ->
     	@current_gui.hide_options()
 
@@ -74,9 +84,6 @@ class GUI
     	
     set_selection_state: () ->
     	@current_gui.set_selection_state()
-
-    add_generalization: (class_parent_id, class_child_id, disjoint, covering) ->
-    	@current_gui.add_generalization(class_parent_id, class_child_id, disjoint, covering)
         	
     # Update and show the "Export JSON String" section.
 	show_export_json: () ->
@@ -96,7 +103,8 @@ class GUI
 	import_jsonstr: (data) -> @current_gui.import_jsonstr(data)
 	
 	show_import_json: () -> @current_gui.show_import_json()
-        
+	
+	reset_all: () -> @current_gui.reset_all()
         
 exports = exports ? this
 if exports.gui == undefined

@@ -29,7 +29,7 @@ class State
     # What to do when the user clicked on a cell.
     #
     # @abstract
-    on_cell_clicked: (cellView, event, x, y, gui) ->
+    on_cell_clicked: (cellView, event, x, y, gui_instance) ->
 
     selection_state: () ->
         return @selectionstate_inst
@@ -44,18 +44,18 @@ class State
 class SelectionState extends State
     constructor: () ->
         
-    on_cell_clicked: (cellView, event, x, y, gui) ->
+    on_cell_clicked: (cellView, event, x, y, gui_instance) ->
         if (cellView.highlighted == undefined or cellView.highlighted == false) 
             cellView.highlight()
             cellView.highlighted = true
 
             # classoptions = new ClassOptionsView({el: $("#classoptions")})
-            gui.set_options_classid(cellView.model.id)
+            gui_instance.set_options_classid(cellView.model.id)
 
         else
             cellView.unhighlight()
             cellView.highlighted = false
-            gui.hide_options()
+            gui_instance.hide_options()
             
 
 
@@ -120,11 +120,11 @@ class AssociationState extends State
     # @param x [int] Where's the X coordinate position where the mouse has clicked.
     # @param y [int] Where's the Y coordinate position where the mouse has clicked.
     # @param gui [GUI] A the current GUI instance.
-    on_cell_clicked: (cell_view, event, x, y, gui) ->
+    on_cell_clicked: (cell_view, event, x, y, gui_instance) ->
         if @with_class
-            gui.add_association_class(@cell_starter, cell_view.model.id, @name, @mult, @roles)
+            gui_instance.add_association_class(@cell_starter, cell_view.model.id, @name, @mult, @roles)
         else
-            gui.add_association(@cell_starter, cell_view.model.id, @name, @mult, @roles)
+            gui_instance.add_relationship(@cell_starter, cell_view.model.id, @name, @mult, @roles)
 
         this.reset()
 
@@ -146,7 +146,7 @@ class IsAState extends State
     # @param cell_starter {string} the parent Cell Id. 
     set_cellStarter: (@cell_starter) ->
 
-    # Set the constrints of the generalization.
+    # Set the constraints of the generalization.
     #
     # @param disjoint {Boolean} If childrens are disjoint instances.
     # @param covering {Boolean} If the parent has no instances and are represented as the children ones.
@@ -154,8 +154,8 @@ class IsAState extends State
     set_disjoint: (@disjoint) ->
     set_covering: (@covering) ->
 
-    on_cell_clicked: (cell_view, event, x, y, gui) ->
-        gui.add_generalization(@cell_starter, cell_view.model.id, @disjoint, @covering)
+    on_cell_clicked: (cell_view, event, x, y, gui_instance) ->
+        gui_instance.add_subsumption(@cell_starter, cell_view.model.id, @disjoint, @covering)
         this.reset()
 
                   
