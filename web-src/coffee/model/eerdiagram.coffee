@@ -25,6 +25,7 @@ class ERDiagram extends Diagram
     # 
     constructor: (@graph = null) ->
         @clases = []
+        @attributes = []
         @links = []
         
         @cells_nuevas = []
@@ -62,6 +63,10 @@ class ERDiagram extends Diagram
             elt.has_classid(classid)
         )
 
+    find_attr_by_attrid: (attrid) ->
+        return @attributes.find( (elt,index,arr) ->
+            elt.has_attrid(attrid)
+        )
     # Find a generalization that contains the given parent
     #
     # @param parentclass {Class} A Class instance that is the parent of the
@@ -192,6 +197,27 @@ class ERDiagram extends Diagram
         @clases.push(clase)
         @cells_nuevas.push(clase.get_joint(@factory, csstheme))
         this.actualizar_graph()
+
+
+    add_attribute: (hash_data) ->
+    	newattribute = new Attribute(hash_data.name, hash_data.type)
+    	this.agregar_attribute(newattribute)
+    	return newattribute
+
+    agregar_attribute: (attribute) ->
+    	@attributes.push(attribute)
+    	@cells_nuevas.push(attribute.get_joint(@factory,csstheme))
+    	this.actualizar_graph()
+
+
+    add_relationship_attr: (class_id, attribute_id, name) ->
+        entity = this.find_class_by_classid(class_id)
+        attr = this.find_attr_by_attrid(attribute_id)
+        
+        newrel = new LinkAttrToEntity(entity, attr, name)
+        
+        this.agregar_link(newrel)   	
+
 
     # @param c {Class instance}. 
     delete_class: (c) ->

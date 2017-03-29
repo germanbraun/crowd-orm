@@ -63,8 +63,15 @@ window.onload = () ->
     exports.guiinst = guiinst
 
     # Create a first example class
-    newclass = new Class('Person', ['firstName:String', 'lastName:String'], [])
+#    newclass = new Class('Person', ['firstName:String', 'lastName:String'], [])
+    newclass = new Class('Person',[],[])
+    newattribute = new Attribute('Name','key')
+    newlink = new LinkAttrToEntity('Person', 'Name')   
     console.log(newclass)
+    console.log(newattribute)
+    console.log(newlink)
     guiinst.add_object_type(newclass)
-
+    guiinst.add_attribute(newattribute)
+    newlink.addTo(graph)
+#    guiinst.add_relationship_attr(newclass,newattribute)
 

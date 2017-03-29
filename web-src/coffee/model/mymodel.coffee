@@ -75,6 +75,10 @@ class MyModel
     has_classid: (classid) ->
         this.get_classid() == classid
 
+    # @return {boolean} true if this Joint Model has the given classid string.
+    has_attrid: (attrid) ->
+        this.get_attributeid() == attrid
+        
     # Return the classid value of the associated JointJS View object.
     # Use {MyModel#create_joint} for creating a JointJS object.
     # 
@@ -85,6 +89,12 @@ class MyModel
         else
             return @joint[0].id
 
+
+    get_attributeid: () ->
+    	if @joint == null
+    		return false
+    	else
+    		return @joint[0].id
     #
     # Return a JSON object representation with only the information.
     #
@@ -223,6 +233,34 @@ class Class extends MyModel
         )   
                
 
+class Attribute extends Class
+	
+	constructor: (name, @type=null) ->
+		super(name)
+		@joint = null
+		@unsatisfiable = false
+		@on_change_objs = []
+
+	get_name: () ->
+        return @name
+
+    set_name: (@name) ->
+        if @joint != null
+             @joint[0].set("name", @name)
+             
+    create_joint: (factory, csstheme = null) ->
+        unless @joint?
+            @joint = []
+            if csstheme?
+                if @unsatisfiable
+                    cssclass = csstheme.css_class_unsatisfiable
+                else
+                    cssclass = csstheme.css_class
+                    
+                    @joint.push(factory.create_attribute(@name, @type, cssclass))
+            else
+                @joint.push(factory.create_attribute(@name, @type))         
+             
 # A Link between two classes or more classes.
 #
 # This give support for two (using from() or to()) or
@@ -525,8 +563,32 @@ class LinkWithClass extends Link
         json.associated_class = @assoc_class.to_json()
 
         return json
+
+
+class LinkAttrToEntity extends Link
+	
+    constructor: (@classes, @attributes, name=null) ->
+        super(@classes, name)
             
-    
+            
+    # @see MyModel#create_joint
+    create_joint: (factory, csstheme = null) ->        
+        if @joint == null
+            @joint = []
+            if csstheme != null
+                @joint.push(factory.create_link_attribute(
+                    @classes[0].get_classid(),
+                    @attributes[0].get_attributeid(),
+                    @name,
+                    csstheme.css_links,
+                    ))
+            else
+                @joint.push(factory.create_link_attribute(
+                    @classes[0].get_classid(),
+                    @attributes[1].get_attributeid(),
+                    @name
+                    null
+                    ))    
 
 exports = exports ? this
        
@@ -535,6 +597,7 @@ exports.Class = Class
 exports.Link = Link
 exports.Generalization = Generalization
 exports.LinkWithClass = LinkWithClass
+exports.LinkAttrToEntity = LinkAttrToEntity
 
 
 

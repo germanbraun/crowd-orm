@@ -86,6 +86,10 @@ class GUIEER extends GUIIMPL
     	this.hide_toolbar()
     	@diag.add_entity(hash_data)
 
+
+    add_attribute: (hash_data) ->
+    	this.hide_toolbar()
+    	@diag.add_attribute(hash_data)
     #
     # Delete a class from the diagram.
     #
@@ -125,6 +129,11 @@ class GUIEER extends GUIIMPL
     add_relationship: (class_a_id, class_b_id, name=null, mult=null) ->
         @diag.add_association(class_a_id, class_b_id, name, mult)
         this.set_selection_state()
+
+
+    add_relationship_attr: (class_id, attribute_id, name=null)->
+    	@diag.add_relationship_attr(class_id, attribute_id, name)
+
 
     # Add a Generalization link and then set the selection state.
     #

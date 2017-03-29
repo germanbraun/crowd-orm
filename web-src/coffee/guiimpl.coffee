@@ -58,6 +58,9 @@ class GUIIMPL
     
     add_object_type: (hash_data) ->
       
+    add_attribute: (hash_data, class_id) ->
+
+    add_relationship_attr: (class_id, attribute_id, name) ->
 
     #
     # Delete a class from the diagram.

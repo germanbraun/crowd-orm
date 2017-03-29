@@ -18,8 +18,8 @@
 ## Central GUI *do-it-all* class...
 class GUI
 	constructor: (@graph, @paper) ->
-		@current_gui = new GUIUML(@graph,@paper)
-		@prev_gui = new GUIEER(@graph,@paper)
+		@current_gui = new GUIEER(@graph,@paper)
+		@prev_gui = new GUIUML(@graph,@paper)
 		@aux_gui = []
 		gui.set_current_instance(this)
 
@@ -47,9 +47,15 @@ class GUI
 	add_object_type: (name) -> 
 	    @current_gui.add_object_type(name)
 
+    add_attribute: (name) ->
+    	@current_gui.add_attribute(name)
+    	
     add_relationship: (class_a_id, class_b_id, name, mult) -> 
         @current_gui.add_relationship(class_a_id, class_b_id, name, mult)
 
+    add_relationship_attr: (class_id, attribute_id, name) ->
+    	@current_gui.add_relationship_attr(class_id, attribute_id, name)
+    	
     add_subsumption: (class_parent_id, class_child_id, disjoint, covering) -> 
     	@current_gui.add_subsumption(class_parent_id, class_child_id, disjoint, covering)
 	
