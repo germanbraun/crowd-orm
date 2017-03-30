@@ -241,19 +241,20 @@ class ERDFactory extends Factory
 
     create_attribute: (attr_name, attr_type, css_class=null) ->
     	
-    	if attr_type = "key"
-    		   newattribute = new erd.Key({attrs: {text: {fill: '#ffffff', text: attr_name}}})
+    	if attr_type == 'key'
+    		   newattribute = new erd.Key({position: {x:200, y:10}, attrs: {text: {fill: '#ffffff', text: attr_name}}})
         else
-       	      newattribute = new erd.Normal({attrs: {text: {fill: '#000000', text: attr_name}}})
+       	      newattribute = new erd.Normal({position: {x:200, y:10}, attrs: {text: {fill: '#ffffff', text: attr_name}}})
 
                                    
         return newattribute                
     		        
 
     create_link_attribute: (class_name, attr_name) ->
-         myLink = new erd.Line({source: { id: attr_name.id },target: { id: class_name.id }})
-
-         return myLink
+    	
+        markup_style = ['<path class="connection" stroke="black" d="M 0 0 0 0"/>','<path class="connection-wrap" d="M 0 0 0 0"/>','<g class="labels"/>','<g class="marker-vertices"/>','<g class="marker-arrowheads"/>']
+        myLink = new erd.Line({markup: markup_style.join(''), source: {id: attr_name}, target: {id: class_name}})
+        return myLink
 
 
 exports = exports ? this

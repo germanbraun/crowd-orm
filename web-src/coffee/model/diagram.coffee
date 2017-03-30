@@ -43,6 +43,13 @@ class Diagram
     update_view: (class_id, paper) ->
 
 
+    find_class_by_name: (name) ->
+
+
+    find_class_by_classid: (classid) ->
+
+
+    find_attr_by_attrid: (attrid) ->
     #
     # @return [joint.graph]
     get_graph: () ->

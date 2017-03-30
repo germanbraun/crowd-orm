@@ -125,6 +125,7 @@ class GUIUML extends GUIIMPL
 
 
     add_relationship_attr: () ->
+
     # Add a Generalization link and then set the selection state.
     #
     # @param class_parent_id {string} The parent class Id.

@@ -32,7 +32,7 @@ class GUIEER extends GUIIMPL
         @owllinkinsert = new OWLlinkInsertView({el: $("#owllink_placer")})
         @errorwidget = new ErrorWidgetView({el: $("#errorwidget_placer")})
         @importjsonwidget = new ImportJSONView({el: $("#importjsonwidget_placer1")})
-        @exportjsonwidget = new ExportJSONView({el: $("#exportjson_placer1")})
+        @exportjsonwidget = new ExportJSONView({el: $("#exportjson_placer")})
         
         @serverconn = new ServerConnection( (jqXHR, status, text) ->
             exports.gui.current_gui.show_error(status + ": " + text , jqXHR.responseText)

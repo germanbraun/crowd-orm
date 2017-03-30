@@ -212,10 +212,10 @@ class ERDiagram extends Diagram
 
     add_relationship_attr: (class_id, attribute_id, name) ->
         entity = this.find_class_by_classid(class_id)
+        console.log(entity)
         attr = this.find_attr_by_attrid(attribute_id)
-        
-        newrel = new LinkAttrToEntity(entity, attr, name)
-        
+        console.log(attr)
+        newrel = new LinkAttrToEntity([entity, attr], name)
         this.agregar_link(newrel)   	
 
 

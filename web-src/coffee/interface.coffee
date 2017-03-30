@@ -65,13 +65,21 @@ window.onload = () ->
     # Create a first example class
 #    newclass = new Class('Person', ['firstName:String', 'lastName:String'], [])
     newclass = new Class('Person',[],[])
-    newattribute = new Attribute('Name','key')
-    newlink = new LinkAttrToEntity('Person', 'Name')   
+    newattribute = new Attribute('name','key')
+    newattribute2 = new Attribute('birthdate','normal')
+    newlink = new LinkAttrToEntity(['Person', 'name'])
+    newlink2 = new LinkAttrToEntity(['Person', 'birthdate'])  
     console.log(newclass)
     console.log(newattribute)
+    console.log(newattribute2)
     console.log(newlink)
+    console.log(newlink2)
     guiinst.add_object_type(newclass)
     guiinst.add_attribute(newattribute)
-    newlink.addTo(graph)
-#    guiinst.add_relationship_attr(newclass,newattribute)
-
+    guiinst.add_attribute(newattribute2)
+#   newlink.addTo(graph)
+    entity = graph.attributes.cells.models[0].id
+    attri = graph.attributes.cells.models[1].id
+    attri2 = graph.attributes.cells.models[2].id
+    guiinst.add_relationship_attr(entity,attri)
+    guiinst.add_relationship_attr(entity,attri2)

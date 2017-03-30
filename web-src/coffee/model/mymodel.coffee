@@ -247,7 +247,10 @@ class Attribute extends Class
     set_name: (@name) ->
         if @joint != null
              @joint[0].set("name", @name)
-             
+
+    get_attr_type: () ->
+    	return @type
+            
     create_joint: (factory, csstheme = null) ->
         unless @joint?
             @joint = []
@@ -567,10 +570,12 @@ class LinkWithClass extends Link
 
 class LinkAttrToEntity extends Link
 	
-    constructor: (@classes, @attributes, name=null) ->
+    constructor: (@classes, name=null) ->
         super(@classes, name)
             
-            
+    get_name: () ->
+    	return @name
+    	            
     # @see MyModel#create_joint
     create_joint: (factory, csstheme = null) ->        
         if @joint == null
@@ -578,18 +583,27 @@ class LinkAttrToEntity extends Link
             if csstheme != null
                 @joint.push(factory.create_link_attribute(
                     @classes[0].get_classid(),
-                    @attributes[0].get_attributeid(),
+                    @classes[1].get_attributeid(),
                     @name,
                     csstheme.css_links,
                     ))
             else
                 @joint.push(factory.create_link_attribute(
                     @classes[0].get_classid(),
-                    @attributes[1].get_attributeid(),
+                    @classes[1].get_attributeid(),
                     @name
                     null
                     ))    
 
+
+    to_json: () ->
+        json = super()
+        json.type = "attribute"
+        json.attr_type = @classes[1].get_attr_type()
+
+        return json
+        
+        
 exports = exports ? this
        
 exports.MyModel = MyModel
