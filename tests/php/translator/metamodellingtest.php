@@ -361,6 +361,12 @@ EOT;
 	## ERD
 	
 	# Test translation from metamodel object types to EER entities.
+	
+	# {"classes":[{"name":"Person","position":{"x":20,"y":20}}],
+	#  "attributes":[{"name":"name","position":{"x":200,"y":10},"type":"key"},
+	#                {"name":"birthdate","position":{"x":150,"y":150},"type":"normal"}],
+	#  "links":[{"name":"r3","classes":["Person","name"],"type":"attribute"},
+	#           {"name":"r4","classes":["Person","birthdate"],"type":"attribute"}],"owllink":"\n"} 
 		public function testMetamodelObjectType2EER(){
 			$json = <<< EOT
 {
@@ -377,10 +383,11 @@ EOT;
 		
 			$expected = <<< EOT
 {
-"entities" : [{"name" : "PhoneCall", "attrs" : []},
-			  {"name" : "Phone", "attrs" : []},
-			  {"name" : "CellPhone", "attrs" : []},
-		      {"name" : "FixedPhone", "attrs" : []}],
+"classes" : [{"name" : "PhoneCall"},
+			  {"name" : "Phone"},
+			  {"name" : "CellPhone"},
+		      {"name" : "FixedPhone"}],
+"attributes" : [],	
 "links" : []
 }
 EOT;
@@ -412,13 +419,19 @@ EOT;
 EOT;
 	
 		$expected = <<< EOT
-{
-"entities" : [{"name" : "PhoneCall", "attrs" : [{"name" : "date"}]},
-			  {"name" : "Phone", "attrs" : [{"name" : "location"}, {"name" : "owner"}]},
-			  {"name" : "CellPhone", "attrs" : []},
-		      {"name" : "FixedPhone", "attrs" : []}],
-"links" : []
-}
+{"classes":[{"name":"PhoneCall"},
+			{"name":"Phone"},
+			{"name":"CellPhone"},
+			{"name":"FixedPhone"}],
+ "attributes":[{"name":"date","type":"normal"}, 
+ 				{"name":"location","type":"normal"},
+ 				{"name":"owner","type":"normal"}
+ 			   ],
+ "links":[{"name":"PhoneCalldate","classes":["PhoneCall","date"],"type":"attribute"},
+ 			{"name":"Phonelocation","classes":["Phone","location"],"type":"attribute"},
+		  	{"name":"Phoneowner","classes":["Phone","owner"],"type":"attribute"}
+ 		  ]
+} 
 EOT;
 	
 		$strategy = new Meta2EER();

@@ -63,6 +63,12 @@ class ERDiagram extends Diagram
             elt.has_classid(classid)
         )
 
+    find_attr_by_name: (name) ->
+        return @attributes.find( (elt, index, arr) ->
+            console.log(elt)
+            elt.get_name() == name
+        )
+        
     find_attr_by_attrid: (attrid) ->
         return @attributes.find( (elt,index,arr) ->
             elt.has_attrid(attrid)
@@ -186,10 +192,8 @@ class ERDiagram extends Diagram
     add_entity: (hash_data) ->
         if hash_data.attrs == undefined
             hash_data.attrs = []
-        if hash_data.methods == undefined
-            hash_data.methods = []
 
-        newclass = new Class(hash_data.name, hash_data.attrs, hash_data.methods)
+        newclass = new Entity(hash_data.name, hash_data.attrs)
         this.agregar_clase(newclass)
         return newclass
 
@@ -230,6 +234,17 @@ class ERDiagram extends Diagram
         @cells_deleted = @cells_deleted.concat(c.get_joint())
         this.actualizar_graph()
 
+
+    delete_attribute: (c) ->
+        @attributes = @attributes.filter( (elt, index, arr) ->
+            elt != c
+        )
+
+        this.remove_associated_links(c)
+        
+        @cells_deleted = @cells_deleted.concat(c.get_joint())
+        this.actualizar_graph()
+        
     # Search for all links associated to the given class.
     #
     # @param c {Class instance} The class.
@@ -295,6 +310,12 @@ class ERDiagram extends Diagram
         # Associations is supposed to be deleted after each classes has
         @clases.forEach( (c, i, arr) ->
             this.delete_class(c)
+        this)
+        @attributes.forEach( (a, i, arr) ->
+            this.delete_attribute(a)
+        this)
+        @links.forEach( (l, i, arr) ->
+            this.delete_link(l)
         this)
         this.actualizar_graph()
         
@@ -369,11 +390,15 @@ class ERDiagram extends Diagram
     to_json : () ->
         classes_json = $.map @clases, (myclass) ->
             myclass.to_json()
-
+            
+        attributes_json = $.map @attributes, (myattr) ->
+            myattr.to_json()
+            
         links_json = $.map @links, (mylink) ->
             mylink.to_json()
 
         classes: classes_json
+        attributes: attributes_json
         links: links_json
                 
     # Import all classes and associations from a JSON object.
@@ -385,7 +410,7 @@ class ERDiagram extends Diagram
     # 
     # @todo Better programmed it would be if we pass a JSON part to the constructor of each model class. Leaving the responsability of each MyModel class to create itself.
     import_json: (json) ->
-        json.entities.forEach(
+        json.classes.forEach(
             (elt, index, arr) ->
                 c = this.add_entity(elt)
 #                if c.get_joint()[0].position?
@@ -393,6 +418,17 @@ class ERDiagram extends Diagram
 #                    elt.position.x,
 #                    elt.position.y)
         this)
+        
+        #attributes
+        json.attributes.forEach(
+            (elt, index, arr) ->
+                c = this.add_attribute(elt)
+#                if c.get_joint()[0].position?
+#                	c.get_joint()[0].position(
+#                    elt.position.x,
+#                    elt.position.y)
+        this)        
+        
         # relationships
         json.links.forEach(
             (elt, index, arr) ->
@@ -425,6 +461,13 @@ class ERDiagram extends Diagram
                         class_parent,
                         classes_children,
                         disjoint, covering)
+                if elt.type is "attribute"
+                    class_a = this.find_class_by_name(elt.classes[0])
+                    attr_a = this.find_attr_by_name(elt.classes[1])
+                    this.add_relationship_attr(
+                            class_a.get_classid(),
+                            attr_a.get_attributeid(),
+                            elt.name)                
                                 
         this)
         

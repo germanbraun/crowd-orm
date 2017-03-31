@@ -331,7 +331,7 @@ class GUIEER extends GUIIMPL
 
     diag_to_json: () ->
         json = @diag.to_json()
-        json.owllink = @owllinkinsert.get_owllink()
+#        json.owllink = [] #@owllinkinsert.get_owllink()
         return JSON.stringify(json)
 
     # Import a JSON string.

@@ -43,9 +43,10 @@ use Wicom\Translator\Metamodel\Attribute;
  JSON EER example for static entities
 
  {
- "entities" : [{"name" : "Phone", "attrs":[]}, 
- 			   {"name" : "CellPhone", "attrs":[]}, 
- 			   {"name" : "FixedPhone", "attrs":[]}],
+ "classes" : [{"name" : "Phone"}, 
+ 			   {"name" : "CellPhone"}, 
+ 			   {"name" : "FixedPhone"}],
+ "attributes" : [],
  "links" : [],
  }
 
@@ -66,7 +67,8 @@ class Meta2EER extends Meta2Lang{
 	public $eer;
 
 	function __construct(){
-		$this->eer = ["entities" => [],
+		$this->eer = ["classes" => [],
+				"attributes" => [],
 				"links" => []
 				
 		];
@@ -109,12 +111,13 @@ class Meta2EER extends Meta2Lang{
 					foreach ($attr as $attr2){
 						$attr_obj = new Attribute($attr2["class name"],$attr2["attribute name"],$attr2["datatype"]);
 						$attr_eer = $attr_obj->equivEERAttr();
-						array_push($eerentity["attrs"],$attr_eer);
+						array_push($this->eer["attributes"],$attr_eer["attr"]);
+						array_push($this->eer["links"],$attr_eer["link"]);
 					}
-					array_push($this->eer["entities"],$eerentity);
+					array_push($this->eer["classes"],$eerentity);
 				}
 				else {
-					array_push($this->eer["entities"],$eerentity);
+					array_push($this->eer["classes"],$eerentity);
 				}
 			}
 		}
@@ -122,7 +125,7 @@ class Meta2EER extends Meta2Lang{
 				foreach ($js_entities as $entity){
 					$entity_obj = new ObjectType($entity["name"]);
 					$eerentity = $entity_obj->equivEEREntity($entity);
-					array_push($this->eer["entities"],$eerentity);
+					array_push($this->eer["classes"],$eerentity);
 				}
 		}
 		

@@ -56,9 +56,16 @@ load('attributeproperty.php');
 		
 		}
 		
-		
+		#  "links":[{"name":"r3","classes":["Person","name"],"type":"attribute"}}]
 		function equivEERAttr(){
-			return ["name" => $this->objectAttrName];
+			return ["attr" => ["name" => $this->objectAttrName,
+					           "type" => "normal"
+			                  ],
+					"link" => ["name" => $this->objClassAttr . $this->objectAttrName,
+					           "classes" => [$this->objClassAttr,$this->objectAttrName],
+					           "type" => "attribute",
+					          ]
+			];
 			
 		}
 		

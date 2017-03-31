@@ -68,7 +68,7 @@ load('entitytype.php');
 		 */
 		
 		function equivEEREntity(){
-			return ["name" => $this->objectTypeName, "attrs" => []];
+			return ["name" => $this->objectTypeName];
 				
 		}
 		
