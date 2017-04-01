@@ -21,21 +21,21 @@
 #
 # Class style.
 css_class = 
-    '.uml-class-name-rect' : 
-        fill: "#fff"
-        stroke: "#000"
-        'stroke-width': 0.5
-        filter: { name: 'dropShadow',  args: { dx: 0.5, dy: 2, blur: 2, color: '#333333' }}
+    '.uml-class-name-rect' :
+    	fill: "#ff8450"
+    	stroke: "#fff"
+    	'stroke-width': 0.5
+    	filter: { name: 'dropShadow',  args: { dx: 0.5, dy: 2, blur: 2, color: '#333333' }}
     '.uml-class-attrs-rect' : 
-        fill: "#fff"
-        stroke: "#000"
+        fill: "#fe976a"
+        stroke: "#fff"
         'stroke-width': 0.5
         filter: { name: 'dropShadow',  args: { dx: 0.5, dy: 2, blur: 2, color: '#333333' }}        
 #        visibility: 'collapse'
 #        display: 'none'
     '.uml-class-methods-rect' : 
-        fill: "#fff"
-        stroke: "#000"
+        fill: "#fe976a"
+        stroke: "#fff"
         'stroke-width': 0.5
         filter: { name: 'dropShadow',  args: { dx: 0.5, dy: 2, blur: 2, color: '#333333' }}        
 #        visibility: 'collapse'
@@ -43,15 +43,15 @@ css_class =
     '.uml-class-name-text' :
         fill: "#000"
     '.uml-class-attrs-text':
-        #ref: '.uml-class-attrs-rect',
-        fill: "#000"       
+        ref: '.uml-class-attrs-rect',
+#        fill: "#000"       
         'ref-y': 0.6
         'y-alignment': 'middle'
 #        visibility: 'collapse'
 #        display: 'none'
     '.uml-class-methods-text':
-        #ref: '.uml-class-methods-rect',
-        fill: "#000"
+        ref: '.uml-class-methods-rect',
+ #       fill: "#000"
         'ref-y': 0.5
         'y-alignment': 'middle'
 #        visibility: 'collapse'

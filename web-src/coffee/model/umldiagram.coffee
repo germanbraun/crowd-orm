@@ -361,8 +361,18 @@ class UMLDiagram extends Diagram
     import_json: (json) ->
         json.classes.forEach(
             (elt, index, arr) ->
-                c = this.add_class(elt)
-                c.get_joint()[0].position(
+            	if elt.attrs?
+            		array = []
+            		attr = elt.attrs
+            		attr.forEach( (cv,index,attr) -> 
+            			att = "#{attr[index].name}:#{attr[index].datatype}"
+            			array.push(att)
+            			return array
+            			)
+            	elt.attrs = []
+            	elt.attrs = array
+            	c = this.add_class(elt)
+            	c.get_joint()[0].position(
                     elt.position.x,
                     elt.position.y)
         this)

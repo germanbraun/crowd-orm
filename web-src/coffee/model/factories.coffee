@@ -56,14 +56,14 @@ class UMLFactory extends Factory
         console.log(methods)
         params =
             position: {x: 20, y: 20}
-            size: {width: 100, height: 50}
+            size: {width: 220, height: 100}
             name: class_name
             attributes: attribs
             methods: methods
             attrs:
                 '.uml-class-name-rect':
-                    fill: '#ffffff'
-                    stroke: '#000000'
+                    fill: '#ff8450'
+                    stroke: '#fff'
                 '.uml-class-name-text':
                     fill: '#000000'                    
         if css_class?
@@ -255,6 +255,48 @@ class ERDFactory extends Factory
         markup_style = ['<path class="connection" stroke="black" d="M 0 0 0 0"/>','<path class="connection-wrap" d="M 0 0 0 0"/>','<g class="labels"/>','<g class="marker-vertices"/>','<g class="marker-arrowheads"/>']
         myLink = new erd.Line({markup: markup_style.join(''), source: {id: attr_name}, target: {id: class_name}})
         return myLink
+
+    # @param css_links {Hash} A Hash representing the CSS. See JointJS documentation for the attrs attribute.
+    # @param disjoint {Boolean} Draw a "disjoint" legend.
+    # @param covering {Boolean} Draw a "covering" legend.
+    # @return [joint.shapes.uml.Generalization]
+    create_generalization: (class_a_id, class_b_id, css_links = null, disjoint=false, covering=false) ->
+        labels = []
+        
+        isaattr = { text: {text: 'ISA', fill: '#ffffff','letter-spacing': 0,style: { 'text-shadow': '1px 0 1px #333333' }}, polygon: {fill: '#fdb664',stroke: 'none',filter: { name: 'dropShadow',  args: { dx: 0, dy: 2, blur: 1, color: '#333333' }}}}
+                  
+        link = new erd.ISA({position: { x: 125, y: 200 },attrs: isaattr})
+        
+        if disjoint || covering
+            legend = "{"
+            if disjoint then legend = legend + "disjoint"
+            if covering
+                if legend != ""
+                    legend = legend + ","
+                legend = legend + "covering"
+            legend = legend + "}"
+
+        labels = labels.concat([
+            position: 0.8
+            attrs:
+                text:
+                    text: legend
+                    fill: '#0000ff'
+                rect: 	
+                    fill: '#ffffff'
+                    
+        ])
+
+        link.set({labels: labels})
+        return link
+
+ #       link.set(
+ #               labels: ([
+ #                   position: 0.8,
+ #                   attrs:
+ #                       text: {text: legend, fill: '#0000ff'},
+ #                       rect: {fill: "#ffffff"}])
+ #				)
 
 
 exports = exports ? this
