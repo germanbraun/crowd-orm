@@ -135,6 +135,8 @@ class GUIEER extends GUIIMPL
     	@diag.add_relationship_attr(class_id, attribute_id, name)
 
 
+    add_relationship_attr_inverse: (class_id, attribute_id, name=null)->
+    	@diag.add_relationship_attr_inverse(attribute_id, class_id, name)
     # Add a Generalization link and then set the selection state.
     #
     # @param class_parent_id {string} The parent class Id.

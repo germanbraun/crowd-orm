@@ -55,7 +55,10 @@ class GUI
 
     add_relationship_attr: (class_id, attribute_id, name) ->
     	@current_gui.add_relationship_attr(class_id, attribute_id, name)
-    	
+
+    add_relationship_attr_inverse: (class_id, attribute_id, name)-> 
+        @current_gui.add_relationship_attr_inverse(class_id, attribute_id, name)
+    	    	
     add_subsumption: (class_parent_id, class_child_id, disjoint, covering) -> 
     	@current_gui.add_subsumption(class_parent_id, class_child_id, disjoint, covering)
 	

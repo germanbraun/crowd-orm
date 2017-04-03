@@ -62,6 +62,8 @@ class GUIIMPL
 
     add_relationship_attr: (class_id, attribute_id, name) ->
 
+#    add_relationship_attr_inverse: (class_id, attribute_id, name)->
+
     #
     # Delete a class from the diagram.
     #

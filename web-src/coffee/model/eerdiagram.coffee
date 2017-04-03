@@ -136,7 +136,8 @@ class ERDiagram extends Diagram
             gen = new Generalization(class_parent, [class_child])
             gen.set_disjoint(disjoint)
             gen.set_covering(covering)
-            this.agregar_link(gen)
+            this.agregar_attribute(gen)
+#            this.agregar_link(gen)
         else
             gen.add_child(class_child)
             gen.create_joint(@factory, csstheme)
@@ -222,7 +223,14 @@ class ERDiagram extends Diagram
         newrel = new LinkAttrToEntity([entity, attr], name)
         this.agregar_link(newrel)   	
 
-
+    add_relationship_attr_inverse: (attribute_id, class_id, name) ->
+        entity = this.find_class_by_classid(class_id)
+        console.log(entity)
+        attr = this.find_attr_by_attrid(attribute_id)
+        console.log(attr)
+        newrel = new LinkEntityToAttr([attr, entity], name)
+        this.agregar_link(newrel) 
+        
     # @param c {Class instance}. 
     delete_class: (c) ->
         @clases = @clases.filter( (elt, index, arr) ->

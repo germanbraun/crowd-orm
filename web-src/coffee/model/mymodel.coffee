@@ -680,6 +680,8 @@ class LinkWithClass extends Link
 
         return json
 
+# linking attributes to entities. Warning: @classes is defined as [class,attr]. We should consider
+# also [attr,entity]
 
 class LinkAttrToEntity extends Link
 	
@@ -717,8 +719,45 @@ class LinkAttrToEntity extends Link
 #        json.attr_type = @classes[1].get_attr_type()
 
         return json
+
         
-        
+class LinkEntityToAttr extends Link
+	
+    constructor: (@classes, name=null) ->
+        super(@classes, name)
+            
+    get_name: () ->
+    	return @name
+    	            
+    # @see MyModel#create_joint
+    create_joint: (factory, csstheme = null) ->        
+        if @joint == null
+            @joint = []
+            if csstheme != null
+                @joint.push(factory.create_link_attribute(
+                	@classes[1].get_classid(),
+                	@classes[0].get_attributeid()
+                    @name,
+                    csstheme.css_links,
+                    ))
+            else
+                @joint.push(factory.create_link_attribute(
+                	@classes[1].get_classid(),
+                	@classes[0].get_attributeid()
+                    @name
+                    null
+                    ))    
+
+
+    to_json: () ->
+        json = super()
+        delete json.multiplicity
+        delete json.roles
+        json.type = "attribute"
+#        json.attr_type = @classes[1].get_attr_type()
+
+        return json
+                
 exports = exports ? this
        
 exports.MyModel = MyModel
@@ -727,6 +766,7 @@ exports.Link = Link
 exports.Generalization = Generalization
 exports.LinkWithClass = LinkWithClass
 exports.LinkAttrToEntity = LinkAttrToEntity
+exports.LinkEntityToAttr = LinkEntityToAttr
 
 
 
