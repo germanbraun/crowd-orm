@@ -26,6 +26,7 @@ class ERDiagram extends Diagram
     constructor: (@graph = null) ->
         @clases = []
         @attributes = []
+        @isa = []
         @links = []
         
         @cells_nuevas = []
@@ -51,6 +52,12 @@ class ERDiagram extends Diagram
     get_links: () ->
         return @links
 
+    get_attributes: () ->
+        return @attributes
+
+    get_isa: () ->
+        return @isa
+	
     get_clase: (nombre) ->
 
     find_class_by_name: (name) ->
@@ -73,6 +80,18 @@ class ERDiagram extends Diagram
         return @attributes.find( (elt,index,arr) ->
             elt.has_attrid(attrid)
         )
+
+    find_isa_by_name: (name) ->
+        return @isa.find( (elt, index, arr) ->
+            console.log(elt)
+            elt.get_name() == name
+        )
+        
+    find_isa_by_isaid: (isaid) ->
+        return @isa.find( (elt,index,arr) ->
+            elt.has_isaid(isaid)
+        )
+
     # Find a generalization that contains the given parent
     #
     # @param parentclass {Class} A Class instance that is the parent of the
@@ -136,13 +155,19 @@ class ERDiagram extends Diagram
             gen = new Generalization(class_parent, [class_child])
             gen.set_disjoint(disjoint)
             gen.set_covering(covering)
-            this.agregar_attribute(gen)
-#            this.agregar_link(gen)
+            this.agregar_isa(gen)
         else
             gen.add_child(class_child)
             gen.create_joint(@factory, csstheme)
             @cells_nuevas.push(gen.get_joint_for_child(class_child))
             this.actualizar_graph()
+
+
+    agregar_isa: (gen) ->
+    	@isa.push(gen)
+    	@cells_nuevas.push(gen.get_joint(@factory,csstheme))
+    	this.actualizar_graph()
+
     
     # @param class_a_id {string} the ID of the first class.
     # @param class_b_id {string} the ID of the second class.
@@ -223,13 +248,21 @@ class ERDiagram extends Diagram
         newrel = new LinkAttrToEntity([entity, attr], name)
         this.agregar_link(newrel)   	
 
-    add_relationship_attr_inverse: (attribute_id, class_id, name) ->
+    add_relationship_isa: (class_id, isa_id, name) ->
         entity = this.find_class_by_classid(class_id)
         console.log(entity)
-        attr = this.find_attr_by_attrid(attribute_id)
-        console.log(attr)
-        newrel = new LinkEntityToAttr([attr, entity], name)
-        this.agregar_link(newrel) 
+        isa = this.find_isa_by_isaid(isa_id)
+        console.log(isa)
+        newlinktoISA = new LinkISAToEntity([entity, isa], name)
+        this.agregar_link(newlinktoISA)
+
+    add_relationship_isa_inverse: (isa_id, class_id, name) ->
+        entity = this.find_class_by_classid(class_id)
+        console.log(entity)
+        isa = this.find_isa_by_isaid(isa_id)
+        console.log(isa)
+        newlinkfromISA = new LinkISAToEntity([isa, entity], name)
+        this.agregar_link(newlinkfromISA) 
         
     # @param c {Class instance}. 
     delete_class: (c) ->

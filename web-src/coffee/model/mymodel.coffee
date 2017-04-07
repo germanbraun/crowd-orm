@@ -75,9 +75,13 @@ class MyModel
     has_classid: (classid) ->
         this.get_classid() == classid
 
-    # @return {boolean} true if this Joint Model has the given classid string.
+    # @return {boolean} true if this Joint Model has the given attrid string.
     has_attrid: (attrid) ->
         this.get_attributeid() == attrid
+
+    # @return {boolean} true if this Joint Model has the given isaid string.
+    has_isaid: (isaid) ->
+        this.get_isaid() == isaid
         
     # Return the classid value of the associated JointJS View object.
     # Use {MyModel#create_joint} for creating a JointJS object.
@@ -95,6 +99,13 @@ class MyModel
     		return false
     	else
     		return @joint[0].id
+
+    get_isaid: () ->
+    	if @joint == null
+    		return false
+    	else
+    		return @joint[0].id
+
     #
     # Return a JSON object representation with only the information.
     #
@@ -716,12 +727,11 @@ class LinkAttrToEntity extends Link
         delete json.multiplicity
         delete json.roles
         json.type = "attribute"
-#        json.attr_type = @classes[1].get_attr_type()
 
         return json
 
         
-class LinkEntityToAttr extends Link
+class LinkISAToEntity extends LinkAttrToEntity
 	
     constructor: (@classes, name=null) ->
         super(@classes, name)
@@ -735,15 +745,15 @@ class LinkEntityToAttr extends Link
             @joint = []
             if csstheme != null
                 @joint.push(factory.create_link_attribute(
-                	@classes[1].get_classid(),
-                	@classes[0].get_attributeid()
+                	@classes[0].get_classid(),
+                	@classes[1].get_isaid()
                     @name,
                     csstheme.css_links,
                     ))
             else
                 @joint.push(factory.create_link_attribute(
-                	@classes[1].get_classid(),
-                	@classes[0].get_attributeid()
+                	@classes[0].get_classid(),
+                	@classes[1].get_isaid()
                     @name
                     null
                     ))    
@@ -751,10 +761,7 @@ class LinkEntityToAttr extends Link
 
     to_json: () ->
         json = super()
-        delete json.multiplicity
-        delete json.roles
-        json.type = "attribute"
-#        json.attr_type = @classes[1].get_attr_type()
+        json.type = "isa"
 
         return json
                 
@@ -766,7 +773,7 @@ exports.Link = Link
 exports.Generalization = Generalization
 exports.LinkWithClass = LinkWithClass
 exports.LinkAttrToEntity = LinkAttrToEntity
-exports.LinkEntityToAttr = LinkEntityToAttr
+exports.LinkISAToEntity = LinkISAToEntity
 
 
 

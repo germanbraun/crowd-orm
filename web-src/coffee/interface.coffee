@@ -65,45 +65,46 @@ window.onload = () ->
     # Create a first example class
 
 #UML mode
-#    newclass = new Class('Person',["name : String", "birthdate : Date"],[])
-#    newclass1 = new Class('Student',["id_leg : String", "enrollment : Date"],[])
-#    console.log(newclass)
-#    guiinst.add_object_type(newclass)
-#    guiinst.add_object_type(newclass1)
-#ERD mode
-    newattribute = new Attribute('name','key')
-    newattribute2 = new Attribute('birthdate','normal')
-    newclass = new Entity('Person',[newattribute,newattribute2])
-    newclass2 = new Entity('Student',[])    
-    newISA = new Generalization(newclass,newclass)
-    console.log(newISA)
-    newlink = new LinkAttrToEntity(['Person', 'name'])
-    newlink2 = new LinkAttrToEntity(['Person', 'birthdate'])  
-    newlinkISA =  new LinkAttrToEntity(['Person', 'r1'])
-    newlinkISA1 =  new LinkEntityToAttr(['r1', 'Student'])
-    console.log(newlinkISA)
-    console.log(newlinkISA1)
+    newclass = new Class('Person',["name : String", "birthdate : Date"],[])
+    newclass1 = new Class('Student',["id_leg : String", "enrollment : Date"],[])
     console.log(newclass)
-    console.log(newattribute)
-    console.log(newattribute2)
-    console.log(newlink)
-    console.log(newlink2)
     guiinst.add_object_type(newclass)
-    guiinst.add_object_type(newclass2)
-    guiinst.add_attribute(newattribute)
-    guiinst.add_attribute(newattribute2)
-    entity = graph.attributes.cells.models[0].id
-    entity2 = graph.attributes.cells.models[1].id    
-    attri = graph.attributes.cells.models[2].id
-    attri2 = graph.attributes.cells.models[3].id
+    guiinst.add_object_type(newclass1)
+#ERD mode
+#    newattribute = new Attribute('name','key')
+#    newattribute2 = new Attribute('birthdate','normal')
+#    newclass = new Entity('Person',[newattribute,newattribute2])
+#    newclass2 = new Entity('Student',[])    
+#    newISA = new Generalization(newclass,newclass)
+#    console.log(newISA)
+#    newlink = new LinkAttrToEntity(['Person', 'name'])
+#    newlink2 = new LinkAttrToEntity(['Person', 'birthdate'])  
+#    newlinkISA =  new LinkISAToEntity(['Person', 'r1'])
+#    newlinkISA1 =  new LinkISAToEntity(['r1', 'Student'])
+#    console.log(newlinkISA)
+#    console.log(newlinkISA1)
+#    console.log(newclass)
+#    console.log(newattribute)
+#    console.log(newattribute2)
+#    console.log(newlink)
+#    console.log(newlink2)
+#    guiinst.add_object_type(newclass)
+#    guiinst.add_object_type(newclass2)
+#    guiinst.add_attribute(newattribute)
+#    guiinst.add_attribute(newattribute2)
+#    entity = graph.attributes.cells.models[0].id
+#    entity2 = graph.attributes.cells.models[1].id    
+#    attri = graph.attributes.cells.models[2].id
+#    attri2 = graph.attributes.cells.models[3].id
 
-    guiinst.add_relationship_attr(entity,attri)
-    guiinst.add_relationship_attr(entity,attri2)
+#    guiinst.add_relationship_attr(entity,attri)
+#    guiinst.add_relationship_attr(entity,attri2)
 #ISA    
-    guiinst.add_subsumption(newclass,newclass2)
-    isa = graph.attributes.cells.models[6].id
-    guiinst.add_relationship_attr(entity,isa)
-    guiinst.add_relationship_attr_inverse(entity2,isa)
+#    guiinst.add_subsumption(newclass,newclass2)
+#    isa = graph.attributes.cells.models[6].id
+#    guiinst.add_relationship_isa(entity,isa,['isa1','isa2'])
+#    guiinst.add_relationship_isa(entity,isa)
+#    guiinst.add_relationship_isa_inverse(entity2,isa)
 
 
     
