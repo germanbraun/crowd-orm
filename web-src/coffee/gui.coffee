@@ -37,11 +37,11 @@ class GUI
         @saveloadjsonwidget = new SaveLoadJson({el: $("#saveloadjson_placer")})
 
         @login = null
-        
+
         @serverconn = new ServerConnection( (jqXHR, status, text) ->
             exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
         )
-                
+
         $("#diagram-page").enhanceWithin()
         $("#details-page").enhanceWithin()
         gui.set_current_instance(this);
@@ -50,7 +50,7 @@ class GUI
         @urlprefix = str
 
     # What to do when the user clicked on a cellView.
-    # 
+    #
     # @param cellview [joint.dia.CellView] The cell view that recieves the click event.
     # @param event [Event] The event object representation. {https://developer.mozilla.org/en-US/docs/Web/API/Event/Event}
     # @param x [int] Where's the X coordinate position where the mouse has clicked.
@@ -75,7 +75,7 @@ class GUI
 
     set_editclass_classid: (model_id) ->
         # editclass = new EditClassView({el: $("#editclass")})
-        @editclass.set_classid(model_id)        
+        @editclass.set_classid(model_id)
 
     #
     # Add a class to the diagram.
@@ -94,7 +94,7 @@ class GUI
         @diag.delete_class_by_classid(class_id)
 
     # Change a class name identified by its classid.
-    # 
+    #
     # @example Getting a classid
     #   < graph.getCells()[0].id
     #   > "5777cd89-45b6-407e-9994-5d681c0717c1"
@@ -106,19 +106,19 @@ class GUI
         # cell = @graph.getCell(class_id)
         # cell.set("name", name)
         @diag.rename_class(class_id, name)
-        
+
         # Update the view
         @diag.update_view(class_id, @paper)
 
     #
     # Add a simple association from A to B.
     # Then, set the selection state for restoring the interface.
-    # 
+    #
     # @example Getting a classid
     #   < graph.getCells()[0].id
     #   > "5777cd89-45b6-407e-9994-5d681c0717c1"
     #
-    # @param class_a_id {string} 
+    # @param class_a_id {string}
     # @param class_b_id {string}
     # @param name {string} optional. The association name.
     # @param mult {array} optional. An array of two string with the cardinality from class and to class b.
@@ -139,7 +139,7 @@ class GUI
     #
     # @param class_parent_id {string} The parent class Id.
     # @param class_child_id {string} The child class Id.
-    # 
+    #
     # @todo Support various children on parameter class_child_id.
     add_generalization: (class_parent_id, class_child_id, disjoint=false, covering=false) ->
         @diag.add_generalization(class_parent_id, class_child_id, disjoint, covering)
@@ -156,13 +156,13 @@ class GUI
 
     #
     # Show the login popup.
-    # 
+    #
     show_login: () ->
         @loginwidget.show()
 
     #
     # Hide the login popup.
-    # 
+    #
     hide_login: () ->
         @loginwidget.hide()
 
@@ -178,7 +178,7 @@ class GUI
             gui.update_login)
 
     # Callback for the ServerConnection
-    # 
+    #
     # Update the interface according to a succesful login.
     #
     # @param data {String} The information about the login answer in JSON format.
@@ -197,25 +197,22 @@ class GUI
 
     # According to the information about @login, update the interface.
     set_logged_in: () ->
-        if @login?
-            loginbutton = $("#loginButton")
-            loginbutton.html(@login.username + "(Logged in)")
-            loginbutton[0].classList.remove("ui-icon-user")
-            loginbutton[0].classList.add("ui-icon-action")
+        if @login?            
             @loginwidget.set_doing_login(false)
+            # Update the model list
+            this.show_load_json()
         else
-            loginbutton = $("#loginButton")
-            loginbutton.html("Login")
-            loginbutton[0].classList.remove("ui-icon-action")
-            loginbutton[0].classList.add("ui-icon-user")
             @loginwidget.set_doing_login(true)
+            # Remove all models in the model list
+            this.show_load_json_with_list([]);
+
 
     # Clear the login and reset the interface. Send information to the server.
     do_logout: () ->
         @serverconn.request_logout(gui.update_logout)
 
     # Callback for the ServerConnection.
-    # 
+    #
     # Update the interface and JS as if the user has recently logged out.
     #
     # @param data {String} The information returned from the server.
@@ -240,7 +237,7 @@ class GUI
     update_satisfiable: (data) ->
         console.log(data)
         obj = JSON.parse(data);
-        
+
         this.set_trafficlight(obj)
         $("#reasoner_input").html(obj.reasoner.input)
         $("#reasoner_output").html(obj.reasoner.output)
@@ -272,12 +269,12 @@ class GUI
     # @param classes_list {Array<String>} a list of classes names.
     set_satisfiable: (classes_list) ->
         @diag.set_satisfiable(classes_list)
-        
+
     #
     # Send a POST to the server for checking if the diagram is
     # satisfiable.
     check_satisfiable: () ->
-        $.mobile.loading("show", 
+        $.mobile.loading("show",
             text: "Consulting server...",
             textVisible: true,
             textonly: false
@@ -299,7 +296,7 @@ class GUI
     # @see CreateClassView#get_translation_format
     update_translation: (data) ->
         format = @crearclase.get_translation_format()
-        if format == "html" 
+        if format == "html"
             $("#html-output").html(data)
             $("#html-output").show()
             $("#owllink_source").hide()
@@ -307,11 +304,11 @@ class GUI
             $("#owllink_source").text(data)
             $("#owllink_source").show()
             $("#html-output").hide()
-        
+
         # Goto the Translation text
         $.mobile.loading("hide")
         this.change_to_details_page()
-        
+
         console.log(data)
 
     ##
@@ -319,7 +316,7 @@ class GUI
     # and the api/translate/berardi.php translator URL.
     translate_owllink: () ->
         format = @crearclase.get_translation_format()
-        $.mobile.loading("show", 
+        $.mobile.loading("show",
             text: "Consulting server...",
             textVisible: true,
             textonly: false
@@ -340,7 +337,7 @@ class GUI
             transition: "slide")
     #
     # Hide the left side "Tools" toolbar
-    # 
+    #
     hide_toolbar: () ->
         $("#tools-panel [data-rel=close]").click()
 
@@ -369,7 +366,7 @@ class GUI
     set_isa_state: (class_id, disjoint=false, covering=false) ->
         @state = gui.state_inst.isa_state()
         @state.set_cellStarter(class_id)
-        @state.set_constraint(disjoint, covering) 
+        @state.set_constraint(disjoint, covering)
 
     # Change the interface into a "selection" state.
     set_selection_state: () ->
@@ -482,7 +479,7 @@ class GUI
         jsonstr = this.diag_to_json()
         @serverconn.send_model(modelname, jsonstr, gui.model_sended)
         this.change_to_diagram_page()
-            
+
 
     # Retrieve the model from the server and import it.
     #
@@ -504,7 +501,7 @@ exports.gui.gui_instance = null
 exports.gui.set_current_instance = (gui_instance) ->
     exports.gui.gui_instance = gui_instance
 
-    
+
 
 # @namespace gui
 #
@@ -548,4 +545,3 @@ exports.gui.model_sended = (data) ->
     console.log(data)
 
 exports.gui.GUI = GUI
-

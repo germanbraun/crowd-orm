@@ -23,7 +23,7 @@
 ?>
 
 <div id="loginWidget" class="loginwidget">
-    <div data-role="collapsible" data-collapsed="true"
+    <div id="login-header" data-role="collapsible" data-collapsed="true"
     data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
     <h1>Login / Logout</h1>
 	<form>
