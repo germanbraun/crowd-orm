@@ -197,7 +197,7 @@ class GUI
 
     # According to the information about @login, update the interface.
     set_logged_in: () ->
-        if @login?            
+        if @login?
             @loginwidget.set_doing_login(false)
             # Update the model list
             this.show_load_json()
@@ -412,6 +412,7 @@ class GUI
     #
     # @param jsonstr {String} a JSON string, like the one returned by diag_to_json().
     import_jsonstr: (jsonstr) ->
+        this.change_to_diagram_page()
         json = JSON.parse(jsonstr)
         # Importing owllink
         @owllinkinsert.append_owllink("\n" + json.owllink)
