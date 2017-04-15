@@ -64,47 +64,69 @@ window.onload = () ->
 
     # Create a first example class
 
-#UML mode
-    newclass = new Class('Person',["name : String", "birthdate : Date"],[])
-    newclass1 = new Class('Student',["id_leg : String", "enrollment : Date"],[])
-    console.log(newclass)
-    guiinst.add_object_type(newclass)
-    guiinst.add_object_type(newclass1)
-#ERD mode
-#    newattribute = new Attribute('name','key')
-#    newattribute2 = new Attribute('birthdate','normal')
-#    newclass = new Entity('Person',[newattribute,newattribute2])
-#    newclass2 = new Entity('Student',[])    
-#    newISA = new Generalization(newclass,newclass)
-#    console.log(newISA)
-#    newlink = new LinkAttrToEntity(['Person', 'name'])
-#    newlink2 = new LinkAttrToEntity(['Person', 'birthdate'])  
-#    newlinkISA =  new LinkISAToEntity(['Person', 'r1'])
-#    newlinkISA1 =  new LinkISAToEntity(['r1', 'Student'])
-#    console.log(newlinkISA)
-#    console.log(newlinkISA1)
-#    console.log(newclass)
-#    console.log(newattribute)
-#    console.log(newattribute2)
-#    console.log(newlink)
-#    console.log(newlink2)
-#    guiinst.add_object_type(newclass)
-#    guiinst.add_object_type(newclass2)
-#    guiinst.add_attribute(newattribute)
-#    guiinst.add_attribute(newattribute2)
-#    entity = graph.attributes.cells.models[0].id
-#    entity2 = graph.attributes.cells.models[1].id    
-#    attri = graph.attributes.cells.models[2].id
-#    attri2 = graph.attributes.cells.models[3].id
+ #UML mode
+ #    newclass = new Class('Person',["dni : String","firstname : String", "surname : String", "birthdate : Date"],[])
+ #    newclass1 = new Class('Student',["id : String", "enrolldate : Date"],[])
+ #    console.log(newclass)
+ #    guiinst.add_object_type(newclass)
+ #    guiinst.add_object_type(newclass1)
+ #ERD mode
 
-#    guiinst.add_relationship_attr(entity,attri)
-#    guiinst.add_relationship_attr(entity,attri2)
-#ISA    
-#    guiinst.add_subsumption(newclass,newclass2)
-#    isa = graph.attributes.cells.models[6].id
+    newattribute = new Attribute('dni','normal')
+    newattribute2 = new Attribute('firstname','normal')
+    newattribute3 = new Attribute('surname','normal')   
+    newattribute4 = new Attribute('birthdate','normal')
+    newattribute5 = new Attribute('id','normal')
+    newattribute6 = new Attribute('enrolldate','normal')
+        
+    newclass = new Entity('Person',[newattribute,newattribute2,newattribute3,newattribute4])
+    newclass2 = new Entity('Student',[newattribute5,newattribute6])
+    newlink = new LinkAttrToEntity(['Person', 'dni'])
+    newlink2 = new LinkAttrToEntity(['Person', 'firstname'])
+    newlink3 = new LinkAttrToEntity(['Person', 'surname'])
+    newlink4 = new LinkAttrToEntity(['Person', 'birthdate'])
+    newlink5 = new LinkAttrToEntity(['Student', 'id'])
+    newlink6 = new LinkAttrToEntity(['Student', 'enrolldate']) 
+    newISA = new Generalization(newclass2,newclass)
+    console.log(newISA)       
+    newlinkISA =  new LinkISAToEntity(['Person', 'r1'])
+    newlinkISA1 =  new LinkISAToEntity(['r1', 'Student'])
+    console.log(newlinkISA)
+    console.log(newlinkISA1)
+    console.log(newclass)
+    console.log(newattribute)
+    console.log(newattribute2)
+    console.log(newlink)
+    console.log(newlink2)
+    guiinst.add_object_type(newclass)
+    guiinst.add_object_type(newclass2)
+    guiinst.add_attribute(newattribute)
+    guiinst.add_attribute(newattribute2)
+    guiinst.add_attribute(newattribute3)
+    guiinst.add_attribute(newattribute4)    
+    guiinst.add_attribute(newattribute5)
+    guiinst.add_attribute(newattribute6)
+      
+    entity = graph.attributes.cells.models[0].id
+    entity2 = graph.attributes.cells.models[1].id    
+    attri = graph.attributes.cells.models[2].id
+    attri2 = graph.attributes.cells.models[3].id
+    attri3 = graph.attributes.cells.models[4].id
+    attri4 = graph.attributes.cells.models[5].id
+    attri5 = graph.attributes.cells.models[6].id
+    attri6 = graph.attributes.cells.models[7].id                
+    guiinst.add_relationship_attr(entity,attri)
+    guiinst.add_relationship_attr(entity,attri2)
+    guiinst.add_relationship_attr(entity,attri3)
+    guiinst.add_relationship_attr(entity,attri4)
+    guiinst.add_relationship_attr(entity2,attri5)
+    guiinst.add_relationship_attr(entity2,attri6)    
+#ISA 
+    guiinst.add_subsumption(newclass2,newclass)
+    isa = graph.attributes.cells.models[14].id
 #    guiinst.add_relationship_isa(entity,isa,['isa1','isa2'])
-#    guiinst.add_relationship_isa(entity,isa)
-#    guiinst.add_relationship_isa_inverse(entity2,isa)
+    guiinst.add_relationship_isa(entity,isa)
+    guiinst.add_relationship_isa_inverse(entity2,isa)
 
 
     
