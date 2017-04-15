@@ -37,7 +37,7 @@ class WicomTest extends PHPUnit_Framework_TestCase
        { 
            "satisfiable": {
                "kb" : true,
-               "classes" : ["Hi World"]
+               "classes" : ["#Hi World"]
            },
            "unsatisfiable": {
               	"classes" : []
@@ -57,9 +57,9 @@ EOT;
         // $GLOBALS['config']['temporal_path'] = "../../temp/";
         $answer = $wicom->is_satisfiable($input);
 
-        print("\n\$answer = ");
+        /*print("\n\$answer = ");
         print_r($answer);
-        print("\n");        
+        print("\n");*/
         
         $answer->set_reasoner_input("");
         $answer->set_reasoner_output("");

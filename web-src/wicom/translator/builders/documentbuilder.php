@@ -114,6 +114,16 @@ You passed a " . gettype($elt) . " on: " . print_r($elt, true) );
         case "class" :
             $this->product->insert_class($elt["class"]);
             break;
+        case "class_min" :
+            $this->insert_class_min(
+                $elt["class_min"][0],
+                $elt["class_min"][0] . "_" . $elt["class_min"][1] . "_min");
+            break;
+        case "class_max" :
+            $this->insert_class_max(
+                $elt["class_max"][0],
+                $elt["class_max"][0] . "_" . $elt["class_max"][1] . "_max");
+            break;
         case "role" :
             $this->product->insert_objectproperty($elt["role"]);
             break;
@@ -157,13 +167,17 @@ You passed a " . gettype($elt) . " on: " . print_r($elt, true) );
         case "mincard" :
             $this->product->begin_mincardinality($elt["mincard"][0]);
             $this->DL_element($elt["mincard"][1]);
-			$this->DL_element($elt["mincard"][2]);
+            if (key_exists(2, $elt["mincard"])){
+                $this->DL_element($elt["mincard"][2]);
+            }
             $this->product->end_mincardinality();
             break;
         case "maxcard" :
             $this->product->begin_maxcardinality($elt["maxcard"][0]);
             $this->DL_element($elt["maxcard"][1]);
-			$this->DL_element($elt["maxcard"][2]);
+            if (key_exists(2, $elt["maxcard"])){
+                $this->DL_element($elt["maxcard"][2]);
+            }
             $this->product->end_maxcardinality();
             break;
 		case "domain" :

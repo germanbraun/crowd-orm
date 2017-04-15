@@ -24,7 +24,11 @@
 namespace Wicom\Translator\Strategies;
 
 use function \load;
+load('crowdpack.php', './qapackages/');
 load('strategy.php');
+load('uml.php');
+
+use Wicom\Translator\Strategies\QAPackages\CrowdPack;
 
 /**
    This module implements the graphical-oriented UML encoding for crowd.
@@ -32,36 +36,14 @@ load('strategy.php');
 
    @see Translator class for description about the JSON format.
  */
-class UMLcrowd extends Strategy{
+class UMLcrowd extends UML{
 
-    /**
-       Translate a JSON String into another format depending on 
-       the given Builder.
-              
-       - Each UML Class is a Class concept in DL.
+    function __construct(){
+        parent::__construct();
 
-       @param json_str A String with a diagram representation in 
-       JSON format.
-       @param builder A Wicom\Translator\Builders\DocumentBuilder subclass instance.
-
-       @see Translator class for description about the JSON format.
-    */
-    function translate($json_str, $builder){
-    
-        $json = json_decode($json_str, true);
-
-        // Classes
-        $js_clases = $json["classes"];
-        foreach ($js_clases as $class){
-            $builder->insert_subclassof($class["name"], "owl:Thing");
-        }
-
-        $this->translate_links($json, $builder); 
-
-  
+        $this->qapack = new CrowdPack();
     }
-
-
+   
     /**
        Depending on $mult translate it into DL.
 
@@ -125,22 +107,22 @@ class UMLcrowd extends Strategy{
 		$assoc_without_class = [
 			["domain" => [["role" => $link["name"]], ["class" => $classes[0]]]],
 			["range" => [["role" => $link["name"]], ["class" => $classes[1]]]],
-			["equivalentclasses" => [["class" => $classes[0]."_".$link["name"]."_"."min"],
+			["equivalentclasses" => [["class_min" => [$classes[0], $link["name"]]],
 						            ["intersection" => [["class" => $classes[0]],
                 				                        ["mincard" => [1, ["role" => $link["name"]], ["top" => "owl:Thing"]]]]
 									]]
 			],
-			["equivalentclasses" => [["class" => $classes[0]."_".$link["name"]."_"."max"],
+			["equivalentclasses" => [["class_max" => [$classes[0], $link["name"]]],
 						            ["intersection" => [["class" => $classes[0]],
                 				                        ["maxcard" => [1, ["role" => $link["name"]], ["top" => "owl:Thing"]]]]
 									]]
 			],
-			["equivalentclasses" => [["class" => $classes[1]."_".$link["name"]."_"."min"],
+			["equivalentclasses" => [["class_min" => [$classes[1], $link["name"]]],
 						            ["intersection" => [["class" => $classes[1]],
                 				                        ["mincard" => [1, ["inverse" => ["role" => $link["name"]]], ["top" => "owl:Thing"]]]]
 									]]
 			],
-			["equivalentclasses" => [["class" => $classes[1]."_".$link["name"]."_"."max"],
+			["equivalentclasses" => [["class_max" => [$classes[1], $link["name"]]],
 						            ["intersection" => [["class" => $classes[1]],
                 				                        ["maxcard" => [1, ["inverse" => ["role" => $link["name"]]], ["top" => "owl:Thing"]]]]
 									]]

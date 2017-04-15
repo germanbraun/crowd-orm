@@ -32,6 +32,7 @@ use Wicom\Translator\Documents\OWLlinkDocument;
 class OWLlinkBuilder extends DocumentBuilder{
     function __construct(){
         $this->product = new OWLlinkDocument;
+        $this->min_max = [];
     }
     
     public function insert_header($createkb=true, $starttell=true){
@@ -44,6 +45,31 @@ class OWLlinkBuilder extends DocumentBuilder{
         }
     }
 
+    /**
+       @todo Move this into the Strategy.
+    */
+    public function insert_class_min($classname, $minname){
+        if (key_exists($classname, $this->min_max)){
+            $this->min_max[$classname][0] = $minname;
+        }else{
+            $this->min_max[$classname] = [$minname, null];
+        }
+        $this->product->insert_class($minname);
+    }
+
+    /**
+       @todo Move this into the Strategy.
+     */
+    public function insert_class_max($classname, $maxname){
+        if (key_exists($classname, $this->min_max)){
+            $this->min_max[$classname][1] = $maxname;
+        }else{
+            $this->min_max[$classname] = [null, $maxname];
+        }
+            
+        $this->product->insert_class($maxname);
+    }
+    
     public function insert_class($name, $col_attrs = []){
         $this->product->insert_class($name);
     }
@@ -74,6 +100,16 @@ class OWLlinkBuilder extends DocumentBuilder{
         $this->product->insert_satisfiable_class($classname);
     }
 
+    /**
+       Insert an entail OWLlink query for checking equivalence between classes.
+
+       @param $array An array of class names.
+     */
+    public function insert_equivalent_class_query($array){
+        $this->ensure_end_tell();
+        $this->product->insert_equivalent_class_query($array);
+    }
+
     ///@}
     // Queries
 
@@ -85,6 +121,16 @@ class OWLlinkBuilder extends DocumentBuilder{
     public function insert_footer(){
         $this->product->end_tell();
         $this->product->end_document();
+    }
+
+    /**
+       Retrieve the classes with its min and max if its exists.
+
+       @return A hash like ["classname" => ["min_class_name", "max_class_name"]]
+       @todo Move this into the Strategy.
+     */
+    public function get_classes_with_min_max(){
+        return $this->min_max;
     }
 
     /**
