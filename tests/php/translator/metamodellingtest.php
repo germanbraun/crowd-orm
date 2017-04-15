@@ -5,7 +5,7 @@
    
    Author: Gilia  
 
-   crowd_uml_test.php
+   metamodellingtest.php
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ require_once("common.php");
 load("crowd_uml.php", "wicom/translator/strategies/");
 load("owllinkbuilder.php", "wicom/translator/builders/");
 
-use Wicom\Translator\Strategies\UMLcrowd;
+use Wicom\Translator\Strategies\Metamodel;
 use Wicom\Translator\Builders\OWLlinkBuilder;
 
 /**
@@ -38,53 +38,51 @@ use Wicom\Translator\Builders\OWLlinkBuilder;
  */
 
 
-class UMLcrowdTest extends PHPUnit_Framework_TestCase
+class MetamodellingTest extends PHPUnit_Framework_TestCase
 {
 
 
-/*    public function testTranslate(){
-        //TODO: Complete JSON!
-        $json = <<<'EOT'
+	##
+	# Test if translate works properly with binary roles many-to-many
+	public function testUMLClass2Metamodel(){
+		$json = <<< EOT
 {
-"classes": [{"attrs":[], "methods":[], "name": "Hi World"}],
+"classes": [{"name":"PhoneCall", "attrs":[], "methods":[]}],
 "links": []
 }
 EOT;
-        //TODO: Complete XML!
-        $expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-<RequestMessage xmlns=\"http://www.owllink.org/owllink#\"
-xmlns:owl=\"http://www.w3.org/2002/07/owl#\" 
-xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
-xsi:schemaLocation=\"http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd\">
-       <CreateKB kb=\"http://localhost/kb1\" />
-       <Tell kb=\"http://localhost/kb1\">   
-       		<owl:SubClassOf>
-       		<owl:Class IRI=\"Hi World\" />
-       		<owl:Class abbreviatedIRI=\"owl:Thing\" />
-       		</owl:SubClassOf>
-       </Tell>
-</RequestMessage>";
-        
-        $strategy = new UMLcrowd();
-        $builder = new OWLlinkBuilder();
-
-        $builder->insert_header(); // Without this, loading the DOMDocument
-        // will throw error for the owl namespace
-        $strategy->translate($json, $builder);
-        $builder->insert_footer();
-        
-        $actual = $builder->get_product();
-        $actual = $actual->to_string();
-
-        //$expected = process_xmlspaces($expected);
-        //$actual = process_xmlspaces($actual);
-        // Don't use assertEqualXMLStructure()! It won't check for attributes values!
-        $this->assertXmlStringEqualsXmlString($expected, $actual, true);
-    }
-*/
-
-
-
+		
+$expected = <<< EOT
+<?xml version="1.0" encoding="UTF-8"?>
+<RequestMessage xmlns="http://www.owllink.org/owllink#"
+		xmlns:owl="http://www.w3.org/2002/07/owl#" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd">
+  <CreateKB kb="http://localhost/kb1" />
+  <Tell kb="http://localhost/kb1">
+    <owl:SubClassOf>
+      <owl:Class IRI="#Entity" />
+      <owl:Class abbreviatedIRI="owl:Thing" />
+    </owl:SubClassOf>		
+  </Tell>
+</RequestMessage>		
+EOT;
+		
+		$strategy = new UMLcrowd();
+		$builder = new OWLlinkBuilder();
+		
+		$builder->insert_header(); // Without this, loading the DOMDocument
+		// will throw error for the owl namespace
+		$strategy->translate($json, $builder);
+		$builder->insert_footer();
+		
+		$actual = $builder->get_product();
+		$actual = $actual->to_string();
+		$this->assertXmlStringEqualsXmlString($expected, $actual,true);
+		
+	}
+	
+	
     ##
     # Test if translate works properly with binary roles many-to-many
     public function testTranslateBinaryRolesWithoutClass0N(){  

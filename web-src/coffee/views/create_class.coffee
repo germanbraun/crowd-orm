@@ -38,9 +38,13 @@ CreateClassView = Backbone.View.extend(
                 "import_json"
             "click a#exportjson_open_dialog":
                 "export_json"
+            "click a#savejson":
+                "save_json"
+            "click a#loadjson":
+                "load_json"
 
         create_class: (event) ->
-            alert("Creando: " + $("#crearclase_input").val() + "...")
+            # alert("Creando: " + $("#crearclase_input").val() + "...")
             gui.gui_instance.add_class(
                 name: $("#crearclase_input").val()
             )
@@ -65,11 +69,11 @@ CreateClassView = Backbone.View.extend(
             gui.gui_instance.show_import_json()
         export_json: () ->
             gui.gui_instance.show_export_json()
-
-                
+        save_json: () ->
+            gui.gui_instance.show_save_json()
+        load_json: () ->
+            gui.gui_instance.show_load_json()
 );
-
-        
 
 exports = exports ? this
 exports.CreateClassView = CreateClassView
