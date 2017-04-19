@@ -244,7 +244,7 @@ class ERDFactory extends Factory
     	if attr_type == 'key'
     		   newattribute = new erd.Key({position: {x:200, y:10}, attrs: {text: {fill: '#ffffff', text: attr_name}}})
         else
-       	      newattribute = new erd.Normal({position: {x:150, y:150}, attrs: {text: {fill: '#ffffff', text: attr_name}}})
+       	      newattribute = new erd.Normal({position: {x:150, y:150}, attrs: {text: {fill: '#ffffff', text: attr_name,  style: { 'text-shadow': '1px 0 1px #333333' }}}})
 
                                    
         return newattribute                
