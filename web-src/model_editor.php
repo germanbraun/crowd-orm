@@ -16,8 +16,10 @@ require_once('template.php');
 	<script src="./js/interface.js"></script>
 	<script src="./js/gui.js"></script>
 	<script src="./js/guiimpl.js"></script>
+	<script src="./js/guiorm.js"></script>
 	<script src="./js/guiuml.js"></script>
 	<script src="./js/guieer.js"></script>
+	
 
 	
 	<?php if (array_key_exists('prueba', $_GET) && $_GET['prueba'] == 1){ ?>
