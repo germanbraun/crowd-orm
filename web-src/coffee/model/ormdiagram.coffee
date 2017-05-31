@@ -19,7 +19,7 @@
 #
 # An ER diagram representation.
 # 
-class ERDiagram extends Diagram
+class ORMDiagram extends Diagram
     #
     # @param [joint.Graph] graph
     # 
@@ -32,7 +32,7 @@ class ERDiagram extends Diagram
         # diagram for apply.
         @cells_deleted = []
         
-        @factory = new ERDFactory()
+        @factory = new ORMFactory()
 
     get_factory: () ->
         return @factory
@@ -403,4 +403,4 @@ class ERDiagram extends Diagram
         
 exports = exports ? this
 
-exports.UMLDiagram = UMLDiagram
+exports.ORMDiagram = ORMDiagram
