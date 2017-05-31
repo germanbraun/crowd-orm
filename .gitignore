@@ -1,8 +1,0 @@
-*~
-docs/doxygen/**
-docs/coffee/**
-web-src/config/config.php
-web-src/js/*.js
-web-src/js/model/*.js
-tests/js/js/*.js
-run/**
