@@ -18,7 +18,7 @@
 ## Central GUI *do-it-all* class...
 class GUI
 	constructor: (@graph, @paper) ->
-		@current_gui = new GUIORM(@graph,@paper)
+		@current_gui = new GUIUML(@graph,@paper)
 		@prev_gui = new GUIEER(@graph,@paper)
 		@aux_gui = []
 		gui.set_current_instance(this)
