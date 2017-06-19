@@ -17,73 +17,121 @@
 # @namespace gui
 ## Central GUI *do-it-all* class...
 class GUI
-	constructor: (@graph, @paper) ->
-		@current_gui = new GUIUML(@graph,@paper)
-		@prev_gui = new GUIEER(@graph,@paper)
-		@aux_gui = []
-		gui.set_current_instance(this)
-		# Login
-		@loginwidget = new LoginWidgetView({el: $("#loginwidget_placer")})
-		@login = null
-		@serverconn = new ServerConnection( (jqXHR, status, text) ->
+    constructor: (@graph, @paper) ->
+        @current_gui = new GUIUML(@graph,@paper)
+        @prev_gui = new GUIEER(@graph,@paper)
+        @aux_gui = []
+        gui.set_current_instance(this)
+        # Login
+        @loginwidget = new LoginWidgetView({el: $("#loginwidget_placer")})
+        @login = null
+        @serverconn = new ServerConnection( (jqXHR, status, text) ->
             exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
         )
-		# Save-Load
-		@saveloadjsonwidget = new SaveLoadJson({el: $("#saveloadjson_placer")})
+        # Save-Load
+        @saveloadjsonwidget = new SaveLoadJson({el: $("#saveloadjson_placer")})
 
-	to_erd: () ->
-		@current_gui.to_erd(this)
-				
+    to_erd: () ->
+        @current_gui.to_erd(this)
 
-	to_metamodel: () ->
+    to_metamodel: () ->
 
-	switch_to_erd: () -> 
-#	    @current_gui.hide_umldiagram_page()
-	    @aux_gui = @current_gui
-	    @current_gui = @prev_gui
-	    @prev_gui = @aux_gui
-#	    @current_gui.show_eerdiagram_page()
-	
-	update_metamodel: (data) ->
-		@current_gui.update_metamodel(data)
+    switch_to_erd: () -> 
+#        @current_gui.hide_umldiagram_page()
+        @aux_gui = @current_gui
+        @current_gui = @prev_gui
+        @prev_gui = @aux_gui
+#        @current_gui.show_eerdiagram_page()
+    
+    update_metamodel: (data) ->
+        @current_gui.update_metamodel(data)
 
-	translate_owllink: () ->
-		@current_gui.translate_owllink()
+    translate_owllink: () ->
+        @current_gui.translate_owllink()
 
-	update_translation: () ->
+    update_translation: () ->
 
-	add_object_type: (name) -> 
-	    @current_gui.add_object_type(name)
+    add_object_type: (name) -> 
+        @current_gui.add_object_type(name)
 
     add_attribute: (name) ->
-    	@current_gui.add_attribute(name)
-    	
+        @current_gui.add_attribute(name)
+        
     add_relationship: (class_a_id, class_b_id, name, mult) -> 
         @current_gui.add_relationship(class_a_id, class_b_id, name, mult)
 
     add_relationship_attr: (class_id, attribute_id, name) ->
-    	@current_gui.add_relationship_attr(class_id, attribute_id, name)
+        @current_gui.add_relationship_attr(class_id, attribute_id, name)
 
     add_relationship_isa: (class_id, isa_id, name)-> 
         @current_gui.add_relationship_isa(class_id, isa_id, name)
 
     add_relationship_isa_inverse: (class_id, isa_id, name)-> 
         @current_gui.add_relationship_isa_inverse(class_id, isa_id, name)
-    	    	
+                
     add_subsumption: (class_parent_id, class_child_id, disjoint, covering) -> 
-    	@current_gui.add_subsumption(class_parent_id, class_child_id, disjoint, covering)
-	
-	edit_class_name: (class_id, name) -> @current_gui.edit_class_name(class_id, name)
-	
-	delete_class: (class_id) -> @current_gui.delete_class(class_id)
+        @current_gui.add_subsumption(class_parent_id, class_child_id, disjoint, covering)
+    
+    edit_class_name: (class_id, name) -> @current_gui.edit_class_name(class_id, name)
+    
+    delete_class: (class_id) -> @current_gui.delete_class(class_id)
 
-	set_isa_state: (class_id, disjoint, covering) -> 
-	    @current_gui.set_isa_state(class_id, disjoint, covering)		
+    set_isa_state: (class_id, disjoint, covering) -> 
+        @current_gui.set_isa_state(class_id, disjoint, covering)        
 
     set_options_classid: (model_id) ->
-    	@current_gui.set_options_classid(model_id)
+        @current_gui.set_options_classid(model_id)
 
-   #
+    set_association_state: (class_id, mult) -> @current_gui.set_association_state(class_id, mult)
+                
+    hide_options: () ->
+        @current_gui.hide_options()
+
+    hide_toolbar: () -> @current_gui.hide_toolbar()
+
+    hide_umldiagram_page: () -> @current_gui.hide_umldiagram_page()
+    
+    show_umldiagram_page: () -> @current_gui.show_umldiagram_page()
+
+    hide_eerdiagram_page: () -> @current_gui.eerdiagram_page()
+    
+    show_eerdiagram_page: () -> @current_gui.eerdiagram_page()
+        
+    set_editclass_classid: (model_id) ->
+        @current_gui.set_editclass_classid(model_id)
+        
+    set_selection_state: () ->
+        @current_gui.set_selection_state()
+            
+    # Update and show the "Export JSON String" section.
+    show_export_json: () ->
+         @current_gui.show_export_json()
+
+    change_to_user_page: () ->
+        $.mobile.changePage("#user-page",
+            transition: "slide")
+
+    # Refresh the content of the "Export JSON String" section.
+    #
+    # No need to show it.
+    refresh_export_json: () ->
+        @current_gui.refresh_export_json()
+        
+
+    on_cell_clicked: (cellview, event, x, y) -> @current_gui.on_cell_clicked(cellview,event,x,y)
+    
+    import_json: (json_obj) -> @current_gui.import_json(json_obj)
+
+    import_jsonstr: (data) -> @current_gui.import_jsonstr(data)
+    
+    show_import_json: () -> @current_gui.show_import_json()
+    
+    reset_all: () -> @current_gui.reset_all()
+        
+    # --------------------------------------------------
+    # Login and Save-Load  Feature
+
+    #
     # Show the login popup.
     #
     show_login: () ->
@@ -149,53 +197,6 @@ class GUI
         console.log(data)
         @login = null
         this.set_logged_in()
-
-    set_association_state: (class_id, mult) -> @current_gui.set_association_state(class_id, mult)
-    	    	
-    hide_options: () ->
-    	@current_gui.hide_options()
-
-    hide_toolbar: () -> @current_gui.hide_toolbar()
-
-    hide_umldiagram_page: () -> @current_gui.hide_umldiagram_page()
-    
-    show_umldiagram_page: () -> @current_gui.show_umldiagram_page()
-
-    hide_eerdiagram_page: () -> @current_gui.eerdiagram_page()
-    
-    show_eerdiagram_page: () -> @current_gui.eerdiagram_page()
-    	
-    set_editclass_classid: (model_id) ->
-    	@current_gui.set_editclass_classid(model_id)
-    	
-    set_selection_state: () ->
-    	@current_gui.set_selection_state()
-        	
-    # Update and show the "Export JSON String" section.
-	show_export_json: () ->
-         @current_gui.show_export_json()
-
-    change_to_user_page: () ->
-        $.mobile.changePage("#user-page",
-            transition: "slide")
-
-    # Refresh the content of the "Export JSON String" section.
-    #
-    # No need to show it.
-	refresh_export_json: () ->
-		@current_gui.refresh_export_json()
-		
-
-	on_cell_clicked: (cellview, event, x, y) -> @current_gui.on_cell_clicked(cellview,event,x,y)
-	
-	import_json: (json_obj) -> @current_gui.import_json(json_obj)
-
-	import_jsonstr: (data) -> @current_gui.import_jsonstr(data)
-	
-	show_import_json: () -> @current_gui.show_import_json()
-	
-	reset_all: () -> @current_gui.reset_all()
-        
 
     # Display the saveloadjson Popup in the save state.
     show_save_json: () ->
@@ -271,9 +272,9 @@ exports.gui.set_current_instance = (gui_instance) ->
 #
 # We need to set a global gui instance variable with one GUI.gui instance.
 exports.gui.switch_to_erd = () -> 
-	gui_instance.aux_gui = gui_instance.current_gui
-	gui_instance.current_gui = gui_instance.prev_gui
-	gui_instance.prev_gui = gui_instance.aux_gui
- 
+    gui_instance.aux_gui = gui_instance.current_gui
+    gui_instance.current_gui = gui_instance.prev_gui
+    gui_instance.prev_gui = gui_instance.aux_gui
+
 exports.gui.GUI = GUI
-	
+
