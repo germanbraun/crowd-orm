@@ -138,6 +138,66 @@ class ServerConnection
             error:
                 @error_callback
         )
+        
+    # Send to the server a metamodel translation Request.
+    #
+    # @param json {string} 
+    # @param callback_function A function to use as a callback when
+    #   the response is recieved.
+    request_metamodel_translation: (json, callback_function) ->
+        url = @urlprefix + "api/translate/metamodel.php"
+        console.log("Requesting at " + url)
+        $.ajax(
+            type: "POST",
+            url: url,
+            data:            
+                "json":
+                    json
+            success:
+                callback_function
+            error:
+                @error_callback
+        )
+        
+    # Send to the server a metamodel-to-ERD translation Request.
+    #
+    # @param json {string} 
+    # @param callback_function A function to use as a callback when
+    #   the response is recieved.
+    request_meta2erd_translation: (json, callback_function) ->
+        url = @urlprefix + "api/translate/metamodeltoerd.php"
+        console.log("Requesting at " + url)
+        $.ajax(
+            type: "POST",
+            url: url,
+            data:            
+                "json":
+                    json
+            success:
+                callback_function
+            error:
+                @error_callback
+        )
+
+    # Send to the server a metamodel-to-ORM translation Request.
+    #
+    # @param json {string} 
+    # @param callback_function A function to use as a callback when
+    #   the response is recieved.
+    request_meta2orm_translation: (json, callback_function) ->
+        url = @urlprefix + "api/translate/metamodeltoorm.php"
+        console.log("Requesting at " + url)
+        $.ajax(
+            type: "POST",
+            url: url,
+            data:            
+                "json":
+                    json
+            success:
+                callback_function
+            error:
+                @error_callback
+        )
 
 exports = exports ? this
 exports.ServerConnection = ServerConnection

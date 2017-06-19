@@ -38,21 +38,27 @@ CreateClassView = Backbone.View.extend(
                 "import_json"
             "click a#exportjson_open_dialog":
                 "export_json"
+            "click a#meta_erd_button" : "meta_to_erd"
             "click a#savejson":
                 "save_json"
             "click a#loadjson":
                 "load_json"
 
+        
+        meta_to_erd: (event) -> 
+        	console.log(event) 
+        	guiinst.to_erd()
+        
+        
         create_class: (event) ->
-            # alert("Creando: " + $("#crearclase_input").val() + "...")
-            gui.gui_instance.add_class(
+            guiinst.add_object_type(
                 name: $("#crearclase_input").val()
             )
 
         # Event handler for translate diagram to OWLlink using Ajax
         # and the api/translate/berardi.php translator URL.
         translate_owllink: (event) ->
-            gui.gui_instance.translate_owllink()
+            guiinst.translate_owllink()
 
         # Which is the current translation format selected by the
         # user?
@@ -62,18 +68,21 @@ CreateClassView = Backbone.View.extend(
             $("#format_select")[0].value
 
         insert_owllink: () ->
-            gui.gui_instance.show_insert_owllink()
+            guiinst.show_insert_owllink()
         reset_all: () ->
-            gui.gui_instance.reset_all()
+            guiinst.reset_all()
         import_json: () ->
-            gui.gui_instance.show_import_json()
+            guiinst.show_import_json()
         export_json: () ->
-            gui.gui_instance.show_export_json()
+            guiinst.show_export_json()
         save_json: () ->
             gui.gui_instance.show_save_json()
         load_json: () ->
             gui.gui_instance.show_load_json()
+                
 );
+
+        
 
 exports = exports ? this
 exports.CreateClassView = CreateClassView

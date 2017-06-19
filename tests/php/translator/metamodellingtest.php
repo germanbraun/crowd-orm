@@ -1,928 +1,444 @@
 <?php
-/* 
+/*
 
-   Copyright 2016 Gilia, Departamento de Teoría de la Computación, Universidad Nacional del Comahue
-   
-   Author: Gilia  
+Copyright 2017 
 
-   metamodellingtest.php
-   
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-   
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-   
-   You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+Grupo de Investigación en Lenguajes e Inteligencia Artificial (GILIA) -
+Facultad de Informática
+Universidad Nacional del Comahue
+
+metamodellingtest.php
+ 
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+ 
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+ 
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 require_once("common.php");
 
 // use function \load;
-load("crowd_uml.php", "wicom/translator/strategies/");
-load("owllinkbuilder.php", "wicom/translator/builders/");
+load("umlmeta.php", "wicom/translator/metastrategies/");
+load("meta2eer.php", "wicom/translator/metastrategies/");
+load("meta2orm.php", "wicom/translator/metastrategies/");
 
-use Wicom\Translator\Strategies\Metamodel;
-use Wicom\Translator\Builders\OWLlinkBuilder;
+use Wicom\Translator\Metastrategies\UMLMeta;
+use Wicom\Translator\Metastrategies\Meta2ORM;
+use Wicom\Translator\Metastrategies\Meta2EER;
 
-/**
-   # Warning!
-   Don't use assertEqualXMLStructure()! It won't check for attributes values! 
-
-   It will only check for the amount of attributes.
- */
 
 
 class MetamodellingTest extends PHPUnit_Framework_TestCase
 {
-
+	
+	##
+	# Test if we can generate the metamodel equivalent to the given UML diagram with classes and subsumptions
+	public function testUMLClass(){
+		$json = <<< EOT
+{"classes":[{"name":"Classssssss","attrs":[],"methods":[],"position":{"x":20,"y":20}}],"links":[]}
+EOT;
+	
+		$expected = <<< EOT
+{
+"Object type" : [{"name" : "Classssssss"}],
+"Subsumption" : [],
+"Association" : [],
+"Object type cardinality" : [],
+"Attribute" : []
+}
+EOT;
+	
+		$strategy = new UMLMeta();
+		$strategy->create_metamodel($json);
+		print_r($strategy->meta);
+		$this->assertJsonStringEqualsJsonString($expected, $strategy->get_json(),true);
+	
+	}
+	
 
 	##
-	# Test if translate works properly with binary roles many-to-many
-	public function testUMLClass2Metamodel(){
+	# Test if we can generate the metamodel equivalent to the given UML diagram with classes and subsumptions
+	public function testUMLClassAndGen2Metamodel(){
 		$json = <<< EOT
 {
-"classes": [{"name":"PhoneCall", "attrs":[], "methods":[]}],
-"links": []
+"classes": [{"name":"Phone", "attrs":[], "methods":[]},
+		    {"name":"CellPhone", "attrs":[], "methods":[]},
+			{"name":"FixedPhone", "attrs":[], "methods":[]}],
+"links":   [
+			{"classes" : ["CellPhone", "FixedPhone"],
+			 "multiplicity" : null,
+			 "name" : "r1",
+			 "type" : "generalization",
+			 "parent" : "Phone",
+			 "constraint" : []
+			}
+		   ]
 }
 EOT;
 		
 $expected = <<< EOT
-<?xml version="1.0" encoding="UTF-8"?>
-<RequestMessage xmlns="http://www.owllink.org/owllink#"
-		xmlns:owl="http://www.w3.org/2002/07/owl#" 
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd">
-  <CreateKB kb="http://localhost/kb1" />
-  <Tell kb="http://localhost/kb1">
-    <owl:SubClassOf>
-      <owl:Class IRI="#Entity" />
-      <owl:Class abbreviatedIRI="owl:Thing" />
-    </owl:SubClassOf>		
-  </Tell>
-</RequestMessage>		
+{
+"Object type" : [{"name" : "Phone"},
+			     {"name" : "CellPhone"},
+		         {"name" : "FixedPhone"}],
+"Subsumption" : [{"name" : "r1",
+				  "parent" : "Phone",
+			      "children" : ["CellPhone", "FixedPhone"]}],
+"Association" : [],
+"Object type cardinality" : [],
+"Attribute" : []
+}
 EOT;
 		
-		$strategy = new UMLcrowd();
-		$builder = new OWLlinkBuilder();
-		
-		$builder->insert_header(); // Without this, loading the DOMDocument
-		// will throw error for the owl namespace
-		$strategy->translate($json, $builder);
-		$builder->insert_footer();
-		
-		$actual = $builder->get_product();
-		$actual = $actual->to_string();
-		$this->assertXmlStringEqualsXmlString($expected, $actual,true);
+		$strategy = new UMLMeta();
+		$strategy->create_metamodel($json);
+		print_r($strategy->meta);
+		$this->assertJsonStringEqualsJsonString($expected, $strategy->get_json(),true);
 		
 	}
 	
 	
-    ##
-    # Test if translate works properly with binary roles many-to-many
-    public function testTranslateBinaryRolesWithoutClass0N(){  
+	##
+	# Test if we can generate the metamodel equivalent to the given UML diagram with classes and associations.
+	# Cardinalities are null.
+	public function testUMLBinaryAssoc0NWithoutRolesMetamodel(){
 		$json = <<< EOT
 {
 "classes": [{"name":"PhoneCall", "attrs":[], "methods":[]},
-			 {"name":"Phone", "attrs":[], "methods":[]}],
-"links": [{"name": "r1", "classes":["PhoneCall","Phone"], "multiplicity":[null,null], "type":"association"}]
+		    {"name":"Phone", "attrs":[], "methods":[]}],
+"links":   [
+			{"name" : "r1",
+			 "classes" : ["PhoneCall", "Phone"],
+			 "multiplicity" : ["0..*","0..*"],
+			 "type" : "association"
+			}
+		   ]
 } 
 EOT;
-
-        //TODO: Complete XML!
-        $expected = <<< EOT
-<?xml version="1.0" encoding="UTF-8"?>
-<RequestMessage xmlns="http://www.owllink.org/owllink#"
-		xmlns:owl="http://www.w3.org/2002/07/owl#" 
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd">
-  <CreateKB kb="http://localhost/kb1" />
-  <Tell kb="http://localhost/kb1">
-    <owl:SubClassOf>
-      <owl:Class IRI="#PhoneCall" />
-      <owl:Class abbreviatedIRI="owl:Thing" />
-    </owl:SubClassOf>
-    <owl:SubClassOf>
-      <owl:Class IRI="#Phone" />
-      <owl:Class abbreviatedIRI="owl:Thing" />
-    </owl:SubClassOf>
-    <owl:ObjectPropertyDomain>
-        <owl:ObjectProperty IRI="#r1"/>
-        <owl:Class IRI="#PhoneCall"/>
-    </owl:ObjectPropertyDomain>
-    <owl:ObjectPropertyRange>
-        <owl:ObjectProperty IRI="#r1"/>
-        <owl:Class IRI="#Phone"/>
-    </owl:ObjectPropertyRange>
-    <owl:EquivalentClasses>
-        <owl:Class IRI="#PhoneCall_r1_min"/>
-        <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#PhoneCall"/>
-            <owl:ObjectMinCardinality cardinality="1">
-                <owl:ObjectProperty IRI="#r1"/>
-     			<owl:Class abbreviatedIRI="owl:Thing" />
-            </owl:ObjectMinCardinality>
-        </owl:ObjectIntersectionOf>
-    </owl:EquivalentClasses>
-    <owl:EquivalentClasses>
-        <owl:Class IRI="#PhoneCall_r1_max"/>
-        <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#PhoneCall"/>
-            <owl:ObjectMaxCardinality cardinality="1">
-                <owl:ObjectProperty IRI="#r1"/>
-			    <owl:Class abbreviatedIRI="owl:Thing" />
-            </owl:ObjectMaxCardinality>
-        </owl:ObjectIntersectionOf>
-    </owl:EquivalentClasses>
-    <owl:EquivalentClasses>
-        <owl:Class IRI="#Phone_r1_min"/>
-        <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#Phone"/>
-            <owl:ObjectMinCardinality cardinality="1">
-                <owl:ObjectInverseOf>
-                    <owl:ObjectProperty IRI="#r1"/>
-                </owl:ObjectInverseOf>
-				<owl:Class abbreviatedIRI="owl:Thing" />
-            </owl:ObjectMinCardinality>
-        </owl:ObjectIntersectionOf>
-    </owl:EquivalentClasses>
-    <owl:EquivalentClasses>
-        <owl:Class IRI="#Phone_r1_max"/>
-        <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#Phone"/>
-            <owl:ObjectMaxCardinality cardinality="1">
-                <owl:ObjectInverseOf>
-                    <owl:ObjectProperty IRI="#r1"/>
-                </owl:ObjectInverseOf>
-		     	<owl:Class abbreviatedIRI="owl:Thing" />
-            </owl:ObjectMaxCardinality>
-        </owl:ObjectIntersectionOf>
-    </owl:EquivalentClasses>
-
-  </Tell>
-</RequestMessage>
-EOT;
-        
-        $strategy = new UMLcrowd();
-        $builder = new OWLlinkBuilder();
-
-        $builder->insert_header(); // Without this, loading the DOMDocument
-        // will throw error for the owl namespace
-        $strategy->translate($json, $builder);
-        $builder->insert_footer();
-        
-        $actual = $builder->get_product();
-        $actual = $actual->to_string();
-        $this->assertXmlStringEqualsXmlString($expected, $actual,true);
-    }
-
-
-
-
-    ##
-    # Test if translate works properly with binary roles many-to-many
-    public function testTranslateBinaryRolesWithoutClass01(){  
-		$json = <<< EOT
+	
+		$expected = <<< EOT
 {
-"classes": [{"name":"PhoneCall", "attrs":[], "methods":[]},
-			 {"name":"Phone", "attrs":[], "methods":[]}],
-"links": [{"name": "r1", "classes":["PhoneCall","Phone"], "multiplicity":["0..1","0..1"], "type":"association"}]
-} 
-EOT;
-
-        //TODO: Complete XML!
-        $expected = <<< EOT
-<?xml version="1.0" encoding="UTF-8"?>
-<RequestMessage xmlns="http://www.owllink.org/owllink#"
-		xmlns:owl="http://www.w3.org/2002/07/owl#" 
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd">
-  <CreateKB kb="http://localhost/kb1" />
-  <Tell kb="http://localhost/kb1">
-    <owl:SubClassOf>
-      <owl:Class IRI="#PhoneCall" />
-      <owl:Class abbreviatedIRI="owl:Thing" />
-    </owl:SubClassOf>
-    <owl:SubClassOf>
-      <owl:Class IRI="#Phone" />
-      <owl:Class abbreviatedIRI="owl:Thing" />
-    </owl:SubClassOf>
-    <owl:ObjectPropertyDomain>
-        <owl:ObjectProperty IRI="#r1"/>
-        <owl:Class IRI="#PhoneCall"/>
-    </owl:ObjectPropertyDomain>
-    <owl:ObjectPropertyRange>
-        <owl:ObjectProperty IRI="#r1"/>
-        <owl:Class IRI="#Phone"/>
-    </owl:ObjectPropertyRange>
-    <owl:EquivalentClasses>
-        <owl:Class IRI="#PhoneCall_r1_min"/>
-        <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#PhoneCall"/>
-            <owl:ObjectMinCardinality cardinality="1">
-                <owl:ObjectProperty IRI="#r1"/>
-				<owl:Class abbreviatedIRI="owl:Thing" />
-            </owl:ObjectMinCardinality>
-        </owl:ObjectIntersectionOf>
-    </owl:EquivalentClasses>
-    <owl:EquivalentClasses>
-        <owl:Class IRI="#PhoneCall_r1_max"/>
-        <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#PhoneCall"/>
-            <owl:ObjectMaxCardinality cardinality="1">
-                <owl:ObjectProperty IRI="#r1"/>
-				<owl:Class abbreviatedIRI="owl:Thing" />
-            </owl:ObjectMaxCardinality>
-        </owl:ObjectIntersectionOf>
-    </owl:EquivalentClasses>
-    <owl:EquivalentClasses>
-        <owl:Class IRI="#Phone_r1_min"/>
-        <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#Phone"/>
-            <owl:ObjectMinCardinality cardinality="1">
-                <owl:ObjectInverseOf>
-                    <owl:ObjectProperty IRI="#r1"/>
-                </owl:ObjectInverseOf>
-				<owl:Class abbreviatedIRI="owl:Thing" />
-            </owl:ObjectMinCardinality>
-        </owl:ObjectIntersectionOf>
-    </owl:EquivalentClasses>
-    <owl:EquivalentClasses>
-        <owl:Class IRI="#Phone_r1_max"/>
-        <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#Phone"/>
-            <owl:ObjectMaxCardinality cardinality="1">
-                <owl:ObjectInverseOf>
-                    <owl:ObjectProperty IRI="#r1"/>
-                </owl:ObjectInverseOf>
-				<owl:Class abbreviatedIRI="owl:Thing" />
-            </owl:ObjectMaxCardinality>
-        </owl:ObjectIntersectionOf>
-    </owl:EquivalentClasses>
-    <owl:SubClassOf>
-       	  <owl:Class IRI="#PhoneCall"/>
-          <owl:ObjectMaxCardinality cardinality="1">
-               <owl:ObjectProperty IRI="#r1"/>
-			   <owl:Class IRI="#Phone"/>
-           </owl:ObjectMaxCardinality> 
-    </owl:SubClassOf>
-    <owl:SubClassOf>
-       	  <owl:Class IRI="#Phone"/>
-          <owl:ObjectMaxCardinality cardinality="1">
-			 <owl:ObjectInverseOf>
-               	<owl:ObjectProperty IRI="#r1"/>
-             </owl:ObjectInverseOf>  
-			 <owl:Class IRI="#PhoneCall"/>           
-           </owl:ObjectMaxCardinality> 
-    </owl:SubClassOf>
-  </Tell>
-</RequestMessage>
-EOT;
-        
-        $strategy = new UMLcrowd();
-        $builder = new OWLlinkBuilder();
-
-        $builder->insert_header(); // Without this, loading the DOMDocument
-        // will throw error for the owl namespace
-        $strategy->translate($json, $builder);
-        $builder->insert_footer();
-        
-        $actual = $builder->get_product();
-        $actual = $actual->to_string();
-        $this->assertXmlStringEqualsXmlString($expected, $actual,true);
-    }
-
-
-
-    ##
-    # Test if translate works properly with binary roles many-to-many
-    public function testTranslateBinaryRolesWithoutClass1N(){  
-		$json = <<< EOT
-{
-"classes": [{"name":"PhoneCall", "attrs":[], "methods":[]},
-			 {"name":"Phone", "attrs":[], "methods":[]}],
-"links": [{"name": "r1", "classes":["PhoneCall","Phone"], "multiplicity":["1..*","1..*"], "type":"association"}]
-} 
-EOT;
-
-        //TODO: Complete XML!
-        $expected = <<< EOT
-<?xml version="1.0" encoding="UTF-8"?>
-<RequestMessage xmlns="http://www.owllink.org/owllink#"
-		xmlns:owl="http://www.w3.org/2002/07/owl#" 
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd">
-  <CreateKB kb="http://localhost/kb1" />
-  <Tell kb="http://localhost/kb1">
-    <owl:SubClassOf>
-      <owl:Class IRI="#PhoneCall" />
-      <owl:Class abbreviatedIRI="owl:Thing" />
-    </owl:SubClassOf>
-    <owl:SubClassOf>
-      <owl:Class IRI="#Phone" />
-      <owl:Class abbreviatedIRI="owl:Thing" />
-    </owl:SubClassOf>
-    <owl:ObjectPropertyDomain>
-        <owl:ObjectProperty IRI="#r1"/>
-        <owl:Class IRI="#PhoneCall"/>
-    </owl:ObjectPropertyDomain>
-    <owl:ObjectPropertyRange>
-        <owl:ObjectProperty IRI="#r1"/>
-        <owl:Class IRI="#Phone"/>
-    </owl:ObjectPropertyRange>
-    <owl:EquivalentClasses>
-        <owl:Class IRI="#PhoneCall_r1_min"/>
-        <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#PhoneCall"/>
-            <owl:ObjectMinCardinality cardinality="1">
-                <owl:ObjectProperty IRI="#r1"/>
-				<owl:Class abbreviatedIRI="owl:Thing" />
-            </owl:ObjectMinCardinality>
-        </owl:ObjectIntersectionOf>
-    </owl:EquivalentClasses>
-    <owl:EquivalentClasses>
-        <owl:Class IRI="#PhoneCall_r1_max"/>
-        <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#PhoneCall"/>
-            <owl:ObjectMaxCardinality cardinality="1">
-                <owl:ObjectProperty IRI="#r1"/>
-				<owl:Class abbreviatedIRI="owl:Thing" />
-            </owl:ObjectMaxCardinality>
-        </owl:ObjectIntersectionOf>
-    </owl:EquivalentClasses>
-    <owl:EquivalentClasses>
-        <owl:Class IRI="#Phone_r1_min"/>
-        <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#Phone"/>
-            <owl:ObjectMinCardinality cardinality="1">
-                <owl:ObjectInverseOf>
-                    <owl:ObjectProperty IRI="#r1"/>
-                </owl:ObjectInverseOf>
-				<owl:Class abbreviatedIRI="owl:Thing" />
-            </owl:ObjectMinCardinality>
-        </owl:ObjectIntersectionOf>
-    </owl:EquivalentClasses>
-    <owl:EquivalentClasses>
-        <owl:Class IRI="#Phone_r1_max"/>
-        <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#Phone"/>
-            <owl:ObjectMaxCardinality cardinality="1">
-                <owl:ObjectInverseOf>
-                    <owl:ObjectProperty IRI="#r1"/>
-                </owl:ObjectInverseOf>
-				<owl:Class abbreviatedIRI="owl:Thing" />
-            </owl:ObjectMaxCardinality>
-        </owl:ObjectIntersectionOf>
-    </owl:EquivalentClasses>
-    <owl:SubClassOf>
-       	  <owl:Class IRI="#PhoneCall"/>
-          <owl:ObjectMinCardinality cardinality="1">
-               <owl:ObjectProperty IRI="#r1"/>
-			   <owl:Class IRI="#Phone"/>
-           </owl:ObjectMinCardinality> 
-    </owl:SubClassOf>
-    <owl:SubClassOf>
-       	  <owl:Class IRI="#Phone"/>
-          <owl:ObjectMinCardinality cardinality="1">
-			 <owl:ObjectInverseOf>
-               	<owl:ObjectProperty IRI="#r1"/>
-             </owl:ObjectInverseOf>  
-			 <owl:Class IRI="#PhoneCall"/>           
-           </owl:ObjectMinCardinality> 
-    </owl:SubClassOf>
-  </Tell>
-</RequestMessage>
-EOT;
-        
-        $strategy = new UMLcrowd();
-        $builder = new OWLlinkBuilder();
-
-        $builder->insert_header(); // Without this, loading the DOMDocument
-        // will throw error for the owl namespace
-        $strategy->translate($json, $builder);
-        $builder->insert_footer();
-        
-        $actual = $builder->get_product();
-        $actual = $actual->to_string();
-        $this->assertXmlStringEqualsXmlString($expected, $actual,true);
-    }
-
-
-    ##
-    # Test if translate works properly with binary roles many-to-many
-    public function testTranslateBinaryRolesWithoutClass11(){  
-		$json = <<< EOT
-{
-"classes": [{"name":"PhoneCall", "attrs":[], "methods":[]},
-			 {"name":"Phone", "attrs":[], "methods":[]}],
-"links": [{"name": "r1", "classes":["PhoneCall","Phone"], "multiplicity":["1..1","1..1"], "type":"association"}]
-} 
-EOT;
-
-        //TODO: Complete XML!
-        $expected = <<< EOT
-<?xml version="1.0" encoding="UTF-8"?>
-<RequestMessage xmlns="http://www.owllink.org/owllink#"
-		xmlns:owl="http://www.w3.org/2002/07/owl#" 
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd">
-  <CreateKB kb="http://localhost/kb1" />
-  <Tell kb="http://localhost/kb1">
-    <owl:SubClassOf>
-      <owl:Class IRI="#PhoneCall" />
-      <owl:Class abbreviatedIRI="owl:Thing" />
-    </owl:SubClassOf>
-    <owl:SubClassOf>
-      <owl:Class IRI="#Phone" />
-      <owl:Class abbreviatedIRI="owl:Thing" />
-    </owl:SubClassOf>
-    <owl:ObjectPropertyDomain>
-        <owl:ObjectProperty IRI="#r1"/>
-        <owl:Class IRI="#PhoneCall"/>
-    </owl:ObjectPropertyDomain>
-    <owl:ObjectPropertyRange>
-        <owl:ObjectProperty IRI="#r1"/>
-        <owl:Class IRI="#Phone"/>
-    </owl:ObjectPropertyRange>
-    <owl:EquivalentClasses>
-        <owl:Class IRI="#PhoneCall_r1_min"/>
-        <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#PhoneCall"/>
-            <owl:ObjectMinCardinality cardinality="1">
-                <owl:ObjectProperty IRI="#r1"/>
-				<owl:Class abbreviatedIRI="owl:Thing" />
-            </owl:ObjectMinCardinality>
-        </owl:ObjectIntersectionOf>
-    </owl:EquivalentClasses>
-    <owl:EquivalentClasses>
-        <owl:Class IRI="#PhoneCall_r1_max"/>
-        <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#PhoneCall"/>
-            <owl:ObjectMaxCardinality cardinality="1">
-                <owl:ObjectProperty IRI="#r1"/>
-				<owl:Class abbreviatedIRI="owl:Thing" />
-            </owl:ObjectMaxCardinality>
-        </owl:ObjectIntersectionOf>
-    </owl:EquivalentClasses>
-    <owl:EquivalentClasses>
-        <owl:Class IRI="#Phone_r1_min"/>
-        <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#Phone"/>
-            <owl:ObjectMinCardinality cardinality="1">
-                <owl:ObjectInverseOf>
-                    <owl:ObjectProperty IRI="#r1"/>
-                </owl:ObjectInverseOf>
-				<owl:Class abbreviatedIRI="owl:Thing" />
-            </owl:ObjectMinCardinality>
-        </owl:ObjectIntersectionOf>
-    </owl:EquivalentClasses>
-    <owl:EquivalentClasses>
-        <owl:Class IRI="#Phone_r1_max"/>
-        <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#Phone"/>
-            <owl:ObjectMaxCardinality cardinality="1">
-                <owl:ObjectInverseOf>
-                    <owl:ObjectProperty IRI="#r1"/>
-                </owl:ObjectInverseOf>
-				<owl:Class abbreviatedIRI="owl:Thing" />
-            </owl:ObjectMaxCardinality>
-        </owl:ObjectIntersectionOf>
-    </owl:EquivalentClasses>
-    <owl:SubClassOf>
-       	  <owl:Class IRI="#PhoneCall"/>
-          <owl:ObjectMinCardinality cardinality="1">
-               <owl:ObjectProperty IRI="#r1"/>
-			   <owl:Class IRI="#Phone"/>
-           </owl:ObjectMinCardinality> 
-    </owl:SubClassOf>
-    <owl:SubClassOf>
-       	  <owl:Class IRI="#PhoneCall"/>
-          <owl:ObjectMaxCardinality cardinality="1">
-               <owl:ObjectProperty IRI="#r1"/>
-			   <owl:Class IRI="#Phone"/>
-           </owl:ObjectMaxCardinality> 
-    </owl:SubClassOf>
-    <owl:SubClassOf>
-       	  <owl:Class IRI="#Phone"/>
-          <owl:ObjectMinCardinality cardinality="1">
-			 <owl:ObjectInverseOf>
-               	<owl:ObjectProperty IRI="#r1"/>
-             </owl:ObjectInverseOf>  
-			 <owl:Class IRI="#PhoneCall"/>           
-           </owl:ObjectMinCardinality> 
-    </owl:SubClassOf>
-    <owl:SubClassOf>
-       	  <owl:Class IRI="#Phone"/>
-          <owl:ObjectMaxCardinality cardinality="1">
-			 <owl:ObjectInverseOf>
-               	<owl:ObjectProperty IRI="#r1"/>
-             </owl:ObjectInverseOf>  
-			 <owl:Class IRI="#PhoneCall"/>           
-           </owl:ObjectMaxCardinality> 
-    </owl:SubClassOf>
-  </Tell>
-</RequestMessage>
-EOT;
-        
-        $strategy = new UMLcrowd();
-        $builder = new OWLlinkBuilder();
-
-        $builder->insert_header(); // Without this, loading the DOMDocument
-        // will throw error for the owl namespace
-        $strategy->translate($json, $builder);
-        $builder->insert_footer();
-        
-        $actual = $builder->get_product();
-        $actual = $actual->to_string();
-        $this->assertXmlStringEqualsXmlString($expected, $actual,true);
-    }
-
-
-
-    ##
-    # Test if translate works properly with binary roles many-to-many > 1
-    public function testTranslateBinaryRolesWithoutClassMN(){  
-		$json = <<< EOT
-{
-"classes": [{"name":"PhoneCall", "attrs":[], "methods":[]},
-			 {"name":"Phone", "attrs":[], "methods":[]}],
-"links": [{"name": "r1", "classes":["PhoneCall","Phone"], "multiplicity":["1..4","2..9"], "type":"association"}]
-} 
-EOT;
-
-        //TODO: Complete XML!
-        $expected = <<< EOT
-<?xml version="1.0" encoding="UTF-8"?>
-<RequestMessage xmlns="http://www.owllink.org/owllink#"
-		xmlns:owl="http://www.w3.org/2002/07/owl#" 
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd">
-  <CreateKB kb="http://localhost/kb1" />
-  <Tell kb="http://localhost/kb1">
-    <owl:SubClassOf>
-      <owl:Class IRI="#PhoneCall" />
-      <owl:Class abbreviatedIRI="owl:Thing" />
-    </owl:SubClassOf>
-    <owl:SubClassOf>
-      <owl:Class IRI="#Phone" />
-      <owl:Class abbreviatedIRI="owl:Thing" />
-    </owl:SubClassOf>
-    <owl:ObjectPropertyDomain>
-        <owl:ObjectProperty IRI="#r1"/>
-        <owl:Class IRI="#PhoneCall"/>
-    </owl:ObjectPropertyDomain>
-    <owl:ObjectPropertyRange>
-        <owl:ObjectProperty IRI="#r1"/>
-        <owl:Class IRI="#Phone"/>
-    </owl:ObjectPropertyRange>
-    <owl:EquivalentClasses>
-        <owl:Class IRI="#PhoneCall_r1_min"/>
-        <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#PhoneCall"/>
-            <owl:ObjectMinCardinality cardinality="1">
-                <owl:ObjectProperty IRI="#r1"/>
-				<owl:Class abbreviatedIRI="owl:Thing" />
-            </owl:ObjectMinCardinality>
-        </owl:ObjectIntersectionOf>
-    </owl:EquivalentClasses>
-    <owl:EquivalentClasses>
-        <owl:Class IRI="#PhoneCall_r1_max"/>
-        <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#PhoneCall"/>
-            <owl:ObjectMaxCardinality cardinality="1">
-                <owl:ObjectProperty IRI="#r1"/>
-				<owl:Class abbreviatedIRI="owl:Thing" />
-            </owl:ObjectMaxCardinality>
-        </owl:ObjectIntersectionOf>
-    </owl:EquivalentClasses>
-    <owl:EquivalentClasses>
-        <owl:Class IRI="#Phone_r1_min"/>
-        <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#Phone"/>
-            <owl:ObjectMinCardinality cardinality="1">
-                <owl:ObjectInverseOf>
-                    <owl:ObjectProperty IRI="#r1"/>
-                </owl:ObjectInverseOf>
-				<owl:Class abbreviatedIRI="owl:Thing" />
-            </owl:ObjectMinCardinality>
-        </owl:ObjectIntersectionOf>
-    </owl:EquivalentClasses>
-    <owl:EquivalentClasses>
-        <owl:Class IRI="#Phone_r1_max"/>
-        <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#Phone"/>
-            <owl:ObjectMaxCardinality cardinality="1">
-                <owl:ObjectInverseOf>
-                    <owl:ObjectProperty IRI="#r1"/>
-                </owl:ObjectInverseOf>
-				<owl:Class abbreviatedIRI="owl:Thing" />
-            </owl:ObjectMaxCardinality>
-        </owl:ObjectIntersectionOf>
-    </owl:EquivalentClasses>
-    <owl:SubClassOf>
-       	  <owl:Class IRI="#PhoneCall"/>
-          <owl:ObjectMinCardinality cardinality="2">
-               <owl:ObjectProperty IRI="#r1"/>
-			   <owl:Class IRI="#Phone"/>
-           </owl:ObjectMinCardinality> 
-    </owl:SubClassOf>
-    <owl:SubClassOf>
-       	  <owl:Class IRI="#PhoneCall"/>
-          <owl:ObjectMaxCardinality cardinality="9">
-               <owl:ObjectProperty IRI="#r1"/>
-			   <owl:Class IRI="#Phone"/>
-           </owl:ObjectMaxCardinality> 
-    </owl:SubClassOf>
-    <owl:SubClassOf>
-       	  <owl:Class IRI="#Phone"/>
-          <owl:ObjectMinCardinality cardinality="1">
-			 <owl:ObjectInverseOf>
-               	<owl:ObjectProperty IRI="#r1"/>
-             </owl:ObjectInverseOf>  
-			 <owl:Class IRI="#PhoneCall"/>           
-           </owl:ObjectMinCardinality> 
-    </owl:SubClassOf>
-    <owl:SubClassOf>
-       	  <owl:Class IRI="#Phone"/>
-          <owl:ObjectMaxCardinality cardinality="4">
-			 <owl:ObjectInverseOf>
-               	<owl:ObjectProperty IRI="#r1"/>
-             </owl:ObjectInverseOf>  
-			 <owl:Class IRI="#PhoneCall"/>           
-           </owl:ObjectMaxCardinality> 
-    </owl:SubClassOf>
-  </Tell>
-</RequestMessage>
-EOT;
-        
-        $strategy = new UMLcrowd();
-        $builder = new OWLlinkBuilder();
-
-        $builder->insert_header(); // Without this, loading the DOMDocument
-        // will throw error for the owl namespace
-        $strategy->translate($json, $builder);
-        $builder->insert_footer();
-        
-        $actual = $builder->get_product();
-        $actual = $actual->to_string();
-        $this->assertXmlStringEqualsXmlString($expected, $actual,true);
-    }
-
-
-
-    # Test generalization is translated properly.
-    public function testTranslateGeneralization(){
-        //TODO: Complete JSON!
-        $json = <<< EOT
-
-{"classes": [
-    {"attrs":[], "methods":[], "name": "PhoneCall"},
-    {"attrs":[], "methods":[], "name": "MobileCall"}],
- "links": [
-     {"classes": ["MobileCall"],
-      "multiplicity": null,
-      "name": "r1",
-      "type": "generalization",
-      "parent": "PhoneCall",
-      "constraint": []}
-	]
+"Object type" : [{"name" : "PhoneCall"},
+			     {"name" : "Phone"}],
+"Subsumption" : [],
+"Association" : [{"name" : "r1",
+			      "classes" : ["PhoneCall", "Phone"]}],
+"Object type cardinality" : [{"association" : "r1",
+							  "min..max left" : "0..*",
+							  "min..max right" : "0..*"}],
+"Attribute" : []
 }
 EOT;
-        $expected = <<< EOT
-<?xml version="1.0" encoding="UTF-8"?>
-<RequestMessage xmlns="http://www.owllink.org/owllink#"
-		xmlns:owl="http://www.w3.org/2002/07/owl#" 
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd">
-  <CreateKB kb="http://localhost/kb1" />
-  <Tell kb="http://localhost/kb1">
-    
-    <owl:SubClassOf>
-      <owl:Class IRI="#PhoneCall" />
-      <owl:Class abbreviatedIRI="owl:Thing" />
-    </owl:SubClassOf>
-    <owl:SubClassOf>
-      <owl:Class IRI="#MobileCall" />
-      <owl:Class abbreviatedIRI="owl:Thing" />
-    </owl:SubClassOf>
-    
-    <!-- Generalization -->
+	
+		$strategy = new UMLMeta();
+		$strategy->create_metamodel($json);
+		print_r($strategy->meta);
+		$this->assertJsonStringEqualsJsonString($expected, $strategy->get_json(),true);
+	
+	}
+	
 
-    <owl:SubClassOf>
-      <owl:Class IRI="#MobileCall" />
-	  <owl:Class IRI="#PhoneCall" />
-    </owl:SubClassOf>
-    
-  </Tell>
-</RequestMessage>
-EOT;
-        
-        $strategy = new UMLcrowd();
-        $builder = new OWLlinkBuilder();
-
-        $builder->insert_header(); // Without this, loading the DOMDocument
-        // will throw error for the owl namespace
-        $strategy->translate($json, $builder);
-        $builder->insert_footer();
-        
-        $actual = $builder->get_product();
-        $actual = $actual->to_string();
-
-        $this->assertXmlStringEqualsXmlString($expected, $actual, TRUE);
-    } 
-
-
-/*
-    # Test generalization with disjoint constraint is translated properly.
-    public function testTranslateGenDisjoint(){
-        //TODO: Complete JSON!
-        $json = <<<'EOT'
-{"classes": [
-    {"attrs":[], "methods":[], "name": "Person"},
-    {"attrs":[], "methods":[], "name": "Employee"},
-    {"attrs":[], "methods":[], "name": "Employer"},
-    {"attrs":[], "methods":[], "name": "Director"}],
- "links": [
-     {"classes": ["Employee", "Employer", "Director"],
-      "multiplicity": null,
-      "name": "r1",
-      "type": "generalization",
-      "parent": "Person",
-      "constraint": ["disjoint"]}
-	]
+	##
+	# Test if we can generate the metamodel equivalent to the given UML diagram with classes and attributes.
+	# Cardinalities are null.
+	public function testUMLWithAttributesMetamodel(){
+		$json = <<< EOT
+{
+"classes": [{"name": "PhoneCall", "attrs":[{"name" : "date", "datatype" : "String"}], "methods":[]},
+		    {"name": "Phone", "attrs":[{"name" : "location", "datatype" : "String"}, 
+		    						   {"name" : "owner", "datatype" : "String"}], "methods":[]}
+		   ],
+"links": []
 }
 EOT;
-        $expected = <<<'EOT'
-<?xml version="1.0" encoding="UTF-8"?>
-<RequestMessage xmlns="http://www.owllink.org/owllink#"
-		xmlns:owl="http://www.w3.org/2002/07/owl#" 
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd">
-  <CreateKB kb="http://localhost/kb1" />
-  <Tell kb="http://localhost/kb1">
-    
-    <owl:SubClassOf>
-      <owl:Class IRI="Person" />
-      <owl:Class abbreviatedIRI="owl:Thing" />
-    </owl:SubClassOf>
-    <owl:SubClassOf>
-      <owl:Class IRI="Employee" />
-      <owl:Class abbreviatedIRI="owl:Thing" />
-    </owl:SubClassOf>
-    <owl:SubClassOf>
-      <owl:Class IRI="Employer" />
-      <owl:Class abbreviatedIRI="owl:Thing" />
-    </owl:SubClassOf>
-    <owl:SubClassOf>
-      <owl:Class IRI="Director" />
-      <owl:Class abbreviatedIRI="owl:Thing" />
-    </owl:SubClassOf>
-    
-    <!-- Generalization -->
-
-    <owl:SubClassOf>
-      <owl:Class IRI="Employee" />
-	  <owl:Class IRI="Person" />
-    </owl:SubClassOf>
-    <owl:SubClassOf>
-      <owl:Class IRI="Employer" />
-	  <owl:Class IRI="Person" />
-    </owl:SubClassOf>
-    <owl:SubClassOf>
-      <owl:Class IRI="Director" />
-	  <owl:Class IRI="Person" />
-    </owl:SubClassOf>
-
-    <owl:SubClassOf>
-      <owl:Class IRI="Employee" />
-      <owl:ObjectIntersectionOf>
-        <owl:ObjectComplementOf>
-          <owl:Class IRI="Employer" />
-        </owl:ObjectComplementOf>
-        <owl:ObjectComplementOf>
-          <owl:Class IRI="Director" />
-        </owl:ObjectComplementOf>
-      </owl:ObjectIntersectionOf>
-    </owl:SubClassOf>
-
-    <owl:SubClassOf>
-      <owl:Class IRI="Employer" />
-      <owl:ObjectComplementOf>
-        <owl:Class IRI="Director" />
-      </owl:ObjectComplementOf>
-    </owl:SubClassOf>
-    
-  </Tell>
-  <!-- <ReleaseKB kb="http://localhost/kb1" /> -->
-</RequestMessage>
-EOT;
-        
-        $strategy = new UMLcrowd();
-        $builder = new OWLlinkBuilder();
-
-        $builder->insert_header(); // Without this, loading the DOMDocument
-        // will throw error for the owl namespace
-        $strategy->translate($json, $builder);
-        $builder->insert_footer();
-        
-        $actual = $builder->get_product();
-        $actual = $actual->to_string();
-      
-        $this->assertXmlStringEqualsXmlString($expected, $actual, TRUE);
-    }
-
-    # Test generalization with covering constraint is translated properly.
-    public function testTranslateGenCovering(){
-        //TODO: Complete JSON!
-        $json = <<<'EOT'
-{"classes": [
-    {"attrs":[], "methods":[], "name": "Person"},
-    {"attrs":[], "methods":[], "name": "Employee"},
-    {"attrs":[], "methods":[], "name": "Employer"},
-    {"attrs":[], "methods":[], "name": "Director"}],
- "links": [
-     {"classes": ["Employee", "Employer", "Director"],
-      "multiplicity": null,
-      "name": "r1",
-      "type": "generalization",
-      "parent": "Person",
-      "constraint": ["covering"]}
-	]
+	
+		$expected = <<< EOT
+{
+"Object type" : [{"name" : "PhoneCall"},
+			     {"name" : "Phone"}],
+"Subsumption" : [],
+"Association" : [],
+"Object type cardinality" : [],
+"Attribute"   : [{"class name" : "PhoneCall", "attribute name" : "date", "datatype" : "String"},
+				 {"class name" : "Phone", "attribute name" : "location", "datatype" : "String"},
+				 {"class name" : "Phone", "attribute name" : "owner", "datatype" : "String"}]
 }
 EOT;
-        $expected = <<<'EOT'
-<?xml version="1.0" encoding="UTF-8"?>
-<RequestMessage xmlns="http://www.owllink.org/owllink#"
-		xmlns:owl="http://www.w3.org/2002/07/owl#" 
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd">
-  <CreateKB kb="http://localhost/kb1" />
-  <Tell kb="http://localhost/kb1">
-    
-    <owl:SubClassOf>
-      <owl:Class IRI="Person" />
-      <owl:Class abbreviatedIRI="owl:Thing" />
-    </owl:SubClassOf>
-    <owl:SubClassOf>
-      <owl:Class IRI="Employee" />
-      <owl:Class abbreviatedIRI="owl:Thing" />
-    </owl:SubClassOf>
-    <owl:SubClassOf>
-      <owl:Class IRI="Employer" />
-      <owl:Class abbreviatedIRI="owl:Thing" />
-    </owl:SubClassOf>
-    <owl:SubClassOf>
-      <owl:Class IRI="Director" />
-      <owl:Class abbreviatedIRI="owl:Thing" />
-    </owl:SubClassOf>
-    
-    <!-- Generalization -->
-
-    <owl:SubClassOf>
-      <owl:Class IRI="Employee" />
-	  <owl:Class IRI="Person" />
-    </owl:SubClassOf>
-    <owl:SubClassOf>
-      <owl:Class IRI="Employer" />
-	  <owl:Class IRI="Person" />
-    </owl:SubClassOf>
-    <owl:SubClassOf>
-      <owl:Class IRI="Director" />
-	  <owl:Class IRI="Person" />
-    </owl:SubClassOf>
-
-    <owl:SubClassOf>
-      <owl:Class IRI="Person" />
-      <owl:ObjectUnionOf>
-          <owl:Class IRI="Employee" />
-          <owl:Class IRI="Employer" />
-          <owl:Class IRI="Director" />
-      </owl:ObjectUnionOf>
-    </owl:SubClassOf>
-    
-  </Tell>
-  <!-- <ReleaseKB kb="http://localhost/kb1" /> -->
-</RequestMessage>
+	
+		$strategy = new UMLMeta();
+		$strategy->create_metamodel($json);
+		print_r($strategy->meta);
+		$this->assertJsonStringEqualsJsonString($expected, $strategy->get_json(),true);
+	
+	}
+	
+	
+	##
+	# General Test from UML to Metamodel
+	public function testUMLMetamodel(){
+		$json = <<< EOT
+{
+"classes": [{"name":"PhoneCall", "attrs":[{"name" : "date", "datatype" : "String"}], "methods":[]},
+		    {"name":"Phone", "attrs":[{"name" : "location", "datatype" : "String"}, 
+		    						  {"name" : "owner", "datatype" : "String"}], "methods":[]},
+			{"name":"CellPhone", "attrs":[], "methods":[]},
+			{"name":"FixedPhone", "attrs":[], "methods":[]}],
+"links":   [
+			{"classes" : ["CellPhone", "FixedPhone"],
+			 "multiplicity" : null,
+			 "name" : "r1",
+			 "type" : "generalization",
+			 "parent" : "Phone",
+			 "constraint" : []
+			},
+			{"name" : "r2",
+			 "classes" : ["PhoneCall", "Phone"],
+			 "multiplicity" : ["0..*","0..*"],
+			 "type" : "association"
+			}
+		   ]
+}
 EOT;
-        
-        $strategy = new UMLcrowd();
-        $builder = new OWLlinkBuilder();
+	
+		$expected = <<< EOT
+{
+"Object type" : [{"name" : "PhoneCall"},
+			     {"name" : "Phone"},
+				 {"name" : "CellPhone"},
+		         {"name" : "FixedPhone"}],
+"Subsumption" : [{"name" : "r1",
+				  "parent" : "Phone",
+			      "children" : ["CellPhone", "FixedPhone"]}],
+"Association" : [{"name" : "r2",
+			      "classes" : ["PhoneCall", "Phone"]}],
+"Object type cardinality" : [{"association" : "r2",
+							  "min..max left" : "0..*",
+							  "min..max right" : "0..*"}],
+"Attribute"   : [{"class name" : "PhoneCall", "attribute name" : "date", "datatype" : "String"},
+				 {"class name" : "Phone", "attribute name" : "location", "datatype" : "String"},
+				 {"class name" : "Phone", "attribute name" : "owner", "datatype" : "String"}]
+}
+EOT;
+	
+		$strategy = new UMLMeta();
+		$strategy->create_metamodel($json);
+		print_r($strategy->meta);
+		$this->assertJsonStringEqualsJsonString($expected, $strategy->get_json(),true);
+	
+	}
+	
+	
+	## ORM
+	
+	# Test translation from metamodel object types to ORM entity types.
+	public function testMetamodelObjectType2ORM(){
+		$json = <<< EOT
+{
+"Object type": [{"name":"PhoneCall"},
+		    	{"name":"Phone"},
+				{"name":"CellPhone"},
+				{"name":"FixedPhone"}],
+"Subsumption" : [],
+"Association" : [],
+"Object type cardinality" : [],
+"Attribute"   : []
+}
+EOT;
 
-        $builder->insert_header(); // Without this, loading the DOMDocument
-        // will throw error for the owl namespace
-        $strategy->translate($json, $builder);
-        $builder->insert_footer();
-        
-        $actual = $builder->get_product();
-        $actual = $actual->to_string();
-       
-        $this->assertXmlStringEqualsXmlString($expected, $actual, TRUE);
-    }
-*/
+		$expected = <<< EOT
+{
+"entity types" : [{"name" : "PhoneCall"},
+			      {"name" : "Phone"},
+				  {"name" : "CellPhone"},
+		          {"name" : "FixedPhone"}],
+"value types" : [],
+"links" : []
+}
+EOT;
+		
+		$strategy = new Meta2ORM();
+		$strategy->create_modelKF($json);
+		print_r($strategy->orm);
+		$this->assertJsonStringEqualsJsonString($expected, $strategy->get_json(),true);
+		
+	}
+		
+	##
+	# Test translation from metamodel object types and attributes to ORM entity types and data types.
+	public function testMetamodelObjectTypeAttr2ORMDatatypes(){
+		$json = <<< EOT
+{
+"Object type": [{"name":"PhoneCall"},
+		    	{"name":"Phone"}],
+"Subsumption" : [],
+"Association" : [],
+"Object type cardinality" : [],
+"Attribute"   : [{"class name" : "PhoneCall", "attribute name" : "date", "datatype" : "String"},
+				 {"class name" : "Phone", "attribute name" : "location", "datatype" : "String"},
+				 {"class name" : "Phone", "attribute name" : "owner", "datatype" : "String"}]
+}
+EOT;
 
+		$expected = <<< EOT
+{
+"entity types" : [{"name" : "PhoneCall"},
+			      {"name" : "Phone"}],
+"value types" :  [{"value type name" : "date", "datatype" : "String"},
+				  {"value type name" : "location", "datatype" : "String"},
+				  {"value type name" : "owner", "datatype" : "String"}],
+"links" : [{"name" : "PhoneCalldate",
+			"entity type" : ["PhoneCall", "date"],
+			"multiplicity" : ["0..*","1..*"],
+			"type" : "binary predicate"
+		   },
+		   {"name" : "Phonelocation",
+			"entity type" : ["Phone", "location"],
+			"multiplicity" : ["0..*","1..*"],
+			"type" : "binary predicate"
+		   },
+		   {"name" : "Phoneowner",
+			"entity type" : ["Phone", "owner"],
+			"multiplicity" : ["0..*","1..*"],
+			"type" : "binary predicate"
+		   }	
+		  ]
+}
+EOT;
+		
+			$strategy = new Meta2ORM();
+			$strategy->create_modelKF($json);
+			print_r($strategy->orm);
+			$this->assertJsonStringEqualsJsonString($expected, $strategy->get_json(),true);
+		
+	}
+	
+		
+	##
+	# Test translation from metamodel object types and subsumptions to ORM entity types and subtypes.
+	public function testMetamodelObjectTypeSub2ORMSubtypes(){
+		$json = <<< EOT
+{
+"Object type": [{"name":"Phone"},
+				{"name":"CellPhone"}],
+"Subsumption" : [{"name" : "r1",
+				  "parent" : "Phone",
+			      "children" : ["CellPhone"]}],
+"Association" : [],
+"Object type cardinality" : [],
+"Attribute"   : []
+}
+EOT;
+		$expected = <<< EOT
+{
+"entity type" : [{"name" : "Phone"},
+			     {"name" : "CellPhone"}],
+"links" : [{"entity type" : ["CellPhone"],
+			"multiplicity" : null,
+			"name" : "r1",
+			"type" : "subtype",
+			"parent" : "Phone",
+			"constraint" : []
+		   }]
+}
+EOT;
+		
+		$strategy = new Meta2ORM();
+		$strategy->create_modelKF($json);
+		print_r($strategy->orm);
+		$this->assertJsonStringEqualsJsonString($expected, $strategy->get_json(),true);
+		
+	}
+		
+		
+	## ERD
+	
+	# Test translation from metamodel object types to EER entities.
+	
+	# {"classes":[{"name":"Person","position":{"x":20,"y":20}}],
+	#  "attributes":[{"name":"name","position":{"x":200,"y":10},"type":"key"},
+	#                {"name":"birthdate","position":{"x":150,"y":150},"type":"normal"}],
+	#  "links":[{"name":"r3","classes":["Person","name"],"type":"attribute"},
+	#           {"name":"r4","classes":["Person","birthdate"],"type":"attribute"}],"owllink":"\n"} 
+		public function testMetamodelObjectType2EER(){
+			$json = <<< EOT
+{
+"Object type": [{"name":"PhoneCall"},
+		    	{"name":"Phone"},
+				{"name":"CellPhone"},
+				{"name":"FixedPhone"}],
+"Subsumption" : [],
+"Association" : [],
+"Object type cardinality" : [],
+"Attribute"   : []
+}
+EOT;
+		
+			$expected = <<< EOT
+{
+"classes" : [{"name" : "PhoneCall"},
+			  {"name" : "Phone"},
+			  {"name" : "CellPhone"},
+		      {"name" : "FixedPhone"}],
+"attributes" : [],	
+"links" : []
+}
+EOT;
+		
+			$strategy = new Meta2EER();
+			$strategy->create_modelKF($json);
+			print_r($strategy->eer);
+			$this->assertJsonStringEqualsJsonString($expected, $strategy->get_json(),true);
+		
+	}
+
+	
+	##
+	# Test translation from metamodel object types to EER entities with attributes.
+	public function testMetamodelObjectType2EERwithAttrs(){
+		$json = <<< EOT
+{
+"Object type": [{"name":"PhoneCall"},
+		    	{"name":"Phone"},
+				{"name":"CellPhone"},
+				{"name":"FixedPhone"}],
+"Subsumption" : [],
+"Association" : [],
+"Object type cardinality" : [],
+"Attribute"   : [{"class name" : "Phone", "attribute name" : "location", "datatype" : "String"},
+				 {"class name" : "Phone", "attribute name" : "owner", "datatype" : "String"},
+				 {"class name" : "PhoneCall", "attribute name" : "date", "datatype" : "String"}]
+}
+EOT;
+	
+		$expected = <<< EOT
+{"classes":[{"name":"PhoneCall"},
+			{"name":"Phone"},
+			{"name":"CellPhone"},
+			{"name":"FixedPhone"}],
+ "attributes":[{"name":"date","type":"normal"}, 
+ 				{"name":"location","type":"normal"},
+ 				{"name":"owner","type":"normal"}
+ 			   ],
+ "links":[{"name":"PhoneCalldate","classes":["PhoneCall","date"],"type":"attribute"},
+ 			{"name":"Phonelocation","classes":["Phone","location"],"type":"attribute"},
+		  	{"name":"Phoneowner","classes":["Phone","owner"],"type":"attribute"}
+ 		  ]
+} 
+EOT;
+	
+		$strategy = new Meta2EER();
+		$strategy->create_modelKF($json);
+		print_r($strategy->eer);
+		$this->assertJsonStringEqualsJsonString($expected, $strategy->get_json(),true);
+	
+	}
+	
 }

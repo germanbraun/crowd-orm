@@ -32,7 +32,7 @@ IsaOptionsView = Backbone.View.extend(
     new_isa: () ->
         disjoint = $("#chk-disjoint").prop("checked")
         covering = $("#chk-covering").prop("checked")
-        gui.gui_instance.set_isa_state(@classid, disjoint, covering)
+        guiinst.set_isa_state(@classid, disjoint, covering)
 
     set_classid: (@classid) ->
         viewpos = graph.getCell(@classid).findView(paper).getBBox()

@@ -75,7 +75,7 @@ class UMLDiagram extends Diagram
     # Add a Generalization link.
     #
     # If a generalziation already exists for the same parent, just add the class
-    # into the same Generalizatino instance. Constraints are ignored in this case.
+    # into the same Generalization instance. Constraints are ignored in this case.
     #
     # This methods try to normalize all parameters  and then call add_generalization_objs().
     #
@@ -179,12 +179,12 @@ class UMLDiagram extends Diagram
     # @see Class
     # @see GUI#add_class
     add_class: (hash_data) ->
-        if hash_data.attribs == undefined
-            hash_data.attribs = []
+        if hash_data.attrs == undefined
+            hash_data.attrs = []
         if hash_data.methods == undefined
             hash_data.methods = []
         
-        newclass = new Class(hash_data.name, hash_data.attribs, hash_data.methods)
+        newclass = new Class(hash_data.name, hash_data.attrs, hash_data.methods)
         this.agregar_clase(newclass)
         return newclass
 
@@ -361,8 +361,18 @@ class UMLDiagram extends Diagram
     import_json: (json) ->
         json.classes.forEach(
             (elt, index, arr) ->
-                c = this.add_class(elt)
-                c.get_joint()[0].position(
+            	if elt.attrs?
+            		array = []
+            		attr = elt.attrs
+            		attr.forEach( (cv,index,attr) -> 
+            			att = "#{attr[index].name}:#{attr[index].datatype}"
+            			array.push(att)
+            			return array
+            			)
+            	elt.attrs = []
+            	elt.attrs = array
+            	c = this.add_class(elt)
+            	c.get_joint()[0].position(
                     elt.position.x,
                     elt.position.y)
         this)

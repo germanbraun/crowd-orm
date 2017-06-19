@@ -22,4 +22,21 @@
  */
 
 
+namespace Wicom\Translator\Builders;
+
+abstract class Documents{
+
+	/**
+	 Return the product builded.
+	
+	 @return A Wicom\Translator\Documents\Document subclass instance.
+	 */
+	public function get_product(){
+		return $this->product;
+	}
+
+
+}
+
+
 ?>

@@ -24,16 +24,26 @@
 namespace Wicom\Translator\MetaStrategies;
 
 /**
-   
- */
+   @see Metamodel translator class for description about the JSON format.
+*/
 abstract class MetaStrategy{
-    function __construction(){
+    function __construct(){
         
     }
 
     /**
-       
+     Translate a given JSON String representing a graphical diagram into a new JSON string according 
+	 to metamodel rules defined in:
+	 
+     (a) Fillottrani, Keet. Conceptual Model Interoperability: A Metamodel-driven Approach. 2014.
+	 (b) Fillottrani, Keet. KF metamodel formalization. 2014.
+      
+     @param json a JSON string
+     @return a JSON metamodel string.
+    
+     @see Translator class for description about the JSON format.
      */
-    abstract function create_metamodel($json, $build);
+    
+    abstract function create_metamodel($json);
 }
 ?>

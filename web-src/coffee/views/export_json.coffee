@@ -32,7 +32,7 @@ ExportJSONView = Backbone.View.extend(
         console.log("Copying: " + @jsonstr)
         document.execCommand("copy", false, @jsonstr)
     refresh: () ->
-        gui.gui_instance.refresh_export_json()
+        guiinst.refresh_export_json()
     set_jsonstr: (@jsonstr) ->
         this.render()
 )

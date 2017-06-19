@@ -31,6 +31,10 @@
     </select>
     <a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all" type="button" id="translate_button">Translate</a>
     
+    <label>Go through Metamodel</label>
+    <a class="ui-btn ui-icon-plus ui-btn-icon-left ui-corner-all" type="button" id="meta_erd_button">Meta > ERD</a>
+    <a class="ui-btn ui-icon-plus ui-btn-icon-left ui-corner-all" type="button" id="meta_orm_button">Meta > ORM</a>
+    
     <label>New Class</label>
     <input data-mini="true" placeholder="ClassName" type="text" id="crearclase_input"/>
     <a class="ui-btn ui-icon-plus ui-btn-icon-left ui-corner-all" type="button" id="crearclase_button">New</a>

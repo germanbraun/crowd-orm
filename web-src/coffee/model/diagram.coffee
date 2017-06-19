@@ -24,6 +24,8 @@ class Diagram
     constructor: (@graph = null) ->
         @factory = null
 
+
+
     # Reset the current diagram to start over empty.
     reset: () ->
 
@@ -36,6 +38,18 @@ class Diagram
     # @param factory [Factory] Used for creating the joint.dia elements.
     set_factory: (@factory) ->
   
+
+
+    update_view: (class_id, paper) ->
+
+
+    find_class_by_name: (name) ->
+
+
+    find_class_by_classid: (classid) ->
+
+
+    find_attr_by_attrid: (attrid) ->
     #
     # @return [joint.graph]
     get_graph: () ->
