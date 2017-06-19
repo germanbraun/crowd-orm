@@ -44,9 +44,9 @@ require_once('template.php');
 		<div data-role="navbar">
 		    <ul>
 			<li><a href="#tools-panel" data-transition="slide" class="ui-btn ui-icon-bars ui-btn-icon-left">UML</a></li>
-			<li><a href="#details-page" data-transition="slide" class="ui-btn ui-btn-icon-right ui-icon-forward">Reasoning Details</a></li>
+			<li><a href="#details-page" data-transition="slide" class="ui-btn ui-btn-icon-left ui-icon-forward">Reasoning Details</a></li>
 			<li><a href="#verbalisation-page" data-transition="slide" class="ui-btn ui-btn-icon-right ui-icon-forward">Verbalisation</a></li>
-			<li><a href="#user-page" data-transition="slide" class="ui-btn ui-icon-user ui-btn-icon-left">Profile</a></li>
+   			<li><a href="#user-page" data-transition="slide" class="ui-btn ui-icon-user ui-btn-icon-right">Profile</a></li>
 		    </ul>
 		</div>
 	    </div> <!-- /header -->
