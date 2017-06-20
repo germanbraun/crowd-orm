@@ -70,8 +70,7 @@ LoginWidgetView = Backbone.View.extend(
 
 
 exports = exports ? this
-if exports.login?
-    exports.login = {}
+exports.login = exports.login ? {}
 
 # @namespace login
 #

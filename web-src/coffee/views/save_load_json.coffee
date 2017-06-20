@@ -14,7 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
+# @namespace login
+# 
 # Provides elements and events needed for displaying the interface for
 # loading or saving the model.
 SaveLoadJson = Backbone.View.extend(    
@@ -58,5 +59,6 @@ SaveLoadJson = Backbone.View.extend(
 );
 
 exports = exports ? this
-exports.SaveLoadJson = SaveLoadJson
+exports.login = exports.login ? {}
 
+exports.login.SaveLoadJson = SaveLoadJson
