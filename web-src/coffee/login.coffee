@@ -22,6 +22,12 @@
 # Main class for the login and save-load features and its widgets.
 class LoginManager
 
+    # The current Login instance.
+    @current = null
+
+    # The LoginRequests instance used for sending requests to the server.
+    @loginconn = null
+
     # Create a LoginWidget
     # 
     # @param widget_id The login widget id. Example: "#loginwidget_placer"
@@ -30,6 +36,16 @@ class LoginManager
         @loginwidget = new login.LoginWidgetView({el: $(loginwidget_id)})
         @saveloadjsonwidget = new login.SaveLoadJson({el: $(saveloadwidget_id)})
         @loginconn = new login.LoginRequests()
+
+    # Create a new login and make it current.
+    #
+    # @param current [boolean] Optional. Make it current? By default is true.
+    # @param username [string] The username of the login.
+    new_login: (username, current = true) ->
+        if current
+            @current = new Login(username, @loginconn)
+        else
+            new Login(username, @loginconn)
 
     #
     # Show the login popup.
@@ -52,8 +68,9 @@ class LoginManager
     #
     # @param data {String} The information about the login answer in JSON format.
     update_login: (data) ->
-        # console.log(data)
-        @current = new Login(data, @loginconn)
+        console.log("update_login:")
+        console.log(data)
+        @current.set_json(data)
         if @current.logged
             this.set_logged_in()
         else
@@ -93,7 +110,8 @@ class LoginManager
             textonly: false
         )
         @loginconn.request_model_list(
-            login.lm_instance.update_saveloadjsonwidget)
+            (data) ->
+                login.lm_instance.update_saveloadjsonwidget(data))
 
     # Display the saveloadjson Popup in the load state.
     #
@@ -105,7 +123,8 @@ class LoginManager
             textonly: false
         )
         @loginconn.request_model_list(
-            login.lm.update_saveloadjsonwidget)
+            (data) ->
+                login.lm_instance.update_saveloadjsonwidget(data))
 
     # Display the loadjson but without retrieving the model list.
     #
@@ -121,6 +140,20 @@ class LoginManager
     hide_saveloadjson: () ->
         @saveloadjsonwidget.hide()
 
+    # Callback for LoginRequests.request_model_list().
+    #
+    # Retrive the JSON string data and update the load model list.
+    # 
+    # @param data [string] The JSON string.
+    update_saveloadjsonwidget: (data) ->
+        try
+            list = JSON.parse(data)
+        catch error
+            $.mobile.loading("hide")
+            console.log(error)
+            console.log("Couldn't parse and retrieve models list.", data)
+        this.show_load_json_with_list(list)
+
 
 # @namespace login
 # 
@@ -128,7 +161,11 @@ class LoginManager
 class Login
     # @param json [string]
     # @param loginrequests a LoginRequests instance.
-    constructor: (jsonstr, @loginconn) ->
+    constructor: (@username, @loginconn = null) ->
+        @json = null
+
+    # @param jsonstr [string] The JSON string.
+    set_json: (jsonstr) ->
         @json = JSON.parse(jsonstr)
 
     logged: () ->
@@ -140,13 +177,15 @@ class Login
     # @param username {String} The username.
     # @param pass {String} The password.
     do_login: (pass) ->
-        @loginconn.request_login(
-            username, pass,
-            login.lm_instance.update_login)
+        @loginconn.request_login(@username, pass,
+            (data) ->
+                login.lm_instance.update_login(data))
         
     # Clear the login and reset the interface. Send information to the server.
     do_logout: () ->
-        @loginconn.request_logout(login.lm_instance.update_logout)
+        @loginconn.request_logout(
+            (data) ->
+                login.lm_instance.update_logout(data))
         
     # Save the JSON model with the provided name.
     #
@@ -160,7 +199,8 @@ class Login
         )
         jsonstr = this.diag_to_json()
         @loginconn.send_model(modelname, jsonstr,
-            login.lm_instance.model_sended)
+            (data) ->
+                login.lm_instance.model_sended(data))
         gui.gui_instance.change_to_diagram_page()
 
 
@@ -173,7 +213,9 @@ class Login
             textVisible: true,
             textonly: false
         )
-        @loginconn.request_model(modelname, login.lm_instance.update_model)
+        @loginconn.request_model(modelname,
+            (data) ->
+                login.lm_instance.update_model(data))
 
 
 # @namespace login
