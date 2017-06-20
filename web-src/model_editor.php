@@ -15,6 +15,7 @@ require_once('template.php');
 	<script src="./js/model.js"></script>
 	<script src="./js/interface.js"></script>
 	<script src="./js/gui.js"></script>
+    <script src="./js/login.js"></script>
 	<script src="./js/guiimpl.js"></script>
 	<script src="./js/guiorm.js"></script>
 	<script src="./js/guiuml.js"></script>
