@@ -307,6 +307,21 @@ class LoginRequests
             error: @error_callback
             )
 
+    # Send to the server e request for retrieving the model list.
+    #
+    # @param callback_function {function} A function to execute when the server answer successfully
+    request_model_list: (callback_function) ->
+        url = "api/profiles/list_models.php"
+        console.log("Requesting at " + url)
+        $.ajax(
+            type: "GET",
+            url: url,
+            success: callback_function,
+            error: @error_callback
+            )
+
+
+
 
 
 exports = exports ? this
