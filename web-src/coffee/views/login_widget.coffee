@@ -43,15 +43,14 @@ LoginWidgetView = Backbone.View.extend(
         # "click a#login_login_btn" : "do_login"
     do_login: (event) ->
         console.log("do_login")
-        gui.gui_instance.hide_login()
-        gui.gui_instance.do_login(
-            $("#login_username").val(),
-            $("#login_password").val())
+        login.lm_instance.hide_login()
+        nl = login.lm_instance.new_login($("#login_username").val())
+        nl.do_login($("#login_password").val())
 
     do_logout: (event) ->
         console.log("do_logout")
-        gui.gui_instance.hide_login()
-        gui.gui_instance.do_logout()
+        login.lm_instance.hide_login()
+        login.lm_instance.current.do_logout()
 
     # Is this widget doing login or logout?
     #
