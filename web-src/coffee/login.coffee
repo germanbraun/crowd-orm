@@ -25,12 +25,11 @@ class LoginManager
     # Create a LoginWidget
     # 
     # @param widget_id The login widget id. Example: "#loginwidget_placer"
-    constructor: (loginwidget_id = "#loginwidget_placer",
-        saveloadwidget_id = "#saveloadjson_placer") ->
+    constructor: (loginwidget_id = "#loginwidget_placer", saveloadwidget_id = "#saveloadjson_placer") ->
         @current = null
         @loginwidget = new login.LoginWidgetView({el: $(loginwidget_id)})
-        @saveloadjsonwidget = new SaveLoadJson({el: $(saveloadwidget_id)})
-        @loginconn = new login.LoginConnection()
+        @saveloadjsonwidget = new login.SaveLoadJson({el: $(saveloadwidget_id)})
+        @loginconn = new login.LoginRequests()
 
     #
     # Show the login popup.
@@ -47,7 +46,7 @@ class LoginManager
     change_to_user_page: () ->
         $.mobile.changePage("#user-page", transition: "slide")
 
-    # Callback for the Loginconnection
+    # Callback for the LoginRequests
     #
     # Update the interface according to a succesful login.
     #
@@ -76,7 +75,7 @@ class LoginManager
             # Remove all models in the model list
             this.show_load_json_with_list([]);
 
-    # Callback for the Loginconnection.
+    # Callback for the Loginrequests.
     #
     # Update the interface and JS as if the user has recently logged out.
     #
@@ -269,13 +268,17 @@ class LoginRequests
 
 
 exports = exports ? this
-if exports.login?
-    exports.login = {}
+exports.login = exports.login ? {}
 
 # @namespace login
 #
 # Login and Save-Load feature for *crowd*.
 exports.login.LoginManager = LoginManager
-exports.login.lm_instance = new LoginManager()
 exports.login.LoginRequests = LoginRequests
 exports.login.Login = Login
+
+# Create instance when the document is ready.
+$.when($.ready).then(() ->
+    exports = exports ? this
+    exports.login.lm_instance = new LoginManager()
+)
