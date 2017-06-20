@@ -14,7 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
+# @namespace login
+# Widget for login.
 LoginWidgetView = Backbone.View.extend(
     initialize: () ->
         @doing_login = true
@@ -68,6 +69,10 @@ LoginWidgetView = Backbone.View.extend(
 )
 
 
-
 exports = exports ? this
-exports.LoginWidgetView = LoginWidgetView
+if exports.login?
+    exports.login = {}
+
+# @namespace login
+#
+exports.login.LoginWidgetView = LoginWidgetView
