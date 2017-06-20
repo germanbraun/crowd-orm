@@ -154,6 +154,11 @@ class LoginManager
             console.log("Couldn't parse and retrieve models list.", data)
         this.show_load_json_with_list(list)
 
+    model_sended: (data) ->
+        $.mobile.loading("hide")
+        console.log("Model sended...")
+        console.log(data)
+
 
 # @namespace login
 # 
@@ -197,7 +202,6 @@ class Login
             textVisible: true
             textonly: false
         )
-        jsonstr = this.diag_to_json()
         @loginconn.send_model(modelname, jsonstr,
             (data) ->
                 login.lm_instance.model_sended(data))
