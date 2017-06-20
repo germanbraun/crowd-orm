@@ -215,7 +215,7 @@ class Login
         )
         @loginconn.request_model(modelname,
             (data) ->
-                login.lm_instance.update_model(data))
+                gui.gui_instance.update_metamodel(data))
 
 
 # @namespace login

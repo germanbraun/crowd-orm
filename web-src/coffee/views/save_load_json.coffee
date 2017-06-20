@@ -51,11 +51,12 @@ SaveLoadJson = Backbone.View.extend(
 
         save: () ->
             modelname = $("#savejson_name").val()
-            login.lm_instance.save_model(modelname)
+            jsonstr = gui.gui_instance.current_gui.diag_to_json()
+            login.lm_instance.current.save_model(jsonstr, modelname)
 
         load_model: (event) ->
             modelname = event.target.text
-            login.lm_instance.load_model(modelname)
+            login.lm_instance.current.load_model(modelname)
 );
 
 exports = exports ? this
