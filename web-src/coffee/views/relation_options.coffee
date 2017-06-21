@@ -27,12 +27,11 @@ RelationOptionsView = Backbone.View.extend(
         this.$el.html(template({classid: @classid}))
 
     events:
-        "click a#cardfrom_accept" : "cardfrom",
-        "click a#cardto_accept" : "cardto",
         "click a#association_button" : "new_relation",
         "click a#assoc_class_button" : "new_assoc_class"
-    	
-    cardfrom: (from) ->
+
+    # Retrieve the source role and multiplicity information.
+    cardfrom: () ->
         # from = "2..3"
         # console.log from
         from_1 = $('#cardfrom-1').val()
@@ -42,8 +41,9 @@ RelationOptionsView = Backbone.View.extend(
         console.log(from_2)
         @from = from_aux.concat from_2
         @from_role = $('#role-from').val()
-    
-    cardto: (too) ->
+
+    # Retrieve the destination role and multiplicity
+    cardto: () ->
         # too = "4..8"
         # console.log too
         too_1 = $('#cardto-1').val()
@@ -54,8 +54,15 @@ RelationOptionsView = Backbone.View.extend(
         @too = too_aux.concat too_2
         # console.log too
         @to_role = $('#role-to').val()
-    		
-    new_relation: (from, too) ->
+
+    # Create a new relation with the information from the role, multiplicity and
+    # association name input fields.
+    # 
+    # Callback, used when the user clicks on the association button.
+    new_relation: () ->
+        this.cardfrom()
+        this.cardto()
+
         mult = []
         mult[0] = @from
         mult[1] = @too
@@ -67,7 +74,14 @@ RelationOptionsView = Backbone.View.extend(
         console.log(mult)
         gui.gui_instance.set_association_state(@classid, mult, roles, name, false)
 
+    # Create a new relation with the information from the role, multiplicity and
+    # association name input fields. *Use an association class in the middle.*
+    # 
+    # Callback, used when the user clicks on the create association class button.
     new_assoc_class: (from, too) ->
+        this.cardfrom()
+        this.cardto()
+
         mult = []
         mult[0] = @from
         mult[1] = @too

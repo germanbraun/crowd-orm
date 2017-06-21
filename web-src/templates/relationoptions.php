@@ -60,10 +60,6 @@
     	    <input type="hidden" id="relationoptions_classid" name="classid" value="<%= classid %>" />
     	    <input data-mini="true" placeholder="*" type="text" id="cardfrom-2" size="2" maxlength="4" />
 	    <input data-mini="true" placeholder="role1" type="text" id="role-from" size="2" maxlength="4" />
-	    <div data-role="controlgroup" data-mini="true" data-type="horizontal">
-		<a class="ui-btn ui-corner-all ui-icon-check ui-btn-icon-notext" type="button" id="cardfrom_accept">Accept</a>
-		<a class="ui-btn ui-corner-all ui-icon-back ui-btn-icon-notext" type="button" id="cardfrom_close">Close</a>
-	    </div>
 	</form>
     </div>
 
@@ -85,10 +81,6 @@
     	    <input type="hidden" id="relationoptions_classid" name="classid" value="<%= classid %>" />
     	    <input data-mini="true" placeholder="*" type="text" id="cardto-2" size="2" maxlength="4" />
 	    <input data-mini="true" placeholder="role2" type="text" id="role-to" size="2" maxlength="4" />
-	    <div data-role="controlgroup" data-mini="true" data-type="horizontal">
-		<a class="ui-btn ui-corner-all ui-icon-check ui-btn-icon-notext" type="button" id="cardto_accept">Accept</a>
-		<a class="ui-btn ui-corner-all ui-icon-back ui-btn-icon-notext" type="button" id="cardto_close">Close</a>
-	    </div>
 	</form>
     </div>    
 </div>
