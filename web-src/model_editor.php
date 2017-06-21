@@ -14,6 +14,7 @@ require_once('template.php');
 	<script src="./js/GUIState.js"></script>
 	<script src="./js/gui.js"></script>
 	<script src="./js/interface.js"></script>
+	<script src="./js/login.js"></script>
 
 	<?php if (array_key_exists('prueba', $_GET) && $_GET['prueba'] == 1){ ?>
 	    <script src="./js/prueba.js"></script>
@@ -146,20 +147,20 @@ require_once('template.php');
 	    </div> <!-- /header -->
 
 	    <div role="main" class="ui-content">
-
+		
 		<div data-role="navbar"></div>
-
-        <div id="loginwidget_placer"></div>
+		
+		<div id="loginwidget_placer"></div>
 		<div id="saveloadjson_placer"></div>
-
-        <!-- Templates -->
-        <?php
-        insert_template("loginwidget");
-        insert_template("saveloadjsonwidget");
-        ?>
+		
+		<!-- Templates -->
+		<?php
+		insert_template("loginwidget");
+		insert_template("saveloadjsonwidget");
+		?>
 
 	    </div> <!-- /main -->
-
+	    
 	    <div data-role="footer"></div>
 	</div> <!-- /page -->
     </body>
