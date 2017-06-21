@@ -34,6 +34,10 @@ class UMLDiagram extends Diagram
         
         @factory = new UMLFactory()
 
+        # Add events to the graph
+        if @graph?
+            this._add_events()
+
     get_factory: () ->
         return @factory
 
@@ -43,6 +47,14 @@ class UMLDiagram extends Diagram
         return @graph
 
     set_graph: (@graph) ->
+        this._add_events()
+
+    # Add events to the joint.Graph instance assigned to @graph
+    _add_events: () =>
+        @graph.on('remove', (event) =>
+            if event.attributes.type == 'link'
+                link = this.delete_link_by_id(event.id)
+        )
 
     get_clases: () ->
         return @clases
@@ -60,6 +72,11 @@ class UMLDiagram extends Diagram
     find_class_by_classid: (classid) ->
         return @clases.find( (elt,index,arr) ->
             elt.has_classid(classid)
+        )
+
+    find_link_by_id: (linkid) ->
+        @links.find( (elt, index, arr) ->
+            elt.has_classid(linkid)
         )
 
     # Find a generalization that contains the given parent
@@ -213,7 +230,6 @@ class UMLDiagram extends Diagram
         @links.filter( (link, indx, arr) ->
             link.is_associated(c)
         this)
-        
     
     # Remove all links associated to the given class.
     #
@@ -228,6 +244,14 @@ class UMLDiagram extends Diagram
         c = this.find_class_by_classid(classid)
         if c != null
             c.set_name(name)
+
+    # Remove the link by its Joint CellID from the diagram.
+    #
+    # @param linkid [string] the Joint CellID.
+    delete_link_by_id: (linkid) ->
+        link = this.find_link_by_id(linkid)
+        if link?
+            this.delete_link(link)
 
     # Remove the given link from the diagram.
     # 
