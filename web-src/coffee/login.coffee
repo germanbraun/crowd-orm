@@ -217,9 +217,7 @@ class Login
             textVisible: true,
             textonly: false
         )
-        @loginconn.request_model(modelname,
-            (data) ->
-                gui.gui_instance.update_metamodel(data))
+        @loginconn.request_model(modelname, gui.update_model)
 
 
 # @namespace login

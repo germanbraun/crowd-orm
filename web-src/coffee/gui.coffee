@@ -31,12 +31,8 @@ class GUI
         @trafficlight = new TrafficLightsView({el: $("#trafficlight")})
         @owllinkinsert = new OWLlinkInsertView({el: $("#owllink_placer")})
         @errorwidget = new ErrorWidgetView({el: $("#errorwidget_placer")})
-        @loginwidget = new LoginWidgetView({el: $("#loginwidget_placer")})
         @importjsonwidget = new ImportJSONView({el: $("#importjsonwidget_placer")})
         @exportjsonwidget = new ExportJSONView({el: $("#exportjson_placer")})
-        @saveloadjsonwidget = new SaveLoadJson({el: $("#saveloadjson_placer")})
-
-        @login = null
 
         @serverconn = new ServerConnection( (jqXHR, status, text) ->
             exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
@@ -155,73 +151,6 @@ class GUI
         @errorwidget.show(status, error)
 
     #
-    # Show the login popup.
-    #
-    show_login: () ->
-        @loginwidget.show()
-
-    #
-    # Hide the login popup.
-    #
-    hide_login: () ->
-        @loginwidget.hide()
-
-    # Do the login steps connecting to the server and verifying the username
-    # and password.
-    #
-    # @param username {String} The username.
-    # @param pass {String} The password.
-    do_login: (username, pass) ->
-        @serverconn.request_login(
-            username,
-            pass,
-            gui.update_login)
-
-    # Callback for the ServerConnection
-    #
-    # Update the interface according to a succesful login.
-    #
-    # @param data {String} The information about the login answer in JSON format.
-    update_login: (data) ->
-        console.log(data)
-        @login = JSON.parse(data)
-        if @login.logged
-            this.set_logged_in()
-        else
-            @login = null
-            # For some reason it won't show the error message if not wait for
-            # one second.
-            setTimeout(() ->
-                gui.gui_instance.show_error("Problems When Logging In", data)
-            ,1000)
-
-    # According to the information about @login, update the interface.
-    set_logged_in: () ->
-        if @login?
-            @loginwidget.set_doing_login(false)
-            # Update the model list
-            this.show_load_json()
-        else
-            @loginwidget.set_doing_login(true)
-            # Remove all models in the model list
-            this.show_load_json_with_list([]);
-
-
-    # Clear the login and reset the interface. Send information to the server.
-    do_logout: () ->
-        @serverconn.request_logout(gui.update_logout)
-
-    # Callback for the ServerConnection.
-    #
-    # Update the interface and JS as if the user has recently logged out.
-    #
-    # @param data {String} The information returned from the server.
-    update_logout: (data) ->
-        console.log(data)
-        @login = null
-        this.set_logged_in()
-
-    #
     # Put the traffic light on green.
     traffic_light_green: () ->
         @trafficlight.turn_green()
@@ -332,9 +261,7 @@ class GUI
         $.mobile.changePage("#diagram-page",
             transition: "slide",
             reverse: true)
-    change_to_user_page: () ->
-        $.mobile.changePage("#user-page",
-            transition: "slide")
+
     #
     # Hide the left side "Tools" toolbar
     #
@@ -437,61 +364,6 @@ class GUI
         @owllinkinsert.set_owllink("")
         this.hide_toolbar()
 
-    # Display the saveloadjson Popup in the save state.
-    show_save_json: () ->
-        $.mobile.loading("show",
-            text: "Retrieving models list...",
-            textVisible: true,
-            textonly: false
-        )
-        @serverconn.request_model_list(gui.update_saveloadjsonwidget)
-
-    # Display the saveloadjson Popup in the load state.
-    #
-    # But first, we must retrieve the model list.
-    show_load_json: () ->
-        $.mobile.loading("show",
-            text: "Retrieving models list...",
-            textVisible: true,
-            textonly: false
-        )
-        @serverconn.request_model_list(gui.update_saveloadjsonwidget)
-
-    # Display the loadjson but without retrieving the model list.
-    #
-    # @param list {Array} A list of Strings with the names of the models.
-    show_load_json_with_list: (list) ->
-        $.mobile.loading("hide")
-        @saveloadjsonwidget.set_jsonlist(list)
-        this.change_to_user_page()
-
-    # Hide the saveloadjson Popup.
-    #
-    # Maybe the user canceled?
-    hide_saveloadjson: () ->
-        @saveloadjsonwidget.hide()
-
-    save_model: (modelname) ->
-        $.mobile.loading("show",
-            text: "Sending to the server..."
-            textVisible: true
-            textonly: false
-        )
-        jsonstr = this.diag_to_json()
-        @serverconn.send_model(modelname, jsonstr, gui.model_sended)
-        this.change_to_diagram_page()
-
-
-    # Retrieve the model from the server and import it.
-    #
-    # @param modelname {String} The modelname to import.
-    load_model: (modelname) ->
-        $.mobile.loading("show",
-            text: "Retrieving model..."
-            textVisible: true,
-            textonly: false
-        )
-        @serverconn.request_model(modelname, gui.update_model)
 
 exports = exports ? this
 
@@ -519,30 +391,10 @@ exports.gui.update_translation = (data) ->
 exports.gui.show_error = (jqXHR, status, text) ->
     exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
 
-exports.gui.update_login = (data) ->
-    exports.gui.gui_instance.update_login(data)
-
-exports.gui.update_logout = (data) ->
-    exports.gui.gui_instance.update_logout(data)
-
-exports.gui.update_saveloadjsonwidget = (data) ->
-    try
-        list = JSON.parse(data)
-    catch error
-        $.mobile.loading("hide")
-        console.log(error)
-        gui.gui_instance.show_error("Couldn't retrieve models list.", data)
-    exports.gui.gui_instance.show_load_json_with_list(list)
-
 exports.gui.update_model = (data) ->
     $.mobile.loading("hide")
     console.log("Model retrieved...")
     console.log(data)
     gui.gui_instance.import_jsonstr(data)
-
-exports.gui.model_sended = (data) ->
-    $.mobile.loading("hide")
-    console.log("Model sended...")
-    console.log(data)
 
 exports.gui.GUI = GUI
