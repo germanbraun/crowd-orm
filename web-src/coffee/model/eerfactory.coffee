@@ -138,7 +138,7 @@ class ERDFactory extends Factory
                 text:
                     text: legend
                     fill: '#0000ff'
-                rect: 	
+                rect:     
                     fill: '#ffffff'
                     
         ])
@@ -152,7 +152,7 @@ class ERDFactory extends Factory
  #                   attrs:
  #                       text: {text: legend, fill: '#0000ff'},
  #                       rect: {fill: "#ffffff"}])
- #				)
+ #                )
 
 
     # Create an association class.
@@ -171,12 +171,12 @@ class ERDFactory extends Factory
         # on source and target. If not it will not associate the link with the
         # Element provided, instead it will still points to (10,10) coordinates.
         
-		link = new joint.dia.Link(
+        link = new joint.dia.Link(
             source: {x: 10, y: 10},
             target: {x: 100, y: 100},
             attrs: css_assoc_links
         )
-
+        
         return link
 
         

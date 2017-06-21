@@ -24,9 +24,9 @@
 require_once("common.php");
 
 // use function \load;
-load("answer.php", "wicom/answers/");
+load("answer.php", "wicom/translator/strategies/qapackages/answeranalizers/");
 
-use Wicom\Answers\Answer;
+use Wicom\Translator\Strategies\QAPackages\AnswerAnalizers\Answer;
 
 class AnswerTest extends PHPUnit_Framework_TestCase
 {

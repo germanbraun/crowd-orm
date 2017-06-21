@@ -24,9 +24,6 @@
 namespace Wicom\Translator;
 
 use function \load;
-load("queriesgenerator.php", "../querying/queries/");
-
-use Wicom\QueriesGen\QueriesGenerator;
 
 use function \json_decode;
 
@@ -77,7 +74,6 @@ class Translator{
     function __construct($strategy, $builder){
         $this->strategy = $strategy;
         $this->builder = $builder;
-        $this->queriesgen = new QueriesGenerator();
         $this->with_queries = true;
     }
 
@@ -104,9 +100,7 @@ class Translator{
         }
 
         if ($this->with_queries){
-            $this->queriesgen->gen_satisfiable($this->builder);
-            $this->queriesgen->gen_class_satisfiable($json, $this->builder);
-            $this->queriesgen->gen_infer_cardinalities($json, $this->builder);
+            $this->strategy->translate_queries($json, $this->builder);                
         }
         
         $this->builder->insert_footer();

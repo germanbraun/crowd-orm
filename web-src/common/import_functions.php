@@ -56,8 +56,14 @@ function load($module, $path=null){
         $current_path .= $path;
     }
 
-    // Load the module...
-    require_once($current_path . $module);
+    try{
+        
+        // Load the module...
+        require_once($current_path . $module);
+        
+    }catch(Exception $e){
+        echo "Fatal error:\nCouldn't load in $current_path the module $module\n";        
+    }
 
     if ($path != null){
         // Restore the current path with the previous.

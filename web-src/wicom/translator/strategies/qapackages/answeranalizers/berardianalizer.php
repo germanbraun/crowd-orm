@@ -5,7 +5,7 @@
    
    Author: Giménez, Christian   
 
-   owllinkanalizer.php
+   berardianalizer.php
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -21,16 +21,16 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Wicom\Answers;
+namespace Wicom\Translator\Strategies\QAPackages\AnswerAnalizers;
 
 load("answer.php");
 load("ansanalizer.php");
 
-use Wicom\Answers\Answer;
-use Wicom\Answers\AnsAnalizer;
+use Wicom\Translator\Strategies\QAPackages\AnswerAnalizers\Answer;
+use Wicom\Translator\Strategies\QAPackages\AnswerAnalizers\AnsAnalizer;
 use \XMLReader;
 
-class OWLlinkAnalizer extends AnsAnalizer{
+class BerardiAnalizer extends AnsAnalizer{
 
     /**
        XMLReader instance for parsing the query given to the 
@@ -51,14 +51,14 @@ class OWLlinkAnalizer extends AnsAnalizer{
         "IsKBSatisfiable" => "BooleanResponse",
         "IsClassSatisfiable" => "BooleanResponse"
     ];
-    
-    function __construct($query, $answer){
-        parent::__construct($query, $answer);
-        
+
+    function generate_answer($query, $answer){
+        parent::generate_answer($query, $answer);
+
         $this->query_reader = XMLReader::xml($query);
         $this->answer_reader = XMLReader::xml($answer);
     }
-
+    
     /**
        Remove comments and other tags, and create an array with 
        the most important tags and its answer.
@@ -181,10 +181,10 @@ class OWLlinkAnalizer extends AnsAnalizer{
                 // It is in fact an element.
                 if($in_query){
                     $cont = ! array_key_exists($xml->name,
-                                               OWLlinkAnalizer::ANSWERS_MAP);
+                                               BerardiAnalizer::ANSWERS_MAP);
                 }else{
                     $cont = ! array_search($xml->name,
-                                           OWLlinkAnalizer::ANSWERS_MAP);
+                                           BerardiAnalizer::ANSWERS_MAP);
                 }
             }
         }

@@ -39,6 +39,10 @@ CreateClassView = Backbone.View.extend(
             "click a#exportjson_open_dialog":
                 "export_json"
             "click a#meta_erd_button" : "meta_to_erd"
+            "click a#savejson":
+                "save_json"
+            "click a#loadjson":
+                "load_json"
 
         
         meta_to_erd: (event) -> 
@@ -71,7 +75,10 @@ CreateClassView = Backbone.View.extend(
             guiinst.show_import_json()
         export_json: () ->
             guiinst.show_export_json()
-
+        save_json: () ->
+            gui.gui_instance.show_save_json()
+        load_json: () ->
+            gui.gui_instance.show_load_json()
                 
 );
 
