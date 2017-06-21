@@ -927,4 +927,61 @@ EOT;
     }
 */
 
+
+    /**
+       Test for checking Strategy::translate_queries method only for class satisfiability.
+     */
+    public function test_translate_queries(){
+        //TODO: Complete JSON!
+        $json = <<< EOT
+
+{"classes": [
+    {"attrs":[], "methods":[], "name": "PhoneCall"},
+    {"attrs":[], "methods":[], "name": "MobileCall"}],
+ "links": [
+     {"classes": ["MobileCall"],
+      "multiplicity": null,
+      "name": "r1",
+      "type": "generalization",
+      "parent": "PhoneCall",
+      "constraint": []}
+	]
+}
+EOT;
+        $expected = <<< EOT
+<?xml version="1.0" encoding="UTF-8"?>
+<RequestMessage xmlns="http://www.owllink.org/owllink#"
+		xmlns:owl="http://www.w3.org/2002/07/owl#" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd">
+  <CreateKB kb="http://localhost/kb1" />
+  <Tell kb="http://localhost/kb1"/>
+  <IsKBSatisfiable kb="http://localhost/kb1"/>
+  <IsClassSatisfiable kb="http://localhost/kb1"><owl:Class IRI="#PhoneCall"/></IsClassSatisfiable>
+  <IsClassSatisfiable kb="http://localhost/kb1"><owl:Class IRI="#MobileCall"/></IsClassSatisfiable>
+</RequestMessage>
+EOT;
+        
+        $strategy = new UMLcrowd();
+        $builder = new OWLlinkBuilder();
+
+        $builder->insert_header(); // Without this, loading the DOMDocument
+        // will throw error for the owl namespace
+        $strategy->translate_queries($json, $builder);
+        $builder->insert_footer();
+        
+        $actual = $builder->get_product();
+        $actual = $actual->to_string();
+
+        $this->assertXmlStringEqualsXmlString($expected, $actual, TRUE);
+    }
+
+    /**
+       Test for checking Strategy::translate_queries method only for class satisfiability.
+
+       @todo Checks for adding more tests for generating queries methods.
+     */
+    public function test_translate_queries_infer(){
+        
+    }
 }

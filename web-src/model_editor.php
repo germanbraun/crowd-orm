@@ -15,6 +15,7 @@ require_once('template.php');
 	<script src="./js/model.js"></script>
 	<script src="./js/interface.js"></script>
 	<script src="./js/gui.js"></script>
+    <script src="./js/login.js"></script>
 	<script src="./js/guiimpl.js"></script>
 	<script src="./js/guiorm.js"></script>
 	<script src="./js/guiuml.js"></script>
@@ -44,20 +45,21 @@ require_once('template.php');
 		<div data-role="navbar">
 		    <ul>
 			<li><a href="#tools-panel" data-transition="slide" class="ui-btn ui-icon-bars ui-btn-icon-left">UML</a></li>
-			<li><a href="#details-page" data-transition="slide" class="ui-btn ui-btn-icon-right ui-icon-forward">Reasoning Details</a></li>
+			<li><a href="#details-page" data-transition="slide" class="ui-btn ui-btn-icon-left ui-icon-forward">Reasoning Details</a></li>
 			<li><a href="#verbalisation-page" data-transition="slide" class="ui-btn ui-btn-icon-right ui-icon-forward">Verbalisation</a></li>
+   			<li><a href="#user-page" data-transition="slide" class="ui-btn ui-icon-user ui-btn-icon-right">Profile</a></li>
 		    </ul>
 		</div>
 	    </div> <!-- /header -->
 
 	    <!-- ---------------------------------------------------------------------- -->
-	    
+
 	    <div role="main" class="ui-content">
 		<div id="errorwidget_placer"></div>
 		<div id="importjsonwidget_placer"></div>
 		<div id="container"></div>
-	    	    
-		
+
+
 		<!-- ---------------------------------------------------------------------- -->
 		<!-- Templates -->
 		<?php
@@ -78,16 +80,16 @@ require_once('template.php');
 		<div id="classoptions"></div>
 		<div id="relationoptions"></div>
 		<div id="isaoptions"></div>
-		
+
  	    </div> <!-- /main ui-content -->
 
 	    <!-- ---------------------------------------------------------------------- -->
-	
+
 	    <div data-role="footer">
 		<address>
 		    <a href="mailto:crowd@Harmonia">Facultad de Informática, Universidad Nacional del Comahue (Argentina)</a>
 		</address>
-		
+
 	    </div><!-- /footer -->
 	</div> <!-- /page -->
 
@@ -115,13 +117,13 @@ require_once('template.php');
 			    onclick="guiinst.translate_owllink()">Translate Again</a>
 			</div>
 		    </div>
-		    
+
 		    <div class="exportjson_details" data-role="collapsible" data-collapsed="true"
 			 data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
 			<h2>JSON Export String</h2>
 			<div id="exportjson_placer"></div>
 		    </div>
-		    
+
 		    <div class="insert_owllink_details" data-role="collapsible"  data-collapsed="true"
 		    	 data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
 			<h2>Insert OWLlink</h2>
@@ -140,10 +142,8 @@ require_once('template.php');
 	    
 	    <div data-role="footer"></div>
 	</div> <!-- /page -->
-	
-	
-	
-    <!-- ---------------------------------------------------------------------- -->
+
+ <!-- ---------------------------------------------------------------------- -->
 	<!-- Verbalisation page -->
 	<div data-role="page" id="verbalisation-page">
 	    <div data-role="header" class="wicom-header">
@@ -177,5 +177,35 @@ require_once('template.php');
 <!-- ERD diagram page -->	
 	
 
+
+	<!-- -------------------------------------------------------------------------------- -->
+	<!-- User Details Page -->
+	<div data-role="page" id="user-page">
+	    <div data-role="header" class="wicom-header">
+		<h1>User</h1>
+		<div data-role="navbar">
+		    <ul>
+			<li><a class="ui-btn ui-icon-back ui-btn-icon-left" href="#" data-rel="back">Back</a></li>
+		    </ul>
+		</div> <!-- /navbar -->
+	    </div> <!-- /header -->
+
+	    <div role="main" class="ui-content">
+
+		<div data-role="navbar"></div>
+
+        <div id="loginwidget_placer"></div>
+		<div id="saveloadjson_placer"></div>
+
+        <!-- Templates -->
+        <?php
+        insert_template("loginwidget");
+        insert_template("saveloadjsonwidget");
+        ?>
+
+	    </div> <!-- /main -->
+
+	    <div data-role="footer"></div>
+	</div> <!-- /page -->
     </body>
 </html>

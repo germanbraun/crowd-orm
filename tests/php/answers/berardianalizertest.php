@@ -5,7 +5,7 @@
    
    Author: Giménez, Christian   
 
-   testowllinkanalaizer.php
+   berardianalizertest.php
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -24,11 +24,11 @@
 require_once("common.php");
 
 // use function \load;
-load("owllinkanalizer.php", "wicom/answers/");
+load("berardianalizer.php", "wicom/translator/strategies/qapackages/answeranalizers/");
 
-use Wicom\Answers\OWLlinkAnalizer;
+use Wicom\Translator\Strategies\QAPackages\AnswerAnalizers\BerardiAnalizer;
 
-class OWLlinkAnalizerTest extends PHPUnit_Framework_TestCase
+class BerardiAnalizerTest extends PHPUnit_Framework_TestCase
 {
 
     public function testFilterXML(){
@@ -95,7 +95,8 @@ EOT;
                       ]
         ];
         
-        $oa = new OWLlinkAnalizer($query_input, $answer_output);
+        $oa = new BerardiAnalizer();
+        $oa->generate_answer($query_input, $answer_output);
         $actual = $oa->filter_xml();
         
         $this->assertEquals($expected, $actual, true);
@@ -176,7 +177,8 @@ EOT;
        }
 EOT;
 
-        $oa = new OWLlinkAnalizer($query_input, $answer_output);
+        $oa = new BerardiAnalizer();
+        $oa->generate_answer($query_input, $answer_output);
         $oa->analize();
         $answer = $oa->get_answer();
         // Removing input and output XML string, is merely descriptive.
@@ -251,7 +253,8 @@ EOT;
        }
 EOT;
 
-        $oa = new OWLlinkAnalizer($query_input, $answer_output);
+        $oa = new BerardiAnalizer();
+        $oa->generate_answer($query_input, $answer_output);        
         $oa->analize();
         $answer = $oa->get_answer();
         // Removing input and output XML string, is merely descriptive.
@@ -296,7 +299,8 @@ EOT;
        }
 EOT;
 
-        $oa = new OWLlinkAnalizer($query_input, $answer_output);
+        $oa = new BerardiAnalizer();
+        $oa->generate_answer($query_input, $answer_output);
         $oa->analize();
         $answer = $oa->get_answer();
         // Removing input and output XML string, is merely descriptive.
@@ -358,7 +362,8 @@ EOT;
        }
 EOT;
 
-        $oa = new OWLlinkAnalizer($query_input, $answer_output);
+        $oa = new BerardiAnalizer();
+        $oa->generate_answer($query_input, $answer_output);
         $oa->analize();
         $answer = $oa->get_answer();
         // Removing input and output XML string, is merely descriptive.

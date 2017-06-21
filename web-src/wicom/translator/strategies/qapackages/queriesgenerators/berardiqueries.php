@@ -1,11 +1,11 @@
 <?php 
 /* 
 
-   Copyright 2016 Giménez, Christian
+   Copyright 2017 Giménez, Christian
    
    Author: Giménez, Christian   
 
-   queriesgenerator.php
+   crowdqueries.php
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -21,15 +21,39 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Wicom\QueriesGen;
+namespace Wicom\Translator\Strategies\QAPackages\QueriesGenerators;
 
-class QueriesGenerator{
+use function \load;
+load('queriesgenerator.php');
+
+/**
+   Queries only for the Berardi strategy.
+
+   Generates queries for checking:
+
+   * KB Satisfiability.
+   * Classes satisfiability.
+
+ */
+class BerardiQueries extends QueriesGenerator {
     function __construct(){
     }
 
     /**
-       I generate queries for checking diagram satisfability.
+       Generate all queries on the builder provided.
 
+       @param $json_str a String representing the JSON of the user model.
+       @param $builder an instance of Wicom\Translator\Builders\DocumentBuilder.
+
+     */
+    function generate_all_queries($json_str, $builder){
+        $this->gen_satisfiable($builder);
+        $this->gen_class_satisfiable($json_str, $builder);
+    }
+    
+    /**
+       I generate queries for checking diagram satisfability.
+       
        @param $builder A Wicom\Translator\Builders\DocumentBuilder
        instance.
      */
@@ -53,21 +77,5 @@ class QueriesGenerator{
             $builder->insert_satisfiable_class($jelem["name"]);
         }
     }
-
-    /**
-       Generate queries for checking for equivalent classes between min and max.
-
-       @see gen_class_satisfiable() for parameters.
-     */
-    function gen_infer_cardinalities($json_diagram, $builder){
-        // [[class => [min, max]], [class2 => [min2, max2]], ...]
-        $lst_classes = $builder->get_classes_with_min_max();
-
-        foreach ($lst_classes as $classname => $tuple){
-            $builder->insert_equivalent_class_query([$classname, $tuple[0]]);
-            $builder->insert_equivalent_class_query([$classname, $tuple[1]]);
-        }
-    }
 }
-    
 ?>

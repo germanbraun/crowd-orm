@@ -172,13 +172,17 @@ You passed a " . gettype($elt) . " on: " . print_r($elt, true) );
         case "mincard" :
             $this->product->begin_mincardinality($elt["mincard"][0]);
             $this->DL_element($elt["mincard"][1]);
-			$this->DL_element($elt["mincard"][2]);
+            if (key_exists(2, $elt["mincard"])){
+                $this->DL_element($elt["mincard"][2]);
+            }
             $this->product->end_mincardinality();
             break;
         case "maxcard" :
             $this->product->begin_maxcardinality($elt["maxcard"][0]);
             $this->DL_element($elt["maxcard"][1]);
-			$this->DL_element($elt["maxcard"][2]);
+            if (key_exists(2, $elt["maxcard"])){
+                $this->DL_element($elt["maxcard"][2]);
+            }
             $this->product->end_maxcardinality();
             break;
 		case "domain" :
