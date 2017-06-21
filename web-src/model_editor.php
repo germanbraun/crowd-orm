@@ -66,12 +66,14 @@ require_once('template.php');
 		insert_template("insertowllink");
 		insert_template("importjson");
 		insert_template("exportjson");
+		insert_template("done_widget");
 		?>
 
 		<div id="editclass"></div>
 		<div id="classoptions"></div>
 		<div id="relationoptions"></div>
 		<div id="isaoptions"></div>
+		<div id="donewidget"></div>
 
  	    </div> <!-- /main ui-content -->
 

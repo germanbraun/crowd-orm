@@ -33,6 +33,7 @@ class GUI
         @errorwidget = new ErrorWidgetView({el: $("#errorwidget_placer")})
         @importjsonwidget = new ImportJSONView({el: $("#importjsonwidget_placer")})
         @exportjsonwidget = new ExportJSONView({el: $("#exportjson_placer")})
+        @donewidget = new DoneWidget({el: $("#donewidget")})
 
         @serverconn = new ServerConnection( (jqXHR, status, text) ->
             exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
@@ -68,6 +69,7 @@ class GUI
         @relationoptions.hide()
         @editclass.hide()
         @isaoptions.hide()
+        @donewidget.hide()
 
     set_editclass_classid: (model_id) ->
         # editclass = new EditClassView({el: $("#editclass")})
@@ -270,12 +272,15 @@ class GUI
 
     # Change the interface into a "new association" state.
     #
-    # @param class_id {string} The id of the class that triggered it and thus,
-    #   the starting class of the association.
+    # @param class_id {string} The id of the class that triggered it and thus, the starting class of the association.
     # @param mult {array} An array of two strings representing the cardinality from and to.
     # @param name [String] A string describing the name of the relation.
     # @param with_class [boolean] If true, this is an association with class.
     set_association_state: (class_id, mult, roles,  name=null, with_class=false) ->
+        this.hide_options()
+        this.hide_toolbar()
+        this.show_donewidget(() ->
+            gui.gui_instance.set_selection_state())
         @state = gui.state_inst.association_state()
         @state.set_cellStarter(class_id)
         @state.set_cardinality(mult)
