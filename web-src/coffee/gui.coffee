@@ -61,6 +61,7 @@ class GUI
         @relationoptions.set_classid(model_id)
         @classoptions.set_classid(model_id)
         @isaoptions.set_classid(model_id)
+        @donewidget.set_classid(model_id)
 
     ##
     # Hide the class options GUI.
@@ -279,7 +280,8 @@ class GUI
     set_association_state: (class_id, mult, roles,  name=null, with_class=false) ->
         this.hide_options()
         this.hide_toolbar()
-        this.show_donewidget(() ->
+        @donewidget.show(class_id, () ->
+            gui.gui_instance.hide_options()
             gui.gui_instance.set_selection_state())
         @state = gui.state_inst.association_state()
         @state.set_cellStarter(class_id)

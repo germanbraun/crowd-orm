@@ -20,6 +20,7 @@ DoneWidget = Backbone.View.extend(
     initialize: () ->
         this.render()
         this.$el.hide()
+        @classid = null
         @callback = () ->
             console.log "Done clicked"
 
@@ -51,9 +52,24 @@ DoneWidget = Backbone.View.extend(
     hide: () ->
         this.$el.hide()
 
+    set_classid: (@classid) ->
+        viewpos = graph.getCell(@classid).findView(paper).getBBox()
+
+        this.$el.css(
+            top: viewpos.y + viewpos.height * 2,
+            left: viewpos.x + viewpos.width/2,
+            position: 'absolute',
+            'z-index': 1
+            )
+
     # Show this widget.
     #
     # @param callback_fnc [function] Optional. A callback function without parameters. If not setted, then use the default.
-    show: (callback_fnc = null) ->
+    show: (classid, callback_fnc = null) ->
+        this.set_classid(classid)
         this.set_callback(callback_fnc)
         this.$el.show()
+)
+
+exports = exports ? this
+exports.DoneWidget = DoneWidget
