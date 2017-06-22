@@ -15,7 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # @namespace gui
-## Central GUI *do-it-all* class...
+#
+# Central GUI *do-it-all* class...
+#
 class GUI
     constructor: (@graph, @paper) ->
         @current_gui = new GUIUML(@graph,@paper)
