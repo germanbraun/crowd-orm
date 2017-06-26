@@ -57,7 +57,7 @@ RelationOptionsView = Backbone.View.extend(
 
     # Create a new relation with the information from the role, multiplicity and
     # association name input fields.
-    # 
+    #
     # Callback, used when the user clicks on the association button.
     new_relation: () ->
         this.cardfrom()
@@ -70,13 +70,14 @@ RelationOptionsView = Backbone.View.extend(
         roles[0] = @from_role
         roles[1] = @to_role
         name = $("#assoc_name").val()
+        @hide()
         console.log("New association without class:")
         console.log(mult)
         gui.gui_instance.set_association_state(@classid, mult, roles, name, false)
 
     # Create a new relation with the information from the role, multiplicity and
     # association name input fields. *Use an association class in the middle.*
-    # 
+    #
     # Callback, used when the user clicks on the create association class button.
     new_assoc_class: (from, too) ->
         this.cardfrom()
@@ -89,10 +90,11 @@ RelationOptionsView = Backbone.View.extend(
         roles[0] = @from_role
         roles[1] = @to_role
         name = $("#assoc_name").val()
+        @hide()
         console.log("New association with class: " + name)
         console.log(mult)
         gui.gui_instance.set_association_state(@classid, mult, roles, name, true)
-        
+
 
     # Map the Option value to multiplicity string.
     #
@@ -116,17 +118,17 @@ RelationOptionsView = Backbone.View.extend(
             'z-index': 1
             )
         this.$el.show()
-        
+
     get_classid: () ->
         return @classid
 
     hide: () ->
         this.$el.hide()
-        
+
 )
 
 
-        
+
 
 exports = exports ? this
 exports.RelationOptionsView = RelationOptionsView

@@ -19,7 +19,12 @@
 # Central GUI *do-it-all* class...
 #
 class GUIUML extends GUIIMPL
-	constructor: (@graph,@paper) ->
+
+    # Create a GUIUML instance.
+    #
+    # @param {JointJS.Graph } graph The JointJS Graph used for drawing models.
+    # @param {JointJS.Paper} paper The JointJS Paper used for drawing views.
+    constructor: (@graph,@paper) ->
         @urlprefix = ""
         @diag = new UMLDiagram(@graph)
         @state = gui.state_inst.selection_state()
@@ -33,24 +38,19 @@ class GUIUML extends GUIIMPL
         @errorwidget = new ErrorWidgetView({el: $("#errorwidget_placer")})
         @importjsonwidget = new ImportJSONView({el: $("#importjsonwidget_placer")})
         @exportjsonwidget = new ExportJSONView({el: $("#exportjson_placer")})
-        
+
         @serverconn = new ServerConnection( (jqXHR, status, text) ->
             exports.gui.current_gui.show_error(status + ": " + text , jqXHR.responseText)
         )
-                
+
         $("#diagram-page").enhanceWithin()
         $("#details-page").enhanceWithin()
         gui.set_current_instance(this);
 
+    set_urlprefix: (str) -> @urlprefix = str
 
-
-	set_urlprefix: (str) -> @urlprefix = str
-
-
-
-    ##
     # What to do when the user clicked on a cellView.
-	on_cell_clicked: (cellview, event, x, y) ->
+    on_cell_clicked: (cellview, event, x, y) ->
         @state.on_cell_clicked(cellview, event, x, y, this)
 
     ##
@@ -70,7 +70,7 @@ class GUIUML extends GUIIMPL
 
     set_editclass_classid: (model_id) ->
         # editclass = new EditClassView({el: $("#editclass")})
-        @editclass.set_classid(model_id)        
+        @editclass.set_classid(model_id)
 
     #
     # Add a class to the diagram.
@@ -78,13 +78,12 @@ class GUIUML extends GUIIMPL
     # @param hash_data {Hash} data information for creating the Class. Use `name`, `attribs` and `methods` keys.
     # @see Class
     # @see Diagram#add_class
-    
     add_object_type: (hash_data) ->
-    	this.hide_toolbar()
-    	@diag.add_class(hash_data)
-
+        this.hide_toolbar()
+        @diag.add_class(hash_data)
 
     add_attribute: (hash_data) ->
+
     #
     # Delete a class from the diagram.
     #
@@ -93,7 +92,7 @@ class GUIUML extends GUIIMPL
         @diag.delete_class_by_classid(class_id)
 
     # Change a class name identified by its classid.
-    # 
+    #
     # @example Getting a classid
     #   < graph.getCells()[0].id
     #   > "5777cd89-45b6-407e-9994-5d681c0717c1"
@@ -105,19 +104,19 @@ class GUIUML extends GUIIMPL
         # cell = @graph.getCell(class_id)
         # cell.set("name", name)
         @diag.rename_class(class_id, name)
-        
+
         # Update the view
         @diag.update_view(class_id, @paper)
 
     #
     # Add a simple association from A to B.
     # Then, set the selection state for restoring the interface.
-    # 
+    #
     # @example Getting a classid
     #   < graph.getCells()[0].id
     #   > "5777cd89-45b6-407e-9994-5d681c0717c1"
     #
-    # @param class_a_id {string} 
+    # @param class_a_id {string}
     # @param class_b_id {string}
     # @param name {string} optional. The association name.
     # @param mult {array} optional. An array of two string with the cardinality from class and to class b.
@@ -125,14 +124,13 @@ class GUIUML extends GUIIMPL
         @diag.add_association(class_a_id, class_b_id, name, mult)
         this.set_selection_state()
 
-
     add_relationship_attr: () ->
 
     # Add a Generalization link and then set the selection state.
     #
     # @param class_parent_id {string} The parent class Id.
     # @param class_child_id {string} The child class Id.
-    # 
+    #
     # @todo Support various children on parameter class_child_id.
     add_subsumption: (class_parent_id, class_child_id, disjoint=false, covering=false) ->
         @diag.add_generalization(class_parent_id, class_child_id, disjoint, covering)
@@ -163,7 +161,7 @@ class GUIUML extends GUIIMPL
     update_satisfiable: (data) ->
         console.log(data)
         obj = JSON.parse(data);
-        
+
         this.set_trafficlight(obj)
         $("#reasoner_input").html(obj.reasoner.input)
         $("#reasoner_output").html(obj.reasoner.output)
@@ -195,13 +193,12 @@ class GUIUML extends GUIIMPL
     # @param classes_list {Array<String>} a list of classes names.
     set_satisfiable: (classes_list) ->
         @diag.set_satisfiable(classes_list)
-        
-        
+
     #
     # Send a POST to the server for checking if the diagram is
     # satisfiable.
     check_satisfiable: () ->
-        $.mobile.loading("show", 
+        $.mobile.loading("show",
             text: "Consulting server...",
             textVisible: true,
             textonly: false
@@ -222,61 +219,55 @@ class GUIUML extends GUIIMPL
     # string.
     # @see CreateClassView#get_translation_format
     update_translation: (data) ->
-    	console.log(data)
-    	format = @crearclase.get_translation_format()
-    	if format == "html"
-    		$("#html-output").html(data)
-    		$("#html-output").show()
-    		$("#owllink_source").hide()
-    	else
-    		$("#owllink_source").text(data)
-    		$("#owllink_source").show()
-    		$("#html-output").hide()
-    	$.mobile.loading("hide")
-    	gui_instance.change_to_details_page()
-        
-  
-    update_metamodel: (data) ->
-    	console.log(data)
-    	$("#owllink_source").text(data) 
-    	$("#owllink_source").show() 
-    	$("#html-output").hide()
-    	$.mobile.loading("hide")
-    	change_to_details_page()
- 
+        console.log(data)
+        format = @crearclase.get_translation_format()
+        if format == "html"
+            $("#html-output").html(data)
+            $("#html-output").show()
+            $("#owllink_source").hide()
+        else
+            $("#owllink_source").text(data)
+            $("#owllink_source").show()
+            $("#html-output").hide()
+        $.mobile.loading("hide")
+        gui_instance.change_to_details_page()
 
-    	
+    update_metamodel: (data) ->
+        console.log(data)
+        $("#owllink_source").text(data)
+        $("#owllink_source").show()
+        $("#html-output").hide()
+        $.mobile.loading("hide")
+        change_to_details_page()
 
     ##
     # Event handler for translate diagram to OWLlink using Ajax
     # and the api/translate/berardi.php translator URL.
     translate_owllink: () ->
         format = @crearclase.get_translation_format()
-        $.mobile.loading("show", 
+        $.mobile.loading("show",
             text: "Consulting server...",
             textVisible: true,
             textonly: false
         )
         json = @diag.to_json()
         @serverconn.request_translation(JSON.stringify(json), format, gui.update_translation)
-        
-   
-	change_to_details_page: () -> 
-		$.mobile.changePage("#details-page", transition: "slide")
-            
-	change_to_diagram_page: () ->
+
+    change_to_details_page: () ->
+        $.mobile.changePage("#details-page", transition: "slide")
+
+    change_to_diagram_page: () ->
         $.mobile.changePage("#diagram-page", transition: "slide", reverse: true)
     #
     # Hide the left side "Tools" toolbar
-    # 
+    #
     hide_toolbar: () ->
         $("#tools-panel [data-rel=close]").click()
-        
+
 
     hide_umldiagram_page: () -> $("#diagram-page").css("display","none")
-    	
+
     show_umldiagram_page: () -> $("#diagram-page").css("display","block")
-    
 
     # Change the interface into a "new association" state.
     #
@@ -290,13 +281,13 @@ class GUIUML extends GUIIMPL
 
     # Change to the IsA GUI State so the user can select the child for the parent.
     #
-    # @param class_id {String} The JointJS::Cell id for the parent class.
+    # @param class_id {String} The JointJS.Cell id for the parent class.
     # @param disjoint {Boolean} optional. If the relation has the disjoint constraint.
     # @param covering {Boolean} optional. If the relation has the disjoint constraint.
     set_isa_state: (class_id, disjoint=false, covering=false) ->
         @state = gui.state_inst.isa_state()
         @state.set_cellStarter(class_id)
-        @state.set_constraint(disjoint, covering) 
+        @state.set_constraint(disjoint, covering)
 
     # Change the interface into a "selection" state.
     set_selection_state: () ->
@@ -333,7 +324,7 @@ class GUIUML extends GUIIMPL
 
     diag_to_json: () ->
         json = @diag.to_json()
-#        json.owllink = @owllinkinsert.get_owllink()
+                # json.owllink = @owllinkinsert.get_owllink()
         return JSON.stringify(json)
 
     # Import a JSON string.
@@ -366,22 +357,20 @@ class GUIUML extends GUIIMPL
         @owllinkinsert.set_owllink("")
         this.hide_toolbar()
 
+    to_metamodel: () ->
+        $.mobile.loading("show", text: "Metamodelling...", textVisible: true, textonly: false)
+        json = JSON.stringify(@diag.to_json())
+        @serverconn.request_metamodel_translation(json,this.update_metamodel)
 
-	to_metamodel: () -> 
-		$.mobile.loading("show", text: "Metamodelling...", textVisible: true, textonly: false) 
-		json = JSON.stringify(@diag.to_json())
-		@serverconn.request_metamodel_translation(json,this.update_metamodel)
-		
-
-	to_erd: (gui_instance) -> 
-		$.mobile.loading("show", text: "Generating ER Diagram...", textVisible: true, textonly: false)
-		gui_instance.hide_toolbar()
-		gui_instance.switch_to_erd()
-		json = JSON.stringify(@diag.to_json())
-		@serverconn.request_meta2erd_translation(json,(data)-> 
-			gui_instance.import_jsonstr(data)
-		)
-		$.mobile.loading("hide")
+    to_erd: (gui_instance) ->
+        $.mobile.loading("show", text: "Generating ER Diagram...", textVisible: true, textonly: false)
+        gui_instance.hide_toolbar()
+        gui_instance.switch_to_erd()
+        json = JSON.stringify(@diag.to_json())
+        @serverconn.request_meta2erd_translation(json,(data)->
+            gui_instance.import_jsonstr(data)
+        )
+        $.mobile.loading("hide")
 
 
 exports = exports ? this
@@ -393,11 +382,11 @@ exports.gui.gui_instance = null
 exports.gui.set_current_instance = (gui_instance) ->
     exports.gui.gui_instance = gui_instance
 
-#exports.gui.switch_to_erd = (gui_instance) -> 
-#	gui_instance.aux_gui = gui_instance.current_gui
-#	gui_instance.current_gui = gui_instance.prev_gui
-#	gui_instance.prev_gui = gui_instance.aux_gui
-#	exports.gui.set_current_instance(gui_instance)
+#exports.gui.switch_to_erd = (gui_instance) ->
+#    gui_instance.aux_gui = gui_instance.current_gui
+#    gui_instance.current_gui = gui_instance.prev_gui
+#    gui_instance.prev_gui = gui_instance.aux_gui
+#    exports.gui.set_current_instance(gui_instance)
 
 # @namespace gui
 #
@@ -416,4 +405,3 @@ exports.gui.show_error = (jqXHR, status, text) ->
 
 exports = exports ? this
 exports.gui.GUIUML = GUIUML
-

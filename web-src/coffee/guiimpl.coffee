@@ -1,4 +1,4 @@
-# gui.coffee --
+# guiimpl.coffee --
 # Copyright (C) 2016 Giménez, Christian
 
 # This program is free software: you can redistribute it and/or modify
@@ -20,24 +20,24 @@
 #
 class GUIIMPL
     constructor: (@graph,@paper) ->
-    	gui.set_current_instance(this);
+        gui.set_current_instance(this);
 
     set_urlprefix : (str) ->
-	
+
     to_metamodel: () ->
 
     switch_to_erd: () ->
 
     to_erd: () ->
-		
+
     update_metamodel: (data) ->
-	
-		
-	# What to do when the user clicked on a cellView.
+
+
+    # What to do when the user clicked on a cellView.
     on_cell_clicked: (cellview, event, x, y) ->
-	
-		
-	##
+
+
+    ##
     # Set the class Id of the class options GUI.
     set_options_classid: (model_id) ->
 
@@ -45,34 +45,34 @@ class GUIIMPL
     ##
     # Hide the class options GUI.
     hide_options: () ->
-   
+
 
     set_editclass_classid: (model_id) ->
-        
+
     #
     # Add a class to the diagram.
     #
     # @param hash_data {Hash} data information for creating the Class. Use `name`, `attribs` and `methods` keys.
     # @see Class
     # @see Diagram#add_class
-    
+
     add_object_type: (hash_data) ->
-      
+
     add_attribute: (hash_data, class_id) ->
 
     add_relationship_attr: (class_id, attribute_id, name) ->
 
-#    add_relationship_attr_inverse: (class_id, attribute_id, name)->
+    # add_relationship_attr_inverse: (class_id, attribute_id, name)->
 
     #
     # Delete a class from the diagram.
     #
     # @param class_id {string} a String with the class Id.
     delete_class: (class_id) ->
-       
+
 
     # Change a class name identified by its classid.
-    # 
+    #
     # @example Getting a classid
     #   < graph.getCells()[0].id
     #   > "5777cd89-45b6-407e-9994-5d681c0717c1"
@@ -85,26 +85,26 @@ class GUIIMPL
     #
     # Add a simple association from A to B.
     # Then, set the selection state for restoring the interface.
-    # 
+    #
     # @example Getting a classid
     #   < graph.getCells()[0].id
     #   > "5777cd89-45b6-407e-9994-5d681c0717c1"
     #
-    # @param class_a_id {string} 
+    # @param class_a_id {string}
     # @param class_b_id {string}
     # @param name {string} optional. The association name.
     # @param mult {array} optional. An array of two string with the cardinality from class and to class b.
     add_relationship: (class_a_id, class_b_id, name, mult) ->
-       
+
 
     # Add a Generalization link and then set the selection state.
     #
     # @param class_parent_id {string} The parent class Id.
     # @param class_child_id {string} The child class Id.
-    # 
+    #
     # @todo Support various children on parameter class_child_id.
     add_subsumption: (class_parent_id, class_child_id, disjoint, covering) ->
-        
+
 
     #
     # Report an error to the user.
@@ -112,29 +112,29 @@ class GUIIMPL
     # @param status {String} the status text.
     # @param error {String} error message
     show_error: (status, error) ->
-        
+
 
     #
     # Put the traffic light on green.
     traffic_light_green: () ->
-        
+
 
     #
     # Put the traffic light on red.
     traffic_light_red: () ->
-        
+
 
     # Update the interface with satisfiable information.
     #
     # @param data {string} is a JSON string with the server response.
     update_satisfiable: (data) ->
-        
+
 
     # Set the traffic-light according to the JSON object recived by the server.
     #
     # @param obj {JSON} The JSON object parsed from the recieved data.
     set_trafficlight: (obj) ->
- 
+
 
     # Show these classes as unsatisifable.
     #
@@ -146,8 +146,8 @@ class GUIIMPL
     #
     # @param classes_list {Array<String>} a list of classes names.
     set_satisfiable: (classes_list) ->
- 
-        
+
+
     #
     # Send a POST to the server for checking if the diagram is
     # satisfiable.
@@ -175,19 +175,19 @@ class GUIIMPL
 
     change_to_diagram_page: () ->
 
- 
+
     #
     # Hide the left side "Tools" toolbar
-    # 
-    
+    #
+
     hide_toolbar: () ->
 
     hide_umldiagram_page: () ->
-    
+
     show_umldiagram_page: () ->
 
     hide_eerdiagram_page: () ->
-    
+
     show_eerdiagram_page: () ->
 
 
@@ -218,24 +218,24 @@ class GUIIMPL
     #
     # No need to show it.
     refresh_export_json: () ->
- 
+
 
     #
     # Show the "Import JSON" modal dialog.
     #
     show_import_json: () ->
- 
+
     ##
     # Show the "Insert OWLlink" section.
     show_insert_owllink: () ->
- 
+
     ##
     # Set the OWLlink addon at the "Insert OWLlink" section.
     set_insert_owllink: (str) ->
 
 
     diag_to_json: () ->
- 
+
 
     # Import a JSON string.
     #
@@ -271,7 +271,7 @@ exports.gui.gui_instance = null
 exports.gui.set_current_instance = (gui_instance) ->
     exports.gui.gui_instance = gui_instance
 
-    
+
 
 # @namespace gui
 #
@@ -292,4 +292,3 @@ exports = exports ? this
 exports.gui.GUIIMPL = GUIIMPL
 #exports.gui.guiuml.GUIUML = GUIUML
 #exports.gui.guieer.GUIEER = GUIEER
-
