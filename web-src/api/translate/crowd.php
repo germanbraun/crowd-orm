@@ -43,9 +43,12 @@ load('owllinkdocument.php', '../../wicom/translator/documents/');
 load('crowd_uml.php','../../wicom/translator/strategies/');
 load('owllinkbuilder.php', '../../wicom/translator/builders/');
 load('htmlbuilder.php', '../../wicom/translator/builders/');
+//load('crowdpack.php', '../../wicom/translator/strategies/qapackages');
+
 
 use Wicom\Translator\Translator;
 use Wicom\Translator\Strategies\UMLcrowd;
+//use Wicom\Translator\Strategies\Qapackages\CrowdPack;
 use Wicom\Translator\Builders\OWLlinkBuilder;
 use Wicom\Translator\Builders\HTMLBuilder;
 

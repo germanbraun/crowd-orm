@@ -30,6 +30,8 @@ class GUIIMPL
 
     to_erd: () ->
 		
+    update_translation: (data) ->
+
     update_metamodel: (data) ->
 	
 		
