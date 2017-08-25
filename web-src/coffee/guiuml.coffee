@@ -18,15 +18,18 @@
 #
 # Central GUI *do-it-all* class...
 #
-class GUIUML extends GUIIMPL
-
+class GUIUML extends GUIIMPL  
+    
     # Create a GUIUML instance.
     #
     # @param {JointJS.Graph } graph The JointJS Graph used for drawing models.
     # @param {JointJS.Paper} paper The JointJS Paper used for drawing views.
     constructor: (@graph,@paper) ->
+        # @property [String] The URL prefix.
         @urlprefix = ""
+        # @property [UMLDiagram] The user model diagram representation.
         @diag = new UMLDiagram(@graph)
+        
         @state = gui.state_inst.selection_state()
         @crearclase = new CreateClassView({el: $("#crearclase")});
         @editclass = new EditClassView({el: $("#editclass")})
@@ -194,7 +197,6 @@ class GUIUML extends GUIIMPL
     set_satisfiable: (classes_list) ->
         @diag.set_satisfiable(classes_list)
 
-    #
     # Send a POST to the server for checking if the diagram is
     # satisfiable.
     check_satisfiable: () ->
@@ -205,7 +207,8 @@ class GUIUML extends GUIIMPL
         )
         @serverconn.request_satisfiable(
             this.diag_to_json(),
-            gui_instance.update_satisfiable # Be careful with the context
+            (data) =>
+                exports.gui.gui_instance.update_satisfiable(data) # Be careful with the context
             # change! this will have another object...
             )
 

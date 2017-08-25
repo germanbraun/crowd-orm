@@ -122,6 +122,16 @@ class GUI
     
     reset_all: () -> @current_gui.reset_all()
 
+    # Check if the model is satisfiable sending a POST to the server.
+    check_satisfiable: () ->
+        @current_gui.check_satisfiable()
+
+    # Update the diagram displaying unsatisfiable primitives in red.
+    #
+    # @param data [String] The JSON answer.
+    update_satisfiable: (data) ->
+        @current_gui.update_satisfiable(data)
+
 exports = exports ? this
 if exports.gui == undefined
     exports.gui = {}
