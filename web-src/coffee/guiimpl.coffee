@@ -29,6 +29,8 @@ class GUIIMPL
     switch_to_erd: () ->
 
     to_erd: () ->
+		
+    update_translation: (data) ->
 
     update_metamodel: (data) ->
 
@@ -292,3 +294,4 @@ exports = exports ? this
 exports.gui.GUIIMPL = GUIIMPL
 #exports.gui.guiuml.GUIUML = GUIUML
 #exports.gui.guieer.GUIEER = GUIEER
+
