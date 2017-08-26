@@ -112,8 +112,8 @@ RelationOptionsView = Backbone.View.extend(
         viewpos = graph.getCell(@classid).findView(paper).getBBox()
 
         this.$el.css(
-            top: viewpos.y,
-            left: viewpos.x + viewpos.width,
+            top: viewpos.y + 50,
+            left: viewpos.x + 100,
             position: 'absolute',
             'z-index': 1
             )

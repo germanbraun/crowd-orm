@@ -74,7 +74,7 @@ class GUI
         @current_gui.add_subsumption(class_parent_id, class_child_id, disjoint, covering)
     
     edit_class_name: (class_id, name) -> @current_gui.edit_class_name(class_id, name)
-    
+
     delete_class: (class_id) -> @current_gui.delete_class(class_id)
 
     set_isa_state: (class_id, disjoint, covering) -> 
