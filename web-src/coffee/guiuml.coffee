@@ -230,28 +230,30 @@ class GUIUML extends GUIIMPL
             $("#owllink_source").show()
             $("#html-output").hide()
         $.mobile.loading("hide")
-        gui_instance.change_to_details_page()
+        this.change_to_details_page()
 
     update_metamodel: (data) ->
-        console.log(data)
-        $("#owllink_source").text(data)
-        $("#owllink_source").show()
-        $("#html-output").hide()
-        $.mobile.loading("hide")
-        change_to_details_page()
+    	console.log(data)
+    	$("#owllink_source").text(data) 
+    	$("#owllink_source").show() 
+    	$("#html-output").hide()
+    	$.mobile.loading("hide")
+    	change_to_details_page()
 
     ##
     # Event handler for translate diagram to OWLlink using Ajax
     # and the api/translate/berardi.php translator URL.
-    translate_owllink: () ->
+    translate_owllink: (gui_instance) ->
         format = @crearclase.get_translation_format()
         $.mobile.loading("show",
             text: "Consulting server...",
             textVisible: true,
             textonly: false
         )
-        json = @diag.to_json()
-        @serverconn.request_translation(JSON.stringify(json), format, gui.update_translation)
+        json = JSON.stringify(@diag.to_json())
+        @serverconn.request_translation(json, format, (data) -> 
+                gui_instance.update_translation(data)
+    )
 
     change_to_details_page: () ->
         $.mobile.changePage("#details-page", transition: "slide")

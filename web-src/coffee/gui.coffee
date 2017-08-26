@@ -45,9 +45,9 @@ class GUI
         @current_gui.update_metamodel(data)
 
     translate_owllink: () ->
-        @current_gui.translate_owllink()
+        @current_gui.translate_owllink(this)
 
-    update_translation: () ->
+    update_translation: (data) -> @current_gui.update_translation(data)
 
     add_object_type: (name) -> 
         @current_gui.add_object_type(name)

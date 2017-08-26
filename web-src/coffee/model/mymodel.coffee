@@ -194,8 +194,8 @@ class Class extends MyModel
         if @attrs?
         	@attrs.forEach( (cv,index,@attrs) -> 
         		dots = @attrs[index].split ":"
-        		name_attr = dots[0]
-        		datatype_attr = dots[1]
+        		name_attr = dots[0].trim()
+        		datatype_attr = dots[1].trim()
         		array.push({name : name_attr, datatype : datatype_attr})
         		return array
         		)
