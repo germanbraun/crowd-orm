@@ -167,10 +167,17 @@ class GUIIMPL
     # @see CreateClassView#get_translation_format
     update_translation: (data) ->
 
+    # Translate the current model into a formalization.
+    #
+    # @param strategy {String} The strategy name to use for formalize the model.
+    # @param syntax {String} The output sintax format.
+    translate_formal: (strategy, syntax) ->
 
     ##
     # Event handler for translate diagram to OWLlink using Ajax
     # and the api/translate/berardi.php translator URL.
+    #
+    # @deprecated Use translate_formal() instead.
     translate_owllink: () ->
 
     change_to_details_page: () ->

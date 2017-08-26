@@ -58,14 +58,22 @@ CreateClassView = Backbone.View.extend(
         # Event handler for translate diagram to OWLlink using Ajax
         # and the api/translate/berardi.php translator URL.
         translate_owllink: (event) ->
-            guiinst.translate_owllink()
+            syntax = this.get_translation_format()
+            strategy = this.get_translation_strategy()
+            gui.gui_instance.translate_formal(strategy, syntax)
 
-        # Which is the current translation format selected by the
+        # Which is the current translation syntax format selected by the
         # user?
         #
         # @return [String] "html", "owllink", etc.
         get_translation_format: () ->
             $("#format_select")[0].value
+
+        # Which is the current strategy the user selected?
+        # 
+        # @return {String} "berardi", "crowd", etc.
+        get_translation_strategy: () ->
+            $("#strategy_select")[0].value
 
         insert_owllink: () ->
             guiinst.show_insert_owllink()

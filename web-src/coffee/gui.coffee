@@ -47,6 +47,16 @@ class GUI
     update_metamodel: (data) ->
         @current_gui.update_metamodel(data)
 
+    # Translate the current model into a formalization.
+    # 
+    # Show the user a "wait" message while the server process the model.
+    # 
+    # @param strategy {String} The strategy name to use for formalize the model.
+    # @param syntax {String} The output sintax format.
+    translate_formal: (strategy, syntax) ->
+        @current_gui.translate_formal(strategy, syntax)
+
+    # @deprecated Use translate_formal() instead.
     translate_owllink: () ->
         @current_gui.translate_owllink(this)
 

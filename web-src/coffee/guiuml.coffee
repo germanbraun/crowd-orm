@@ -232,20 +232,31 @@ class GUIUML extends GUIIMPL
     	$.mobile.loading("hide")
     	change_to_details_page()
 
-    ##
-    # Event handler for translate diagram to OWLlink using Ajax
-    # and the api/translate/berardi.php translator URL.
-    translate_owllink: (gui_instance) ->
-        format = @crearclase.get_translation_format()
+    # Translate the current model into a formalization.
+    #
+    # Show the user a "wait" message while the server process the model.
+    #
+    # @param strategy {String} The strategy name to use for formalize the model.
+    # @param syntax {String} The output sintax format.
+    translate_formal: (strategy, syntax) ->
         $.mobile.loading("show",
             text: "Consulting server...",
             textVisible: true,
             textonly: false
         )
         json = JSON.stringify(@diag.to_json())
-        @serverconn.request_translation(json, format, (data) -> 
-                gui_instance.update_translation(data)
-    )
+        @serverconn.request_translation(json, syntax, strategy, (data) -> 
+            gui.gui_instance.update_translation(data)
+        )
+
+    # Event handler for translate diagram to OWLlink using Ajax
+    # and the api/translate/berardi.php translator URL.
+    # 
+    # @deprecated Use translate_formal() instead.
+    translate_owllink: (gui_instance) ->
+        format = @crearclase.get_translation_format()
+        strat = @crearclase.get_translation_strategy()
+        this.translate_formal(strat, format)
 
     change_to_details_page: () ->
         $.mobile.changePage("#details-page", transition: "slide")
