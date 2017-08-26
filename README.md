@@ -43,6 +43,8 @@ You can run the `scripts/install.fish` script, it will setup the current working
 
 Use the `scripts/compilar-coffee.sh` script located under the root project directory.
 
+Use `scripts/compile-coffee.fish WHAT` to compile one part of the CoffeeScript code when developing. Example: `scripts/compile-coffee.fish tests` for compiling the tests suite.
+
 ## Installing Coffee script on Eclipse Mars.1 Release (4.5.1)
 
 * From Eclipse -> Help -> Install New Software... install
@@ -91,7 +93,9 @@ For installing docco:
 	
 Compiling documentation:
 
-```./scripts/generate-coffee-api.fish from project root directory```
+Use `scripts/generate-coffee-api.fish` from the project root directory for creating documentation with the codo program. 
+
+Use `scripts/generate-coffee-api.fish t` for compiling using both codo and docco.
 
 # Licence
 
