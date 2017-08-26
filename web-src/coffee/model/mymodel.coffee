@@ -131,7 +131,7 @@ class Class extends MyModel
     # @param name {String}
     # @param attrs {Array<String>} Array representing the attributes names.
     # @param methods {Array<Strings>} Array representing the methods names.
-    constructor : (name, @attrs = null , @methods = null) ->
+    constructor : (name, @attrs = [] , @methods = []) ->
         super(name)
         @joint = null
         @unsatisfiable = false

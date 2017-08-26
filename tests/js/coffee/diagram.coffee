@@ -19,7 +19,7 @@ QUnit.test("diag.delete_class", (assert) ->
     expected = 2
 
     # preparation   
-    diag = new Diagram();
+    diag = new UMLDiagram();
     c = new Class("hi world");
     diag.agregar_clase(new Class("Class1"))
     diag.agregar_clase(c)
@@ -39,7 +39,7 @@ QUnit.test("diag.delete_by_name", (assert) ->
     expected = 2
 
     # preparation   
-    diag = new Diagram();
+    diag = new UMLDiagram();
     c = new Class("hi world");
     diag.agregar_clase(new Class("Class1"))   
     diag.agregar_clase(c);
@@ -59,7 +59,7 @@ QUnit.test("diag.delete_by_classid", (assert) ->
     expected = 2
 
     # preparation   
-    diag = new Diagram()
+    diag = new UMLDiagram()
     fact = new UMLFactory()
     graph = new joint.dia.Graph()
 

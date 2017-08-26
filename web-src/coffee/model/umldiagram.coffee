@@ -205,9 +205,9 @@ class UMLDiagram extends Diagram
     # @see Class
     # @see GUI#add_class
     add_class: (hash_data) ->
-        if hash_data.attrs == undefined
+        if ! hash_data.attrs?
             hash_data.attrs = []
-        if hash_data.methods == undefined
+        if ! hash_data.methods?
             hash_data.methods = []
         
         newclass = new Class(hash_data.name, hash_data.attrs, hash_data.methods)
