@@ -156,6 +156,8 @@ class Class extends MyModel
     # @param bool {Boolean} If it is unsatisfiable or not.
     # @param csstheme {CSSTheme} optional. A csstheme object that if given,
     #   will set the appearance of this class depending if it is unsatisfiable.
+    #   It must have two elements: `css_class` and `css_class_unsatisfiable`. Both are CSS templates.
+    # @see set_theme()
     set_unsatisfiable: (bool, csstheme=null) ->
         @unsatisfiable = bool
         if csstheme?
@@ -163,6 +165,8 @@ class Class extends MyModel
             
 
     # Set the csstheme to the joint class.
+    #
+    # @param csstheme {Hash} The theme with two keys: `css_class` and `css_class_unsatisfiale`. Both are CSS templates to apply on the SVG elements of the final JointJS attributes.
     set_theme: (csstheme) ->
         if (@joint?) && (@joint.length > 0)
             # Joint instance exists.
