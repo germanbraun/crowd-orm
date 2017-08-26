@@ -56,7 +56,7 @@ xsi:schemaLocation=\"http://www.owllink.org/owllink# http://www.owllink.org/owll
        <CreateKB kb=\"http://localhost/kb1\" />
        <Tell kb=\"http://localhost/kb1\">   
        <owl:SubClassOf>
-       <owl:Class IRI=\"#Hi World\" />
+       <owl:Class IRI=\"Hi World\" />
        <owl:Class abbreviatedIRI=\"owl:Thing\" />
        </owl:SubClassOf>
        </Tell>
@@ -105,17 +105,17 @@ EOT;
   <CreateKB kb="http://localhost/kb1" />
   <Tell kb="http://localhost/kb1">
     <!-- <owl:ClassAssertion>
-	 <owl:Class IRI="#Person" />
-	 <owl:NamedIndividual IRI="#Mary" />
+	 <owl:Class IRI="Person" />
+	 <owl:NamedIndividual IRI="Mary" />
 	 </owl:ClassAssertion>
     -->
     
     <owl:SubClassOf>
-      <owl:Class IRI="#Person" />
+      <owl:Class IRI="Person" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     <owl:SubClassOf>
-      <owl:Class IRI="#Cellphone" />
+      <owl:Class IRI="Cellphone" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     <!-- One person can has lots of cellphones -->
@@ -124,37 +124,37 @@ EOT;
       <owl:Class abbreviatedIRI="owl:Thing" />
       <owl:ObjectIntersectionOf>
 	<owl:ObjectAllValuesFrom>
-	  <owl:ObjectProperty IRI="#hasCellphone" />
-	  <owl:Class IRI="#Person" />
+	  <owl:ObjectProperty IRI="hasCellphone" />
+	  <owl:Class IRI="Person" />
 	</owl:ObjectAllValuesFrom>
 	<owl:ObjectAllValuesFrom>
 	  <owl:ObjectInverseOf>
-	    <owl:ObjectProperty IRI="#hasCellphone" />	    
+	    <owl:ObjectProperty IRI="hasCellphone" />	    
 	  </owl:ObjectInverseOf>
-	  <owl:Class IRI="#Cellphone" />
+	  <owl:Class IRI="Cellphone" />
 	</owl:ObjectAllValuesFrom>
       </owl:ObjectIntersectionOf>
     </owl:SubClassOf>
 
     <!-- Multiplicity -->
     <owl:SubClassOf>
-      <owl:Class IRI="#Person" />
+      <owl:Class IRI="Person" />
       <owl:ObjectMinCardinality cardinality="1">
-        <owl:ObjectProperty IRI="#hasCellphone" />
+        <owl:ObjectProperty IRI="hasCellphone" />
       </owl:ObjectMinCardinality>      
     </owl:SubClassOf>
 
     <owl:SubClassOf>
-      <owl:Class IRI="#Cellphone" />
+      <owl:Class IRI="Cellphone" />
       <owl:ObjectIntersectionOf>
 	<owl:ObjectMinCardinality cardinality="1">
 	  <owl:ObjectInverseOf>
-	    <owl:ObjectProperty IRI="#hasCellphone" />
+	    <owl:ObjectProperty IRI="hasCellphone" />
 	  </owl:ObjectInverseOf>
 	</owl:ObjectMinCardinality>
 	<owl:ObjectMaxCardinality cardinality="1">
 	  <owl:ObjectInverseOf>
-	    <owl:ObjectProperty IRI="#hasCellphone" />
+	    <owl:ObjectProperty IRI="hasCellphone" />
 	  </owl:ObjectInverseOf>
 	</owl:ObjectMaxCardinality>
       </owl:ObjectIntersectionOf>
@@ -207,11 +207,11 @@ EOT;
   <Tell kb="http://localhost/kb1">
     
     <owl:SubClassOf>
-      <owl:Class IRI="#Person" />
+      <owl:Class IRI="Person" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     <owl:SubClassOf>
-      <owl:Class IRI="#Cellphone" />
+      <owl:Class IRI="Cellphone" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     <!-- One person can has lots of cellphones -->
@@ -220,14 +220,14 @@ EOT;
       <owl:Class abbreviatedIRI="owl:Thing" />
       <owl:ObjectIntersectionOf>
 	<owl:ObjectAllValuesFrom>
-	  <owl:ObjectProperty IRI="#hasCellphone" />
-	  <owl:Class IRI="#Person" />	  
+	  <owl:ObjectProperty IRI="hasCellphone" />
+	  <owl:Class IRI="Person" />	  
 	</owl:ObjectAllValuesFrom>	
 	<owl:ObjectAllValuesFrom>
 	  <owl:ObjectInverseOf>
-	    <owl:ObjectProperty IRI="#hasCellphone" />
+	    <owl:ObjectProperty IRI="hasCellphone" />
 	  </owl:ObjectInverseOf>
-	  <owl:Class IRI="#Cellphone" />	  
+	  <owl:Class IRI="Cellphone" />	  
 	</owl:ObjectAllValuesFrom>
       </owl:ObjectIntersectionOf>
     </owl:SubClassOf>
@@ -282,19 +282,19 @@ EOT;
   <Tell kb="http://localhost/kb1">
     
     <owl:SubClassOf>
-      <owl:Class IRI="#Person" />
+      <owl:Class IRI="Person" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     <owl:SubClassOf>
-      <owl:Class IRI="#Employee" />
+      <owl:Class IRI="Employee" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     
     <!-- Generalization -->
 
     <owl:SubClassOf>
-      <owl:Class IRI="#Employee" />
-	  <owl:Class IRI="#Person" />
+      <owl:Class IRI="Employee" />
+	  <owl:Class IRI="Person" />
     </owl:SubClassOf>
     
   </Tell>
@@ -348,53 +348,53 @@ EOT;
   <Tell kb="http://localhost/kb1">
     
     <owl:SubClassOf>
-      <owl:Class IRI="#Person" />
+      <owl:Class IRI="Person" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     <owl:SubClassOf>
-      <owl:Class IRI="#Employee" />
+      <owl:Class IRI="Employee" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     <owl:SubClassOf>
-      <owl:Class IRI="#Employer" />
+      <owl:Class IRI="Employer" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     <owl:SubClassOf>
-      <owl:Class IRI="#Director" />
+      <owl:Class IRI="Director" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     
     <!-- Generalization -->
 
     <owl:SubClassOf>
-      <owl:Class IRI="#Employee" />
-	  <owl:Class IRI="#Person" />
+      <owl:Class IRI="Employee" />
+	  <owl:Class IRI="Person" />
     </owl:SubClassOf>
     <owl:SubClassOf>
-      <owl:Class IRI="#Employer" />
-	  <owl:Class IRI="#Person" />
+      <owl:Class IRI="Employer" />
+	  <owl:Class IRI="Person" />
     </owl:SubClassOf>
     <owl:SubClassOf>
-      <owl:Class IRI="#Director" />
-	  <owl:Class IRI="#Person" />
+      <owl:Class IRI="Director" />
+	  <owl:Class IRI="Person" />
     </owl:SubClassOf>
 
     <owl:SubClassOf>
-      <owl:Class IRI="#Employee" />
+      <owl:Class IRI="Employee" />
       <owl:ObjectIntersectionOf>
         <owl:ObjectComplementOf>
-          <owl:Class IRI="#Employer" />
+          <owl:Class IRI="Employer" />
         </owl:ObjectComplementOf>
         <owl:ObjectComplementOf>
-          <owl:Class IRI="#Director" />
+          <owl:Class IRI="Director" />
         </owl:ObjectComplementOf>
       </owl:ObjectIntersectionOf>
     </owl:SubClassOf>
 
     <owl:SubClassOf>
-      <owl:Class IRI="#Employer" />
+      <owl:Class IRI="Employer" />
       <owl:ObjectComplementOf>
-        <owl:Class IRI="#Director" />
+        <owl:Class IRI="Director" />
       </owl:ObjectComplementOf>
     </owl:SubClassOf>
     
@@ -448,43 +448,43 @@ EOT;
   <Tell kb="http://localhost/kb1">
     
     <owl:SubClassOf>
-      <owl:Class IRI="#Person" />
+      <owl:Class IRI="Person" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     <owl:SubClassOf>
-      <owl:Class IRI="#Employee" />
+      <owl:Class IRI="Employee" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     <owl:SubClassOf>
-      <owl:Class IRI="#Employer" />
+      <owl:Class IRI="Employer" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     <owl:SubClassOf>
-      <owl:Class IRI="#Director" />
+      <owl:Class IRI="Director" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     
     <!-- Generalization -->
 
     <owl:SubClassOf>
-      <owl:Class IRI="#Employee" />
-	  <owl:Class IRI="#Person" />
+      <owl:Class IRI="Employee" />
+	  <owl:Class IRI="Person" />
     </owl:SubClassOf>
     <owl:SubClassOf>
-      <owl:Class IRI="#Employer" />
-	  <owl:Class IRI="#Person" />
+      <owl:Class IRI="Employer" />
+	  <owl:Class IRI="Person" />
     </owl:SubClassOf>
     <owl:SubClassOf>
-      <owl:Class IRI="#Director" />
-	  <owl:Class IRI="#Person" />
+      <owl:Class IRI="Director" />
+	  <owl:Class IRI="Person" />
     </owl:SubClassOf>
 
     <owl:SubClassOf>
-      <owl:Class IRI="#Person" />
+      <owl:Class IRI="Person" />
       <owl:ObjectUnionOf>
-          <owl:Class IRI="#Employee" />
-          <owl:Class IRI="#Employer" />
-          <owl:Class IRI="#Director" />
+          <owl:Class IRI="Employee" />
+          <owl:Class IRI="Employer" />
+          <owl:Class IRI="Director" />
       </owl:ObjectUnionOf>
     </owl:SubClassOf>
     
@@ -537,8 +537,8 @@ EOT;
     <CreateKB kb="http://localhost/kb1" />
     <Tell kb="http://localhost/kb1"/>
     <IsKBSatisfiable kb="http://localhost/kb1"/>
-    <IsClassSatisfiable kb="http://localhost/kb1"><owl:Class IRI="#PhoneCall"/></IsClassSatisfiable>
-    <IsClassSatisfiable kb="http://localhost/kb1"><owl:Class IRI="#MobileCall"/></IsClassSatisfiable>
+    <IsClassSatisfiable kb="http://localhost/kb1"><owl:Class IRI="PhoneCall"/></IsClassSatisfiable>
+    <IsClassSatisfiable kb="http://localhost/kb1"><owl:Class IRI="MobileCall"/></IsClassSatisfiable>
 </RequestMessage>
 EOT;
         

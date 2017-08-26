@@ -279,14 +279,14 @@ class OWLlinkDocument extends Document{
         if ($is_abbreviated){
             $this->content->writeAttribute("abbreviatedIRI", $name);
         }else{
-            $this->content->writeAttribute("IRI", "#".$name);
+            $this->content->writeAttribute("IRI", $name);
         }
         $this->content->endElement();
     }
 
     public function insert_objectproperty($name){
         $this->content->startElement("owl:ObjectProperty");        
-        $this->content->writeAttribute("IRI", "#".$name);
+        $this->content->writeAttribute("IRI", $name);
         $this->content->endElement();
     }
 
@@ -396,7 +396,7 @@ class OWLlinkDocument extends Document{
         $this->content->writeAttribute("kb", $this->actual_kb);
         
         $this->content->startElement("owl:Class");
-        $this->content->writeAttribute("IRI", "#".$classname);
+        $this->content->writeAttribute("IRI", $classname);
         $this->content->endElement();
         
         $this->content->endElement();

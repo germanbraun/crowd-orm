@@ -49,15 +49,15 @@ class BerardiAnalizerTest extends PHPUnit_Framework_TestCase
   <CreateKB kb="http://localhost/kb1" />
   <Tell kb="http://localhost/kb1">
     <owl:SubClassOf>
-      <owl:Class IRI="#Person" />
+      <owl:Class IRI="Person" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     <owl:SubClassOf>
-      <owl:Class IRI="#OtherPerson" />
+      <owl:Class IRI="OtherPerson" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     <owl:SubClassOf>
-      <owl:Class IRI="#Nope this one nope" />
+      <owl:Class IRI="Nope this one nope" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
   </Tell>
@@ -66,13 +66,13 @@ class BerardiAnalizerTest extends PHPUnit_Framework_TestCase
   
   <IsKBSatisfiable kb="http://localhost/kb1" />
   <IsClassSatisfiable kb="http://localhost/kb1">
-    <owl:Class IRI="#Person" />
+    <owl:Class IRI="Person" />
   </IsClassSatisfiable>
   <IsClassSatisfiable kb="http://localhost/kb1">
-    <owl:Class IRI="#OtherPerson" />
+    <owl:Class IRI="OtherPerson" />
   </IsClassSatisfiable>
   <IsClassSatisfiable kb="http://localhost/kb1">
-    <owl:Class IRI="#Nope this one nope" />
+    <owl:Class IRI="Nope this one nope" />
   </IsClassSatisfiable>
 
 
@@ -96,9 +96,9 @@ EOT;
 
         $expected = [ "IsKBSatisfiable" => "true",
                       "IsClassSatisfiable" => [
-                          ["true", "#Person"],
-                          ["true", "#OtherPerson"],
-                          ["false", "#Nope this one nope"]
+                          ["true", "Person"],
+                          ["true", "OtherPerson"],
+                          ["false", "Nope this one nope"]
                       ]
         ];
         
@@ -120,15 +120,15 @@ EOT;
   <CreateKB kb="http://localhost/kb1" />
   <Tell kb="http://localhost/kb1">
     <owl:SubClassOf>
-      <owl:Class IRI="#Person" />
+      <owl:Class IRI="Person" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     <owl:SubClassOf>
-      <owl:Class IRI="#OtherPerson" />
+      <owl:Class IRI="OtherPerson" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     <owl:SubClassOf>
-      <owl:Class IRI="#Nope this one nope" />
+      <owl:Class IRI="Nope this one nope" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
   </Tell>
@@ -137,13 +137,13 @@ EOT;
   
   <IsKBSatisfiable kb="http://localhost/kb1" />
   <IsClassSatisfiable kb="http://localhost/kb1">
-    <owl:Class IRI="#Person" />
+    <owl:Class IRI="Person" />
   </IsClassSatisfiable>
   <IsClassSatisfiable kb="http://localhost/kb1">
-    <owl:Class IRI="#OtherPerson" />
+    <owl:Class IRI="OtherPerson" />
   </IsClassSatisfiable>
   <IsClassSatisfiable kb="http://localhost/kb1">
-    <owl:Class IRI="#Nope this one nope" />
+    <owl:Class IRI="Nope this one nope" />
   </IsClassSatisfiable>
 
 
@@ -214,7 +214,7 @@ EOT;
   <CreateKB kb="http://localhost/kb1" />
   <Tell kb="http://localhost/kb1">
     <owl:SubClassOf>
-      <owl:Class IRI="#Person" />
+      <owl:Class IRI="Person" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
   </Tell>
@@ -223,7 +223,7 @@ EOT;
   
   <IsKBSatisfiable kb="http://localhost/kb1" />
   <IsClassSatisfiable kb="http://localhost/kb1">
-    <owl:Class IRI="#Person" />
+    <owl:Class IRI="Person" />
   </IsClassSatisfiable>
   
   <ReleaseKB kb="http://localhost/kb1" />
@@ -281,7 +281,7 @@ EOT;
     public function testRealCase(){
         $query_input = <<<'EOT'
 <?xml version="1.0" encoding="UTF-8"?>
-<RequestMessage xmlns="http://www.owllink.org/owllink#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd"><CreateKB kb="http://localhost/kb1"/><Tell kb="http://localhost/kb1"><owl:SubClassOf><owl:Class IRI="#Hi World"/><owl:Class abbreviatedIRI="owl:Thing"/></owl:SubClassOf></Tell><IsKBSatisfiable kb="http://localhost/kb1"/><IsClassSatisfiable kb="http://localhost/kb1"><owl:Class IRI="#Hi World"/></IsClassSatisfiable></RequestMessage>
+<RequestMessage xmlns="http://www.owllink.org/owllink#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd"><CreateKB kb="http://localhost/kb1"/><Tell kb="http://localhost/kb1"><owl:SubClassOf><owl:Class IRI="Hi World"/><owl:Class abbreviatedIRI="owl:Thing"/></owl:SubClassOf></Tell><IsKBSatisfiable kb="http://localhost/kb1"/><IsClassSatisfiable kb="http://localhost/kb1"><owl:Class IRI="Hi World"/></IsClassSatisfiable></RequestMessage>
 EOT;
         $answer_output = <<<'EOT'
 <?xml version="1.0" encoding="UTF-8"?><ResponseMessage xmlns="http://www.owllink.org/owllink#"                 xmlns:owl="http://www.w3.org/2002/07/owl#">  <KB kb="http://localhost/kb1"/>  <OK/>  <BooleanResponse result="true"/>  <BooleanResponse result="true"/></ResponseMessage>
@@ -328,14 +328,14 @@ EOT;
     public function testUnsatisfiableOWLlink(){
         $query_input = <<<'EOT'
 <?xml version="1.0" encoding="UTF-8"?>
-<RequestMessage xmlns="http://www.owllink.org/owllink#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd"><CreateKB kb="http://localhost/kb1"/><Tell kb="http://localhost/kb1"><owl:SubClassOf><owl:Class IRI="#Test Class"/><owl:Class abbreviatedIRI="owl:Thing"/></owl:SubClassOf></Tell><Tell kb="http://localhost/kb1">
+<RequestMessage xmlns="http://www.owllink.org/owllink#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd"><CreateKB kb="http://localhost/kb1"/><Tell kb="http://localhost/kb1"><owl:SubClassOf><owl:Class IRI="Test Class"/><owl:Class abbreviatedIRI="owl:Thing"/></owl:SubClassOf></Tell><Tell kb="http://localhost/kb1">
 <owl:SubClassOf>
-  <owl:Class IRI="#Test Class" />
+  <owl:Class IRI="Test Class" />
   <owl:ObjectComplementOf>
-    <owl:Class IRI="#Test Class" />
+    <owl:Class IRI="Test Class" />
   </owl:ObjectComplementOf>
 </owl:SubClassOf>
-</Tell><IsKBSatisfiable kb="http://localhost/kb1"/><IsClassSatisfiable kb="http://localhost/kb1"><owl:Class IRI="#Test Class"/></IsClassSatisfiable></RequestMessage>
+</Tell><IsKBSatisfiable kb="http://localhost/kb1"/><IsClassSatisfiable kb="http://localhost/kb1"><owl:Class IRI="Test Class"/></IsClassSatisfiable></RequestMessage>
 EOT;
         $answer_output = <<<'EOT'
 <?xml version="1.0" encoding="UTF-8"?>
