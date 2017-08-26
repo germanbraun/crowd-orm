@@ -29,6 +29,7 @@ alert_func = (jqXHR, status, error) ->
     alert(str)
     console.log(str)
 
+# Tests the ServerConnection translation request.
 QUnit.test( "translate_request test", ( assert ) ->
     expected ='<?xml version="1.0" encoding="UTF-8"?>
 <RequestMessage xmlns="http://www.owllink.org/owllink#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.owllink.org/owllink# http://www.owllink.org/owllink-20091116.xsd"><CreateKB kb="http://localhost/kb1"/><Tell kb="http://localhost/kb1"><owl:SubClassOf><owl:Class IRI="Hi World"/><owl:Class abbreviatedIRI="owl:Thing"/></owl:SubClassOf></Tell><IsKBSatisfiable kb="http://localhost/kb1"/><IsClassSatisfiable kb="http://localhost/kb1"><owl:Class IRI="Hi World"/></IsClassSatisfiable></RequestMessage>'
@@ -37,13 +38,14 @@ QUnit.test( "translate_request test", ( assert ) ->
     conn = new ServerConnection( alert_func )
     conn.set_urlprefix("../../web-src/")
     
-    diag = new Diagram(null)
-    diag.agregar_clase(new Class("Hi World"))
+    diag = new UMLDiagram(null)
+    diag.add_class(new Class("Hi World"))
 
     done = assert.async()    
     conn.request_translation(
         JSON.stringify(diag.to_json()),
         "owllink",
+        "berardi",
         (data) ->           
             actual = remove_xml_spaces(data)
             assert.equal(actual , expected,
@@ -72,7 +74,7 @@ QUnit.test( "satisfiable_request test", ( assert ) ->
     conn = new ServerConnection(alert_func)
     conn.set_urlprefix("../../web-src/")
     
-    diag = new Diagram(null)
+    diag = new UMLDiagram(null)
     diag.agregar_clase(new Class("Hi World"))
 
     done = assert.async()    
