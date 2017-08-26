@@ -109,6 +109,12 @@ class BerardiAnalizer extends AnsAnalizer{
         return $col;
     }
 
+    /**
+       Search for the next `owl:Class` tag and return its class IRI.
+
+       @return false If there's no Class tag.
+       @return String The IRI of the founded tag.
+     */
     protected function find_classname(){
         $this->query_reader->read();
         while ($this->query_reader->name != "owl:Class"){
@@ -212,10 +218,17 @@ class BerardiAnalizer extends AnsAnalizer{
 
         $col_class = $col["IsClassSatisfiable"];
         foreach ($col_class as $val){
+            // Clean the name string
+            $name = $val[1];
+            if ($name[0] == "#"){
+                $name = substr($name, 1, strlen($name) - 1);
+            }
+
+            // Add to satisfiable or to unsatisfiable set
             if ($val[0] == "true"){
-                $this->answer->add_satis_class($val[1]);
+                $this->answer->add_satis_class($name);
             }else{
-                $this->answer->add_unsatis_class($val[1]);
+                $this->answer->add_unsatis_class($name);
             }        
         }
         return $this->answer;
