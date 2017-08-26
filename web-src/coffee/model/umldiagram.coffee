@@ -16,10 +16,14 @@
 
 # {UMLFactory} = require './factories'
 
+exports = exports ? this
+exports.model = exports.model ? {}
+
 #
 # A UML diagram representation.
-# 
-class UMLDiagram extends Diagram
+#
+# @namespace model
+class UMLDiagram extends model.Diagram
     #
     # @param [joint.Graph] graph
     # 
@@ -32,7 +36,7 @@ class UMLDiagram extends Diagram
         # diagram for apply.
         @cells_deleted = []
         
-        @factory = new UMLFactory()
+        @factory = new model.UMLFactory()
 
         # Add events to the graph
         if @graph?
@@ -148,7 +152,7 @@ class UMLDiagram extends Diagram
     add_generalization_objs: (class_parent, class_child, disjoint=false, covering=false) ->
         gen = this.find_IsA_with_parent(class_parent)
         if (gen is undefined) || (gen is null)
-            gen = new Generalization(class_parent, [class_child])
+            gen = new model.Generalization(class_parent, [class_child])
             gen.set_disjoint(disjoint)
             gen.set_covering(covering)
             this.agregar_link(gen)
@@ -167,7 +171,7 @@ class UMLDiagram extends Diagram
         class_a = this.find_class_by_classid(class_a_id)
         class_b = this.find_class_by_classid(class_b_id)
         
-        newassoc = new Link([class_a, class_b], name)
+        newassoc = new model.Link([class_a, class_b], name)
         if (mult isnt null)
             newassoc.set_mult(mult)
         if (roles isnt null)
@@ -179,7 +183,7 @@ class UMLDiagram extends Diagram
         class_a = this.find_class_by_classid(class_a_id)
         class_b = this.find_class_by_classid(class_b_id)
         
-        newassoc = new LinkWithClass([class_a, class_b], name)
+        newassoc = new model.LinkWithClass([class_a, class_b], name)
         if (mult isnt null)
             newassoc.set_mult(mult)
         if (roles isnt null)
@@ -210,7 +214,7 @@ class UMLDiagram extends Diagram
         if ! hash_data.methods?
             hash_data.methods = []
         
-        newclass = new Class(hash_data.name, hash_data.attrs, hash_data.methods)
+        newclass = new model.Class(hash_data.name, hash_data.attrs, hash_data.methods)
         this.agregar_clase(newclass)
         return newclass
 
@@ -456,6 +460,4 @@ class UMLDiagram extends Diagram
 
 
         
-exports = exports ? this
-
-exports.UMLDiagram = UMLDiagram
+exports.model.UMLDiagram = UMLDiagram

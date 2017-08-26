@@ -1,4 +1,4 @@
-# umldiagram.coffee --
+# eerdiagram.coffee --
 # Copyright (C) 2016 Giménez, Christian
 
 # This program is free software: you can redistribute it and/or modify
@@ -16,10 +16,14 @@
 
 # {ERDFactory} = require './factories'
 
+exports = exports ? this
+exports.model = exports.model ? {}
+
 #
 # An ER diagram representation.
-# 
-class ERDiagram extends Diagram
+#
+# @namespace model
+class ERDiagram extends model.Diagram
     #
     # @param [joint.Graph] graph
     # 
@@ -34,7 +38,7 @@ class ERDiagram extends Diagram
         # diagram for apply.
         @cells_deleted = []
         
-        @factory = new ERDFactory()
+        @factory = new model.ERDFactory()
 
     get_factory: () ->
         return @factory
@@ -152,7 +156,7 @@ class ERDiagram extends Diagram
     add_generalization_objs: (class_parent, class_child, disjoint=false, covering=false) ->
         gen = this.find_IsA_with_parent(class_parent)
         if (gen is undefined) || (gen is null)
-            gen = new Generalization(class_parent, [class_child])
+            gen = new model.Generalization(class_parent, [class_child])
             gen.set_disjoint(disjoint)
             gen.set_covering(covering)
             this.agregar_isa(gen)
@@ -178,7 +182,7 @@ class ERDiagram extends Diagram
         class_a = this.find_class_by_classid(class_a_id)
         class_b = this.find_class_by_classid(class_b_id)
         
-        newassoc = new Link([class_a, class_b], name)
+        newassoc = new model.Link([class_a, class_b], name)
         if (mult isnt null)
             newassoc.set_mult(mult)
         if (roles isnt null)
@@ -190,7 +194,7 @@ class ERDiagram extends Diagram
         class_a = this.find_class_by_classid(class_a_id)
         class_b = this.find_class_by_classid(class_b_id)
         
-        newassoc = new LinkWithClass([class_a, class_b], name)
+        newassoc = new model.LinkWithClass([class_a, class_b], name)
         if (mult isnt null)
             newassoc.set_mult(mult)
         if (roles isnt null)
@@ -219,7 +223,7 @@ class ERDiagram extends Diagram
         if hash_data.attrs == undefined
             hash_data.attrs = []
 
-        newclass = new Entity(hash_data.name, hash_data.attrs)
+        newclass = new model.Entity(hash_data.name, hash_data.attrs)
         this.agregar_clase(newclass)
         return newclass
 
@@ -230,7 +234,7 @@ class ERDiagram extends Diagram
 
 
     add_attribute: (hash_data) ->
-    	newattribute = new Attribute(hash_data.name, hash_data.type)
+    	newattribute = new model.Attribute(hash_data.name, hash_data.type)
     	this.agregar_attribute(newattribute)
     	return newattribute
 
@@ -245,7 +249,7 @@ class ERDiagram extends Diagram
         console.log(entity)
         attr = this.find_attr_by_attrid(attribute_id)
         console.log(attr)
-        newrel = new LinkAttrToEntity([entity, attr], name)
+        newrel = new model.LinkAttrToEntity([entity, attr], name)
         this.agregar_link(newrel)   	
 
     add_relationship_isa: (class_id, isa_id, name) ->
@@ -253,7 +257,7 @@ class ERDiagram extends Diagram
         console.log(entity)
         isa = this.find_isa_by_isaid(isa_id)
         console.log(isa)
-        newlinktoISA = new LinkISAToEntity([entity, isa], name)
+        newlinktoISA = new model.LinkISAToEntity([entity, isa], name)
         this.agregar_link(newlinktoISA)
 
     add_relationship_isa_inverse: (isa_id, class_id, name) ->
@@ -261,7 +265,7 @@ class ERDiagram extends Diagram
         console.log(entity)
         isa = this.find_isa_by_isaid(isa_id)
         console.log(isa)
-        newlinkfromISA = new LinkISAToEntity([isa, entity], name)
+        newlinkfromISA = new model.LinkISAToEntity([isa, entity], name)
         this.agregar_link(newlinkfromISA) 
         
     # @param c {Class instance}. 
@@ -511,7 +515,6 @@ class ERDiagram extends Diagram
                             elt.name)                
                                 
         this)
-        
-exports = exports ? this
 
-exports.ERDiagram = ERDiagram
+
+exports.model.ERDiagram = ERDiagram

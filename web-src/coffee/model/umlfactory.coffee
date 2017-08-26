@@ -16,8 +16,14 @@
 
 uml = joint.shapes.uml
 
+exports = exports ? this
+exports.model = exports.model ? {}
+
+
 # UML Factory for creating JointJS shapes representing a primitive in
 # its plugins.
+#
+# @namespace model
 class UMLFactory extends Factory
    
     constructor: () ->
@@ -53,7 +59,7 @@ class UMLFactory extends Factory
         if css_class?
             params.attrs = css_class
 
-        newclass = new uml.Class( params )
+        newclass = new model.Class( params )
             
         return newclass
 
@@ -186,7 +192,5 @@ class UMLFactory extends Factory
 		return link
 
 
-
-exports = exports ? this
-exports.UMLFactory = UMLFactory
+exports.model.UMLFactory = UMLFactory
 

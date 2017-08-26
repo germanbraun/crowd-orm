@@ -15,9 +15,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 erd = joint.shapes.erd       
 
+exports = exports ? this
+exports.model = exports.model ? {}
+
 # ERD Factory for creating JointJS shapes representing a primitive in
 # its plugins.
-class ERDFactory extends Factory
+#
+# @namespace model
+class ERDFactory extends model.Factory
    
     constructor: () ->
 
@@ -43,7 +48,7 @@ class ERDFactory extends Factory
         if css_class?
             params.attrs = css_class
 
-        newclass = new uml.Class( params )
+        newclass = new model.Class( params )
             
         return newclass
 
@@ -179,10 +184,6 @@ class ERDFactory extends Factory
         
         return link
 
-        
 
-# If exports doesn't exists, use "this".
-exports = exports ? this
-
-exports.ERDFactory = ERDFactory
+exports.model.ERDFactory = ERDFactory
 

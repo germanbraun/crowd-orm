@@ -23,6 +23,8 @@
 
 # {Factory} = require './factories'
 
+exports = exports ? this
+exports.model = exports.model ? {}
 
 #
 # 
@@ -32,6 +34,8 @@
 # - constructor
 # - create_joint
 # - others?
+#
+# @namespace model
 class MyModel
     # @param name {String}
     constructor: (@name) ->
@@ -127,7 +131,9 @@ class MyModel
 
 
 # A Class from our model UML diagram.
-class Class extends MyModel 
+#
+# @namespace model
+class Class extends model.MyModel 
     # @param name {String}
     # @param attrs {Array<String>} Array representing the attributes names.
     # @param methods {Array<Strings>} Array representing the methods names.
@@ -250,7 +256,9 @@ class Class extends MyModel
 
 
 # An Entity from our model ERD diagram.
-class Entity extends MyModel 
+#
+# @namespace model
+class Entity extends model.MyModel 
     # @param name {String}
     # @param attrs {Array<String>} Array representing the attributes names.
     # @param methods {Array<Strings>} Array representing the methods names.
@@ -352,8 +360,8 @@ class Entity extends MyModel
             obj.update_position()
         )   
 
-
-class Attribute extends Class
+# @namespace model 
+class Attribute extends model.Class
 	
 	constructor: (name, @type=null) ->
 		super(name)
@@ -396,7 +404,9 @@ class Attribute extends Class
 #
 # This give support for two (using from() or to()) or
 # more classes.
-class Link extends MyModel 
+#
+# @namespace model
+class Link extends model.MyModel 
     # @param classes {Array<Class>} An array of Class objects,
     #   the first class is the "from" and the second is the "to" class
     #   in a two-linked relation.
@@ -502,7 +512,9 @@ Link.get_new_name = () ->
     return "r" + Link.name_number
 
 # A generalization link.
-class Generalization extends Link
+#
+# @namespace model
+class Generalization extends model.Link
 
     # @param parent_class {Class} The parent class.
     # @param classes {Array<Class>} An array of child classes.
@@ -603,13 +615,14 @@ class Generalization extends Link
 # middle of the link with to the association class; the association class, which
 # represent the association and is at the middle of the association link.
 #
-class LinkWithClass extends Link
+# @namespace model
+class LinkWithClass extends model.Link
    
     constructor: (@classes, name) ->
         super(@classes, name)
         @mult = [null,null]
 
-        @assoc_class = new Class(name)
+        @assoc_class = new model.Class(name)
         @j_assoc_link = null
         # Easy access to the assoc_class.get_joint().
         @j_assoc_class = null
@@ -697,8 +710,9 @@ class LinkWithClass extends Link
 
 # linking attributes to entities. Warning: @classes is defined as [class,attr]. We should consider
 # also [attr,entity]
-
-class LinkAttrToEntity extends Link
+#
+# @namespace model
+class LinkAttrToEntity extends model.Link
 	
     constructor: (@classes, name=null) ->
         super(@classes, name)
@@ -734,8 +748,8 @@ class LinkAttrToEntity extends Link
 
         return json
 
-        
-class LinkISAToEntity extends LinkAttrToEntity
+# @namespace model        
+class LinkISAToEntity extends model.LinkAttrToEntity
 	
     constructor: (@classes, name=null) ->
         super(@classes, name)
@@ -769,15 +783,14 @@ class LinkISAToEntity extends LinkAttrToEntity
 
         return json
                 
-exports = exports ? this
        
-exports.MyModel = MyModel
-exports.Class = Class
-exports.Link = Link
-exports.Generalization = Generalization
-exports.LinkWithClass = LinkWithClass
-exports.LinkAttrToEntity = LinkAttrToEntity
-exports.LinkISAToEntity = LinkISAToEntity
+exports.model.MyModel = MyModel
+exports.model.Class = Class
+exports.model.Link = Link
+exports.model.Generalization = Generalization
+exports.model.LinkWithClass = LinkWithClass
+exports.model.LinkAttrToEntity = LinkAttrToEntity
+exports.model.LinkISAToEntity = LinkISAToEntity
 
 
 

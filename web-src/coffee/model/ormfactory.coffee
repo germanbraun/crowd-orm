@@ -17,9 +17,14 @@
 uml = joint.shapes.uml
 erd = joint.shapes.erd
 
+exports = exports ? this
+exports.model = exports.model ? {}
+
 # *Abstract class.*
 #
 # Factory class for defining common behaviour of all JointJS plugins primitives.
+#
+# @namespace model
 class Factory
     constructor: () ->
 
@@ -41,7 +46,9 @@ class Factory
 
 # UML Factory for creating JointJS shapes representing a primitive in
 # its plugins.
-class UMLFactory extends Factory
+#
+# @namespace model
+class UMLFactory extends model.Factory
    
     constructor: () ->
 
@@ -67,7 +74,7 @@ class UMLFactory extends Factory
         if css_class?
             params.attrs = css_class
 
-        newclass = new uml.Class( params )
+        newclass = new model.Class( params )
             
         return newclass
 
@@ -205,7 +212,9 @@ class UMLFactory extends Factory
 
 
 # @todo ERDFactory is not yet implemented. This factory is beyond the scope for this prototype.
-class ERDFactory extends Factory
+# 
+# @namespace model
+class ERDFactory extends model.Factory
     
     constructor: () ->
     
@@ -231,15 +240,13 @@ class ERDFactory extends Factory
         if css_class?
             params.attrs = css_class
 
-        newentity = new erd.Entity( params )
+        newentity = new model.Entity( params )
             
         return newentity
         
 
-# If exports doesn't exists, use "this".
-exports = exports ? this
 
-exports.Factory = Factory
-exports.UMLFactory = UMLFactory
-exports.ERDFactory = ERDFactory
+exports.model.Factory = Factory
+exports.model.UMLFactory = UMLFactory
+exports.model.ERDFactory = ERDFactory
 
