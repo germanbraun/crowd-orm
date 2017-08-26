@@ -64,16 +64,25 @@ class UMLDiagram extends Diagram
 
     get_clase: (nombre) ->
 
+    # # Find Primitive Messages
+    # ---
+    #
+    # @param name {String}
+    # @return {Class} The first class founded that have the given name.
     find_class_by_name: (name) ->
         return @clases.find( (elt, index, arr) ->
             elt.get_name() == name
         )
 
+    # @param classid {String}
+    # @return {Class} The class with the provided ClassID
     find_class_by_classid: (classid) ->
         return @clases.find( (elt,index,arr) ->
             elt.has_classid(classid)
         )
 
+    # @param linkid {String}
+    # @return {Link} The MyModel's link.
     find_link_by_id: (linkid) ->
         @links.find( (elt, index, arr) ->
             elt.has_classid(linkid)
@@ -83,7 +92,7 @@ class UMLDiagram extends Diagram
     #
     # @param parentclass {Class} A Class instance that is the parent of the
     #     generalization.
-    # @return null if nothing founded, a Generalization instance otherwise.
+    # @return {Generalization} null if nothing founded, a Generalization instance otherwise.
     find_IsA_with_parent: (parentclass) ->
         return @links.find( (elt, index, arr) ->
             elt.has_parent(parentclass)
@@ -192,7 +201,7 @@ class UMLDiagram extends Diagram
     # 
     #   
     # @param hash_data {Hash} data information for creating the new {Class} instance.
-    # @return The new class
+    # @return {Class} The new class
     # @see Class
     # @see GUI#add_class
     add_class: (hash_data) ->
@@ -318,6 +327,10 @@ class UMLDiagram extends Diagram
             this.set_class_satisfiable(class_name)
         this)
 
+    # # Satisfiability
+    # Satifiability objects managent messages.
+    # ---
+    #  
     # Show this class as satisfiable.
     #
     # @param class_name {String} The class name.
@@ -344,19 +357,10 @@ class UMLDiagram extends Diagram
         if c?
             c.set_unsatisfiable(true, csstheme)
 
-    # Update a joint.Graph instance with the new cells.
-    actualizar_graph: () ->
-        if @graph != null
-            @graph.addCell(@cells_nuevas)
-            # remove the removed cells
-            @cells_deleted.forEach(
-                (elt,index,arr) ->
-                    elt.remove()
-            )                    
-        @cells_deleted = []
-        @cells_nuevas = []
-        
-
+    # # JSON Import/Export
+    # Messages for supporting JSON translation.
+    # ---
+    # 
     # Return a JSON representing the Diagram.
     #
     # We want to send only some things not all the JSON the object
@@ -434,6 +438,23 @@ class UMLDiagram extends Diagram
                         disjoint, covering)
                                 
         this)
+
+    # # Joint Graph Management
+    # ---
+    # 
+    # Update a joint.Graph instance with the new cells.
+    actualizar_graph: () ->
+        if @graph != null
+            @graph.addCell(@cells_nuevas)
+            # remove the removed cells
+            @cells_deleted.forEach(
+                (elt,index,arr) ->
+                    elt.remove()
+            )                    
+        @cells_deleted = []
+        @cells_nuevas = []
+
+
         
 exports = exports ? this
 
