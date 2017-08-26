@@ -1,6 +1,7 @@
 *~
 docs/doxygen/**
 docs/coffee/**
+docs/docco/**
 web-src/config/config.php
 web-src/js/*.js
 web-src/js/model/*.js
