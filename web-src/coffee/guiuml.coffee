@@ -38,17 +38,15 @@ class GUIUML extends GUIIMPL
         @isaoptions = new IsaOptionsView({el: $("#isaoptions")})
         @trafficlight = new TrafficLightsView({el: $("#trafficlight")})
         @owllinkinsert = new OWLlinkInsertView({el: $("#owllink_placer")})
-        @errorwidget = new ErrorWidgetView({el: $("#errorwidget_placer")})
         @importjsonwidget = new ImportJSONView({el: $("#importjsonwidget_placer")})
         @exportjsonwidget = new ExportJSONView({el: $("#exportjson_placer")})
 
         @serverconn = new ServerConnection( (jqXHR, status, text) ->
-            exports.gui.current_gui.show_error(status + ": " + text , jqXHR.responseText)
+            exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
         )
 
         $("#diagram-page").enhanceWithin()
         $("#details-page").enhanceWithin()
-        gui.set_current_instance(this);
 
     set_urlprefix: (str) -> @urlprefix = str
 
@@ -138,15 +136,6 @@ class GUIUML extends GUIIMPL
     add_subsumption: (class_parent_id, class_child_id, disjoint=false, covering=false) ->
         @diag.add_generalization(class_parent_id, class_child_id, disjoint, covering)
         this.set_selection_state()
-
-    #
-    # Report an error to the user.
-    #
-    # @param status {String} the status text.
-    # @param error {String} error message
-    show_error: (status, error) ->
-        $.mobile.loading("hide")
-        @errorwidget.show(status, error)
 
     #
     # Put the traffic light on green.

@@ -1,4 +1,4 @@
-# guiuml.coffee --
+# guieer.coffee --
 # Copyright (C) 2016 Giménez, Christian
 
 # This program is free software: you can redistribute it and/or modify
@@ -30,17 +30,15 @@ class GUIEER extends GUIIMPL
         @isaoptions = new IsaOptionsView({el: $("#isaoptions1")})
         @trafficlight = new TrafficLightsView({el: $("#trafficlight")})
         @owllinkinsert = new OWLlinkInsertView({el: $("#owllink_placer")})
-        @errorwidget = new ErrorWidgetView({el: $("#errorwidget_placer")})
         @importjsonwidget = new ImportJSONView({el: $("#importjsonwidget_placer1")})
         @exportjsonwidget = new ExportJSONView({el: $("#exportjson_placer")})
         
         @serverconn = new ServerConnection( (jqXHR, status, text) ->
-            exports.gui.current_gui.show_error(status + ": " + text , jqXHR.responseText)
+            exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
         )
                 
         $("#diagram-page").enhanceWithin()
         $("#details-page").enhanceWithin()
-        gui.set_current_instance(this);
         
     
 #    switch_gui : (gui_instance) ->
@@ -397,7 +395,6 @@ exports.gui.switch_to_erd = (gui_instance) ->
 	gui_instance.aux_gui = gui_instance.current_gui
 	gui_instance.current_gui = gui_instance.prev_gui
 	gui_instance.prev_gui = gui_instance.aux_gui
-	exports.gui.set_current_instance(gui_instance)    
 
 # @namespace gui
 #

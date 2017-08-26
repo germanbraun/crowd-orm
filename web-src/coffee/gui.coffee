@@ -24,10 +24,13 @@ class GUI
         @prev_gui = new GUIEER(@graph,@paper)
         @aux_gui = []
         gui.set_current_instance(this)
+
+        # Widgets that are the same for all type of GUIImpl.
         # Login
         @loginwidget = new LoginWidgetView({el: $("#loginwidget_placer")})
         # Save-Load
-
+        # Error reporting widget
+        @errorwidget = new ErrorWidgetView({el: $("#errorwidget_placer")})
 
     to_erd: () ->
         @current_gui.to_erd(this)
@@ -132,6 +135,16 @@ class GUI
     update_satisfiable: (data) ->
         @current_gui.update_satisfiable(data)
 
+    # Report an error to the user.
+    #
+    # @param status {String} the status text.
+    # @param error {String} error message
+    show_error: (status, error) ->
+        $.mobile.loading("hide")
+        @errorwidget.show(status, error)
+
+
+
 exports = exports ? this
 if exports.gui == undefined
     exports.gui = {}
@@ -139,7 +152,6 @@ if exports.gui == undefined
 exports.gui.gui_instance = null
 exports.gui.set_current_instance = (gui_instance) ->
     exports.gui.gui_instance = gui_instance
-
 
 
 # @namespace gui
@@ -154,4 +166,3 @@ exports.gui.switch_to_erd = () ->
     gui_instance.prev_gui = gui_instance.aux_gui
 
 exports.gui.GUI = GUI
-
