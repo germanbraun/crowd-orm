@@ -14,11 +14,15 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+exports = exports ? this
+exports.gui = exports.gui ? {}
+
+
 # @namespace gui
 #
 # Central GUI *do-it-all* class...
 #
-class GUIUML extends GUIIMPL  
+class GUIUML extends gui.GUIIMPL  
     
     # Create a GUIUML instance.
     #
@@ -28,7 +32,7 @@ class GUIUML extends GUIIMPL
         # @property [String] The URL prefix.
         @urlprefix = ""
         # @property [UMLDiagram] The user model diagram representation.
-        @diag = new UMLDiagram(@graph)
+        @diag = new model.uml.UMLDiagram(@graph)
         
         @state = gui.state_inst.selection_state()
         @crearclase = new CreateClassView({el: $("#crearclase")});
@@ -378,35 +382,5 @@ class GUIUML extends GUIIMPL
         $.mobile.loading("hide")
 
 
-exports = exports ? this
 
-if exports.gui == undefined
-    exports.gui = {}
-
-exports.gui.gui_instance = null
-exports.gui.set_current_instance = (gui_instance) ->
-    exports.gui.gui_instance = gui_instance
-
-#exports.gui.switch_to_erd = (gui_instance) ->
-#    gui_instance.aux_gui = gui_instance.current_gui
-#    gui_instance.current_gui = gui_instance.prev_gui
-#    gui_instance.prev_gui = gui_instance.aux_gui
-#    exports.gui.set_current_instance(gui_instance)
-
-# @namespace gui
-#
-# This is sooo bad, but the context of a $.post callback function
-# differs from the source caller class.
-#
-# We need to set a global guiinst variable with one GUI.gui instance.
-exports.gui.update_satisfiable = (data) ->
-    exports.gui.gui_instance.update_satisfiable(data)
-
-exports.gui.update_translation = (data) ->
-    exports.gui.gui_instance.update_translation(data)
-
-exports.gui.show_error = (jqXHR, status, text) ->
-    exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
-
-exports = exports ? this
 exports.gui.GUIUML = GUIUML

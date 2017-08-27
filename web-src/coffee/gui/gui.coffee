@@ -14,14 +14,18 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+exports = exports ? this
+exports.gui = exports.gui ? {}
+
+
 # @namespace gui
 #
 # Central GUI *do-it-all* class...
 #
 class GUI
     constructor: (@graph, @paper) ->
-        @current_gui = new GUIUML(@graph,@paper)
-        @prev_gui = new GUIEER(@graph,@paper)
+        @current_gui = new gui.GUIUML(@graph,@paper)
+        @prev_gui = new gui.GUIEER(@graph,@paper)
         @aux_gui = []
         gui.set_current_instance(this)
 
@@ -155,17 +159,31 @@ class GUI
 
 
 
-exports = exports ? this
-if exports.gui == undefined
-    exports.gui = {}
-
+# Current GUI instance.
+# 
+# An instance must be running!
+# 
+# Better use gui.set_current_instance()
+#
+# @see set_current_instance()
+# @namespace gui
 exports.gui.gui_instance = null
+
+# Set the current instance of the GUI class.
+#
+# This has nothing to do with the current language interface (GUIUML, GUIEER,
+# etc.).
+#
+# @param gui_instance {GUI} The running instance.
+# @namespace gui
 exports.gui.set_current_instance = (gui_instance) ->
     exports.gui.gui_instance = gui_instance
 
 
 # @namespace gui
 #
+# Switch to the ERD interface and diagram.
+# 
 # This is sooo bad, but the context of a $.post callback function
 # differs from the source caller class.
 #
@@ -174,5 +192,22 @@ exports.gui.switch_to_erd = () ->
     gui_instance.aux_gui = gui_instance.current_gui
     gui_instance.current_gui = gui_instance.prev_gui
     gui_instance.prev_gui = gui_instance.aux_gui
+
+# @namespace gui
+#
+# This is sooo bad, but the context of a $.post callback function
+# differs from the source caller class.
+#
+# We need to set a global guiinst variable with one GUI.gui instance.
+exports.gui.update_satisfiable = (data) ->
+    exports.gui.gui_instance.update_satisfiable(data)
+
+# @namespace gui
+exports.gui.update_translation = (data) ->
+    exports.gui.gui_instance.update_translation(data)
+
+# @namespace gui
+exports.gui.show_error = (jqXHR, status, text) ->
+    exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
 
 exports.gui.GUI = GUI

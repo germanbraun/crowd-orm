@@ -14,6 +14,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+exports = exports ? this
+exports.gui = exports.gui ? {}
+
+
 # @namespace gui
 #
 # Central GUI *do-it-all* class...
@@ -270,35 +274,6 @@ class GUIIMPL
     reset_all: () ->
 
 
-
-exports = exports ? this
-
-if exports.gui == undefined
-    exports.gui = {}
-
-exports.gui.gui_instance = null
-exports.gui.set_current_instance = (gui_instance) ->
-    exports.gui.gui_instance = gui_instance
-
-
-
-# @namespace gui
-#
-# This is sooo bad, but the context of a $.post callback function
-# differs from the source caller class.
-#
-# We need to set a global guiinst variable with one GUI.gui instance.
-exports.gui.update_satisfiable = (data) ->
-    exports.gui.gui_instance.update_satisfiable(data)
-
-exports.gui.update_translation = (data) ->
-    exports.gui.gui_instance.update_translation(data)
-
-exports.gui.show_error = (jqXHR, status, text) ->
-    exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
-
-exports = exports ? this
+        
 exports.gui.GUIIMPL = GUIIMPL
-#exports.gui.guiuml.GUIUML = GUIUML
-#exports.gui.guieer.GUIEER = GUIEER
 

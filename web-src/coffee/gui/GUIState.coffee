@@ -15,11 +15,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+exports = exports ? this
+exports.gui = exports.gui ? {}
+
 # Abstract class that helps determine how the interface
 # should respond to a user action depending on the current
 # state.
 #
 # @abstract
+# @namespace gui
 class State
     constructor: () ->
         @selectionstate_inst = new SelectionState()
@@ -41,7 +45,9 @@ class State
         return @isastate_inst
 
 # Selection state, the user can select some classes.
-class SelectionState extends State
+#
+# @namespace gui
+class SelectionState extends gui.State
     constructor: () ->
         
     on_cell_clicked: (cellView, event, x, y, gui_instance) ->
@@ -61,7 +67,9 @@ class SelectionState extends State
 
 # Association state, the user can select another class for
 # create an association between them.
-class AssociationState extends State
+#
+# @namespace gui
+class AssociationState extends gui.State
     constructor: () ->
         @cell_starter = null
         @mult = null
@@ -131,7 +139,9 @@ class AssociationState extends State
 
 # IsA state, the user can select another class for
 # create a generalization between them.
-class IsAState extends State
+#
+# @namespace gui
+class IsAState extends gui.State
     constructor: () ->
         this.reset()
 
@@ -159,11 +169,12 @@ class IsAState extends State
         this.reset()
 
                   
-        
-exports = exports ? this
-if exports.gui == undefined
-    exports.gui = {}
+
+# The current gui.State instance.
+#
+# @namespace gui
 exports.gui.state_inst = new State()
+
 exports.gui.SelectionState = SelectionState
 exports.gui.AssociationState = AssociationState
 exports.gui.IsAState = IsAState

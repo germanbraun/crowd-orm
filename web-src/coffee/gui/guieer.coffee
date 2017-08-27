@@ -14,14 +14,18 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+exports = exports ? this
+exports.gui = exports.gui ? {}
+
+
 # @namespace gui
 #
 # Central GUI *do-it-all* class...
 #
-class GUIEER extends GUIIMPL
+class GUIEER extends gui.GUIIMPL
     constructor: (@graph,@paper) ->
         @urlprefix = ""
-        @diag = new ERDiagram(@graph)
+        @diag = new model.eer.ERDiagram(@graph)
         @state = gui.state_inst.selection_state()
         @crearclase = new CreateClassView({el: $("#crearclase1")});
         @editclass = new EditClassView({el: $("#editclass1")})
@@ -379,37 +383,4 @@ class GUIEER extends GUIIMPL
     	this.change_to_details_page()
 
 
-
-
-
-exports = exports ? this
-
-if exports.gui == undefined
-    exports.gui = {}
-
-exports.gui.gui_instance = null
-exports.gui.set_current_instance = (gui_instance) ->
-    exports.gui.gui_instance = gui_instance
-
-exports.gui.switch_to_erd = (gui_instance) -> 
-	gui_instance.aux_gui = gui_instance.current_gui
-	gui_instance.current_gui = gui_instance.prev_gui
-	gui_instance.prev_gui = gui_instance.aux_gui
-
-# @namespace gui
-#
-# This is sooo bad, but the context of a $.post callback function
-# differs from the source caller class.
-#
-# We need to set a global guiinst variable with one GUI.gui instance.
-exports.gui.update_satisfiable = (data) ->
-    exports.gui.gui_instance.update_satisfiable(data)
-
-exports.gui.update_translation = (data) ->
-    exports.gui.gui_instance.update_translation(data)
-
-exports.gui.show_error = (jqXHR, status, text) ->
-    exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
-
-exports = exports ? this
 exports.gui.GUIEER = GUIEER
