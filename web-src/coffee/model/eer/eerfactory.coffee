@@ -22,7 +22,7 @@ exports.model.eer = exports.model.eer ? {}
 # ERD Factory for creating JointJS shapes representing a primitive in
 # its plugins.
 #
-# @namespace model
+# @namespace model.eer
 class ERDFactory extends model.Factory
    
     constructor: () ->

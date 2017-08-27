@@ -22,8 +22,8 @@ exports.model.eer = exports.model.eer ? {}
 # linking attributes to entities. Warning: @classes is defined as [class,attr]. We should consider
 # also [attr,entity]
 #
-# @namespace model
-class LinkAttrToEntity extends model.Link
+# @namespace model.eer
+class LinkAttrToEntity extends model.uml.Link
 	
     constructor: (@classes, name=null) ->
         super(@classes, name)

@@ -23,7 +23,7 @@ exports.model.eer = exports.model.eer ? {}
 #
 # An ER diagram representation.
 #
-# @namespace model
+# @namespace model.eer
 class ERDiagram extends model.Diagram
     #
     # @param [joint.Graph] graph
