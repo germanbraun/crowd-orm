@@ -5,5 +5,6 @@ docs/docco/**
 web-src/config/config.php
 web-src/js/*.js
 web-src/js/model/**
+web-src/js/gui/**
 tests/js/js/*.js
 run/**
