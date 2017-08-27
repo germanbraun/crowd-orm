@@ -11,15 +11,16 @@ require_once('template.php');
 
 	<script src="./js/csstheme.js"></script>
 	<script src="./js/backbone_views.js"></script>
-	<script src="./js/GUIState.js"></script>
 	<script src="./js/model.js"></script>
 	<script src="./js/interface.js"></script>
-	<script src="./js/gui.js"></script>
-    	<script src="./js/login.js"></script>
-	<script src="./js/guiimpl.js"></script>
-	<script src="./js/guiorm.js"></script>
-	<script src="./js/guiuml.js"></script>
-	<script src="./js/guieer.js"></script>
+	<script src="./js/gui/gui.js"></script>
+   	<script src="./js/login.js"></script>
+	<script src="./js/gui/guiimpl.js"></script>
+	<script src="./js/gui/guiorm.js"></script>
+	<script src="./js/gui/guiuml.js"></script>
+	<script src="./js/gui/guieer.js"></script>
+   	<script src="./js/gui/GUIState.js"></script>
+
 	
 
 	<?php if (array_key_exists('prueba', $_GET) && $_GET['prueba'] == 1){ ?>

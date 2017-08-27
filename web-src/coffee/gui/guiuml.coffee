@@ -35,15 +35,15 @@ class GUIUML extends gui.GUIIMPL
         @diag = new model.uml.UMLDiagram(@graph)
         
         @state = gui.state_inst.selection_state()
-        @crearclase = new CreateClassView({el: $("#crearclase")});
-        @editclass = new EditClassView({el: $("#editclass")})
-        @classoptions = new ClassOptionsView({el: $("#classoptions")})
-        @relationoptions = new RelationOptionsView({el: $("#relationoptions")})
-        @isaoptions = new IsaOptionsView({el: $("#isaoptions")})
-        @trafficlight = new TrafficLightsView({el: $("#trafficlight")})
-        @owllinkinsert = new OWLlinkInsertView({el: $("#owllink_placer")})
-        @importjsonwidget = new ImportJSONView({el: $("#importjsonwidget_placer")})
-        @exportjsonwidget = new ExportJSONView({el: $("#exportjson_placer")})
+        @crearclase = new views.CreateClassView({el: $("#crearclase")});
+        @editclass = new views.EditClassView({el: $("#editclass")})
+        @classoptions = new views.ClassOptionsView({el: $("#classoptions")})
+        @relationoptions = new views.RelationOptionsView({el: $("#relationoptions")})
+        @isaoptions = new views.IsaOptionsView({el: $("#isaoptions")})
+        @trafficlight = new views.TrafficLightsView({el: $("#trafficlight")})
+        @owllinkinsert = new views.OWLlinkInsertView({el: $("#owllink_placer")})
+        @importjsonwidget = new views.ImportJSONView({el: $("#importjsonwidget_placer")})
+        @exportjsonwidget = new views.ExportJSONView({el: $("#exportjson_placer")})
 
         @serverconn = new ServerConnection( (jqXHR, status, text) ->
             exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)

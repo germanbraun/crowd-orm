@@ -27,15 +27,15 @@ class GUIEER extends gui.GUIIMPL
         @urlprefix = ""
         @diag = new model.eer.ERDiagram(@graph)
         @state = gui.state_inst.selection_state()
-        @crearclase = new CreateClassView({el: $("#crearclase1")});
-        @editclass = new EditClassView({el: $("#editclass1")})
-        @classoptions = new ClassOptionsView({el: $("#classoptions1")})
-        @relationoptions = new RelationOptionsView({el: $("#relationoptions1")})
-        @isaoptions = new IsaOptionsView({el: $("#isaoptions1")})
-        @trafficlight = new TrafficLightsView({el: $("#trafficlight")})
-        @owllinkinsert = new OWLlinkInsertView({el: $("#owllink_placer")})
-        @importjsonwidget = new ImportJSONView({el: $("#importjsonwidget_placer1")})
-        @exportjsonwidget = new ExportJSONView({el: $("#exportjson_placer")})
+        @crearclase = new views.CreateClassView({el: $("#crearclase1")});
+        @editclass = new views.EditClassView({el: $("#editclass1")})
+        @classoptions = new views.ClassOptionsView({el: $("#classoptions1")})
+        @relationoptions = new views.RelationOptionsView({el: $("#relationoptions1")})
+        @isaoptions = new views.IsaOptionsView({el: $("#isaoptions1")})
+        @trafficlight = new views.TrafficLightsView({el: $("#trafficlight")})
+        @owllinkinsert = new views.OWLlinkInsertView({el: $("#owllink_placer")})
+        @importjsonwidget = new views.ImportJSONView({el: $("#importjsonwidget_placer1")})
+        @exportjsonwidget = new views.ExportJSONView({el: $("#exportjson_placer")})
         
         @serverconn = new ServerConnection( (jqXHR, status, text) ->
             exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)

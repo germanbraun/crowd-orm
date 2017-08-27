@@ -31,10 +31,10 @@ class GUI
 
         # Widgets that are the same for all type of GUIImpl.
         # Login
-        @loginwidget = new LoginWidgetView({el: $("#loginwidget_placer")})
+        @loginwidget = new views.LoginWidgetView({el: $("#loginwidget_placer")})
         # Save-Load
         # Error reporting widget
-        @errorwidget = new ErrorWidgetView({el: $("#errorwidget_placer")})
+        @errorwidget = new views.ErrorWidgetView({el: $("#errorwidget_placer")})
 
     to_erd: () ->
         @current_gui.to_erd(this)
