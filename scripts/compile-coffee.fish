@@ -93,7 +93,7 @@ function compile_views --description="Compile only the backbone's views and merg
 	set_color --bold white
 	echo "Compiling Backbone's views files into JS"
 	set_color normal
-	coffee -b --output web-src/js/views --compile web-src/coffee/views
+	coffee --output web-src/js/views --compile web-src/coffee/views
 	merge_views	
 end
 
@@ -105,6 +105,41 @@ function compile_tests --description="Compile tests scripts"
 	set_color normal
 	coffee --output tests/js/js --compile tests/js/coffee	
 end
+
+function compile_gui --description="Compile the GUI namespace"
+	set_color --bold white
+	echo "Compiling GUI"
+	set_color normal
+	coffee --output web-src/js/gui --compile web-src/coffee/gui
+	merge_gui
+end
+
+function merge_gui --description="Compiles GUI scripts"
+
+	set order gui guiimpl guiuml GUIState associationstate isastate selectionstate
+	
+	set_color --bold white
+	echo "Merging GUI files"
+	set_color normal
+	
+	echo "Removing previous output"
+	if test -f web-src/js/gui.js
+		rm -v web-src/js/gui.js
+	end
+
+	echo "Merging"
+	for js in $order
+		echo "Merging $js into web-src/js/gui.js"
+		cat web-src/js/gui/$js.js >> web-src/js/gui.js
+		rm -v web-src/js/gui/$js.js
+	end
+
+	set_color red
+	echo "Files compiled but not merged:"
+	set_color white
+	ls web-src/js/gui/
+end
+
 
 
 echo
@@ -126,6 +161,7 @@ echo "__________________________________________________"
 
 if test -z "$argv[1]"
 	compile_common
+	merge_gui
 	merge_model
 	merge_views
 	compile_tests

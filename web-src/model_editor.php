@@ -13,13 +13,8 @@ require_once('template.php');
 	<script src="./js/backbone_views.js"></script>
 	<script src="./js/model.js"></script>
 	<script src="./js/interface.js"></script>
-	<script src="./js/gui/gui.js"></script>
    	<script src="./js/login.js"></script>
-	<script src="./js/gui/guiimpl.js"></script>
-	<script src="./js/gui/guiorm.js"></script>
-	<script src="./js/gui/guiuml.js"></script>
-	<script src="./js/gui/guieer.js"></script>
-   	<script src="./js/gui/GUIState.js"></script>
+   	<script src="./js/gui.js"></script>
 
 	
 
