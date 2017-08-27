@@ -130,4 +130,4 @@ Link.get_new_name = () ->
     return "r" + Link.name_number
 
 
-exports.model.Link = Link
+exports.model.uml.Link = Link

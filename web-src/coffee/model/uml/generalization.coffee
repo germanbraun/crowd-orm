@@ -21,7 +21,7 @@ exports.model.uml = exports.model.uml ? {}
 # A generalization link.
 #
 # @namespace model
-class Generalization extends model.Link
+class Generalization extends model.uml.Link
 
     # @param parent_class {Class} The parent class.
     # @param classes {Array<Class>} An array of child classes.

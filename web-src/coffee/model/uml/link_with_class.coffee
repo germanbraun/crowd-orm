@@ -24,14 +24,14 @@ exports.model.uml = exports.model.uml ? {}
 # middle of the link with to the association class; the association class, which
 # represent the association and is at the middle of the association link.
 #
-# @namespace model
-class LinkWithClass extends model.Link
+# @namespace model.uml
+class LinkWithClass extends model.uml.Link
    
     constructor: (@classes, name) ->
         super(@classes, name)
         @mult = [null,null]
 
-        @assoc_class = new model.Class(name)
+        @assoc_class = new model.uml.Class(name)
         @j_assoc_link = null
         # Easy access to the assoc_class.get_joint().
         @j_assoc_class = null
@@ -118,4 +118,4 @@ class LinkWithClass extends model.Link
         return json
 
 
-exports.model.LinkWithClass = LinkWithClass
+exports.model.uml.LinkWithClass = LinkWithClass
