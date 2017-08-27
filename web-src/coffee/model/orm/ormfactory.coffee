@@ -14,34 +14,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-uml = joint.shapes.uml
-erd = joint.shapes.erd
+orm = joint.shapes.orm
 
-# *Abstract class.*
-#
-# Factory class for defining common behaviour of all JointJS plugins primitives.
-class Factory
-    constructor: () ->
+exports = exports ? this
+exports.model = exports.model ? {}
 
-    # Create a class representation.
-    #
-    # @param [String] name the class name.
-    # @return A JointJS class model.
-    create_class: (name) ->
-
-    # Create an association between two classes.
-    #
-    # @param [String] class_a_id the JointJS id of the first class.
-    # @param [String] class_b_id the JointJS id of the second class.
-    # @param [String] name the association name or tag.
-    #
-    # @return A JointJS link model.
-    create_association: (class_a_id, class_b_id, name = null ) ->
-        
-
-# UML Factory for creating JointJS shapes representing a primitive in
+# ORM Factory for creating JointJS shapes representing a primitive in
 # its plugins.
-class UMLFactory extends Factory
+#
+# @namespace model
+class ORMFactory extends model.Factory
    
     constructor: () ->
 
@@ -50,24 +32,25 @@ class UMLFactory extends Factory
     #     Javascript hash. See the JointJS documentation and demos.
     # 
     # @return [joint.shapes.uml.Class] 
-    create_class: (class_name, css_class=null) ->
+    create_class: (class_name, attribs, methods, css_class=null) ->
+        console.log(attribs)
+        console.log(methods)
         params =
             position: {x: 20, y: 20}
-            size: {width: 100, height: 50}
+            size: {width: 220, height: 100}
             name: class_name
-            attributes: []
-            methods: []
+            attributes: attribs
+            methods: methods
             attrs:
                 '.uml-class-name-rect':
-                    fill: '#ffffff'
-                    stroke: '#000000'
+                    fill: '#ff8450'
+                    stroke: '#fff'
                 '.uml-class-name-text':
                     fill: '#000000'                    
-
         if css_class?
             params.attrs = css_class
 
-        newclass = new uml.Class( params )
+        newclass = new model.Class( params )
             
         return newclass
 
@@ -162,7 +145,7 @@ class UMLFactory extends Factory
                 text:
                     text: legend
                     fill: '#0000ff'
-                rect:     
+                rect: 	
                     fill: '#ffffff'
                     
         ])
@@ -176,7 +159,7 @@ class UMLFactory extends Factory
  #                   attrs:
  #                       text: {text: legend, fill: '#0000ff'},
  #                       rect: {fill: "#ffffff"}])
- #                )
+ #				)
 
 
     # Create an association class.
@@ -190,56 +173,16 @@ class UMLFactory extends Factory
     # the UML association and the UML association class).
     #
     # @return [joint.dia.Link] a Joint Link object.
-    create_association_link: (css_assoc_links = {"stroke-dasharray": "5,5"}) ->
+#    create_association_link: (css_assoc_links = {"stroke-dasharray": "5,5"}) ->
         # For some misterious reason, you have to add some joint elements ids
-        # on source and target. If not it will not associate the link with the
+        # on source and target. If not it will not as   params.attrs = css_class sociate the link with the
         # Element provided, instead it will still points to (10,10) coordinates.
-        
-        link = new joint.dia.Link(
-            source: {x: 10, y: 10},
-            target: {x: 100, y: 100},
-            attrs: css_assoc_links
-        )
+#        link = new joint.dia.Link(
+#            source: {x: 10, y: 10},
+#            target: {x: 100, y: 100},
+#            attrs: css_assoc_links
+#        )
+#        return link
 
-        return link
-
-
-# @todo ERDFactory is not yet implemented. This factory is beyond the scope for this prototype.
-class ERDFactory extends Factory
-    
-    constructor: () ->
-    
-    # @overload create_class(class_name, css_class=null)
-    #     @param [hash] css_class A CSS class definition in a
-    #     Javascript hash. See the JointJS documentation and demos.
-    # 
-    # @return [joint.shapes.erd.Entity] 
-    create_class: (class_name, css_class=null) ->
-        params =
-            position: {x: 20, y: 20}
-            size: {width: 100, height: 50}
-            name: class_name
-            attributes: []
-            methods: []
-            attrs:
-                '.uml-class-name-rect':
-                    fill: '#ffffff'
-                    stroke: '#000000'
-                '.uml-class-name-text':
-                    fill: '#000000'                    
-
-        if css_class?
-            params.attrs = css_class
-
-        newentity = new erd.Entity( params )
-            
-        return newentity
-        
-
-# If exports doesn't exists, use "this".
-exports = exports ? this
-
-exports.Factory = Factory
-exports.UMLFactory = UMLFactory
-exports.ERDFactory = ERDFactory
+exports.model.ORMFactory = ORMFactory
 

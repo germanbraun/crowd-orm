@@ -15,9 +15,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 erd = joint.shapes.erd       
 
+exports = exports ? this
+exports.model = exports.model ? {}
+exports.model.eer = exports.model.eer ? {}
+
 # ERD Factory for creating JointJS shapes representing a primitive in
 # its plugins.
-class ERDFactory extends Factory
+#
+# @namespace model
+class ERDFactory extends model.Factory
    
     constructor: () ->
 
@@ -25,27 +31,89 @@ class ERDFactory extends Factory
     #     @param [hash] css_class A CSS class definition in a
     #     Javascript hash. See the JointJS documentation and demos.
     # 
-    # @return [joint.shapes.uml.Class] 
+    # @return [joint.shapes.erd.Entity] 
     create_class: (class_name, css_class=null) ->
         params =
             position: {x: 20, y: 20}
-            size: {width: 100, height: 50}
-            name: class_name
-            attributes: []
-            methods: []
-            attrs:
-                '.uml-class-name-rect':
-                    fill: '#ffffff'
-                    stroke: '#000000'
-                '.uml-class-name-text':
-                    fill: '#000000'                    
-
-        if css_class?
-            params.attrs = css_class
-
-        newclass = new uml.Class( params )
+            attrs: {
+            	text: {
+            		fill: "#ffffff",
+            		text: class_name,
+            		'letter-spacing': 0,
+            		style: { 'text-shadow': '1px 0 1px #333333' }
+            	},
+            	'.outer, .inner': {
+            		fill: '#31d0c6',
+            		stroke: 'none',
+            		filter: { name: 'dropShadow',  args: { dx: 0.5, dy: 2, blur: 2, color: '#333333' }}
+            		}	
+            }
+            
+#       	if css_class?
+#       		params.attrs = css_class
+       	
+       	newclass = new erd.Entity( params )
             
         return newclass
+
+    create_attribute: (attr_name, attr_type, css_class=null) ->
+    	
+    	if attr_type == 'key'
+    		   newattribute = new erd.Key({position: {x:200, y:10}, attrs: {text: {fill: '#ffffff', text: attr_name}}})
+        else
+       	      newattribute = new erd.Normal({position: {x:150, y:150}, attrs: {text: {fill: '#ffffff', text: attr_name,  style: { 'text-shadow': '1px 0 1px #333333' }}}})
+
+                                   
+        return newattribute                
+
+    create_link_attribute: (class_name, attr_name) ->
+    	
+        markup_style = ['<path class="connection" stroke="black" d="M 0 0 0 0"/>','<path class="connection-wrap" d="M 0 0 0 0"/>','<g class="labels"/>','<g class="marker-vertices"/>','<g class="marker-arrowheads"/>']
+        myLink = new erd.Line({markup: markup_style.join(''), source: {id: attr_name}, target: {id: class_name}})
+        return myLink
+
+    # @param css_links {Hash} A Hash representing the CSS. See JointJS documentation for the attrs attribute.
+    # @param disjoint {Boolean} Draw a "disjoint" legend.
+    # @param covering {Boolean} Draw a "covering" legend.
+    # @return [joint.shapes.uml.Generalization]
+    create_generalization: (class_a_id, class_b_id, css_links = null, disjoint=false, covering=false) ->
+        labels = []
+        
+        isaattr = { text: {text: 'ISA', fill: '#ffffff','letter-spacing': 0,style: { 'text-shadow': '1px 0 1px #333333' }}, polygon: {fill: '#fdb664',stroke: 'none',filter: { name: 'dropShadow',  args: { dx: 0, dy: 2, blur: 1, color: '#333333' }}}}
+                  
+        link = new erd.ISA({position: { x: 125, y: 200 },attrs: isaattr})
+        
+        if disjoint || covering
+            legend = "{"
+            if disjoint then legend = legend + "disjoint"
+            if covering
+                if legend != ""
+                    legend = legend + ","
+                legend = legend + "covering"
+            legend = legend + "}"
+
+        labels = labels.concat([
+            position: 0.8
+            attrs:
+                text:
+                    text: legend
+                    fill: '#0000ff'
+                rect: 	
+                    fill: '#ffffff'
+                    
+        ])
+
+        link.set({labels: labels})
+        return link
+
+ #       link.set(
+ #               labels: ([
+ #                   position: 0.8,
+ #                   attrs:
+ #                       text: {text: legend, fill: '#0000ff'},
+ #                       rect: {fill: "#ffffff"}])
+ #				)
+
 
     # Create an association links.
     # 
@@ -110,50 +178,6 @@ class ERDFactory extends Factory
         link.set({labels: labels})
         return link
 
-    # @param css_links {Hash} A Hash representing the CSS. See JointJS documentation for the attrs attribute.
-    # @param disjoint {Boolean} Draw a "disjoint" legend.
-    # @param covering {Boolean} Draw a "covering" legend.
-    # @return [joint.shapes.uml.Generalization]
-    create_generalization: (class_a_id, class_b_id, css_links = null, disjoint=false, covering=false) ->
-        labels = []
-        
-        link = new joint.shapes.uml.Generalization(
-            source: {id: class_b_id}
-            target: {id: class_a_id}
-            attrs: css_links
-        )
-
-        if disjoint || covering
-            legend = "{"
-            if disjoint then legend = legend + "disjoint"
-            if covering
-                if legend != ""
-                    legend = legend + ","
-                legend = legend + "covering"
-            legend = legend + "}"
-
-        labels = labels.concat([
-            position: 0.8
-            attrs:
-                text:
-                    text: legend
-                    fill: '#0000ff'
-                rect:     
-                    fill: '#ffffff'
-                    
-        ])
-
-        link.set({labels: labels})
-        return link
-
- #       link.set(
- #               labels: ([
- #                   position: 0.8,
- #                   attrs:
- #                       text: {text: legend, fill: '#0000ff'},
- #                       rect: {fill: "#ffffff"}])
- #                )
-
 
     # Create an association class.
     # 
@@ -178,11 +202,7 @@ class ERDFactory extends Factory
         )
         
         return link
+    
 
-        
-
-# If exports doesn't exists, use "this".
-exports = exports ? this
-
-exports.ERDFactory = ERDFactory
+exports.model.eer.ERDFactory = ERDFactory
 

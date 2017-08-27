@@ -14,7 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
+exports = exports ? this
+exports.views = exports.views ? this
 
 
 ExportJSONView = Backbone.View.extend(
@@ -39,6 +40,6 @@ ExportJSONView = Backbone.View.extend(
 
         
 
-exports = exports ? this
-exports.ExportJSONView = ExportJSONView
+
+exports.views.ExportJSONView = ExportJSONView
 

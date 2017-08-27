@@ -16,10 +16,15 @@
 
 # {UMLFactory} = require './factories'
 
+exports = exports ? this
+exports.model = exports.model ? {}
+exports.model.uml = exports.model.uml ? {}
+
 #
 # A UML diagram representation.
-# 
-class UMLDiagram extends Diagram
+#
+# @namespace model.uml
+class UMLDiagram extends model.Diagram
     #
     # @param [joint.Graph] graph
     # 
@@ -32,7 +37,11 @@ class UMLDiagram extends Diagram
         # diagram for apply.
         @cells_deleted = []
         
-        @factory = new UMLFactory()
+        @factory = new model.uml.UMLFactory()
+
+        # Add events to the graph
+        if @graph?
+            this._add_events()
 
     get_factory: () ->
         return @factory
@@ -43,6 +52,14 @@ class UMLDiagram extends Diagram
         return @graph
 
     set_graph: (@graph) ->
+        this._add_events()
+
+    # Add events to the joint.Graph instance assigned to @graph
+    _add_events: () =>
+        @graph.on('remove', (event) =>
+            if event.attributes.type == 'link'
+                link = this.delete_link_by_id(event.id)
+        )
 
     get_clases: () ->
         return @clases
@@ -52,21 +69,35 @@ class UMLDiagram extends Diagram
 
     get_clase: (nombre) ->
 
+    # # Find Primitive Messages
+    # ---
+    #
+    # @param name {String}
+    # @return {Class} The first class founded that have the given name.
     find_class_by_name: (name) ->
         return @clases.find( (elt, index, arr) ->
             elt.get_name() == name
         )
 
+    # @param classid {String}
+    # @return {Class} The class with the provided ClassID
     find_class_by_classid: (classid) ->
         return @clases.find( (elt,index,arr) ->
             elt.has_classid(classid)
+        )
+
+    # @param linkid {String}
+    # @return {Link} The MyModel's link.
+    find_link_by_id: (linkid) ->
+        @links.find( (elt, index, arr) ->
+            elt.has_classid(linkid)
         )
 
     # Find a generalization that contains the given parent
     #
     # @param parentclass {Class} A Class instance that is the parent of the
     #     generalization.
-    # @return null if nothing founded, a Generalization instance otherwise.
+    # @return {Generalization} null if nothing founded, a Generalization instance otherwise.
     find_IsA_with_parent: (parentclass) ->
         return @links.find( (elt, index, arr) ->
             elt.has_parent(parentclass)
@@ -122,7 +153,7 @@ class UMLDiagram extends Diagram
     add_generalization_objs: (class_parent, class_child, disjoint=false, covering=false) ->
         gen = this.find_IsA_with_parent(class_parent)
         if (gen is undefined) || (gen is null)
-            gen = new Generalization(class_parent, [class_child])
+            gen = new model.uml.Generalization(class_parent, [class_child])
             gen.set_disjoint(disjoint)
             gen.set_covering(covering)
             this.agregar_link(gen)
@@ -141,7 +172,7 @@ class UMLDiagram extends Diagram
         class_a = this.find_class_by_classid(class_a_id)
         class_b = this.find_class_by_classid(class_b_id)
         
-        newassoc = new Link([class_a, class_b], name)
+        newassoc = new model.uml.Link([class_a, class_b], name)
         if (mult isnt null)
             newassoc.set_mult(mult)
         if (roles isnt null)
@@ -153,7 +184,7 @@ class UMLDiagram extends Diagram
         class_a = this.find_class_by_classid(class_a_id)
         class_b = this.find_class_by_classid(class_b_id)
         
-        newassoc = new LinkWithClass([class_a, class_b], name)
+        newassoc = new model.uml.LinkWithClass([class_a, class_b], name)
         if (mult isnt null)
             newassoc.set_mult(mult)
         if (roles isnt null)
@@ -175,16 +206,16 @@ class UMLDiagram extends Diagram
     # 
     #   
     # @param hash_data {Hash} data information for creating the new {Class} instance.
-    # @return The new class
+    # @return {Class} The new class
     # @see Class
     # @see GUI#add_class
     add_class: (hash_data) ->
-        if hash_data.attrs == undefined
+        if ! hash_data.attrs?
             hash_data.attrs = []
-        if hash_data.methods == undefined
+        if ! hash_data.methods?
             hash_data.methods = []
         
-        newclass = new Class(hash_data.name, hash_data.attrs, hash_data.methods)
+        newclass = new model.uml.Class(hash_data.name, hash_data.attrs, hash_data.methods)
         this.agregar_clase(newclass)
         return newclass
 
@@ -213,7 +244,6 @@ class UMLDiagram extends Diagram
         @links.filter( (link, indx, arr) ->
             link.is_associated(c)
         this)
-        
     
     # Remove all links associated to the given class.
     #
@@ -228,6 +258,14 @@ class UMLDiagram extends Diagram
         c = this.find_class_by_classid(classid)
         if c != null
             c.set_name(name)
+
+    # Remove the link by its Joint CellID from the diagram.
+    #
+    # @param linkid [string] the Joint CellID.
+    delete_link_by_id: (linkid) ->
+        link = this.find_link_by_id(linkid)
+        if link?
+            this.delete_link(link)
 
     # Remove the given link from the diagram.
     # 
@@ -294,6 +332,10 @@ class UMLDiagram extends Diagram
             this.set_class_satisfiable(class_name)
         this)
 
+    # # Satisfiability
+    # Satifiability objects managent messages.
+    # ---
+    #  
     # Show this class as satisfiable.
     #
     # @param class_name {String} The class name.
@@ -320,19 +362,10 @@ class UMLDiagram extends Diagram
         if c?
             c.set_unsatisfiable(true, csstheme)
 
-    # Update a joint.Graph instance with the new cells.
-    actualizar_graph: () ->
-        if @graph != null
-            @graph.addCell(@cells_nuevas)
-            # remove the removed cells
-            @cells_deleted.forEach(
-                (elt,index,arr) ->
-                    elt.remove()
-            )                    
-        @cells_deleted = []
-        @cells_nuevas = []
-        
-
+    # # JSON Import/Export
+    # Messages for supporting JSON translation.
+    # ---
+    # 
     # Return a JSON representing the Diagram.
     #
     # We want to send only some things not all the JSON the object
@@ -410,7 +443,22 @@ class UMLDiagram extends Diagram
                         disjoint, covering)
                                 
         this)
-        
-exports = exports ? this
 
-exports.UMLDiagram = UMLDiagram
+    # # Joint Graph Management
+    # ---
+    # 
+    # Update a joint.Graph instance with the new cells.
+    actualizar_graph: () ->
+        if @graph != null
+            @graph.addCell(@cells_nuevas)
+            # remove the removed cells
+            @cells_deleted.forEach(
+                (elt,index,arr) ->
+                    elt.remove()
+            )                    
+        @cells_deleted = []
+        @cells_nuevas = []
+
+
+        
+exports.model.uml.UMLDiagram = UMLDiagram

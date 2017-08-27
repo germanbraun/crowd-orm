@@ -65,8 +65,8 @@ window.onload = () ->
     # Create a first example class
 
  #UML mode
-    newclass = new Class('Person',["dni : String","firstname : String", "surname : String", "birthdate : Date"],[])
-    newclass1 = new Class('Student',["id : String", "enrolldate : Date"],[])
+    newclass = new model.uml.Class('Person',["dni : String","firstname : String", "surname : String", "birthdate : Date"],[])
+    newclass1 = new model.uml.Class('Student',["id : String", "enrolldate : Date"],[])
     console.log(newclass)
     guiinst.add_object_type(newclass)
     guiinst.add_object_type(newclass1)

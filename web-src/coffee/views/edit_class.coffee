@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+exports = exports ? this
+exports.views = exports.views ? this
 
 
 EditClassView = Backbone.View.extend(
@@ -36,7 +38,7 @@ EditClassView = Backbone.View.extend(
         viewpos = graph.getCell(@classid).findView(paper).getBBox()
 
         this.$el.css(
-            top: viewpos.y,
+            top: viewpos.y + 50,
             left: viewpos.x,
             position: 'absolute',
             'z-index': 1
@@ -58,6 +60,5 @@ EditClassView = Backbone.View.extend(
 )
         
 
-exports = exports ? this
-exports.EditClassView = EditClassView
+exports.views.EditClassView = EditClassView
 

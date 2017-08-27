@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+exports = exports ? this
+exports.views = exports.views ? this
+
 
 # Provides elements and events needed for displaying the interface for
 # creating a new class.
@@ -58,14 +61,22 @@ CreateClassView = Backbone.View.extend(
         # Event handler for translate diagram to OWLlink using Ajax
         # and the api/translate/berardi.php translator URL.
         translate_owllink: (event) ->
-            guiinst.translate_owllink()
+            syntax = this.get_translation_format()
+            strategy = this.get_translation_strategy()
+            gui.gui_instance.translate_formal(strategy, syntax)
 
-        # Which is the current translation format selected by the
+        # Which is the current translation syntax format selected by the
         # user?
         #
         # @return [String] "html", "owllink", etc.
         get_translation_format: () ->
             $("#format_select")[0].value
+
+        # Which is the current strategy the user selected?
+        # 
+        # @return {String} "berardi", "crowd", etc.
+        get_translation_strategy: () ->
+            $("#strategy_select")[0].value
 
         insert_owllink: () ->
             guiinst.show_insert_owllink()
@@ -84,5 +95,4 @@ CreateClassView = Backbone.View.extend(
 
         
 
-exports = exports ? this
-exports.CreateClassView = CreateClassView
+exports.views.CreateClassView = CreateClassView

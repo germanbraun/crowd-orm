@@ -1,4 +1,4 @@
-# guiuml.coffee --
+# guieer.coffee --
 # Copyright (C) 2016 Giménez, Christian
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,33 +14,35 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+exports = exports ? this
+exports.gui = exports.gui ? {}
+
+
 # @namespace gui
 #
 # Central GUI *do-it-all* class...
 #
-class GUIEER extends GUIIMPL
+class GUIEER extends gui.GUIIMPL
     constructor: (@graph,@paper) ->
         @urlprefix = ""
-        @diag = new ERDiagram(@graph)
-        @state = gui.state_inst.selection_state()
-        @crearclase = new CreateClassView({el: $("#crearclase1")});
-        @editclass = new EditClassView({el: $("#editclass1")})
-        @classoptions = new ClassOptionsView({el: $("#classoptions1")})
-        @relationoptions = new RelationOptionsView({el: $("#relationoptions1")})
-        @isaoptions = new IsaOptionsView({el: $("#isaoptions1")})
-        @trafficlight = new TrafficLightsView({el: $("#trafficlight")})
-        @owllinkinsert = new OWLlinkInsertView({el: $("#owllink_placer")})
-        @errorwidget = new ErrorWidgetView({el: $("#errorwidget_placer")})
-        @importjsonwidget = new ImportJSONView({el: $("#importjsonwidget_placer1")})
-        @exportjsonwidget = new ExportJSONView({el: $("#exportjson_placer")})
+        @diag = new model.eer.ERDiagram(@graph)
+        @state = gui.get_state().selection_state()
+        @crearclase = new views.CreateClassView({el: $("#crearclase1")});
+        @editclass = new views.EditClassView({el: $("#editclass1")})
+        @classoptions = new views.ClassOptionsView({el: $("#classoptions1")})
+        @relationoptions = new views.RelationOptionsView({el: $("#relationoptions1")})
+        @isaoptions = new views.IsaOptionsView({el: $("#isaoptions1")})
+        @trafficlight = new views.TrafficLightsView({el: $("#trafficlight")})
+        @owllinkinsert = new views.OWLlinkInsertView({el: $("#owllink_placer")})
+        @importjsonwidget = new views.ImportJSONView({el: $("#importjsonwidget_placer1")})
+        @exportjsonwidget = new views.ExportJSONView({el: $("#exportjson_placer")})
         
         @serverconn = new ServerConnection( (jqXHR, status, text) ->
-            exports.gui.current_gui.show_error(status + ": " + text , jqXHR.responseText)
+            exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
         )
                 
         $("#diagram-page").enhanceWithin()
         $("#details-page").enhanceWithin()
-        gui.set_current_instance(this);
         
     
 #    switch_gui : (gui_instance) ->
@@ -381,38 +383,4 @@ class GUIEER extends GUIIMPL
     	this.change_to_details_page()
 
 
-
-
-
-exports = exports ? this
-
-if exports.gui == undefined
-    exports.gui = {}
-
-exports.gui.gui_instance = null
-exports.gui.set_current_instance = (gui_instance) ->
-    exports.gui.gui_instance = gui_instance
-
-exports.gui.switch_to_erd = (gui_instance) -> 
-	gui_instance.aux_gui = gui_instance.current_gui
-	gui_instance.current_gui = gui_instance.prev_gui
-	gui_instance.prev_gui = gui_instance.aux_gui
-	exports.gui.set_current_instance(gui_instance)    
-
-# @namespace gui
-#
-# This is sooo bad, but the context of a $.post callback function
-# differs from the source caller class.
-#
-# We need to set a global guiinst variable with one GUI.gui instance.
-exports.gui.update_satisfiable = (data) ->
-    exports.gui.gui_instance.update_satisfiable(data)
-
-exports.gui.update_translation = (data) ->
-    exports.gui.gui_instance.update_translation(data)
-
-exports.gui.show_error = (jqXHR, status, text) ->
-    exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
-
-exports = exports ? this
 exports.gui.GUIEER = GUIEER

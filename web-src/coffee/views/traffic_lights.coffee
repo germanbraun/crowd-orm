@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+exports = exports ? this
+exports.views = exports.views ? this
+
 
 TrafficLightsView = Backbone.View.extend(
     initialize: () ->
@@ -57,5 +60,4 @@ TrafficLightsView = Backbone.View.extend(
 )
 
 
-exports = exports ? this
-exports.TrafficLightsView = TrafficLightsView
+exports.views.TrafficLightsView = TrafficLightsView

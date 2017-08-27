@@ -18,14 +18,19 @@
 QUnit.test( "diag.to_json", ( assert ) ->
     expected =
         classes: [
-            name: "hi world"
+            name: "hi world",
+            attrs: [],
+            methods: [],
+            position:
+                x: 20,
+                y: 20
             ]
         links: []
 
     # expected = JSON.stringify(expected)
         
-    diag = new Diagram();
-    diag.agregar_clase(new Class("hi world"))
+    diag = new model.uml.UMLDiagram();
+    diag.agregar_clase(new model.uml.Class("hi world"))
     
     # actual = JSON.stringify(diag.to_json())
     actual = diag.to_json()
@@ -36,24 +41,36 @@ QUnit.test( "diag.to_json", ( assert ) ->
 QUnit.test( "diag.to_json with links", ( assert ) ->
     expected =
         classes: [
-            {name: "Person"},
-            {name: "Cellphones"}
+            {name: "Person",
+            attrs: [],
+            methods: [],
+            position:
+                x: 20,
+                y: 20},
+            {name: "Cellphones",
+            attrs: [],
+            methods: [],
+            position:
+                x: 20,
+                y: 20}
             ]
         links: [{
             classes: ["Person", "Cellphones"],
             multiplicity: ["1..1", "1..*"],
-            name: "",
+            roles: [null, null],
+            name: "role",
             type: "association"}]
 
 
     # expected = JSON.stringify(expected)
         
-    diag = new Diagram()
-    person = new Class("Person")
-    cell = new Class("Cellphones")
-    diag.agregar_clase(person)
-    diag.agregar_clase(cell)
-    link = new Link([person, cell])
+    diag = new model.uml.UMLDiagram()
+    person = new model.uml.Class("Person")
+    cell = new model.uml.Class("Cellphones")
+    diag.add_class(person)
+    diag.add_class(cell)
+    link = new model.uml.Link([person, cell], "role")
+    link.set_mult(["1..1", "1..*"])
     diag.agregar_link(link)
     
     # actual = JSON.stringify(diag.to_json())

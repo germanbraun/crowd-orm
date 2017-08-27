@@ -106,60 +106,60 @@ EOT;
   <CreateKB kb="http://localhost/kb1" />
   <Tell kb="http://localhost/kb1">
     <owl:SubClassOf>
-      <owl:Class IRI="#PhoneCall" />
+      <owl:Class IRI="PhoneCall" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     <owl:SubClassOf>
-      <owl:Class IRI="#Phone" />
+      <owl:Class IRI="Phone" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     <owl:ObjectPropertyDomain>
-        <owl:ObjectProperty IRI="#r1"/>
-        <owl:Class IRI="#PhoneCall"/>
+        <owl:ObjectProperty IRI="r1"/>
+        <owl:Class IRI="PhoneCall"/>
     </owl:ObjectPropertyDomain>
     <owl:ObjectPropertyRange>
-        <owl:ObjectProperty IRI="#r1"/>
-        <owl:Class IRI="#Phone"/>
+        <owl:ObjectProperty IRI="r1"/>
+        <owl:Class IRI="Phone"/>
     </owl:ObjectPropertyRange>
     <owl:EquivalentClasses>
-        <owl:Class IRI="#PhoneCall_r1_min"/>
+        <owl:Class IRI="PhoneCall_r1_min"/>
         <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#PhoneCall"/>
+            <owl:Class IRI="PhoneCall"/>
             <owl:ObjectMinCardinality cardinality="1">
-                <owl:ObjectProperty IRI="#r1"/>
+                <owl:ObjectProperty IRI="r1"/>
      			<owl:Class abbreviatedIRI="owl:Thing" />
             </owl:ObjectMinCardinality>
         </owl:ObjectIntersectionOf>
     </owl:EquivalentClasses>
     <owl:EquivalentClasses>
-        <owl:Class IRI="#PhoneCall_r1_max"/>
+        <owl:Class IRI="PhoneCall_r1_max"/>
         <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#PhoneCall"/>
+            <owl:Class IRI="PhoneCall"/>
             <owl:ObjectMaxCardinality cardinality="1">
-                <owl:ObjectProperty IRI="#r1"/>
+                <owl:ObjectProperty IRI="r1"/>
 			    <owl:Class abbreviatedIRI="owl:Thing" />
             </owl:ObjectMaxCardinality>
         </owl:ObjectIntersectionOf>
     </owl:EquivalentClasses>
     <owl:EquivalentClasses>
-        <owl:Class IRI="#Phone_r1_min"/>
+        <owl:Class IRI="Phone_r1_min"/>
         <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#Phone"/>
+            <owl:Class IRI="Phone"/>
             <owl:ObjectMinCardinality cardinality="1">
                 <owl:ObjectInverseOf>
-                    <owl:ObjectProperty IRI="#r1"/>
+                    <owl:ObjectProperty IRI="r1"/>
                 </owl:ObjectInverseOf>
 				<owl:Class abbreviatedIRI="owl:Thing" />
             </owl:ObjectMinCardinality>
         </owl:ObjectIntersectionOf>
     </owl:EquivalentClasses>
     <owl:EquivalentClasses>
-        <owl:Class IRI="#Phone_r1_max"/>
+        <owl:Class IRI="Phone_r1_max"/>
         <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#Phone"/>
+            <owl:Class IRI="Phone"/>
             <owl:ObjectMaxCardinality cardinality="1">
                 <owl:ObjectInverseOf>
-                    <owl:ObjectProperty IRI="#r1"/>
+                    <owl:ObjectProperty IRI="r1"/>
                 </owl:ObjectInverseOf>
 		     	<owl:Class abbreviatedIRI="owl:Thing" />
             </owl:ObjectMaxCardinality>
@@ -207,79 +207,79 @@ EOT;
   <CreateKB kb="http://localhost/kb1" />
   <Tell kb="http://localhost/kb1">
     <owl:SubClassOf>
-      <owl:Class IRI="#PhoneCall" />
+      <owl:Class IRI="PhoneCall" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     <owl:SubClassOf>
-      <owl:Class IRI="#Phone" />
+      <owl:Class IRI="Phone" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     <owl:ObjectPropertyDomain>
-        <owl:ObjectProperty IRI="#r1"/>
-        <owl:Class IRI="#PhoneCall"/>
+        <owl:ObjectProperty IRI="r1"/>
+        <owl:Class IRI="PhoneCall"/>
     </owl:ObjectPropertyDomain>
     <owl:ObjectPropertyRange>
-        <owl:ObjectProperty IRI="#r1"/>
-        <owl:Class IRI="#Phone"/>
+        <owl:ObjectProperty IRI="r1"/>
+        <owl:Class IRI="Phone"/>
     </owl:ObjectPropertyRange>
     <owl:EquivalentClasses>
-        <owl:Class IRI="#PhoneCall_r1_min"/>
+        <owl:Class IRI="PhoneCall_r1_min"/>
         <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#PhoneCall"/>
+            <owl:Class IRI="PhoneCall"/>
             <owl:ObjectMinCardinality cardinality="1">
-                <owl:ObjectProperty IRI="#r1"/>
+                <owl:ObjectProperty IRI="r1"/>
 				<owl:Class abbreviatedIRI="owl:Thing" />
             </owl:ObjectMinCardinality>
         </owl:ObjectIntersectionOf>
     </owl:EquivalentClasses>
     <owl:EquivalentClasses>
-        <owl:Class IRI="#PhoneCall_r1_max"/>
+        <owl:Class IRI="PhoneCall_r1_max"/>
         <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#PhoneCall"/>
+            <owl:Class IRI="PhoneCall"/>
             <owl:ObjectMaxCardinality cardinality="1">
-                <owl:ObjectProperty IRI="#r1"/>
+                <owl:ObjectProperty IRI="r1"/>
 				<owl:Class abbreviatedIRI="owl:Thing" />
             </owl:ObjectMaxCardinality>
         </owl:ObjectIntersectionOf>
     </owl:EquivalentClasses>
     <owl:EquivalentClasses>
-        <owl:Class IRI="#Phone_r1_min"/>
+        <owl:Class IRI="Phone_r1_min"/>
         <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#Phone"/>
+            <owl:Class IRI="Phone"/>
             <owl:ObjectMinCardinality cardinality="1">
                 <owl:ObjectInverseOf>
-                    <owl:ObjectProperty IRI="#r1"/>
+                    <owl:ObjectProperty IRI="r1"/>
                 </owl:ObjectInverseOf>
 				<owl:Class abbreviatedIRI="owl:Thing" />
             </owl:ObjectMinCardinality>
         </owl:ObjectIntersectionOf>
     </owl:EquivalentClasses>
     <owl:EquivalentClasses>
-        <owl:Class IRI="#Phone_r1_max"/>
+        <owl:Class IRI="Phone_r1_max"/>
         <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#Phone"/>
+            <owl:Class IRI="Phone"/>
             <owl:ObjectMaxCardinality cardinality="1">
                 <owl:ObjectInverseOf>
-                    <owl:ObjectProperty IRI="#r1"/>
+                    <owl:ObjectProperty IRI="r1"/>
                 </owl:ObjectInverseOf>
 				<owl:Class abbreviatedIRI="owl:Thing" />
             </owl:ObjectMaxCardinality>
         </owl:ObjectIntersectionOf>
     </owl:EquivalentClasses>
     <owl:SubClassOf>
-       	  <owl:Class IRI="#PhoneCall"/>
+       	  <owl:Class IRI="PhoneCall"/>
           <owl:ObjectMaxCardinality cardinality="1">
-               <owl:ObjectProperty IRI="#r1"/>
-			   <owl:Class IRI="#Phone"/>
+               <owl:ObjectProperty IRI="r1"/>
+			   <owl:Class IRI="Phone"/>
            </owl:ObjectMaxCardinality> 
     </owl:SubClassOf>
     <owl:SubClassOf>
-       	  <owl:Class IRI="#Phone"/>
+       	  <owl:Class IRI="Phone"/>
           <owl:ObjectMaxCardinality cardinality="1">
 			 <owl:ObjectInverseOf>
-               	<owl:ObjectProperty IRI="#r1"/>
+               	<owl:ObjectProperty IRI="r1"/>
              </owl:ObjectInverseOf>  
-			 <owl:Class IRI="#PhoneCall"/>           
+			 <owl:Class IRI="PhoneCall"/>           
            </owl:ObjectMaxCardinality> 
     </owl:SubClassOf>
   </Tell>
@@ -322,79 +322,79 @@ EOT;
   <CreateKB kb="http://localhost/kb1" />
   <Tell kb="http://localhost/kb1">
     <owl:SubClassOf>
-      <owl:Class IRI="#PhoneCall" />
+      <owl:Class IRI="PhoneCall" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     <owl:SubClassOf>
-      <owl:Class IRI="#Phone" />
+      <owl:Class IRI="Phone" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     <owl:ObjectPropertyDomain>
-        <owl:ObjectProperty IRI="#r1"/>
-        <owl:Class IRI="#PhoneCall"/>
+        <owl:ObjectProperty IRI="r1"/>
+        <owl:Class IRI="PhoneCall"/>
     </owl:ObjectPropertyDomain>
     <owl:ObjectPropertyRange>
-        <owl:ObjectProperty IRI="#r1"/>
-        <owl:Class IRI="#Phone"/>
+        <owl:ObjectProperty IRI="r1"/>
+        <owl:Class IRI="Phone"/>
     </owl:ObjectPropertyRange>
     <owl:EquivalentClasses>
-        <owl:Class IRI="#PhoneCall_r1_min"/>
+        <owl:Class IRI="PhoneCall_r1_min"/>
         <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#PhoneCall"/>
+            <owl:Class IRI="PhoneCall"/>
             <owl:ObjectMinCardinality cardinality="1">
-                <owl:ObjectProperty IRI="#r1"/>
+                <owl:ObjectProperty IRI="r1"/>
 				<owl:Class abbreviatedIRI="owl:Thing" />
             </owl:ObjectMinCardinality>
         </owl:ObjectIntersectionOf>
     </owl:EquivalentClasses>
     <owl:EquivalentClasses>
-        <owl:Class IRI="#PhoneCall_r1_max"/>
+        <owl:Class IRI="PhoneCall_r1_max"/>
         <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#PhoneCall"/>
+            <owl:Class IRI="PhoneCall"/>
             <owl:ObjectMaxCardinality cardinality="1">
-                <owl:ObjectProperty IRI="#r1"/>
+                <owl:ObjectProperty IRI="r1"/>
 				<owl:Class abbreviatedIRI="owl:Thing" />
             </owl:ObjectMaxCardinality>
         </owl:ObjectIntersectionOf>
     </owl:EquivalentClasses>
     <owl:EquivalentClasses>
-        <owl:Class IRI="#Phone_r1_min"/>
+        <owl:Class IRI="Phone_r1_min"/>
         <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#Phone"/>
+            <owl:Class IRI="Phone"/>
             <owl:ObjectMinCardinality cardinality="1">
                 <owl:ObjectInverseOf>
-                    <owl:ObjectProperty IRI="#r1"/>
+                    <owl:ObjectProperty IRI="r1"/>
                 </owl:ObjectInverseOf>
 				<owl:Class abbreviatedIRI="owl:Thing" />
             </owl:ObjectMinCardinality>
         </owl:ObjectIntersectionOf>
     </owl:EquivalentClasses>
     <owl:EquivalentClasses>
-        <owl:Class IRI="#Phone_r1_max"/>
+        <owl:Class IRI="Phone_r1_max"/>
         <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#Phone"/>
+            <owl:Class IRI="Phone"/>
             <owl:ObjectMaxCardinality cardinality="1">
                 <owl:ObjectInverseOf>
-                    <owl:ObjectProperty IRI="#r1"/>
+                    <owl:ObjectProperty IRI="r1"/>
                 </owl:ObjectInverseOf>
 				<owl:Class abbreviatedIRI="owl:Thing" />
             </owl:ObjectMaxCardinality>
         </owl:ObjectIntersectionOf>
     </owl:EquivalentClasses>
     <owl:SubClassOf>
-       	  <owl:Class IRI="#PhoneCall"/>
+       	  <owl:Class IRI="PhoneCall"/>
           <owl:ObjectMinCardinality cardinality="1">
-               <owl:ObjectProperty IRI="#r1"/>
-			   <owl:Class IRI="#Phone"/>
+               <owl:ObjectProperty IRI="r1"/>
+			   <owl:Class IRI="Phone"/>
            </owl:ObjectMinCardinality> 
     </owl:SubClassOf>
     <owl:SubClassOf>
-       	  <owl:Class IRI="#Phone"/>
+       	  <owl:Class IRI="Phone"/>
           <owl:ObjectMinCardinality cardinality="1">
 			 <owl:ObjectInverseOf>
-               	<owl:ObjectProperty IRI="#r1"/>
+               	<owl:ObjectProperty IRI="r1"/>
              </owl:ObjectInverseOf>  
-			 <owl:Class IRI="#PhoneCall"/>           
+			 <owl:Class IRI="PhoneCall"/>           
            </owl:ObjectMinCardinality> 
     </owl:SubClassOf>
   </Tell>
@@ -436,95 +436,95 @@ EOT;
   <CreateKB kb="http://localhost/kb1" />
   <Tell kb="http://localhost/kb1">
     <owl:SubClassOf>
-      <owl:Class IRI="#PhoneCall" />
+      <owl:Class IRI="PhoneCall" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     <owl:SubClassOf>
-      <owl:Class IRI="#Phone" />
+      <owl:Class IRI="Phone" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     <owl:ObjectPropertyDomain>
-        <owl:ObjectProperty IRI="#r1"/>
-        <owl:Class IRI="#PhoneCall"/>
+        <owl:ObjectProperty IRI="r1"/>
+        <owl:Class IRI="PhoneCall"/>
     </owl:ObjectPropertyDomain>
     <owl:ObjectPropertyRange>
-        <owl:ObjectProperty IRI="#r1"/>
-        <owl:Class IRI="#Phone"/>
+        <owl:ObjectProperty IRI="r1"/>
+        <owl:Class IRI="Phone"/>
     </owl:ObjectPropertyRange>
     <owl:EquivalentClasses>
-        <owl:Class IRI="#PhoneCall_r1_min"/>
+        <owl:Class IRI="PhoneCall_r1_min"/>
         <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#PhoneCall"/>
+            <owl:Class IRI="PhoneCall"/>
             <owl:ObjectMinCardinality cardinality="1">
-                <owl:ObjectProperty IRI="#r1"/>
+                <owl:ObjectProperty IRI="r1"/>
 				<owl:Class abbreviatedIRI="owl:Thing" />
             </owl:ObjectMinCardinality>
         </owl:ObjectIntersectionOf>
     </owl:EquivalentClasses>
     <owl:EquivalentClasses>
-        <owl:Class IRI="#PhoneCall_r1_max"/>
+        <owl:Class IRI="PhoneCall_r1_max"/>
         <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#PhoneCall"/>
+            <owl:Class IRI="PhoneCall"/>
             <owl:ObjectMaxCardinality cardinality="1">
-                <owl:ObjectProperty IRI="#r1"/>
+                <owl:ObjectProperty IRI="r1"/>
 				<owl:Class abbreviatedIRI="owl:Thing" />
             </owl:ObjectMaxCardinality>
         </owl:ObjectIntersectionOf>
     </owl:EquivalentClasses>
     <owl:EquivalentClasses>
-        <owl:Class IRI="#Phone_r1_min"/>
+        <owl:Class IRI="Phone_r1_min"/>
         <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#Phone"/>
+            <owl:Class IRI="Phone"/>
             <owl:ObjectMinCardinality cardinality="1">
                 <owl:ObjectInverseOf>
-                    <owl:ObjectProperty IRI="#r1"/>
+                    <owl:ObjectProperty IRI="r1"/>
                 </owl:ObjectInverseOf>
 				<owl:Class abbreviatedIRI="owl:Thing" />
             </owl:ObjectMinCardinality>
         </owl:ObjectIntersectionOf>
     </owl:EquivalentClasses>
     <owl:EquivalentClasses>
-        <owl:Class IRI="#Phone_r1_max"/>
+        <owl:Class IRI="Phone_r1_max"/>
         <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#Phone"/>
+            <owl:Class IRI="Phone"/>
             <owl:ObjectMaxCardinality cardinality="1">
                 <owl:ObjectInverseOf>
-                    <owl:ObjectProperty IRI="#r1"/>
+                    <owl:ObjectProperty IRI="r1"/>
                 </owl:ObjectInverseOf>
 				<owl:Class abbreviatedIRI="owl:Thing" />
             </owl:ObjectMaxCardinality>
         </owl:ObjectIntersectionOf>
     </owl:EquivalentClasses>
     <owl:SubClassOf>
-       	  <owl:Class IRI="#PhoneCall"/>
+       	  <owl:Class IRI="PhoneCall"/>
           <owl:ObjectMinCardinality cardinality="1">
-               <owl:ObjectProperty IRI="#r1"/>
-			   <owl:Class IRI="#Phone"/>
+               <owl:ObjectProperty IRI="r1"/>
+			   <owl:Class IRI="Phone"/>
            </owl:ObjectMinCardinality> 
     </owl:SubClassOf>
     <owl:SubClassOf>
-       	  <owl:Class IRI="#PhoneCall"/>
+       	  <owl:Class IRI="PhoneCall"/>
           <owl:ObjectMaxCardinality cardinality="1">
-               <owl:ObjectProperty IRI="#r1"/>
-			   <owl:Class IRI="#Phone"/>
+               <owl:ObjectProperty IRI="r1"/>
+			   <owl:Class IRI="Phone"/>
            </owl:ObjectMaxCardinality> 
     </owl:SubClassOf>
     <owl:SubClassOf>
-       	  <owl:Class IRI="#Phone"/>
+       	  <owl:Class IRI="Phone"/>
           <owl:ObjectMinCardinality cardinality="1">
 			 <owl:ObjectInverseOf>
-               	<owl:ObjectProperty IRI="#r1"/>
+               	<owl:ObjectProperty IRI="r1"/>
              </owl:ObjectInverseOf>  
-			 <owl:Class IRI="#PhoneCall"/>           
+			 <owl:Class IRI="PhoneCall"/>           
            </owl:ObjectMinCardinality> 
     </owl:SubClassOf>
     <owl:SubClassOf>
-       	  <owl:Class IRI="#Phone"/>
+       	  <owl:Class IRI="Phone"/>
           <owl:ObjectMaxCardinality cardinality="1">
 			 <owl:ObjectInverseOf>
-               	<owl:ObjectProperty IRI="#r1"/>
+               	<owl:ObjectProperty IRI="r1"/>
              </owl:ObjectInverseOf>  
-			 <owl:Class IRI="#PhoneCall"/>           
+			 <owl:Class IRI="PhoneCall"/>           
            </owl:ObjectMaxCardinality> 
     </owl:SubClassOf>
   </Tell>
@@ -567,95 +567,95 @@ EOT;
   <CreateKB kb="http://localhost/kb1" />
   <Tell kb="http://localhost/kb1">
     <owl:SubClassOf>
-      <owl:Class IRI="#PhoneCall" />
+      <owl:Class IRI="PhoneCall" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     <owl:SubClassOf>
-      <owl:Class IRI="#Phone" />
+      <owl:Class IRI="Phone" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     <owl:ObjectPropertyDomain>
-        <owl:ObjectProperty IRI="#r1"/>
-        <owl:Class IRI="#PhoneCall"/>
+        <owl:ObjectProperty IRI="r1"/>
+        <owl:Class IRI="PhoneCall"/>
     </owl:ObjectPropertyDomain>
     <owl:ObjectPropertyRange>
-        <owl:ObjectProperty IRI="#r1"/>
-        <owl:Class IRI="#Phone"/>
+        <owl:ObjectProperty IRI="r1"/>
+        <owl:Class IRI="Phone"/>
     </owl:ObjectPropertyRange>
     <owl:EquivalentClasses>
-        <owl:Class IRI="#PhoneCall_r1_min"/>
+        <owl:Class IRI="PhoneCall_r1_min"/>
         <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#PhoneCall"/>
+            <owl:Class IRI="PhoneCall"/>
             <owl:ObjectMinCardinality cardinality="1">
-                <owl:ObjectProperty IRI="#r1"/>
+                <owl:ObjectProperty IRI="r1"/>
 				<owl:Class abbreviatedIRI="owl:Thing" />
             </owl:ObjectMinCardinality>
         </owl:ObjectIntersectionOf>
     </owl:EquivalentClasses>
     <owl:EquivalentClasses>
-        <owl:Class IRI="#PhoneCall_r1_max"/>
+        <owl:Class IRI="PhoneCall_r1_max"/>
         <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#PhoneCall"/>
+            <owl:Class IRI="PhoneCall"/>
             <owl:ObjectMaxCardinality cardinality="1">
-                <owl:ObjectProperty IRI="#r1"/>
+                <owl:ObjectProperty IRI="r1"/>
 				<owl:Class abbreviatedIRI="owl:Thing" />
             </owl:ObjectMaxCardinality>
         </owl:ObjectIntersectionOf>
     </owl:EquivalentClasses>
     <owl:EquivalentClasses>
-        <owl:Class IRI="#Phone_r1_min"/>
+        <owl:Class IRI="Phone_r1_min"/>
         <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#Phone"/>
+            <owl:Class IRI="Phone"/>
             <owl:ObjectMinCardinality cardinality="1">
                 <owl:ObjectInverseOf>
-                    <owl:ObjectProperty IRI="#r1"/>
+                    <owl:ObjectProperty IRI="r1"/>
                 </owl:ObjectInverseOf>
 				<owl:Class abbreviatedIRI="owl:Thing" />
             </owl:ObjectMinCardinality>
         </owl:ObjectIntersectionOf>
     </owl:EquivalentClasses>
     <owl:EquivalentClasses>
-        <owl:Class IRI="#Phone_r1_max"/>
+        <owl:Class IRI="Phone_r1_max"/>
         <owl:ObjectIntersectionOf>
-            <owl:Class IRI="#Phone"/>
+            <owl:Class IRI="Phone"/>
             <owl:ObjectMaxCardinality cardinality="1">
                 <owl:ObjectInverseOf>
-                    <owl:ObjectProperty IRI="#r1"/>
+                    <owl:ObjectProperty IRI="r1"/>
                 </owl:ObjectInverseOf>
 				<owl:Class abbreviatedIRI="owl:Thing" />
             </owl:ObjectMaxCardinality>
         </owl:ObjectIntersectionOf>
     </owl:EquivalentClasses>
     <owl:SubClassOf>
-       	  <owl:Class IRI="#PhoneCall"/>
+       	  <owl:Class IRI="PhoneCall"/>
           <owl:ObjectMinCardinality cardinality="2">
-               <owl:ObjectProperty IRI="#r1"/>
-			   <owl:Class IRI="#Phone"/>
+               <owl:ObjectProperty IRI="r1"/>
+			   <owl:Class IRI="Phone"/>
            </owl:ObjectMinCardinality> 
     </owl:SubClassOf>
     <owl:SubClassOf>
-       	  <owl:Class IRI="#PhoneCall"/>
+       	  <owl:Class IRI="PhoneCall"/>
           <owl:ObjectMaxCardinality cardinality="9">
-               <owl:ObjectProperty IRI="#r1"/>
-			   <owl:Class IRI="#Phone"/>
+               <owl:ObjectProperty IRI="r1"/>
+			   <owl:Class IRI="Phone"/>
            </owl:ObjectMaxCardinality> 
     </owl:SubClassOf>
     <owl:SubClassOf>
-       	  <owl:Class IRI="#Phone"/>
+       	  <owl:Class IRI="Phone"/>
           <owl:ObjectMinCardinality cardinality="1">
 			 <owl:ObjectInverseOf>
-               	<owl:ObjectProperty IRI="#r1"/>
+               	<owl:ObjectProperty IRI="r1"/>
              </owl:ObjectInverseOf>  
-			 <owl:Class IRI="#PhoneCall"/>           
+			 <owl:Class IRI="PhoneCall"/>           
            </owl:ObjectMinCardinality> 
     </owl:SubClassOf>
     <owl:SubClassOf>
-       	  <owl:Class IRI="#Phone"/>
+       	  <owl:Class IRI="Phone"/>
           <owl:ObjectMaxCardinality cardinality="4">
 			 <owl:ObjectInverseOf>
-               	<owl:ObjectProperty IRI="#r1"/>
+               	<owl:ObjectProperty IRI="r1"/>
              </owl:ObjectInverseOf>  
-			 <owl:Class IRI="#PhoneCall"/>           
+			 <owl:Class IRI="PhoneCall"/>           
            </owl:ObjectMaxCardinality> 
     </owl:SubClassOf>
   </Tell>
@@ -705,19 +705,19 @@ EOT;
   <Tell kb="http://localhost/kb1">
     
     <owl:SubClassOf>
-      <owl:Class IRI="#PhoneCall" />
+      <owl:Class IRI="PhoneCall" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     <owl:SubClassOf>
-      <owl:Class IRI="#MobileCall" />
+      <owl:Class IRI="MobileCall" />
       <owl:Class abbreviatedIRI="owl:Thing" />
     </owl:SubClassOf>
     
     <!-- Generalization -->
 
     <owl:SubClassOf>
-      <owl:Class IRI="#MobileCall" />
-	  <owl:Class IRI="#PhoneCall" />
+      <owl:Class IRI="MobileCall" />
+	  <owl:Class IRI="PhoneCall" />
     </owl:SubClassOf>
     
   </Tell>
@@ -957,8 +957,8 @@ EOT;
   <CreateKB kb="http://localhost/kb1" />
   <Tell kb="http://localhost/kb1"/>
   <IsKBSatisfiable kb="http://localhost/kb1"/>
-  <IsClassSatisfiable kb="http://localhost/kb1"><owl:Class IRI="#PhoneCall"/></IsClassSatisfiable>
-  <IsClassSatisfiable kb="http://localhost/kb1"><owl:Class IRI="#MobileCall"/></IsClassSatisfiable>
+  <IsClassSatisfiable kb="http://localhost/kb1"><owl:Class IRI="PhoneCall"/></IsClassSatisfiable>
+  <IsClassSatisfiable kb="http://localhost/kb1"><owl:Class IRI="MobileCall"/></IsClassSatisfiable>
 </RequestMessage>
 EOT;
         

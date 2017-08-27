@@ -1,4 +1,4 @@
-# umldiagram.coffee --
+# ormdiagram.coffee --
 # Copyright (C) 2016 Giménez, Christian
 
 # This program is free software: you can redistribute it and/or modify
@@ -16,17 +16,20 @@
 
 # {ERDFactory} = require './factories'
 
+exports = exports ? this
+exports.model = exports.model ? {}
+
+
 #
 # An ER diagram representation.
-# 
-class ERDiagram extends Diagram
+#
+# @namespace model
+class ORMDiagram extends model.Diagram
     #
     # @param [joint.Graph] graph
     # 
     constructor: (@graph = null) ->
         @clases = []
-        @attributes = []
-        @isa = []
         @links = []
         
         @cells_nuevas = []
@@ -34,7 +37,7 @@ class ERDiagram extends Diagram
         # diagram for apply.
         @cells_deleted = []
         
-        @factory = new ERDFactory()
+        @factory = new model.ORMFactory()
 
     get_factory: () ->
         return @factory
@@ -52,12 +55,6 @@ class ERDiagram extends Diagram
     get_links: () ->
         return @links
 
-    get_attributes: () ->
-        return @attributes
-
-    get_isa: () ->
-        return @isa
-	
     get_clase: (nombre) ->
 
     find_class_by_name: (name) ->
@@ -68,28 +65,6 @@ class ERDiagram extends Diagram
     find_class_by_classid: (classid) ->
         return @clases.find( (elt,index,arr) ->
             elt.has_classid(classid)
-        )
-
-    find_attr_by_name: (name) ->
-        return @attributes.find( (elt, index, arr) ->
-            console.log(elt)
-            elt.get_name() == name
-        )
-        
-    find_attr_by_attrid: (attrid) ->
-        return @attributes.find( (elt,index,arr) ->
-            elt.has_attrid(attrid)
-        )
-
-    find_isa_by_name: (name) ->
-        return @isa.find( (elt, index, arr) ->
-            console.log(elt)
-            elt.get_name() == name
-        )
-        
-    find_isa_by_isaid: (isaid) ->
-        return @isa.find( (elt,index,arr) ->
-            elt.has_isaid(isaid)
         )
 
     # Find a generalization that contains the given parent
@@ -152,22 +127,15 @@ class ERDiagram extends Diagram
     add_generalization_objs: (class_parent, class_child, disjoint=false, covering=false) ->
         gen = this.find_IsA_with_parent(class_parent)
         if (gen is undefined) || (gen is null)
-            gen = new Generalization(class_parent, [class_child])
+            gen = new model.Generalization(class_parent, [class_child])
             gen.set_disjoint(disjoint)
             gen.set_covering(covering)
-            this.agregar_isa(gen)
+            this.agregar_link(gen)
         else
             gen.add_child(class_child)
             gen.create_joint(@factory, csstheme)
             @cells_nuevas.push(gen.get_joint_for_child(class_child))
             this.actualizar_graph()
-
-
-    agregar_isa: (gen) ->
-    	@isa.push(gen)
-    	@cells_nuevas.push(gen.get_joint(@factory,csstheme))
-    	this.actualizar_graph()
-
     
     # @param class_a_id {string} the ID of the first class.
     # @param class_b_id {string} the ID of the second class.
@@ -178,7 +146,7 @@ class ERDiagram extends Diagram
         class_a = this.find_class_by_classid(class_a_id)
         class_b = this.find_class_by_classid(class_b_id)
         
-        newassoc = new Link([class_a, class_b], name)
+        newassoc = new model.Link([class_a, class_b], name)
         if (mult isnt null)
             newassoc.set_mult(mult)
         if (roles isnt null)
@@ -190,7 +158,7 @@ class ERDiagram extends Diagram
         class_a = this.find_class_by_classid(class_a_id)
         class_b = this.find_class_by_classid(class_b_id)
         
-        newassoc = new LinkWithClass([class_a, class_b], name)
+        newassoc = new model.LinkWithClass([class_a, class_b], name)
         if (mult isnt null)
             newassoc.set_mult(mult)
         if (roles isnt null)
@@ -215,11 +183,13 @@ class ERDiagram extends Diagram
     # @return The new class
     # @see Class
     # @see GUI#add_class
-    add_entity: (hash_data) ->
-        if hash_data.attrs == undefined
-            hash_data.attrs = []
-
-        newclass = new Entity(hash_data.name, hash_data.attrs)
+    add_class: (hash_data) ->
+        if hash_data.attribs == undefined
+            hash_data.attribs = []
+        if hash_data.methods == undefined
+            hash_data.methods = []
+        
+        newclass = new model.Class(hash_data.name, hash_data.attribs, hash_data.methods)
         this.agregar_clase(newclass)
         return newclass
 
@@ -228,42 +198,6 @@ class ERDiagram extends Diagram
         @cells_nuevas.push(clase.get_joint(@factory, csstheme))
         this.actualizar_graph()
 
-
-    add_attribute: (hash_data) ->
-    	newattribute = new Attribute(hash_data.name, hash_data.type)
-    	this.agregar_attribute(newattribute)
-    	return newattribute
-
-    agregar_attribute: (attribute) ->
-    	@attributes.push(attribute)
-    	@cells_nuevas.push(attribute.get_joint(@factory,csstheme))
-    	this.actualizar_graph()
-
-
-    add_relationship_attr: (class_id, attribute_id, name) ->
-        entity = this.find_class_by_classid(class_id)
-        console.log(entity)
-        attr = this.find_attr_by_attrid(attribute_id)
-        console.log(attr)
-        newrel = new LinkAttrToEntity([entity, attr], name)
-        this.agregar_link(newrel)   	
-
-    add_relationship_isa: (class_id, isa_id, name) ->
-        entity = this.find_class_by_classid(class_id)
-        console.log(entity)
-        isa = this.find_isa_by_isaid(isa_id)
-        console.log(isa)
-        newlinktoISA = new LinkISAToEntity([entity, isa], name)
-        this.agregar_link(newlinktoISA)
-
-    add_relationship_isa_inverse: (isa_id, class_id, name) ->
-        entity = this.find_class_by_classid(class_id)
-        console.log(entity)
-        isa = this.find_isa_by_isaid(isa_id)
-        console.log(isa)
-        newlinkfromISA = new LinkISAToEntity([isa, entity], name)
-        this.agregar_link(newlinkfromISA) 
-        
     # @param c {Class instance}. 
     delete_class: (c) ->
         @clases = @clases.filter( (elt, index, arr) ->
@@ -275,17 +209,6 @@ class ERDiagram extends Diagram
         @cells_deleted = @cells_deleted.concat(c.get_joint())
         this.actualizar_graph()
 
-
-    delete_attribute: (c) ->
-        @attributes = @attributes.filter( (elt, index, arr) ->
-            elt != c
-        )
-
-        this.remove_associated_links(c)
-        
-        @cells_deleted = @cells_deleted.concat(c.get_joint())
-        this.actualizar_graph()
-        
     # Search for all links associated to the given class.
     #
     # @param c {Class instance} The class.
@@ -351,12 +274,6 @@ class ERDiagram extends Diagram
         # Associations is supposed to be deleted after each classes has
         @clases.forEach( (c, i, arr) ->
             this.delete_class(c)
-        this)
-        @attributes.forEach( (a, i, arr) ->
-            this.delete_attribute(a)
-        this)
-        @links.forEach( (l, i, arr) ->
-            this.delete_link(l)
         this)
         this.actualizar_graph()
         
@@ -431,15 +348,11 @@ class ERDiagram extends Diagram
     to_json : () ->
         classes_json = $.map @clases, (myclass) ->
             myclass.to_json()
-            
-        attributes_json = $.map @attributes, (myattr) ->
-            myattr.to_json()
-            
+
         links_json = $.map @links, (mylink) ->
             mylink.to_json()
 
         classes: classes_json
-        attributes: attributes_json
         links: links_json
                 
     # Import all classes and associations from a JSON object.
@@ -453,24 +366,12 @@ class ERDiagram extends Diagram
     import_json: (json) ->
         json.classes.forEach(
             (elt, index, arr) ->
-                c = this.add_entity(elt)
-#                if c.get_joint()[0].position?
-#                	c.get_joint()[0].position(
-#                    elt.position.x,
-#                    elt.position.y)
+                c = this.add_class(elt)
+                c.get_joint()[0].position(
+                    elt.position.x,
+                    elt.position.y)
         this)
-        
-        #attributes
-        json.attributes.forEach(
-            (elt, index, arr) ->
-                c = this.add_attribute(elt)
-#                if c.get_joint()[0].position?
-#                	c.get_joint()[0].position(
-#                    elt.position.x,
-#                    elt.position.y)
-        this)        
-        
-        # relationships
+        # associations
         json.links.forEach(
             (elt, index, arr) ->
                 if elt.type is "association"
@@ -502,16 +403,8 @@ class ERDiagram extends Diagram
                         class_parent,
                         classes_children,
                         disjoint, covering)
-                if elt.type is "attribute"
-                    class_a = this.find_class_by_name(elt.classes[0])
-                    attr_a = this.find_attr_by_name(elt.classes[1])
-                    this.add_relationship_attr(
-                            class_a.get_classid(),
-                            attr_a.get_attributeid(),
-                            elt.name)                
                                 
         this)
         
-exports = exports ? this
 
-exports.ERDiagram = ERDiagram
+exports.model.ORMDiagram = ORMDiagram

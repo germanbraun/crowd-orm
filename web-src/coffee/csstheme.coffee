@@ -57,15 +57,13 @@ css_class =
 #        visibility: 'collapse'
         display: 'none'
 
-# [JointJS special
-# attributes](http://jointjs.com/api#SpecialAttributes) 
-# [SVG
-# attributes](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute)  
+# [JointJS special attributes](http://jointjs.com/api#SpecialAttributes) 
+# [SVG attributes](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute)  
 #
 # Unsatisfiable Class style.
 css_class_unsatisfiable = 
     '.uml-class-name-rect' : 
-        fill: "#faa"
+        fill: "#f00"
         stroke: "#000"
         'stroke-width': 0.5
     '.uml-class-attrs-rect' : 

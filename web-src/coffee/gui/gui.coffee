@@ -14,18 +14,36 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+exports = exports ? this
+exports.gui = exports.gui ? {}
+
+
 # @namespace gui
-## Central GUI *do-it-all* class...
+#
+# Central GUI *do-it-all* class...
+#
 class GUI
     constructor: (@graph, @paper) ->
-        @current_gui = new GUIUML(@graph,@paper)
-        @prev_gui = new GUIEER(@graph,@paper)
+        @current_gui = new gui.GUIUML(@graph,@paper)
+        @prev_gui = null 
         @aux_gui = []
         gui.set_current_instance(this)
-        # Login
-        @loginwidget = new LoginWidgetView({el: $("#loginwidget_placer")})
-        # Save-Load
 
+        # Widgets that are the same for all type of GUIImpl.
+        # Login
+        @loginwidget = new login.LoginWidgetView({el: $("#loginwidget_placer")})
+        # Save-Load
+        # Error reporting widget
+        @errorwidget = new views.ErrorWidgetView({el: $("#errorwidget_placer")})
+
+    # Set the previous GUIIMP instance.
+    #
+    # @param guiimp {GUIIMP} A GUIIMP subclass.
+    set_prev_gui: (guiimp) ->
+        # @prev_gui = new gui.GUIEER(@graph,@paper)
+        @prev_gui = guiimp
+        guiimp.graph = @graph
+        guiimp.paper = @paper
 
     to_erd: () ->
         @current_gui.to_erd(this)
@@ -42,6 +60,16 @@ class GUI
     update_metamodel: (data) ->
         @current_gui.update_metamodel(data)
 
+    # Translate the current model into a formalization.
+    # 
+    # Show the user a "wait" message while the server process the model.
+    # 
+    # @param strategy {String} The strategy name to use for formalize the model.
+    # @param syntax {String} The output sintax format.
+    translate_formal: (strategy, syntax) ->
+        @current_gui.translate_formal(strategy, syntax)
+
+    # @deprecated Use translate_formal() instead.
     translate_owllink: () ->
         @current_gui.translate_owllink(this)
 
@@ -69,7 +97,7 @@ class GUI
         @current_gui.add_subsumption(class_parent_id, class_child_id, disjoint, covering)
     
     edit_class_name: (class_id, name) -> @current_gui.edit_class_name(class_id, name)
-    
+
     delete_class: (class_id) -> @current_gui.delete_class(class_id)
 
     set_isa_state: (class_id, disjoint, covering) -> 
@@ -120,18 +148,51 @@ class GUI
     
     reset_all: () -> @current_gui.reset_all()
 
-exports = exports ? this
-if exports.gui == undefined
-    exports.gui = {}
+    # Check if the model is satisfiable sending a POST to the server.
+    check_satisfiable: () ->
+        @current_gui.check_satisfiable()
 
+    # Update the diagram displaying unsatisfiable primitives in red.
+    #
+    # @param data [String] The JSON answer.
+    update_satisfiable: (data) ->
+        @current_gui.update_satisfiable(data)
+
+    # Report an error to the user.
+    #
+    # @param status {String} the status text.
+    # @param error {String} error message
+    show_error: (status, error) ->
+        $.mobile.loading("hide")
+        @errorwidget.show(status, error)
+
+
+
+# Current GUI instance.
+# 
+# An instance must be running!
+# 
+# Better use gui.set_current_instance()
+#
+# @see set_current_instance()
+# @namespace gui
 exports.gui.gui_instance = null
+
+# Set the current instance of the GUI class.
+#
+# This has nothing to do with the current language interface (GUIUML, GUIEER,
+# etc.).
+#
+# @param gui_instance {GUI} The running instance.
+# @namespace gui
 exports.gui.set_current_instance = (gui_instance) ->
     exports.gui.gui_instance = gui_instance
 
 
-
 # @namespace gui
 #
+# Switch to the ERD interface and diagram.
+# 
 # This is sooo bad, but the context of a $.post callback function
 # differs from the source caller class.
 #
@@ -141,5 +202,21 @@ exports.gui.switch_to_erd = () ->
     gui_instance.current_gui = gui_instance.prev_gui
     gui_instance.prev_gui = gui_instance.aux_gui
 
-exports.gui.GUI = GUI
+# @namespace gui
+#
+# This is sooo bad, but the context of a $.post callback function
+# differs from the source caller class.
+#
+# We need to set a global guiinst variable with one GUI.gui instance.
+exports.gui.update_satisfiable = (data) ->
+    exports.gui.gui_instance.update_satisfiable(data)
 
+# @namespace gui
+exports.gui.update_translation = (data) ->
+    exports.gui.gui_instance.update_translation(data)
+
+# @namespace gui
+exports.gui.show_error = (jqXHR, status, text) ->
+    exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
+
+exports.gui.GUI = GUI

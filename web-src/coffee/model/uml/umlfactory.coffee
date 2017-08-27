@@ -16,40 +16,38 @@
 
 uml = joint.shapes.uml
 
+exports = exports ? this
+exports.model = exports.model ? {}
+exports.model.uml = exports.model.uml ? {}
+
 # UML Factory for creating JointJS shapes representing a primitive in
 # its plugins.
-class UMLFactory extends Factory
+#
+# @namespace model.uml
+class UMLFactory extends model.Factory
    
     constructor: () ->
 
-    # @overload create_class(class_name, css_class=null)
+
     #     @param [hash] css_class A CSS class definition in a
     #     Javascript hash. See the JointJS documentation and demos.
     # 
     # @return [joint.shapes.uml.Class] 
-    create_class: (class_name, attrs, methods, css_class=null) ->
+    create_class: (class_name, attribs, methods, css_class=null) ->
+        console.log(attribs)
+        console.log(methods)
         params =
             position: {x: 20, y: 20}
-            size: {width: 100, height: 50}
+            size: {width: 220, height: 100}
             name: class_name
-            attributes: attrs
+            attributes: attribs
             methods: methods
             attrs:
                 '.uml-class-name-rect':
-                    fill: '#ffffff'
-                    stroke: '#000000'
+                    fill: '#ff8450'
+                    stroke: '#fff'
                 '.uml-class-name-text':
-                    fill: '#000000'
-                '.uml-class-attr-rect':
-                    fill: '#ffffff'
-                    stroke: '#000000'
-                '.uml-class-attr-text':
-                    fill: '#000000'                     
-                '.uml-class-method-rect':
-                    fill: '#ffffff'
-                    stroke: '#000000'
-                '.uml-class-method-text':
-                    fill: '#000000'    
+                    fill: '#000000'                    
         if css_class?
             params.attrs = css_class
 
@@ -172,21 +170,24 @@ class UMLFactory extends Factory
     create_association_class: (class_name, css_class = null) ->
         return this.create_class(class_name, css_class)
 
-
-	# Create an association link only (the one dashed one that appears between
+    # Create an association link only (the one dashed one that appears between
     # the UML association and the UML association class).
     #
     # @return [joint.dia.Link] a Joint Link object.
-	create_association_link(css_assoc_links) ->
-		link = new joint.dia.Link(
-			source: {x: 10, y: 10},
-			target: {x: 100, y: 100},
-			attrs: css_assoc_links
-        )
-		return link
+#    create_association_link: (css_assoc_links = {"stroke-dasharray": "5,5"}) ->
+        # For some misterious reason, you have to add some joint elements ids
+        # on source and target. If not it will not as   params.attrs = css_class sociate the link with the
+        # Element provided, instead it will still points to (10,10) coordinates.
+#        link = new joint.dia.Link(
+#            source: {x: 10, y: 10},
+#            target: {x: 100, y: 100},
+#            attrs: css_assoc_links
+#        )
+#        return link
 
 
 
-exports = exports ? this
-exports.UMLFactory = UMLFactory
+
+
+exports.model.uml.UMLFactory = UMLFactory
 

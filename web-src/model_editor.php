@@ -11,18 +11,13 @@ require_once('template.php');
 
 	<script src="./js/csstheme.js"></script>
 	<script src="./js/backbone_views.js"></script>
-	<script src="./js/GUIState.js"></script>
 	<script src="./js/model.js"></script>
 	<script src="./js/interface.js"></script>
-	<script src="./js/gui.js"></script>
-    <script src="./js/login.js"></script>
-	<script src="./js/guiimpl.js"></script>
-	<script src="./js/guiorm.js"></script>
-	<script src="./js/guiuml.js"></script>
-	<script src="./js/guieer.js"></script>
-	
+   	<script src="./js/login.js"></script>
+   	<script src="./js/gui.js"></script>
 
 	
+
 	<?php if (array_key_exists('prueba', $_GET) && $_GET['prueba'] == 1){ ?>
 	    <script src="./js/prueba.js"></script>
 	<?php } ?>
@@ -74,12 +69,14 @@ require_once('template.php');
 		insert_template("importjson");
 		insert_template("exportjson");
 		insert_template("tools_navbar");
-		?>			
-   		
+		insert_template("done_widget");
+		?>
+
 		<div id="editclass"></div>
 		<div id="classoptions"></div>
 		<div id="relationoptions"></div>
 		<div id="isaoptions"></div>
+		<div id="donewidget"></div>
 
  	    </div> <!-- /main ui-content -->
 
@@ -135,7 +132,7 @@ require_once('template.php');
 			<h3 class="ui-bar ui-bar-a ui-corner-all">Reasoner Input</h3>
 			<textarea cols="40" class="ui-body" id="reasoner_input"></textarea>
 			<h3 class="ui-bar ui-bar-a ui-corner-all">Reasoner Output</h3>
-			<textarea cols="40" class="ui-body" id="reasoner_output"></textarea>			
+			<textarea cols="40" class="ui-body" id="reasoner_output"></textarea>
 		    </div>
 		</div>
 	    </div>

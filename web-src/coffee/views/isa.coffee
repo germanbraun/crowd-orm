@@ -14,7 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
+exports = exports ? this
+exports.views = exports.views ? this
 
 
 IsaOptionsView = Backbone.View.extend(
@@ -38,7 +39,7 @@ IsaOptionsView = Backbone.View.extend(
         viewpos = graph.getCell(@classid).findView(paper).getBBox()
 
         this.$el.css(
-            top: viewpos.height * 3 + viewpos.y,
+            top: viewpos.y + 150,
             left: viewpos.x,
             position: 'absolute',
             'z-index': 1
@@ -55,5 +56,4 @@ IsaOptionsView = Backbone.View.extend(
 
         
 
-exports = exports ? this
-exports.IsaOptionsView = IsaOptionsView
+exports.views.IsaOptionsView = IsaOptionsView
