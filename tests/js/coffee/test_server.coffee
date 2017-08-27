@@ -38,8 +38,8 @@ QUnit.test( "translate_request test", ( assert ) ->
     conn = new ServerConnection( alert_func )
     conn.set_urlprefix("../../web-src/")
     
-    diag = new UMLDiagram(null)
-    diag.add_class(new Class("Hi World"))
+    diag = new model.uml.UMLDiagram(null)
+    diag.add_class(new model.uml.Class("Hi World"))
 
     done = assert.async()    
     conn.request_translation(
@@ -74,8 +74,8 @@ QUnit.test( "satisfiable_request test", ( assert ) ->
     conn = new ServerConnection(alert_func)
     conn.set_urlprefix("../../web-src/")
     
-    diag = new UMLDiagram(null)
-    diag.agregar_clase(new Class("Hi World"))
+    diag = new model.uml.UMLDiagram(null)
+    diag.agregar_clase(new model.uml.Class("Hi World"))
 
     done = assert.async()    
     conn.request_satisfiable(

@@ -19,11 +19,11 @@ QUnit.test("diag.delete_class", (assert) ->
     expected = 2
 
     # preparation   
-    diag = new UMLDiagram();
-    c = new Class("hi world");
-    diag.agregar_clase(new Class("Class1"))
+    diag = new model.uml.UMLDiagram();
+    c = new model.uml.Class("hi world");
+    diag.agregar_clase(new model.uml.Class("Class1"))
     diag.agregar_clase(c)
-    diag.agregar_clase(new Class("Class1"))
+    diag.agregar_clase(new model.uml.Class("Class1"))
 
     # Executing test:
     diag.delete_class(c)
@@ -39,11 +39,11 @@ QUnit.test("diag.delete_by_name", (assert) ->
     expected = 2
 
     # preparation   
-    diag = new UMLDiagram();
-    c = new Class("hi world");
-    diag.agregar_clase(new Class("Class1"))   
+    diag = new model.uml.UMLDiagram();
+    c = new model.uml.Class("hi world");
+    diag.agregar_clase(new model.uml.Class("Class1"))   
     diag.agregar_clase(c);
-    diag.agregar_clase(new Class("Class2"))
+    diag.agregar_clase(new model.uml.Class("Class2"))
 
     # Executing test:
     diag.delete_class_by_name("hi world")
@@ -59,13 +59,13 @@ QUnit.test("diag.delete_by_classid", (assert) ->
     expected = 2
 
     # preparation   
-    diag = new UMLDiagram()
-    fact = new UMLFactory()
+    diag = new model.uml.UMLDiagram()
+    fact = new model.uml.UMLFactory()
     graph = new joint.dia.Graph()
 
-    c1 = new Class("Class1")
-    c = new Class("hi world")
-    c2 = new Class("Class2")
+    c1 = new model.uml.Class("Class1")
+    c = new model.uml.Class("hi world")
+    c2 = new model.uml.Class("Class2")
     # we need to create the classid using the factory object 
     c1.create_joint(fact) 
     c.create_joint(fact)

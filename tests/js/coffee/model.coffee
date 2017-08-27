@@ -29,8 +29,8 @@ QUnit.test( "diag.to_json", ( assert ) ->
 
     # expected = JSON.stringify(expected)
         
-    diag = new UMLDiagram();
-    diag.agregar_clase(new Class("hi world"))
+    diag = new model.uml.UMLDiagram();
+    diag.agregar_clase(new model.uml.Class("hi world"))
     
     # actual = JSON.stringify(diag.to_json())
     actual = diag.to_json()
@@ -64,12 +64,12 @@ QUnit.test( "diag.to_json with links", ( assert ) ->
 
     # expected = JSON.stringify(expected)
         
-    diag = new UMLDiagram()
-    person = new Class("Person")
-    cell = new Class("Cellphones")
+    diag = new model.uml.UMLDiagram()
+    person = new model.uml.Class("Person")
+    cell = new model.uml.Class("Cellphones")
     diag.add_class(person)
     diag.add_class(cell)
-    link = new Link([person, cell], "role")
+    link = new model.uml.Link([person, cell], "role")
     link.set_mult(["1..1", "1..*"])
     diag.agregar_link(link)
     
