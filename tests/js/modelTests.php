@@ -21,5 +21,6 @@
 	<script src="./js/qunit-1.22.0.js"></script>
 	<script src="./js/model.js"></script>
 	<script src="./js/diagram.js"></script>
+	<script src="./js/eer.js"></script>
     </body>
 </html>
