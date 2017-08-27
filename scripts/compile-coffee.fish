@@ -29,11 +29,12 @@ function compile_common --description="Compiles common files"
 	set_color --bold white
 	echo "Compiling CoffeeScripts into Javascript"
 	set_color normal
-	coffee -b --output web-src/js/ --compile web-src/coffee/
+	coffee --output web-src/js/ --compile web-src/coffee/
 end
 
 function merge_model --description="Compiles the model CoffeeScripts."
-	set model_order diagram umldiagram eerdiagram ormdiagram factories mymodel products server_connection
+	# set model_order diagram factories uml/umlfactory uml/umldiagram eerdiagram mymodel products server_connection uml/class uml/generalization uml/link uml/link_with_class
+	set model_order diagram factories uml/umlfactory uml/umldiagram mymodel server_connection uml/class uml/link uml/generalization uml/link_with_class	
 	
 	set_color --bold white
 	echo "Merging model files"
@@ -61,7 +62,7 @@ function compile_model --description="Compiles the model files only and merge it
 	set_color --bold white
 	echo "Compiling Models files into JS"
 	set_color normal
-	coffee -b --output web-src/js/model --compile web-src/coffee/model
+	coffee --output web-src/js/model --compile web-src/coffee/model
 	merge_model
 end
 
