@@ -18,6 +18,7 @@
 
 exports = exports ? this
 exports.model = exports.model ? {}
+exports.model.eer = exports.model.eer ? {}
 
 #
 # An ER diagram representation.
@@ -38,7 +39,7 @@ class ERDiagram extends model.Diagram
         # diagram for apply.
         @cells_deleted = []
         
-        @factory = new model.ERDFactory()
+        @factory = new model.eer.ERDFactory()
 
     get_factory: () ->
         return @factory
@@ -156,7 +157,7 @@ class ERDiagram extends model.Diagram
     add_generalization_objs: (class_parent, class_child, disjoint=false, covering=false) ->
         gen = this.find_IsA_with_parent(class_parent)
         if (gen is undefined) || (gen is null)
-            gen = new model.Generalization(class_parent, [class_child])
+            gen = new model.eer.Generalization(class_parent, [class_child])
             gen.set_disjoint(disjoint)
             gen.set_covering(covering)
             this.agregar_isa(gen)
@@ -182,7 +183,7 @@ class ERDiagram extends model.Diagram
         class_a = this.find_class_by_classid(class_a_id)
         class_b = this.find_class_by_classid(class_b_id)
         
-        newassoc = new model.Link([class_a, class_b], name)
+        newassoc = new model.eer.Link([class_a, class_b], name)
         if (mult isnt null)
             newassoc.set_mult(mult)
         if (roles isnt null)
@@ -194,7 +195,7 @@ class ERDiagram extends model.Diagram
         class_a = this.find_class_by_classid(class_a_id)
         class_b = this.find_class_by_classid(class_b_id)
         
-        newassoc = new model.LinkWithClass([class_a, class_b], name)
+        newassoc = new model.eer.LinkWithClass([class_a, class_b], name)
         if (mult isnt null)
             newassoc.set_mult(mult)
         if (roles isnt null)
@@ -223,7 +224,7 @@ class ERDiagram extends model.Diagram
         if hash_data.attrs == undefined
             hash_data.attrs = []
 
-        newclass = new model.Entity(hash_data.name, hash_data.attrs)
+        newclass = new model.eer.Entity(hash_data.name, hash_data.attrs)
         this.agregar_clase(newclass)
         return newclass
 
@@ -234,7 +235,7 @@ class ERDiagram extends model.Diagram
 
 
     add_attribute: (hash_data) ->
-    	newattribute = new model.Attribute(hash_data.name, hash_data.type)
+    	newattribute = new model.eer.Attribute(hash_data.name, hash_data.type)
     	this.agregar_attribute(newattribute)
     	return newattribute
 
@@ -249,7 +250,7 @@ class ERDiagram extends model.Diagram
         console.log(entity)
         attr = this.find_attr_by_attrid(attribute_id)
         console.log(attr)
-        newrel = new model.LinkAttrToEntity([entity, attr], name)
+        newrel = new model.eer.LinkAttrToEntity([entity, attr], name)
         this.agregar_link(newrel)   	
 
     add_relationship_isa: (class_id, isa_id, name) ->
@@ -257,7 +258,7 @@ class ERDiagram extends model.Diagram
         console.log(entity)
         isa = this.find_isa_by_isaid(isa_id)
         console.log(isa)
-        newlinktoISA = new model.LinkISAToEntity([entity, isa], name)
+        newlinktoISA = new model.eer.LinkISAToEntity([entity, isa], name)
         this.agregar_link(newlinktoISA)
 
     add_relationship_isa_inverse: (isa_id, class_id, name) ->
@@ -265,7 +266,7 @@ class ERDiagram extends model.Diagram
         console.log(entity)
         isa = this.find_isa_by_isaid(isa_id)
         console.log(isa)
-        newlinkfromISA = new model.LinkISAToEntity([isa, entity], name)
+        newlinkfromISA = new model.eer.LinkISAToEntity([isa, entity], name)
         this.agregar_link(newlinkfromISA) 
         
     # @param c {Class instance}. 
@@ -517,4 +518,4 @@ class ERDiagram extends model.Diagram
         this)
 
 
-exports.model.ERDiagram = ERDiagram
+exports.model.eer.ERDiagram = ERDiagram

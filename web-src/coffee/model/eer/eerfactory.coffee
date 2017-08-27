@@ -17,6 +17,7 @@ erd = joint.shapes.erd
 
 exports = exports ? this
 exports.model = exports.model ? {}
+exports.model.eer = exports.model.eer ? {}
 
 # ERD Factory for creating JointJS shapes representing a primitive in
 # its plugins.
@@ -203,5 +204,5 @@ class ERDFactory extends model.Factory
         return link
     
 
-exports.model.ERDFactory = ERDFactory
+exports.model.eer.ERDFactory = ERDFactory
 
