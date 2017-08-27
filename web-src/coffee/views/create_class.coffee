@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+exports = exports ? this
+exports.views = exports.views ? this
+
 
 # Provides elements and events needed for displaying the interface for
 # creating a new class.
@@ -92,5 +95,4 @@ CreateClassView = Backbone.View.extend(
 
         
 
-exports = exports ? this
-exports.CreateClassView = CreateClassView
+exports.views.CreateClassView = CreateClassView

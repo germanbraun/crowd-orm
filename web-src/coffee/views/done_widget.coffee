@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+exports = exports ? this
+exports.views = exports.views ? this
+
 
 # Widget with a "done" button.
 DoneWidget = Backbone.View.extend(
@@ -71,5 +74,5 @@ DoneWidget = Backbone.View.extend(
         this.$el.show()
 )
 
-exports = exports ? this
-exports.DoneWidget = DoneWidget
+
+exports.views.DoneWidget = DoneWidget
