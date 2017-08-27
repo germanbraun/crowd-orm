@@ -51,7 +51,7 @@ class UMLFactory extends model.Factory
         if css_class?
             params.attrs = css_class
 
-        newclass = new model.Class( params )
+        newclass = new uml.Class( params )
             
         return newclass
 

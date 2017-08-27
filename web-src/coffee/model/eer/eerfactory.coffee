@@ -52,16 +52,16 @@ class ERDFactory extends model.Factory
 #       	if css_class?
 #       		params.attrs = css_class
        	
-       	newclass = new model.Entity( params )
+       	newclass = new erd.Entity( params )
             
         return newclass
 
     create_attribute: (attr_name, attr_type, css_class=null) ->
     	
     	if attr_type == 'key'
-    		   newattribute = new model.Key({position: {x:200, y:10}, attrs: {text: {fill: '#ffffff', text: attr_name}}})
+    		   newattribute = new erd.Key({position: {x:200, y:10}, attrs: {text: {fill: '#ffffff', text: attr_name}}})
         else
-       	      newattribute = new model.Normal({position: {x:150, y:150}, attrs: {text: {fill: '#ffffff', text: attr_name,  style: { 'text-shadow': '1px 0 1px #333333' }}}})
+       	      newattribute = new erd.Normal({position: {x:150, y:150}, attrs: {text: {fill: '#ffffff', text: attr_name,  style: { 'text-shadow': '1px 0 1px #333333' }}}})
 
                                    
         return newattribute                
@@ -69,7 +69,7 @@ class ERDFactory extends model.Factory
     create_link_attribute: (class_name, attr_name) ->
     	
         markup_style = ['<path class="connection" stroke="black" d="M 0 0 0 0"/>','<path class="connection-wrap" d="M 0 0 0 0"/>','<g class="labels"/>','<g class="marker-vertices"/>','<g class="marker-arrowheads"/>']
-        myLink = new model.Line({markup: markup_style.join(''), source: {id: attr_name}, target: {id: class_name}})
+        myLink = new erd.Line({markup: markup_style.join(''), source: {id: attr_name}, target: {id: class_name}})
         return myLink
 
     # @param css_links {Hash} A Hash representing the CSS. See JointJS documentation for the attrs attribute.
@@ -81,7 +81,7 @@ class ERDFactory extends model.Factory
         
         isaattr = { text: {text: 'ISA', fill: '#ffffff','letter-spacing': 0,style: { 'text-shadow': '1px 0 1px #333333' }}, polygon: {fill: '#fdb664',stroke: 'none',filter: { name: 'dropShadow',  args: { dx: 0, dy: 2, blur: 1, color: '#333333' }}}}
                   
-        link = new model.ISA({position: { x: 125, y: 200 },attrs: isaattr})
+        link = new erd.ISA({position: { x: 125, y: 200 },attrs: isaattr})
         
         if disjoint || covering
             legend = "{"
