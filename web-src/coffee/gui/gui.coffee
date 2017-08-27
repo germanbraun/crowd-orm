@@ -25,16 +25,25 @@ exports.gui = exports.gui ? {}
 class GUI
     constructor: (@graph, @paper) ->
         @current_gui = new gui.GUIUML(@graph,@paper)
-        @prev_gui = new gui.GUIEER(@graph,@paper)
+        @prev_gui = null 
         @aux_gui = []
         gui.set_current_instance(this)
 
         # Widgets that are the same for all type of GUIImpl.
         # Login
-        @loginwidget = new views.LoginWidgetView({el: $("#loginwidget_placer")})
+        @loginwidget = new login.LoginWidgetView({el: $("#loginwidget_placer")})
         # Save-Load
         # Error reporting widget
         @errorwidget = new views.ErrorWidgetView({el: $("#errorwidget_placer")})
+
+    # Set the previous GUIIMP instance.
+    #
+    # @param guiimp {GUIIMP} A GUIIMP subclass.
+    set_prev_gui: (guiimp) ->
+        # @prev_gui = new gui.GUIEER(@graph,@paper)
+        @prev_gui = guiimp
+        guiimp.graph = @graph
+        guiimp.paper = @paper
 
     to_erd: () ->
         @current_gui.to_erd(this)

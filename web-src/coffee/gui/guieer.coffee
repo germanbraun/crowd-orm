@@ -26,7 +26,7 @@ class GUIEER extends gui.GUIIMPL
     constructor: (@graph,@paper) ->
         @urlprefix = ""
         @diag = new model.eer.ERDiagram(@graph)
-        @state = gui.state_inst.selection_state()
+        @state = gui.get_state().selection_state()
         @crearclase = new views.CreateClassView({el: $("#crearclase1")});
         @editclass = new views.EditClassView({el: $("#editclass1")})
         @classoptions = new views.ClassOptionsView({el: $("#classoptions1")})

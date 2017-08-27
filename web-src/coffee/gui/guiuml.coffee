@@ -34,7 +34,8 @@ class GUIUML extends gui.GUIIMPL
         # @property [UMLDiagram] The user model diagram representation.
         @diag = new model.uml.UMLDiagram(@graph)
         
-        @state = gui.state_inst.selection_state()
+        @state = gui.get_state().selection_state()
+
         @crearclase = new views.CreateClassView({el: $("#crearclase")});
         @editclass = new views.EditClassView({el: $("#editclass")})
         @classoptions = new views.ClassOptionsView({el: $("#classoptions")})

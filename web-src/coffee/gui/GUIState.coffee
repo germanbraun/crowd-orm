@@ -21,7 +21,7 @@ exports.gui = exports.gui ? {}
 # Abstract class that helps determine how the interface
 # should respond to a user action depending on the current
 # state.
-#
+
 # @abstract
 # @namespace gui
 class State
@@ -46,9 +46,21 @@ class State
 
 
 
+exports.gui.State = State
+
+# The gui.State instance currently running.
+#
+# **Don't access this property!*** use gui.get_state().
+#
+# @see gui.get_state()
+# @namespace gui
+exports.gui.gui_inst = null
+
 # The current gui.State instance.
 #
 # @namespace gui
-exports.gui.state_inst = new gui.State()
+exports.gui.get_state = () ->
+    if ! gui.gui_inst?
+       gui.gui_inst = new gui.State()
+    gui.gui_inst
 
-exports.gui.State = State
