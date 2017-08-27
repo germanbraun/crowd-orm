@@ -35,6 +35,11 @@ window.onload = () ->
 
     guiinst = new gui.GUI(graph, paper)
     gui.set_current_instance(guiinst)
+
+    # We add available GUIs. The last will be the current one.
+    # guiinst.add_gui(new gui.GUIEER())
+    gui.gui_instance.add_gui(new gui.GUIUML())
+
     
  
     # Interface
@@ -57,19 +62,22 @@ window.onload = () ->
         
     # CreateClassView instance
     exports = exports ? this
-    
+
+    # Export the graph for debugging.
     exports.graph = graph
+    # Export the paper for debugging.    
     exports.paper = paper
+    # Export the guiinst for easy debugging.
     exports.guiinst = guiinst
 
     # Create a first example class
 
- #UML mode
+    #UML mode
     newclass = new model.uml.Class('Person',["dni : String","firstname : String", "surname : String", "birthdate : Date"],[])
     newclass1 = new model.uml.Class('Student',["id : String", "enrolldate : Date"],[])
     console.log(newclass)
-    guiinst.add_object_type(newclass)
-    guiinst.add_object_type(newclass1)
+    gui.gui_instance.add_object_type(newclass)
+    gui.gui_instance.add_object_type(newclass1)
  #ERD mode
 
 #    newattribute = new Attribute('dni','normal')

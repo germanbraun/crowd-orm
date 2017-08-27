@@ -23,8 +23,20 @@ exports.gui = exports.gui ? {}
 # Central GUI *do-it-all* class...
 #
 class GUIIMPL
-    constructor: (@graph,@paper) ->
-        gui.set_current_instance(this);
+    constructor: (@graph = null, @paper = null) ->
+        gui.set_current_instance(this)
+        @diag = null
+
+        # @param {JointJS.Graph } graph The JointJS Graph used for drawing models.
+    set_graph: (graph) ->
+        @graph = graph
+        if @diag?
+            @diag.set_graph(@graph)
+
+    # @param {JointJS.Paper} paper The JointJS Paper used for drawing views.
+    set_paper: (paper) ->
+        @paper = paper
+
 
     set_urlprefix : (str) ->
 

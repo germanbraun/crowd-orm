@@ -24,10 +24,13 @@ exports.gui = exports.gui ? {}
 #
 class GUI
     constructor: (@graph, @paper) ->
-        @current_gui = new gui.GUIUML(@graph,@paper)
-        @prev_gui = null 
+        # Current and active GUIIMP.
+        @current_gui = null
+        # When changing GUI, this will be the "return" GUI.
+        @prev_gui = null
+        # List of GUIIMP instance available.
+        @lst_guis = []
         @aux_gui = []
-        gui.set_current_instance(this)
 
         # Widgets that are the same for all type of GUIImpl.
         # Login
@@ -35,6 +38,40 @@ class GUI
         # Save-Load
         # Error reporting widget
         @errorwidget = new views.ErrorWidgetView({el: $("#errorwidget_placer")})
+
+    # # GUIIMP management.
+    # Messages for manage GUIIMP instances.
+    # ---
+    #
+    # Add the GUIIMP instance as availables GUIs.
+    #
+    # If the GUIIMP provided is the first, then make it the current.
+    # Works as a stack: if there are already one, make the last added the current.
+    #
+    # @param guiimp {GUIIMP} An instance of a GUIIMP subclass.
+    add_gui: (guiimp) ->
+        @lst_guis.push guiimp
+        guiimp.set_graph(@graph)
+        guiimp.set_paper(@paper)
+        this.set_current(0)
+        this.set_previous(1)
+
+    # Make the nth GUIIMP in the @lst_guis the current GUI.
+    #
+    # Change the current GUI the previous one.
+    # 
+    # @param nth {number} The index of the @lst_guis.
+    set_current: (nth) ->
+        if @lst_guis[nth]?
+            @prev_gui = @current_gui
+            @current_gui = @lst_guis[nth]
+
+    # Make the nth GUIIMP in the @lst_guis the previous GUI.
+    #
+    # @param nth {number} The index of the @lst_guis.
+    set_previous: (nth) ->
+        if @lst_guis[nth]?
+            @prev_gui = @lst_guis[nth]
 
     # Set the previous GUIIMP instance.
     #
