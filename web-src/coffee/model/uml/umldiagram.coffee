@@ -103,6 +103,15 @@ class UMLDiagram extends model.Diagram
             elt.has_parent(parentclass)
         )
 
+    # Find the Link instances with the given name.
+    # 
+    # @param name {string}
+    # @return {Array}
+    find_links_by_name: (name) ->
+        return @links.filter( (elt) ->
+            elt.name == name
+        )
+
     # Add a Generalization link.
     #
     # If a generalziation already exists for the same parent, just add the class
@@ -484,7 +493,7 @@ class UMLDiagram extends model.Diagram
         # Check if all the links are the same
         # all_same = true # not needed
         @links.forEach( (l) ->
-            l2 = diag.find_link_by_name(l.name)
+            l2 = diag.find_links_by_name(l.name)
             # At least one of the links must be the same.
             one_same = false
             l2.forEach( (l2b) ->

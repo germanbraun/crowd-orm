@@ -123,6 +123,36 @@ QUnit.test("Link.same_elts", (assert) ->
 
 )
 
+QUnit.test("UMLDiagram.find_link_by_name", (assert) ->
+    c1 = new model.uml.Class("Person")
+    c2 = new model.uml.Class("Person")
+    c3 = new model.uml.Class("Person2")
+    c4 = new model.uml.Class("Person", ["Attr1", "Attr2"], ["Methods1", "Methods2"])
+    c5 = new model.uml.Class("Person", ["Attr1", "Attr2"], ["Methods1", "Methods2"])
+    c6 = new model.uml.Class("Person", ["Attr1", "Attr2"], ["Methods1", "Methods2", "Methods3"])
+
+    l1 = new model.uml.Link([c1, c3], "link")
+    l2 = new model.uml.Link([c1, c3], "link")
+    l3 = new model.uml.Link([c2, c3], "link")
+    l4 = new model.uml.Link([c1, c3], "link2")
+    l5 = new model.uml.Link([c4, c3], "link")
+
+    diag = new model.uml.UMLDiagram()
+    diag.add_class(c1)
+    diag.add_class(c2)
+    diag.add_class(c3)
+    diag.add_class(c4)
+    diag.add_class(c5)
+    diag.add_class(c6)
+
+    diag.agregar_link(l1)
+    diag.agregar_link(l2)
+    diag.agregar_link(l3)
+    diag.agregar_link(l4)
+    diag.agregar_link(l5)
+
+    assert.ok(diag.find_links_by_name("link"), [l1, l2, l3, l5])
+)
 
 QUnit.test("UMLDiagram.same_elts", (assert) ->
     diag1 = new model.uml.UMLDiagram()
