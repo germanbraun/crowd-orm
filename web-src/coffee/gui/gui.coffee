@@ -29,7 +29,7 @@ class GUI
         # When changing GUI, this will be the "return" GUI.
         @prev_gui = null
         # List of GUIIMP instance available.
-        @lst_guis = []
+        @lst_guis = {}
         @aux_gui = []
 
         # Widgets that are the same for all type of GUIImpl.
@@ -43,56 +43,63 @@ class GUI
     # Messages for manage GUIIMP instances.
     # ---
     #
-    # Add the GUIIMP instance as availables GUIs.
+    # Add the GUIIMP instance as availables GUIs, also make it the current.
     #
-    # If the GUIIMP provided is the first, then make it the current.
-    # Works as a stack: if there are already one, make the last added the current.
-    #
+    # @param name {string} The GUIIMP name.
     # @param guiimp {GUIIMP} An instance of a GUIIMP subclass.
-    add_gui: (guiimp) ->
-        @lst_guis.push guiimp
+    add_gui: (name, guiimp) ->
+        @lst_guis[name] = guiimp
         guiimp.set_graph(@graph)
         guiimp.set_paper(@paper)
-        this.set_current(0)
-        this.set_previous(1)
-
-    # Make the nth GUIIMP in the @lst_guis the current GUI.
-    #
-    # Change the current GUI the previous one.
-    # 
-    # @param nth {number} The index of the @lst_guis.
-    set_current: (nth) ->
-        if @lst_guis[nth]?
-            @prev_gui = @current_gui
-            @current_gui = @lst_guis[nth]
-
-    # Make the nth GUIIMP in the @lst_guis the previous GUI.
-    #
-    # @param nth {number} The index of the @lst_guis.
-    set_previous: (nth) ->
-        if @lst_guis[nth]?
-            @prev_gui = @lst_guis[nth]
-
-    # Set the previous GUIIMP instance.
-    #
-    # @param guiimp {GUIIMP} A GUIIMP subclass.
-    set_prev_gui: (guiimp) ->
-        # @prev_gui = new gui.GUIEER(@graph,@paper)
-        @prev_gui = guiimp
-        guiimp.graph = @graph
-        guiimp.paper = @paper
+        this.switch_to_gui(name)
 
     to_erd: () ->
         @current_gui.to_erd(this)
 
     to_metamodel: () ->
 
+    # Make the nth GUIIMP in the @lst_guis the current GUI.
+    #
+    # Change the current GUI the previous one.
+    #
+    # @param name {string} The GUI name.
+    switch_to_gui: (name) ->
+        if @lst_guis[name]?
+            @prev_gui = @current_gui
+            @current_gui = @lst_guis[name]
+
+    # Make the GUIIMP instance that it is in the @lst_guis as the previous GUI.
+    #
+    # @param name {name} The name key of the @lst_guis.
+    set_previous: (name) ->
+        if @lst_guis[name]?
+            @prev_gui = @lst_guis[name]
+
+    # Set the previous GUIIMP instance that may not be added to my @lst_guis.
+    #
+    # @param guiimp {GUIIMP} A GUIIMP subclass instance.
+    set_prev_gui: (guiimp) ->
+        # @prev_gui = new gui.GUIEER(@graph,@paper)
+        @prev_gui = guiimp
+        guiimp.graph = @graph
+        guiimp.paper = @paper
+
+    # Switch to the previous GUIIMP.
+    switch_to_prev: () ->
+        @aux_gui = @current_gui
+        @current_gui = @prev_gui
+        @prev_gui = @aux_gui        
+
+    # Simply change the current with the previous.
+    #
+    # @todo Support for more GUIs and @lst_guis.
+    # @deprecated When there are more than two GUI, we don't know which one is the previous. Use switch_to_gui().
     switch_to_erd: () -> 
-#        @current_gui.hide_umldiagram_page()
+        # @current_gui.hide_umldiagram_page()
         @aux_gui = @current_gui
         @current_gui = @prev_gui
         @prev_gui = @aux_gui
-#        @current_gui.show_eerdiagram_page()
+        # @current_gui.show_eerdiagram_page()
     
     update_metamodel: (data) ->
         @current_gui.update_metamodel(data)
@@ -102,7 +109,7 @@ class GUI
     # Show the user a "wait" message while the server process the model.
     # 
     # @param strategy {String} The strategy name to use for formalize the model.
-    # @param syntax {String} The output sintax format.
+    # @param syntax {String} The output syntax format.
     translate_formal: (strategy, syntax) ->
         @current_gui.translate_formal(strategy, syntax)
 
