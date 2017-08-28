@@ -1,4 +1,4 @@
-# uml.coffee --
+# test_uml.coffee --
 # Copyright (C) 2017 Giménez, Christian
 
 # This program is free software: you can redistribute it and/or modify
@@ -188,6 +188,10 @@ QUnit.test("UMLDiagram.same_elts", (assert) ->
     assert.notEqual(diag1, diag2)
 )
 
+# Test the import UML diagram feature.
+#
+# UMLDiagram.same_elts() function must work because is used for comparing the
+# results with the expected value.
 QUnit.test("UMLDiagram.import_json", (assert) ->
     expected = new model.uml.UMLDiagram()
     c1 = new model.uml.Class("Person")
@@ -223,9 +227,8 @@ QUnit.test("UMLDiagram.import_json", (assert) ->
     actual = new model.uml.UMLDiagram()
     actual.import_json(json)
     
-    assert.equal(actual, expected, "UMLDiagram.import_json")
+    assert.ok(actual.same_elts(expected), "UMLDiagram.import_json same_elts must work as it is used for comparing the expected value.")
 )
-
 
 QUnit.test("UMLDiagram.to_json", ( assert ) ->
     expected =
