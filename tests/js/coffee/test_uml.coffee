@@ -1,5 +1,5 @@
-# diagram.coffee --
-# Copyright (C) 2016 Giménez, Christian
+# uml.coffee --
+# Copyright (C) 2017 Giménez, Christian
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-QUnit.test("diag.delete_class", (assert) ->
+QUnit.test("UMLDiagram.delete_class", (assert) ->
     expected = 2
 
     # preparation   
@@ -35,7 +35,7 @@ QUnit.test("diag.delete_class", (assert) ->
     
 )
 
-QUnit.test("diag.delete_by_name", (assert) ->
+QUnit.test("UMLDiagram.delete_by_name", (assert) ->
     expected = 2
 
     # preparation   
@@ -55,7 +55,7 @@ QUnit.test("diag.delete_by_name", (assert) ->
     
 )
 
-QUnit.test("diag.delete_by_classid", (assert) ->
+QUnit.test("UMLDiagram.delete_by_classid", (assert) ->
     expected = 2
 
     # preparation   
@@ -224,4 +224,68 @@ QUnit.test("UMLDiagram.import_json", (assert) ->
     actual.import_json(json)
     
     assert.equal(actual, expected, "UMLDiagram.import_json")
+)
+
+
+QUnit.test("UMLDiagram.to_json", ( assert ) ->
+    expected =
+        classes: [
+            name: "hi world",
+            attrs: [],
+            methods: [],
+            position:
+                x: 20,
+                y: 20
+            ]
+        links: []
+
+    # expected = JSON.stringify(expected)
+        
+    diag = new model.uml.UMLDiagram();
+    diag.agregar_clase(new model.uml.Class("hi world"))
+    
+    # actual = JSON.stringify(diag.to_json())
+    actual = diag.to_json()
+    assert.propEqual(actual , expected, "dia.to_json" )
+)
+
+
+QUnit.test("UMLDiagram.to_json with links", ( assert ) ->
+    expected =
+        classes: [
+            {name: "Person",
+            attrs: [],
+            methods: [],
+            position:
+                x: 20,
+                y: 20},
+            {name: "Cellphones",
+            attrs: [],
+            methods: [],
+            position:
+                x: 20,
+                y: 20}
+            ]
+        links: [{
+            classes: ["Person", "Cellphones"],
+            multiplicity: ["1..1", "1..*"],
+            roles: [null, null],
+            name: "role",
+            type: "association"}]
+
+
+    # expected = JSON.stringify(expected)
+        
+    diag = new model.uml.UMLDiagram()
+    person = new model.uml.Class("Person")
+    cell = new model.uml.Class("Cellphones")
+    diag.add_class(person)
+    diag.add_class(cell)
+    link = new model.uml.Link([person, cell], "role")
+    link.set_mult(["1..1", "1..*"])
+    diag.agregar_link(link)
+    
+    # actual = JSON.stringify(diag.to_json())
+    actual = diag.to_json()
+    assert.propEqual(actual , expected, "dia.to_json" )
 )

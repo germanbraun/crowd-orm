@@ -19,6 +19,6 @@
 	<div id="qunit"></div>
 	<div id="qunit-fixture"></div>
 	<script src="./js/qunit-1.22.0.js"></script>
-	<script src="./js/eer.js"></script>
+	<script src="./js/test_eer.js"></script>
     </body>
 </html>
