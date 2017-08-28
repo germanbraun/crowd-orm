@@ -485,7 +485,10 @@ class UMLDiagram extends model.Diagram
         all_same = true
         @clases.forEach( (c) ->
             c2 = diag.find_class_by_name(c.name)
-            all_same = all_same && c2.same_elts(c)
+            if c2?
+                all_same = all_same && c2.same_elts(c)
+            else
+                all_same = false
         )
         if !all_same
             return false
