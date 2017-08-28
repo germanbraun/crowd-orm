@@ -139,7 +139,23 @@ class Class extends model.MyModel
     notify_change_position: (model) ->
         @on_change_objs.forEach( (obj, indx, arr) ->
             obj.update_position()
-        )   
-               
+        )
+
+    same_elts: (other) ->
+        all_same = super(other) && @unsatisfiable == other.unsatisfiable
+        if @attrs.length != other.attrs.length
+            return false
+        @attrs.forEach( (s) ->
+            all_same = all_same && other.attrs.includes(s)
+        )
+
+        if @methods.length != other.methods.length
+            return false
+        @methods.forEach( (s) ->
+            all_same = all_same && other.methods.includes(s)
+        )
+
+        return all_same
+
 
 exports.model.uml.Class = Class

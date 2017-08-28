@@ -123,6 +123,30 @@ class Link extends model.MyModel
                     @mult,
                     @roles))
 
+    # Compare the relevant elements of these links.
+    # 
+    # @param other {Link}
+    # @return {boolean}
+    same_elts: (other) ->
+        if !super(other)
+            return false
+        if @classes.length != other.classes.length
+            return false
+
+        # it must have the same order!
+        all_same = true
+        for index in [0...@classes.length]
+            do (index) =>
+                all_same = all_same && @classes[index].same_elts(other.classes[index])
+
+        all_same = all_same && v == other.mult[k] for v,k in @mult
+            
+        all_same = all_same && v == other.roles[k] for v,k in @roles
+        
+
+        return all_same
+            
+
 Link.get_new_name = () ->
     if Link.name_number == undefined
         Link.name_number = 0
