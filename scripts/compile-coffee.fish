@@ -116,7 +116,7 @@ end
 
 function merge_gui --description="Compiles GUI scripts"
 
-	set order gui guiimpl guiuml GUIState associationstate isastate selectionstate
+	set order gui guiimpl guiuml guieer GUIState associationstate isastate selectionstate
 	
 	set_color --bold white
 	echo "Merging GUI files"
