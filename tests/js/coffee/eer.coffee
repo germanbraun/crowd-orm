@@ -18,8 +18,14 @@
 QUnit.test("EERDiagram.to_json", (assert) ->
     expected =
         classes: [
-            {name: "PhoneCall"},
-            {name: "Phone"}
+            {name: "PhoneCall",
+            position:
+                x: 20,
+                y: 20},
+            {name: "Phone",
+            position:
+                x: 20,
+                y: 20}
             ],
         attributes: [
             {name: "date", type: "normal"},
