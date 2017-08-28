@@ -37,7 +37,7 @@ window.onload = () ->
     gui.set_current_instance(guiinst)
 
     # We add available GUIs. The last will be the current one.
-    # guiinst.add_gui('eer', new gui.GUIEER())
+    guiinst.add_gui('eer', new gui.GUIEER())
     gui.gui_instance.add_gui('uml', new gui.GUIUML())
     
  
