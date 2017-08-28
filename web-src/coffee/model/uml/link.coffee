@@ -23,7 +23,7 @@ exports.model.uml = exports.model.uml ? {}
 # This give support for two (using from() or to()) or
 # more classes.
 #
-# @namespace model
+# @namespace model.uml
 class Link extends model.MyModel 
     # @param classes {Array<Class>} An array of Class objects,
     #   the first class is the "from" and the second is the "to" class
