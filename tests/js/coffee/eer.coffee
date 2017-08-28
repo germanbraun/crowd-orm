@@ -34,7 +34,7 @@ QUnit.test("EERDiagram.to_json", (assert) ->
             type: "attribute"}
             ]
 
-    diag = model.eer.EERDiagram()
+    diag = new model.eer.ERDiagram()
 
     c1 = new model.eer.Entity("PhoneCall")
     c2 = new model.eer.Entity("Phone")
