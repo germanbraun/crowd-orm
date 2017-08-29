@@ -54,13 +54,13 @@ exports.gui.State = State
 #
 # @see gui.get_state()
 # @namespace gui
-exports.gui.gui_inst = null
+exports.gui.state_inst = null
 
 # The current gui.State instance.
 #
 # @namespace gui
 exports.gui.get_state = () ->
-    if ! gui.gui_inst?
-       gui.gui_inst = new gui.State()
-    gui.gui_inst
+    if ! gui.state_inst?
+       gui.state_inst = new gui.State()
+    gui.state_inst
 
