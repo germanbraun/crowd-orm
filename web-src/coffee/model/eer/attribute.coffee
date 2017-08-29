@@ -19,7 +19,7 @@ exports.model = exports.model ? {}
 exports.model.eer = exports.model.eer ? {}
 
 
-# @namespace model 
+# @namespace model.eer
 class Attribute extends model.MyModel
 	
 	constructor: (name, @type=null) ->

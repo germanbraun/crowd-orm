@@ -127,13 +127,11 @@ class MyModel
     # **event handler** .
     # 
     # Redefine this function if necessary.
-    update_position: () ->        
+    update_position: () ->
+
+    same_elts: (other) ->
+        other.name == @name
 
 
        
 exports.model.MyModel = MyModel
-
-
-
-
-

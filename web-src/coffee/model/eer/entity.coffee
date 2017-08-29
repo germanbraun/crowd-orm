@@ -21,7 +21,7 @@ exports.model.eer = exports.model.eer ? {}
 
 # An Entity from our model ERD diagram.
 #
-# @namespace model
+# @namespace model.eer
 class Entity extends model.MyModel 
     # @param name {String}
     # @param attrs {Array<String>} Array representing the attributes names.

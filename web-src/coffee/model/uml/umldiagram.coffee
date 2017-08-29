@@ -103,6 +103,15 @@ class UMLDiagram extends model.Diagram
             elt.has_parent(parentclass)
         )
 
+    # Find the Link instances with the given name.
+    # 
+    # @param name {string}
+    # @return {Array}
+    find_links_by_name: (name) ->
+        return @links.filter( (elt) ->
+            elt.name == name
+        )
+
     # Add a Generalization link.
     #
     # If a generalziation already exists for the same parent, just add the class
@@ -459,6 +468,45 @@ class UMLDiagram extends model.Diagram
         @cells_deleted = []
         @cells_nuevas = []
 
+    # # Comparing Diagrams
+    # ---
+    #
+    # Two diagram are equivalents if has the same classes and links with
+    # the same names and attributes.
+    #
+    # @return {boolean} 
+    same_elts: (diag) ->
+        if @clases.length != diag.clases.length
+            return false
+        if @links.length != diag.links.length
+            return false
+
+        # Check if all classes are the same
+        all_same = true
+        @clases.forEach( (c) ->
+            c2 = diag.find_class_by_name(c.name)
+            if c2?
+                all_same = all_same && c2.same_elts(c)
+            else
+                all_same = false
+        )
+        if !all_same
+            return false
+
+        # Check if all the links are the same
+        # all_same = true # not needed
+        @links.forEach( (l) ->
+            l2 = diag.find_links_by_name(l.name)
+            # At least one of the links must be the same.
+            one_same = false
+            l2.forEach( (l2b) ->
+                one_same = one_same || l.same_elts(l2b)
+            )
+            all_same = all_same && one_same
+        )
+        
+        return all_same
+        
 
         
 exports.model.uml.UMLDiagram = UMLDiagram
