@@ -117,4 +117,4 @@ class Generalization extends model.uml.Link
 
 
 
-exports.model.Generalization = Generalization
+exports.model.uml.Generalization = Generalization
