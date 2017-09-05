@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>CoffeeScript API Documentation</title>
+  <script src='../javascript/application.js'></script>
+  <script src='../javascript/search.js'></script>
+  <link rel='stylesheet' href='../stylesheets/application.css' type='text/css'>
+</head>
+  <body>
+    <div id='base' data-path='../'></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='../extra/README.md.html' title='Wicom-qdod'>
+      Wicom-qdod
+    </a>
+    &raquo;
+    <a href='../alphabetical_index.html' title='Index'>
+      Index
+    </a>
+    &raquo;
+    <span class='title'>MyModel</span>
+  </div>
+</div>
+    <div id='content'>
+      <h1>
+        Class:
+        MyModel
+      </h1>
+      <table class='box'>
+        <tr>
+          <td>Defined in:</td>
+          <td>web-src&#47;coffee&#47;model&#47;mymodel.coffee</td>
+        </tr>
+      </table>
+      <h2>Overview</h2>
+      <div class='docstring'>
+  <h1 id="on-subclass">On subclass</h1><p>Re-implement this functions:</p><ul>
+<li>constructor</li>
+<li>create_joint</li>
+<li>others?</li>
+</ul>
+
+</div>
+<div class='tags'>
+</div>
+      <h2>Instance Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#get_joint-dynamic'>
+        #
+(?)
+<b>get_joint</b><span>(factory = null, csstheme = null)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Return the joint model. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#create_joint-dynamic'>
+        #
+(Array&lt;JointJS::Cells&gt;)
+<b>create_joint</b><span>(factory, csstheme = null)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Create a JointJS view class and assign it to @joint variable. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#update_view-dynamic'>
+        #
+(void)
+<b>update_view</b><span>(paper)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Update the view if the @joint is already created and associated to this class.
+
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#has_classid-dynamic'>
+        #
+(boolean)
+<b>has_classid</b><span>(classid)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#has_attrid-dynamic'>
+        #
+(boolean)
+<b>has_attrid</b><span>(attrid)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#has_isaid-dynamic'>
+        #
+(boolean)
+<b>has_isaid</b><span>(isaid)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#get_classid-dynamic'>
+        #
+(string)
+<b>get_classid</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Return the classid value of the associated JointJS View object. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#get_attributeid-dynamic'>
+        #
+(void)
+<b>get_attributeid</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#get_isaid-dynamic'>
+        #
+(void)
+<b>get_isaid</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#to_json-dynamic'>
+        #
+(void)
+<b>to_json</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Return a JSON object representation with only the information. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#update_position-dynamic'>
+        #
+(void)
+<b>update_position</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Simply update the coordinates of this object to its proper position. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#same_elts-dynamic'>
+        #
+(void)
+<b>same_elts</b><span>(other)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+</ul>
+      <h2>Constructor Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='constructor-dynamic'>
+      #
+(void)
+<b>constructor</b><span>(name)</span>
+      <br>
+    </p>
+    <div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>name</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+    </li>
+  </ul>
+</div>
+  </div>
+</div>
+      <h2>Instance Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='get_joint-dynamic'>
+      #
+(?)
+<b>get_joint</b><span>(factory = null, csstheme = null)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Return the joint model. Create it if it is null and a factory
+is provided.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>factory</span>
+      <span class='type'>
+        (
+          <tt>Factory subclass</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Concrete Factory like UMLFactory or ERDFactory instance. </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>?</tt>
+      )
+      &mdash;
+      <span class='desc'>{Array<JointJS::Cells> An array of Cells elements. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='create_joint-dynamic'>
+      #
+(Array&lt;JointJS::Cells&gt;)
+<b>create_joint</b><span>(factory, csstheme = null)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <div class='note'>
+    <strong>Note:</strong>
+    Please redefine this method in the subclass. 
+  </div>
+  <p>Create a JointJS view class and assign it to @joint variable.</p><h1 id="caution">Caution</h1><p>The first element is used for get_classid, representing it as the JointJS
+visual element of this instance. If this instance has more than one
+JointJS cells, the first one is the most important.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>factory</span>
+      <span class='type'>
+        (
+          <tt>Factory subclass</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>A concrete Factory for creating the view instance. </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>Array&lt;JointJS::Cells&gt;</tt>
+      )
+      &mdash;
+      <span class='desc'>An array of Cells elements. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='update_view-dynamic'>
+      #
+(void)
+<b>update_view</b><span>(paper)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Update the view if the @joint is already created and
+associated to this class.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='has_classid-dynamic'>
+      #
+(boolean)
+<b>has_classid</b><span>(classid)</span>
+      <br>
+    </p>
+    <div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>boolean</tt>
+      )
+      &mdash;
+      <span class='desc'>true if this Joint Model has the given classid string. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='has_attrid-dynamic'>
+      #
+(boolean)
+<b>has_attrid</b><span>(attrid)</span>
+      <br>
+    </p>
+    <div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>boolean</tt>
+      )
+      &mdash;
+      <span class='desc'>true if this Joint Model has the given attrid string. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='has_isaid-dynamic'>
+      #
+(boolean)
+<b>has_isaid</b><span>(isaid)</span>
+      <br>
+    </p>
+    <div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>boolean</tt>
+      )
+      &mdash;
+      <span class='desc'>true if this Joint Model has the given isaid string. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='get_classid-dynamic'>
+      #
+(string)
+<b>get_classid</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Return the classid value of the associated JointJS View object.
+Use <a href='../class/MyModel.html#create_joint-dynamic'>MyModel#create_joint</a> for creating a JointJS object.</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>string</tt>
+      )
+      &mdash;
+      <span class='desc'>A string for the JointJS object or false if it wasn&#39;t initialized. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='get_attributeid-dynamic'>
+      #
+(void)
+<b>get_attributeid</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='get_isaid-dynamic'>
+      #
+(void)
+<b>get_isaid</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='to_json-dynamic'>
+      #
+(void)
+<b>to_json</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <div class='note'>
+    <strong>Note:</strong>
+    Redefine this method in the subclass. 
+  </div>
+  <p>Return a JSON object representation with only the information.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='update_position-dynamic'>
+      #
+(void)
+<b>update_position</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Simply update the coordinates of this object to its proper position.
+Useful when the object has other dependants, that should move accordingly
+to one or another.</p><p>Consider it could be called when the user change the position of the
+JointJS Object or any associated MyModel/Joint object to update the
+position of this object accordingly to them. So, this is also an
+<strong>event handler</strong> .</p><p>Redefine this function if necessary.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='same_elts-dynamic'>
+      #
+(void)
+<b>same_elts</b><span>(other)</span>
+      <br>
+    </p>
+    
+  </div>
+</div>
+    </div>
+    <div id='footer'>
+  By
+  <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
+    Codo
+  </a>
+  2.1.2
+  &#10034;
+  Press H to see the keyboard shortcuts
+  &#10034;
+  <a href='http://twitter.com/netzpirat' target='_parent'>@netzpirat</a>
+  &#10034;
+  <a href='http://twitter.com/_inossidabile' target='_parent'>@_inossidabile</a>
+</div>
+<iframe id='search_frame'></iframe>
+<div id='fuzzySearch'>
+  <input type='text'>
+  <ol></ol>
+</div>
+<div id='help'>
+  <p>
+    Quickly fuzzy find classes, mixins, methods, file:
+  </p>
+  <ul>
+    <li>
+      <span>T</span>
+      Open fuzzy finder dialog
+    </li>
+  </ul>
+  <p>
+    Control the navigation frame:
+  </p>
+  <ul>
+    <li>
+      <span>L</span>
+      Toggle list view
+    </li>
+    <li>
+      <span>C</span>
+      Show class list
+    </li>
+    <li>
+      <span>I</span>
+      Show mixin list
+    </li>
+    <li>
+      <span>F</span>
+      Show file list
+    </li>
+    <li>
+      <span>M</span>
+      Show method list
+    </li>
+    <li>
+      <span>E</span>
+      Show extras list
+    </li>
+  </ul>
+  <p>
+    You can focus and blur the search input:
+  </p>
+  <ul>
+    <li>
+      <span>S</span>
+      Focus search input
+    </li>
+    <li>
+      <span>Esc</span>
+      Blur search input
+    </li>
+  </ul>
+</div>
+  </body>
+</html>
