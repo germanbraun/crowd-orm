@@ -42,6 +42,8 @@ class GUI
         # Details page elements
         @owllinkinsert = new views.OWLlinkInsertView({el: $("#owllink_placer")})
         @exportjsonwidget = new views.ExportJSONView({el: $("#exportjson_placer")})
+        @importjsonwidget = new views.ImportJSONView({el: $("#importjsonwidget_placer")})
+
         $("#details-page").enhanceWithin()
 
     # # GUIIMP management.
@@ -160,7 +162,12 @@ class GUI
     hide_options: () ->
         @current_gui.hide_options()
 
-    hide_toolbar: () -> @current_gui.hide_toolbar()
+    #
+    # Hide the left side "Tools" toolbar
+    #
+    hide_toolbar: () ->
+        $("#tools-panel [data-rel=close]").click()
+
 
     hide_umldiagram_page: () -> @current_gui.hide_umldiagram_page()
     
@@ -227,8 +234,13 @@ class GUI
         json = JSON.parse(jsonstr)
         # Importing the Diagram
         this.import_json(json)
-    
-    show_import_json: () -> @current_gui.show_import_json()
+
+    #
+    # Show the "Import JSON" modal dialog.
+    #
+    show_import_json: () ->
+        this.hide_toolbar()
+        @importjsonwidget.show()
 
     # Reset all the diagram and the input forms.
     #

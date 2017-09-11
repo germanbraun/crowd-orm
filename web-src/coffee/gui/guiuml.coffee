@@ -43,7 +43,6 @@ class GUIUML extends gui.GUIIMPL
         @isaoptions = new views.IsaOptionsView({el: $("#isaoptions")})
         
         @trafficlight = new views.TrafficLightsView({el: $("#trafficlight")})
-        @importjsonwidget = new views.ImportJSONView({el: $("#importjsonwidget_placer")})
 
         @serverconn = new ServerConnection( (jqXHR, status, text) ->
             exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
@@ -84,7 +83,7 @@ class GUIUML extends gui.GUIIMPL
     # @see Class
     # @see Diagram#add_class
     add_object_type: (hash_data) ->
-        this.hide_toolbar()
+        gui.gui_instance.hide_toolbar()
         @diag.add_class(hash_data)
 
     add_attribute: (hash_data) ->
@@ -262,13 +261,6 @@ class GUIUML extends gui.GUIIMPL
         strat = @crearclase.get_translation_strategy()
         this.translate_formal(strat, format)
 
-    #
-    # Hide the left side "Tools" toolbar
-    #
-    hide_toolbar: () ->
-        $("#tools-panel [data-rel=close]").click()
-
-
     hide_umldiagram_page: () -> $("#diagram-page").css("display","none")
 
     show_umldiagram_page: () -> $("#diagram-page").css("display","block")
@@ -297,13 +289,6 @@ class GUIUML extends gui.GUIIMPL
     set_selection_state: () ->
         @state = gui.state_inst.selection_state()
 
-    #
-    # Show the "Import JSON" modal dialog.
-    #
-    show_import_json: () ->
-        this.hide_toolbar()
-        @importjsonwidget.show()
-
     # Generate a JSON string representation of the current diagram.
     #
     # @return {string} A JSON string.
@@ -324,7 +309,7 @@ class GUIUML extends gui.GUIIMPL
     # Reset all the diagram and the input forms.
     reset_all: () ->
         @diag.reset()
-        this.hide_toolbar()
+        gui.gui_instance.hide_toolbar()
 
     to_metamodel: () ->
         $.mobile.loading("show", text: "Metamodelling...", textVisible: true, textonly: false)
