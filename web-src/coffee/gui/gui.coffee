@@ -39,6 +39,11 @@ class GUI
         # Error reporting widget
         @errorwidget = new views.ErrorWidgetView({el: $("#errorwidget_placer")})
 
+        # Details page elements
+        @owllinkinsert = new views.OWLlinkInsertView({el: $("#owllink_placer")})
+        @exportjsonwidget = new views.ExportJSONView({el: $("#exportjson_placer")})
+        $("#details-page").enhanceWithin()
+
     # # GUIIMP management.
     # Messages for manage GUIIMP instances.
     # ---
@@ -173,24 +178,64 @@ class GUI
             
     # Update and show the "Export JSON String" section.
     show_export_json: () ->
-         @current_gui.show_export_json()
+        @exportjsonwidget.set_jsonstr(@current_gui.diag_to_json())
+        $(".exportjson_details").collapsible("expand")
+        this.change_to_details_page()
 
     # Refresh the content of the "Export JSON String" section.
     #
     # No need to show it.
     refresh_export_json: () ->
-        @current_gui.refresh_export_json()
-        
+        @exportjsonwidget.set_jsonstr(@current_gui.diag_to_json())
+
+    # Show the "Insert OWLlink" section.
+    show_insert_owllink: () ->
+        this.change_to_details_page()
+
+    change_to_details_page: () ->
+        $.mobile.changePage("#details-page", transition: "slide")
+
+    change_to_diagram_page: () ->
+        $.mobile.changePage("#diagram-page", transition: "slide", reverse: true)
+
 
     on_cell_clicked: (cellview, event, x, y) -> @current_gui.on_cell_clicked(cellview,event,x,y)
-    
-    import_json: (json_obj) -> @current_gui.import_json(json_obj)
 
-    import_jsonstr: (data) -> @current_gui.import_jsonstr(data)
+    # Import a JSON object.
+    #
+    # This will not reset the current diagram, just add more elements.
+    #
+    # Same as import_jsonstr, but it accept a JSON object as parameter.
+    #
+    # @param json_obj {JSON object} A JSON object.
+    # @see import_jsonstr
+    import_json: (json_obj) ->
+        @current_gui.import_json(json_obj)
+        # Importing owllink
+        @owllinkinsert.append_owllink("\n" + json.owllink)
+
+    # Import a JSON string.
+    #
+    # This will not reset the current diagram, just add more elements.
+    #
+    # # GUIIMPL Subclasses
+    # This messages does not need to be reimplemented in GUIIMPL subclasses
+    #
+    # @param jsonstr {String} a JSON string, like the one returned by diag_to_json().
+    # @see import_json
+    import_jsonstr: (jsonstr) ->
+        json = JSON.parse(jsonstr)
+        # Importing the Diagram
+        this.import_json(json)
     
     show_import_json: () -> @current_gui.show_import_json()
-    
-    reset_all: () -> @current_gui.reset_all()
+
+    # Reset all the diagram and the input forms.
+    #
+    # Reset the diagram and the "OWLlink Insert" input field.
+    reset_all: () ->
+        @owllinkinsert.set_owllink("")
+        @current_gui.reset_all()
 
     # Check if the model is satisfiable sending a POST to the server.
     check_satisfiable: () ->
@@ -209,6 +254,13 @@ class GUI
     show_error: (status, error) ->
         $.mobile.loading("hide")
         @errorwidget.show(status, error)
+
+    # Set the OWLlink dara at the "Insert OWLlink" section.
+    #
+    # @param str {string} The OWLlink data.
+    set_insert_owllink: (str) ->
+        @owllinkinsert.set_owllink(str)
+
 
 
 

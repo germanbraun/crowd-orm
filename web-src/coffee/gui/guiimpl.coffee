@@ -266,8 +266,15 @@ class GUIIMPL
     #
     # This will not reset the current diagram, just add more elements.
     #
+    # # Subclasses
+    # This message doesn't need to be reimplemented.
+    # 
     # @param jsonstr {String} a JSON string, like the one returned by diag_to_json().
+    # @see GUI#import_jsonstr
     import_jsonstr: (jsonstr) ->
+        json = JSON.parse(jsonstr)
+        # Importing the Diagram
+        this.import_json(json)
 
 
     # Import a JSON object.
@@ -276,7 +283,11 @@ class GUIIMPL
     #
     # Same as import_jsonstr, but it accept a JSON object as parameter.
     #
+    # # Subclasses
+    # Reimplement for loading the diagram.
+    #
     # @param json_obj {JSON object} A JSON object.
+    # @see GUI#import_json
     import_json: (json_obj) ->
 
 

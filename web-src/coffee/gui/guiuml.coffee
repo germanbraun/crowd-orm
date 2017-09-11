@@ -41,17 +41,16 @@ class GUIUML extends gui.GUIIMPL
         @classoptions = new views.ClassOptionsView({el: $("#classoptions")})
         @relationoptions = new views.RelationOptionsView({el: $("#relationoptions")})
         @isaoptions = new views.IsaOptionsView({el: $("#isaoptions")})
+        
         @trafficlight = new views.TrafficLightsView({el: $("#trafficlight")})
-        @owllinkinsert = new views.OWLlinkInsertView({el: $("#owllink_placer")})
         @importjsonwidget = new views.ImportJSONView({el: $("#importjsonwidget_placer")})
-        @exportjsonwidget = new views.ExportJSONView({el: $("#exportjson_placer")})
 
         @serverconn = new ServerConnection( (jqXHR, status, text) ->
             exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
         )
 
         $("#diagram-page").enhanceWithin()
-        $("#details-page").enhanceWithin()
+
 
     set_urlprefix: (str) -> @urlprefix = str
 
@@ -227,7 +226,7 @@ class GUIUML extends gui.GUIIMPL
             $("#owllink_source").show()
             $("#html-output").hide()
         $.mobile.loading("hide")
-        this.change_to_details_page()
+        gui.gui_instance.change_to_details_page()
 
     update_metamodel: (data) ->
     	console.log(data)
@@ -235,7 +234,7 @@ class GUIUML extends gui.GUIIMPL
     	$("#owllink_source").show() 
     	$("#html-output").hide()
     	$.mobile.loading("hide")
-    	change_to_details_page()
+    	gui.gui_instance.change_to_details_page()
 
     # Translate the current model into a formalization.
     #
@@ -263,11 +262,6 @@ class GUIUML extends gui.GUIIMPL
         strat = @crearclase.get_translation_strategy()
         this.translate_formal(strat, format)
 
-    change_to_details_page: () ->
-        $.mobile.changePage("#details-page", transition: "slide")
-
-    change_to_diagram_page: () ->
-        $.mobile.changePage("#diagram-page", transition: "slide", reverse: true)
     #
     # Hide the left side "Tools" toolbar
     #
@@ -303,18 +297,6 @@ class GUIUML extends gui.GUIIMPL
     set_selection_state: () ->
         @state = gui.state_inst.selection_state()
 
-    # Update and show the "Export JSON String" section.
-    show_export_json: () ->
-        @exportjsonwidget.set_jsonstr(this.diag_to_json())
-        $(".exportjson_details").collapsible("expand")
-        this.change_to_details_page()
-
-    # Refresh the content of the "Export JSON String" section.
-    #
-    # No need to show it.
-    refresh_export_json: () ->
-        @exportjsonwidget.set_jsonstr(this.diag_to_json())
-
     #
     # Show the "Import JSON" modal dialog.
     #
@@ -322,32 +304,12 @@ class GUIUML extends gui.GUIIMPL
         this.hide_toolbar()
         @importjsonwidget.show()
 
-    ##
-    # Show the "Insert OWLlink" section.
-    show_insert_owllink: () ->
-        this.change_to_details_page()
-
-    ##
-    # Set the OWLlink addon at the "Insert OWLlink" section.
-    set_insert_owllink: (str) ->
-        @owllinkinsert.set_owllink(str)
-
+    # Generate a JSON string representation of the current diagram.
+    #
+    # @return {string} A JSON string.
     diag_to_json: () ->
         json = @diag.to_json()
-                # json.owllink = @owllinkinsert.get_owllink()
         return JSON.stringify(json)
-
-    # Import a JSON string.
-    #
-    # This will not reset the current diagram, just add more elements.
-    #
-    # @param jsonstr {String} a JSON string, like the one returned by diag_to_json().
-    import_jsonstr: (jsonstr) ->
-        json = JSON.parse(jsonstr)
-        # Importing owllink
-        @owllinkinsert.append_owllink("\n" + json.owllink)
-        # Importing the Diagram
-        this.import_json(json)
 
     # Import a JSON object.
     #
@@ -360,11 +322,8 @@ class GUIUML extends gui.GUIIMPL
         @diag.import_json(json_obj)
 
     # Reset all the diagram and the input forms.
-    #
-    # Reset the diagram and the "OWLlink Insert" input field.
     reset_all: () ->
         @diag.reset()
-        @owllinkinsert.set_owllink("")
         this.hide_toolbar()
 
     to_metamodel: () ->
