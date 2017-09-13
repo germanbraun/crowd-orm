@@ -97,7 +97,8 @@ class UMLImporter
                     @diagram.add_generalization(
                         class_parent,
                         classes_children,
-                        disjoint, covering)
+                        disjoint, covering,
+                        elt.name)
                                 
         this)
 

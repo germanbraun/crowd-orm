@@ -122,7 +122,7 @@ class UMLDiagram extends model.Diagram
     # @param class_parent {string, object} The parent class Id string or the class_parent Class object.
     # @param class_child_id {string, array of strings, array of objects, object} The child class string, an array of class Ids strings, an array of Class objects or the child object.
     #
-    add_generalization: (class_parent, class_childs, disjoint=false, covering=false) ->
+    add_generalization: (class_parent, class_childs, disjoint=false, covering=false, name = null) ->
         class_parent_obj = null
         class_child_obj = null
 
@@ -139,7 +139,7 @@ class UMLDiagram extends model.Diagram
             # class_child is an Array, add one by one...
             class_childs.forEach( (child) ->
                 # child could be a string or obj, it doesn't matter! :-)
-                this.add_generalization(class_parent, child, disjoint, covering)
+                this.add_generalization(class_parent, child, disjoint, covering, name)
             this)
         else if typeof(class_childs) == "string"
             # class_child is an Id string
@@ -149,7 +149,7 @@ class UMLDiagram extends model.Diagram
             class_child_obj = class_childs
 
         if class_child_obj? and class_parent_obj?
-            this.add_generalization_objs(class_parent_obj, class_child_obj, disjoint, covering)
+            this.add_generalization_objs(class_parent_obj, class_child_obj, disjoint, covering, name)
 
     # Add a Generalization link.
     #
@@ -159,10 +159,10 @@ class UMLDiagram extends model.Diagram
     # @param class_parent {Class instance} A Class object.
     # @param class_child {Class instance} A Class object.
     #
-    add_generalization_objs: (class_parent, class_child, disjoint=false, covering=false) ->
+    add_generalization_objs: (class_parent, class_child, disjoint=false, covering=false, name = null) ->
         gen = this.find_IsA_with_parent(class_parent)
         if (gen is undefined) || (gen is null)
-            gen = new model.uml.Generalization(class_parent, [class_child])
+            gen = new model.uml.Generalization(class_parent, [class_child], name)
             gen.set_disjoint(disjoint)
             gen.set_covering(covering)
             this.agregar_link(gen)
