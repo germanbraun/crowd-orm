@@ -32,7 +32,7 @@ class UMLImporter
         else
             @_json = json
         @_normalize()
-
+    
     # Import all classes and links without clearing the diagram
     do_import: () ->
         @import_classes()
@@ -60,16 +60,16 @@ class UMLImporter
         @_json.classes.forEach(
             (elt, index, arr) ->                
                 console.log("class " + elt.name)
-            	@diagram.add_class(elt)
-        this)
+                @diagram.add_class(elt)
+            this)
 
     import_links: () ->
         @_json.links.forEach(
             (elt, index, arr) ->
                 if elt.type is "association"
                     console.log("association " + elt.classes[0] + " - " + elt.classes[1])
-                    class_a = this.find_class_by_name(elt.classes[0])
-                    class_b = this.find_class_by_name(elt.classes[1])
+                    class_a = @diagram.find_class_by_name(elt.classes[0])
+                    class_b = @diagram.find_class_by_name(elt.classes[1])
                     if elt.associated_class?
                         @diagram.add_association_class(
                             class_a.get_classid(),
@@ -87,10 +87,10 @@ class UMLImporter
                 if elt.type is "generalization"
                     console.log("generalization " + elt.parent + " childs:")
                     console.log(elt.classes)
-                    class_parent = this.find_class_by_name(elt.parent)
+                    class_parent = @diagram.find_class_by_name(elt.parent)
                     classes_children = elt.classes.map(
                         (childname) ->
-                            this.find_class_by_name(childname)
+                            @diagram.find_class_by_name(childname)
                     this)
                     disjoint = elt.constraint.includes("disjoint")
                     covering = elt.constraint.includes("covering")
@@ -100,5 +100,6 @@ class UMLImporter
                         disjoint, covering)
                                 
         this)
+
 
 exports.model.uml.UMLImporter = UMLImporter

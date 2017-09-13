@@ -414,7 +414,7 @@ class UMLDiagram extends model.Diagram
     # 
     # @todo Better programmed it would be if we pass a JSON part to the constructor of each model class. Leaving the responsability of each MyModel class to create itself.
     import_json: (json) ->
-        importer = model.uml.UMLImporter(this, json)
+        importer = new model.uml.UMLImporter(this, json)
         importer.do_import()
 
     # # Joint Graph Management
