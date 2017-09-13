@@ -233,9 +233,11 @@ class UMLDiagram extends model.Diagram
                 y: 20
         
         newclass = new model.uml.Class(hash_data.name, hash_data.attrs, hash_data.methods)
-        newclass.get_joint()[0].position(
-            hash_data.position.x,
-            hash_data.position.y)
+        joints = newclass.get_joint()
+        if joints? and joints.length[0]?
+            joints[0].position(
+                hash_data.position.x,
+                hash_data.position.y)
         this.agregar_clase(newclass)
         return newclass
 
