@@ -41,7 +41,6 @@ class UMLImporter
     # Normalize the JSON into a more usable format.
     # 
     # Change attributes format for each classes:
-    # 
     # From `{name: Namestr, datatype: Typestr}` into  a string "Name:Typestr"
     _normalize: () ->
         @_json.classes.forEach( (elt, index, arr) ->
@@ -53,7 +52,8 @@ class UMLImporter
                     array.push(att)
                     return array
                 )
-            elt.attrs = array        
+            elt.attrs = array
+        )
 
     # Normalize the JSON provided and import all its classes.
     import_classes: () ->

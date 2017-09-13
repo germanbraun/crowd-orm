@@ -412,61 +412,8 @@ class UMLDiagram extends model.Diagram
     # 
     # @todo Better programmed it would be if we pass a JSON part to the constructor of each model class. Leaving the responsability of each MyModel class to create itself.
     import_json: (json) ->
-        json.classes.forEach(
-            (elt, index, arr) ->
-            	if elt.attrs?
-                    array = []
-                    attr = elt.attrs
-                    attr.forEach( (cv,index,attr) -> 
-                        att = "#{attr[index].name}:#{attr[index].datatype}"
-                        array.push(att)
-                        return array
-                    )
-                elt.attrs = []
-                elt.attrs = array
-                console.log("class " + elt.name)
-            	c = this.add_class(elt)
-            	c.get_joint()[0].position(
-                    elt.position.x,
-                    elt.position.y)
-        this)
-        # associations
-        json.links.forEach(
-            (elt, index, arr) ->
-                if elt.type is "association"
-                    console.log("association " + elt.classes[0] + " - " + elt.classes[1])
-                    class_a = this.find_class_by_name(elt.classes[0])
-                    class_b = this.find_class_by_name(elt.classes[1])
-                    if elt.associated_class?
-                        this.add_association_class(
-                            class_a.get_classid(),
-                            class_b.get_classid(),
-                            elt.name,
-                            elt.multiplicity,
-                            elt.roles)
-                    else
-                        this.add_association(
-                            class_a.get_classid(),
-                            class_b.get_classid(),
-                            elt.name,
-                            elt.multiplicity,
-                            elt.roles)
-                if elt.type is "generalization"
-                    console.log("generalization " + elt.parent + " childs:")
-                    console.log(elt.classes)
-                    class_parent = this.find_class_by_name(elt.parent)
-                    classes_children = elt.classes.map(
-                        (childname) ->
-                            this.find_class_by_name(childname)
-                    this)
-                    disjoint = elt.constraint.includes("disjoint")
-                    covering = elt.constraint.includes("covering")
-                    this.add_generalization(
-                        class_parent,
-                        classes_children,
-                        disjoint, covering)
-                                
-        this)
+        importer = model.uml.UMLImporter(this, json)
+        importer.do_import()
 
     # # Joint Graph Management
     # ---
