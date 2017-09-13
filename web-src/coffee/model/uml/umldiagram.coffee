@@ -171,7 +171,7 @@ class UMLDiagram extends model.Diagram
             gen.create_joint(@factory, csstheme)
             @cells_nuevas.push(gen.get_joint_for_child(class_child))
             this.actualizar_graph()
-    
+   
     # @param class_a_id {string} the ID of the first class.
     # @param class_b_id {string} the ID of the second class.
     # @param name {string} optional. The name of the association.
@@ -208,10 +208,14 @@ class UMLDiagram extends model.Diagram
     # * `name`    (mandatory)
     # * `attribs` (optional)
     # * `methods` (optional)
+    # * `position` (optional)
     #
     # @example Adding a class
-    #   diagram_instance.add_class({name: "class A"})
-    #   diagram_instance.add_class({name: "class B", ["attrib1", "attrib2"], ["method1", "method2"]})
+    #
+    # ```
+    # diagram_instance.add_class({name: "class A"})
+    # diagram_instance.add_class({name: "class B", attrs: ["attrib1", "attrib2"], methods: ["method1", "method2"], position: {x: 20, y: 20}})
+    # ```
     # 
     #   
     # @param hash_data {Hash} data information for creating the new {Class} instance.
@@ -223,8 +227,15 @@ class UMLDiagram extends model.Diagram
             hash_data.attrs = []
         if ! hash_data.methods?
             hash_data.methods = []
+        if ! hash_data.position?
+            hash_data.position =
+                x: 20,
+                y: 20
         
         newclass = new model.uml.Class(hash_data.name, hash_data.attrs, hash_data.methods)
+        newclass.get_joint()[0].position(
+            hash_data.position.x,
+            hash_data.position.y)
         this.agregar_clase(newclass)
         return newclass
 
@@ -404,15 +415,16 @@ class UMLDiagram extends model.Diagram
         json.classes.forEach(
             (elt, index, arr) ->
             	if elt.attrs?
-            		array = []
-            		attr = elt.attrs
-            		attr.forEach( (cv,index,attr) -> 
-            			att = "#{attr[index].name}:#{attr[index].datatype}"
-            			array.push(att)
-            			return array
-            			)
-            	elt.attrs = []
-            	elt.attrs = array
+                    array = []
+                    attr = elt.attrs
+                    attr.forEach( (cv,index,attr) -> 
+                        att = "#{attr[index].name}:#{attr[index].datatype}"
+                        array.push(att)
+                        return array
+                    )
+                elt.attrs = []
+                elt.attrs = array
+                console.log("class " + elt.name)
             	c = this.add_class(elt)
             	c.get_joint()[0].position(
                     elt.position.x,
@@ -422,6 +434,7 @@ class UMLDiagram extends model.Diagram
         json.links.forEach(
             (elt, index, arr) ->
                 if elt.type is "association"
+                    console.log("association " + elt.classes[0] + " - " + elt.classes[1])
                     class_a = this.find_class_by_name(elt.classes[0])
                     class_b = this.find_class_by_name(elt.classes[1])
                     if elt.associated_class?
@@ -439,6 +452,8 @@ class UMLDiagram extends model.Diagram
                             elt.multiplicity,
                             elt.roles)
                 if elt.type is "generalization"
+                    console.log("generalization " + elt.parent + " childs:")
+                    console.log(elt.classes)
                     class_parent = this.find_class_by_name(elt.parent)
                     classes_children = elt.classes.map(
                         (childname) ->
