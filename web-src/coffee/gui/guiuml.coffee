@@ -271,6 +271,7 @@ class GUIUML extends gui.GUIIMPL
     #   the starting class of the association.
     # @param mult {array} An array of two strings representing the cardinality from and to.
     set_association_state: (class_id, mult) ->
+        @hide_options()
         @state = gui.state_inst.association_state()
         @state.set_cellStarter(class_id)
         @state.set_cardinality(mult)
@@ -281,6 +282,7 @@ class GUIUML extends gui.GUIIMPL
     # @param disjoint {Boolean} optional. If the relation has the disjoint constraint.
     # @param covering {Boolean} optional. If the relation has the disjoint constraint.
     set_isa_state: (class_id, disjoint=false, covering=false) ->
+        @hide_options()
         @state = gui.state_inst.isa_state()
         @state.set_cellStarter(class_id)
         @state.set_constraint(disjoint, covering)
