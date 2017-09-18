@@ -41,6 +41,7 @@ class GUIUML extends gui.GUIIMPL
         @classoptions = new views.ClassOptionsView({el: $("#classoptions")})
         @relationoptions = new views.RelationOptionsView({el: $("#relationoptions")})
         @isaoptions = new views.IsaOptionsView({el: $("#isaoptions")})
+        @toolbar = new views.ToolsUML({el: $("#lang_tools")})
         
         @trafficlight = new views.TrafficLightsView({el: $("#trafficlight")})
 

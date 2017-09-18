@@ -44,7 +44,8 @@ require_once('template.php');
 			<li><a href="#verbalisation-page" data-transition="slide" class="ui-btn ui-btn-icon-right ui-icon-forward">Verbalisation</a></li>
    			<li><a href="#user-page" data-transition="slide" class="ui-btn ui-icon-user ui-btn-icon-right">Profile</a></li>
 		    </ul>
-		</div>
+		</div> <!-- /navbar -->
+		<div id="lang_tools"></div>	
 	    </div> <!-- /header -->
 
 	    <!-- ---------------------------------------------------------------------- -->
@@ -52,6 +53,7 @@ require_once('template.php');
 	    <div role="main" class="ui-content">
 		<div id="errorwidget_placer"></div>
 		<div id="importjsonwidget_placer"></div>
+
 		<div id="container"></div>
 
 
@@ -70,6 +72,8 @@ require_once('template.php');
 		insert_template("exportjson");
 		insert_template("tools_navbar");
 		insert_template("done_widget");
+		// Language toolbars
+		insert_template("tools_uml");
 		?>
 
 		<div id="editclass"></div>
