@@ -23,28 +23,35 @@ exports.gui = exports.gui ? {}
 # Central GUI *do-it-all* class...
 #
 class GUIEER extends gui.GUIIMPL
+
+    # Create a GUIERR instance.
+    #
+    # @param {JointJS.Graph } graph The JointJS Graph used for drawing models.
+    # @param {JointJS.Paper} paper The JointJS Paper used for drawing views.
     constructor: (@graph,@paper) ->
         @urlprefix = ""
         @diag = new model.eer.ERDiagram(@graph)
+
         @state = gui.get_state().selection_state()
-        @crearclase = new views.CreateClassView({el: $("#crearclase1")});
-        @editclass = new views.EditClassView({el: $("#editclass1")})
-        @classoptions = new views.ClassOptionsView({el: $("#classoptions1")})
-        @relationoptions = new views.RelationOptionsView({el: $("#relationoptions1")})
-        @isaoptions = new views.IsaOptionsView({el: $("#isaoptions1")})
-        @trafficlight = new views.TrafficLightsView({el: $("#trafficlight")})
-        @owllinkinsert = new views.OWLlinkInsertView({el: $("#owllink_placer")})
-        @importjsonwidget = new views.ImportJSONView({el: $("#importjsonwidget_placer1")})
-        @exportjsonwidget = new views.ExportJSONView({el: $("#exportjson_placer")})
-        
+
+        @crearclase = new views.eer.CreateEntityView({el: $("#crearclase")});
+        @editclass = new views.eer.EditEntityView({el: $("#editclass")})
+        @classoptions = new views.eer.EntityOptionsView({el: $("#classoptions")})
+        @relationoptions = new views.eer.RelationOptionsEERView({el: $("#relationoptions")})
+#        @isaoptions = new views.IsaOptionsView({el: $("#isaoptions")})
+#        @trafficlight = new views.TrafficLightsView({el: $("#trafficlight")})
+#        @owllinkinsert = new views.OWLlinkInsertView({el: $("#owllink_placer")})
+#        @importjsonwidget = new views.ImportJSONView({el: $("#importjsonwidget_placer")})
+#        @exportjsonwidget = new views.ExportJSONView({el: $("#exportjson_placer")})
+
         @serverconn = new ServerConnection( (jqXHR, status, text) ->
             exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
         )
-                
+
         $("#diagram-page").enhanceWithin()
         $("#details-page").enhanceWithin()
-        
-    
+
+
 #    switch_gui : (gui_instance) ->
 #		gui = @meta2uml.get_gui()
 #		if gui == "UML"
@@ -76,7 +83,7 @@ class GUIEER extends gui.GUIIMPL
 
     set_editclass_classid: (model_id) ->
         # editclass = new EditClassView({el: $("#editclass")})
-        @editclass.set_classid(model_id)        
+        @editclass.set_classid(model_id)
 
     #
     # Add a class to the diagram.
@@ -100,7 +107,7 @@ class GUIEER extends gui.GUIIMPL
         @diag.delete_class_by_classid(class_id)
 
     # Change a class name identified by its classid.
-    # 
+    #
     # @example Getting a classid
     #   < graph.getCells()[0].id
     #   > "5777cd89-45b6-407e-9994-5d681c0717c1"
@@ -112,19 +119,19 @@ class GUIEER extends gui.GUIIMPL
         # cell = @graph.getCell(class_id)
         # cell.set("name", name)
         @diag.rename_class(class_id, name)
-        
+
         # Update the view
         @diag.update_view(class_id, @paper)
 
     #
     # Add a simple association from A to B.
     # Then, set the selection state for restoring the interface.
-    # 
+    #
     # @example Getting a classid
     #   < graph.getCells()[0].id
     #   > "5777cd89-45b6-407e-9994-5d681c0717c1"
     #
-    # @param class_a_id {string} 
+    # @param class_a_id {string}
     # @param class_b_id {string}
     # @param name {string} optional. The association name.
     # @param mult {array} optional. An array of two string with the cardinality from class and to class b.
@@ -140,7 +147,7 @@ class GUIEER extends gui.GUIIMPL
     add_relationship_isa: (class_id, isa_id, name) ->
     	@diag.add_relationship_isa(class_id, isa_id, name)
 
-    	
+
     add_relationship_isa_inverse: (class_id, isa_id, name=null)->
     	@diag.add_relationship_isa_inverse(isa_id, class_id, name)
 
@@ -148,7 +155,7 @@ class GUIEER extends gui.GUIIMPL
     #
     # @param class_parent_id {string} The parent class Id.
     # @param class_child_id {string} The child class Id.
-    # 
+    #
     # @todo Support various children on parameter class_child_id.
     add_subsumption: (class_parent_id, class_child_id, disjoint=false, covering=false) ->
         @diag.add_generalization(class_parent_id, class_child_id, disjoint, covering)
@@ -179,7 +186,7 @@ class GUIEER extends gui.GUIIMPL
     update_satisfiable: (data) ->
         console.log(data)
         obj = JSON.parse(data);
-        
+
         this.set_trafficlight(obj)
         $("#reasoner_input").html(obj.reasoner.input)
         $("#reasoner_output").html(obj.reasoner.output)
@@ -211,12 +218,12 @@ class GUIEER extends gui.GUIIMPL
     # @param classes_list {Array<String>} a list of classes names.
     set_satisfiable: (classes_list) ->
         @diag.set_satisfiable(classes_list)
-        
+
     #
     # Send a POST to the server for checking if the diagram is
     # satisfiable.
     check_satisfiable: () ->
-        $.mobile.loading("show", 
+        $.mobile.loading("show",
             text: "Consulting server...",
             textVisible: true,
             textonly: false
@@ -238,7 +245,7 @@ class GUIEER extends gui.GUIIMPL
     # @see CreateClassView#get_translation_format
     update_translation: (data) ->
         format = @crearclase.get_translation_format()
-        if format == "html" 
+        if format == "html"
             $("#html-output").html(data)
             $("#html-output").show()
             $("#owllink_source").hide()
@@ -246,11 +253,11 @@ class GUIEER extends gui.GUIIMPL
             $("#owllink_source").text(data)
             $("#owllink_source").show()
             $("#html-output").hide()
-        
+
         # Goto the Translation text
         $.mobile.loading("hide")
         this.change_to_details_page()
-        
+
         console.log(data)
 
     ##
@@ -258,7 +265,7 @@ class GUIEER extends gui.GUIIMPL
     # and the api/translate/berardi.php translator URL.
     translate_owllink: () ->
         format = @crearclase.get_translation_format()
-        $.mobile.loading("show", 
+        $.mobile.loading("show",
             text: "Consulting server...",
             textVisible: true,
             textonly: false
@@ -276,15 +283,15 @@ class GUIEER extends gui.GUIIMPL
             reverse: true)
     #
     # Hide the left side "Tools" toolbar
-    # 
+    #
     hide_toolbar: () ->
         $("#tools-panel [data-rel=close]").click()
 
 
     hide_eerdiagram_page: () -> $("#diagram-eer-page").css("display","none")
-    	
+
     show_eerdiagram_page: () -> $("#diagram-eer-page").css("display","block")
-    	
+
     # Change the interface into a "new association" state.
     #
     # @param class_id {string} The id of the class that triggered it and thus,
@@ -303,7 +310,7 @@ class GUIEER extends gui.GUIIMPL
     set_isa_state: (class_id, disjoint=false, covering=false) ->
         @state = gui.state_inst.isa_state()
         @state.set_cellStarter(class_id)
-        @state.set_constraint(disjoint, covering) 
+        @state.set_constraint(disjoint, covering)
 
     # Change the interface into a "selection" state.
     set_selection_state: () ->
@@ -376,8 +383,8 @@ class GUIEER extends gui.GUIIMPL
 
     update_metamodel: (data) ->
     	console.log(data)
-    	$("#owllink_source").text(data) 
-    	$("#owllink_source").show() 
+    	$("#owllink_source").text(data)
+    	$("#owllink_source").show()
     	$("#html-output").hide()
     	$.mobile.loading("hide")
     	this.change_to_details_page()

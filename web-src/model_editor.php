@@ -13,10 +13,10 @@ require_once('template.php');
 	<script src="./js/backbone_views.js"></script>
 	<script src="./js/model.js"></script>
 	<script src="./js/interface.js"></script>
-   	<script src="./js/login.js"></script>
-   	<script src="./js/gui.js"></script>
+  <script src="./js/login.js"></script>
+  <script src="./js/gui.js"></script>
 
-	
+
 
 	<?php if (array_key_exists('prueba', $_GET) && $_GET['prueba'] == 1){ ?>
 	    <script src="./js/prueba.js"></script>
@@ -68,7 +68,7 @@ require_once('template.php');
 		insert_template("insertowllink");
 		insert_template("importjson");
 		insert_template("exportjson");
-		insert_template("tools_navbar");
+		insert_template("tools_navbar_erd");
 		insert_template("done_widget");
 		?>
 
@@ -136,7 +136,7 @@ require_once('template.php');
 		    </div>
 		</div>
 	    </div>
-	    
+
 	    <div data-role="footer"></div>
 	</div> <!-- /page -->
 
@@ -166,13 +166,13 @@ require_once('template.php');
 		    </div>
 		</div>
 	    </div>
-	    
+
 	    <div data-role="footer"></div>
 	</div> <!-- /page -->
-	
-	
-<!-- ERD diagram page -->	
-	
+
+
+<!-- ERD diagram page -->
+
 
 
 	<!-- -------------------------------------------------------------------------------- -->
