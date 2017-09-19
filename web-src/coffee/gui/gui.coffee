@@ -57,6 +57,7 @@ class GUI
         @current_gui.to_erd(this)
 
     to_metamodel: () ->
+        @current_gui.to_metamodel(this)
 
     # Make the nth GUIIMP in the @lst_guis the current GUI.
     #
@@ -88,26 +89,26 @@ class GUI
     switch_to_prev: () ->
         @aux_gui = @current_gui
         @current_gui = @prev_gui
-        @prev_gui = @aux_gui        
+        @prev_gui = @aux_gui
 
     # Simply change the current with the previous.
     #
     # @todo Support for more GUIs and @lst_guis.
     # @deprecated When there are more than two GUI, we don't know which one is the previous. Use switch_to_gui().
-    switch_to_erd: () -> 
+    switch_to_erd: () ->
         # @current_gui.hide_umldiagram_page()
         @aux_gui = @current_gui
         @current_gui = @prev_gui
         @prev_gui = @aux_gui
         # @current_gui.show_eerdiagram_page()
-    
+
     update_metamodel: (data) ->
         @current_gui.update_metamodel(data)
 
     # Translate the current model into a formalization.
-    # 
+    #
     # Show the user a "wait" message while the server process the model.
-    # 
+    #
     # @param strategy {String} The strategy name to use for formalize the model.
     # @param syntax {String} The output syntax format.
     translate_formal: (strategy, syntax) ->
@@ -119,58 +120,58 @@ class GUI
 
     update_translation: (data) -> @current_gui.update_translation(data)
 
-    add_object_type: (name) -> 
+    add_object_type: (name) ->
         @current_gui.add_object_type(name)
 
     add_attribute: (name) ->
         @current_gui.add_attribute(name)
-        
-    add_relationship: (class_a_id, class_b_id, name, mult) -> 
+
+    add_relationship: (class_a_id, class_b_id, name, mult) ->
         @current_gui.add_relationship(class_a_id, class_b_id, name, mult)
 
     add_relationship_attr: (class_id, attribute_id, name) ->
         @current_gui.add_relationship_attr(class_id, attribute_id, name)
 
-    add_relationship_isa: (class_id, isa_id, name)-> 
+    add_relationship_isa: (class_id, isa_id, name)->
         @current_gui.add_relationship_isa(class_id, isa_id, name)
 
-    add_relationship_isa_inverse: (class_id, isa_id, name)-> 
+    add_relationship_isa_inverse: (class_id, isa_id, name)->
         @current_gui.add_relationship_isa_inverse(class_id, isa_id, name)
-                
-    add_subsumption: (class_parent_id, class_child_id, disjoint, covering) -> 
+
+    add_subsumption: (class_parent_id, class_child_id, disjoint, covering) ->
         @current_gui.add_subsumption(class_parent_id, class_child_id, disjoint, covering)
-    
+
     edit_class_name: (class_id, name) -> @current_gui.edit_class_name(class_id, name)
 
     delete_class: (class_id) -> @current_gui.delete_class(class_id)
 
-    set_isa_state: (class_id, disjoint, covering) -> 
-        @current_gui.set_isa_state(class_id, disjoint, covering)        
+    set_isa_state: (class_id, disjoint, covering) ->
+        @current_gui.set_isa_state(class_id, disjoint, covering)
 
     set_options_classid: (model_id) ->
         @current_gui.set_options_classid(model_id)
 
     set_association_state: (class_id, mult) -> @current_gui.set_association_state(class_id, mult)
-                
+
     hide_options: () ->
         @current_gui.hide_options()
 
     hide_toolbar: () -> @current_gui.hide_toolbar()
 
     hide_umldiagram_page: () -> @current_gui.hide_umldiagram_page()
-    
+
     show_umldiagram_page: () -> @current_gui.show_umldiagram_page()
 
     hide_eerdiagram_page: () -> @current_gui.eerdiagram_page()
-    
+
     show_eerdiagram_page: () -> @current_gui.eerdiagram_page()
-        
+
     set_editclass_classid: (model_id) ->
         @current_gui.set_editclass_classid(model_id)
-        
+
     set_selection_state: () ->
         @current_gui.set_selection_state()
-            
+
     # Update and show the "Export JSON String" section.
     show_export_json: () ->
          @current_gui.show_export_json()
@@ -180,16 +181,16 @@ class GUI
     # No need to show it.
     refresh_export_json: () ->
         @current_gui.refresh_export_json()
-        
+
 
     on_cell_clicked: (cellview, event, x, y) -> @current_gui.on_cell_clicked(cellview,event,x,y)
-    
+
     import_json: (json_obj) -> @current_gui.import_json(json_obj)
 
     import_jsonstr: (data) -> @current_gui.import_jsonstr(data)
-    
+
     show_import_json: () -> @current_gui.show_import_json()
-    
+
     reset_all: () -> @current_gui.reset_all()
 
     # Check if the model is satisfiable sending a POST to the server.
@@ -213,9 +214,9 @@ class GUI
 
 
 # Current GUI instance.
-# 
+#
 # An instance must be running!
-# 
+#
 # Better use gui.set_current_instance()
 #
 # @see set_current_instance()
@@ -236,12 +237,12 @@ exports.gui.set_current_instance = (gui_instance) ->
 # @namespace gui
 #
 # Switch to the ERD interface and diagram.
-# 
+#
 # This is sooo bad, but the context of a $.post callback function
 # differs from the source caller class.
 #
 # We need to set a global gui instance variable with one GUI.gui instance.
-exports.gui.switch_to_erd = () -> 
+exports.gui.switch_to_erd = () ->
     gui_instance.aux_gui = gui_instance.current_gui
     gui_instance.current_gui = gui_instance.prev_gui
     gui_instance.prev_gui = gui_instance.aux_gui

@@ -25,20 +25,20 @@ exports.model.uml = exports.model.uml ? {}
 #
 # @namespace model.uml
 class UMLFactory extends model.Factory
-   
+
     constructor: () ->
 
 
     #     @param [hash] css_class A CSS class definition in a
     #     Javascript hash. See the JointJS documentation and demos.
-    # 
-    # @return [joint.shapes.uml.Class] 
+    #
+    # @return [joint.shapes.uml.Class]
     create_class: (class_name, attribs, methods, css_class=null) ->
         console.log(attribs)
         console.log(methods)
         params =
             position: {x: 20, y: 20}
-            size: {width: 220, height: 100}
+            size: {width: 175, height: 100}
             name: class_name
             attributes: attribs
             methods: methods
@@ -47,19 +47,19 @@ class UMLFactory extends model.Factory
                     fill: '#ff8450'
                     stroke: '#fff'
                 '.uml-class-name-text':
-                    fill: '#000000'                    
+                    fill: '#000000'
         if css_class?
             params.attrs = css_class
 
         newclass = new uml.Class( params )
-            
+
         return newclass
 
     # Create an association links.
-    # 
+    #
     # @param mult [array] The multiplicity strings.
     # @param roles [array] An array of two strings with the roles names.
-    # 
+    #
     # @return [joint.dia.Link]
     create_association: (class_a_id, class_b_id, name = null, css_links = null, mult = null, roles = null) ->
         link = new joint.dia.Link(
@@ -97,9 +97,9 @@ class UMLFactory extends model.Factory
         if str_labels[1] isnt null
             labels[1] =
                 position: 0.5
-                attrs: 
+                attrs:
                     text: {text: str_labels[1], fill: '#0000ff'}
-                    rect: {fill: '#ffffff'} 
+                    rect: {fill: '#ffffff'}
 
         # from and to association roles and mult
         if str_labels[0] isnt null
@@ -113,7 +113,7 @@ class UMLFactory extends model.Factory
                 position: 0.9,
                 attrs:
                     text: {text: str_labels[2], fill: '#0000ff'},
-                    rect: {fill: '#ffffff'}                
+                    rect: {fill: '#ffffff'}
 
         link.set({labels: labels})
         return link
@@ -124,7 +124,7 @@ class UMLFactory extends model.Factory
     # @return [joint.shapes.uml.Generalization]
     create_generalization: (class_a_id, class_b_id, css_links = null, disjoint=false, covering=false) ->
         labels = []
-        
+
         link = new joint.shapes.uml.Generalization(
             source: {id: class_b_id}
             target: {id: class_a_id}
@@ -146,9 +146,9 @@ class UMLFactory extends model.Factory
                 text:
                     text: legend
                     fill: '#0000ff'
-                rect: 	
+                rect:
                     fill: '#ffffff'
-                    
+
         ])
 
         link.set({labels: labels})
@@ -164,8 +164,8 @@ class UMLFactory extends model.Factory
 
 
     # Create an association class.
-    # 
-    # 
+    #
+    #
     # @see #create_class
     create_association_class: (class_name, css_class = null) ->
         return this.create_class(class_name, css_class)
@@ -190,4 +190,3 @@ class UMLFactory extends model.Factory
 
 
 exports.model.uml.UMLFactory = UMLFactory
-

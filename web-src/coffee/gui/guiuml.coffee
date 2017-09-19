@@ -22,8 +22,8 @@ exports.gui = exports.gui ? {}
 #
 # Central GUI *do-it-all* class...
 #
-class GUIUML extends gui.GUIIMPL  
-    
+class GUIUML extends gui.GUIIMPL
+
     # Create a GUIUML instance.
     #
     # @param {JointJS.Graph } graph The JointJS Graph used for drawing models.
@@ -33,7 +33,7 @@ class GUIUML extends gui.GUIIMPL
         @urlprefix = ""
         # @property [UMLDiagram] The user model diagram representation.
         @diag = new model.uml.UMLDiagram(@graph)
-        
+
         @state = gui.get_state().selection_state()
 
         @crearclase = new views.CreateClassView({el: $("#crearclase")});
@@ -231,8 +231,8 @@ class GUIUML extends gui.GUIIMPL
 
     update_metamodel: (data) ->
     	console.log(data)
-    	$("#owllink_source").text(data) 
-    	$("#owllink_source").show() 
+    	$("#owllink_source").text(data)
+    	$("#owllink_source").show()
     	$("#html-output").hide()
     	$.mobile.loading("hide")
     	change_to_details_page()
@@ -250,13 +250,13 @@ class GUIUML extends gui.GUIIMPL
             textonly: false
         )
         json = JSON.stringify(@diag.to_json())
-        @serverconn.request_translation(json, syntax, strategy, (data) -> 
+        @serverconn.request_translation(json, syntax, strategy, (data) ->
             gui.gui_instance.update_translation(data)
         )
 
     # Event handler for translate diagram to OWLlink using Ajax
     # and the api/translate/berardi.php translator URL.
-    # 
+    #
     # @deprecated Use translate_formal() instead.
     translate_owllink: (gui_instance) ->
         format = @crearclase.get_translation_format()
@@ -285,6 +285,7 @@ class GUIUML extends gui.GUIIMPL
     #   the starting class of the association.
     # @param mult {array} An array of two strings representing the cardinality from and to.
     set_association_state: (class_id, mult) ->
+        @hide_options()
         @state = gui.state_inst.association_state()
         @state.set_cellStarter(class_id)
         @state.set_cardinality(mult)
@@ -295,6 +296,7 @@ class GUIUML extends gui.GUIIMPL
     # @param disjoint {Boolean} optional. If the relation has the disjoint constraint.
     # @param covering {Boolean} optional. If the relation has the disjoint constraint.
     set_isa_state: (class_id, disjoint=false, covering=false) ->
+        @hide_options()
         @state = gui.state_inst.isa_state()
         @state.set_cellStarter(class_id)
         @state.set_constraint(disjoint, covering)
