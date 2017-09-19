@@ -139,7 +139,6 @@ class GUIUML extends gui.GUIIMPL
     # @todo Support various children on parameter class_child_id.
     add_subsumption: (class_parent_id, class_child_id, disjoint=false, covering=false) ->
         @diag.add_generalization(class_parent_id, class_child_id, disjoint, covering)
-        this.set_selection_state()
 
     #
     # Put the traffic light on green.

@@ -43,6 +43,7 @@ class GUI
         @owllinkinsert = new views.OWLlinkInsertView({el: $("#owllink_placer")})
         @exportjsonwidget = new views.ExportJSONView({el: $("#exportjson_placer")})
         @importjsonwidget = new views.ImportJSONView({el: $("#importjsonwidget_placer")})
+        @donewidget = new views.DoneWidget({el: $("#donewidget")})
 
         $("#details-page").enhanceWithin()
 
@@ -205,8 +206,16 @@ class GUI
     change_to_diagram_page: () ->
         $.mobile.changePage("#diagram-page", transition: "slide", reverse: true)
 
-
-    on_cell_clicked: (cellview, event, x, y) -> @current_gui.on_cell_clicked(cellview,event,x,y)
+    # What to do when a Joint cell is clicked.
+    # 
+    # Follows the responsability to the @current_gui.
+    #
+    # @param cellview [dia.CellView] The Joint CellView that recieves the click event.
+    # @param event The event descripiton object
+    # @param x [number] X coordinate.
+    # @param y [number] Y coordinate.
+    on_cell_clicked: (cellview, event, x, y) ->
+        @current_gui.on_cell_clicked(cellview,event,x,y)
 
     # Import a JSON object.
     #

@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 exports = exports ? this
-exports.views = exports.views ? this
+exports.views = exports.views ? {}
 
 
 # Widget with a "done" button.

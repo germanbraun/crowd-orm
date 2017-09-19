@@ -47,7 +47,5 @@ class IsAState extends gui.State
 
     on_cell_clicked: (cell_view, event, x, y, gui_instance) ->
         gui_instance.add_subsumption(@cell_starter, cell_view.model.id, @disjoint, @covering)
-        this.reset()
-
                   
 exports.gui.IsAState = IsAState
