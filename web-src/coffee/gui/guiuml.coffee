@@ -283,6 +283,8 @@ class GUIUML extends gui.GUIIMPL
     # @param covering {Boolean} optional. If the relation has the disjoint constraint.
     set_isa_state: (class_id, disjoint=false, covering=false) ->
         @hide_options()
+        gui.gui_instance.show_donewidget(class_id, () =>
+            @set_selection_state())
         @state = gui.state_inst.isa_state()
         @state.set_cellStarter(class_id)
         @state.set_constraint(disjoint, covering)

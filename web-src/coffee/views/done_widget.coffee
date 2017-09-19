@@ -39,6 +39,7 @@ DoneWidget = Backbone.View.extend(
     # This is a callback function.
     done_clicked: (event) ->
         @callback()
+        @hide()
 
     # Change the callback function that will be called when the user clicked on
     # the button.
@@ -55,21 +56,25 @@ DoneWidget = Backbone.View.extend(
     hide: () ->
         this.$el.hide()
 
-    set_classid: (@classid) ->
-        viewpos = graph.getCell(@classid).findView(paper).getBBox()
-
+    # Set the position of the widget.
+    #
+    # @param x {number} The CSS X (alias "left") coordinate.
+    # @param y {number} The CSS Y (alias "top") coordinate.
+    set_pos: (@x, @y) ->
         this.$el.css(
-            top: viewpos.y + viewpos.height * 2,
-            left: viewpos.x + viewpos.width/2,
+            top: @y
+            left: @x
             position: 'absolute',
             'z-index': 1
             )
 
     # Show this widget.
     #
+    # @param pos {object} Optional. The position, for example: `{x: 10, y: 20}`
     # @param callback_fnc [function] Optional. A callback function without parameters. If not setted, then use the default.
-    show: (classid, callback_fnc = null) ->
-        this.set_classid(classid)
+    show: (pos = null, callback_fnc = null) ->
+        if pos?
+            this.set_pos(pos.x, pos.y)
         this.set_callback(callback_fnc)
         this.$el.show()
 )

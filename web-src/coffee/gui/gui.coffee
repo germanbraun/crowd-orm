@@ -43,6 +43,7 @@ class GUI
         @owllinkinsert = new views.OWLlinkInsertView({el: $("#owllink_placer")})
         @exportjsonwidget = new views.ExportJSONView({el: $("#exportjson_placer")})
         @importjsonwidget = new views.ImportJSONView({el: $("#importjsonwidget_placer")})
+
         @donewidget = new views.DoneWidget({el: $("#donewidget")})
 
         $("#details-page").enhanceWithin()
@@ -282,7 +283,20 @@ class GUI
     set_insert_owllink: (str) ->
         @owllinkinsert.set_owllink(str)
 
+    # Show a "done" widget on a Joint cell.
+    #
+    # @param cellid {string} The Joint cellid.
+    # @param callback {function} A callback function without parameters. 
+    show_donewidget: (cellid, callback=null) ->
+        viewpos = graph.getCell(cellid).findView(paper).getBBox()
+        top = viewpos.y + viewpos.height * 2
+        left = viewpos.x + viewpos.width/2
 
+        @donewidget.show(
+            x: left
+            y: top,
+            callback
+        )
 
 
 # Current GUI instance.
