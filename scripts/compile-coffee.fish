@@ -34,7 +34,7 @@ end
 
 function merge_model --description="Compiles the model CoffeeScripts."
 	# set model_order diagram factories uml/umlfactory uml/umldiagram eerdiagram mymodel products server_connection uml/class uml/generalization uml/link uml/link_with_class
-	set model_order diagram factories uml/umlfactory uml/umldiagram mymodel server_connection uml/class uml/link uml/generalization uml/link_with_class eer/eerfactory eer/eerdiagram eer/entity eer/attribute eer/linkattrtoentity eer/linkisatoentity
+	set model_order diagram factories uml/umlfactory uml/umldiagram uml/umlimporter mymodel server_connection uml/class uml/link uml/generalization uml/link_with_class eer/eerfactory eer/eerdiagram eer/entity eer/attribute eer/linkattrtoentity eer/linkisatoentity
 	
 	set_color --bold white
 	echo "Merging model files"

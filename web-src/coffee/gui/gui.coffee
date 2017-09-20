@@ -39,6 +39,15 @@ class GUI
         # Error reporting widget
         @errorwidget = new views.ErrorWidgetView({el: $("#errorwidget_placer")})
 
+        # Details page elements
+        @owllinkinsert = new views.OWLlinkInsertView({el: $("#owllink_placer")})
+        @exportjsonwidget = new views.ExportJSONView({el: $("#exportjson_placer")})
+        @importjsonwidget = new views.ImportJSONView({el: $("#importjsonwidget_placer")})
+
+        @donewidget = new views.DoneWidget({el: $("#donewidget")})
+
+        $("#details-page").enhanceWithin()
+
     # # GUIIMP management.
     # Messages for manage GUIIMP instances.
     # ---
@@ -155,7 +164,12 @@ class GUI
     hide_options: () ->
         @current_gui.hide_options()
 
-    hide_toolbar: () -> @current_gui.hide_toolbar()
+    #
+    # Hide the left side "Tools" toolbar
+    #
+    hide_toolbar: () ->
+        $("#tools-panel [data-rel=close]").click()
+
 
     hide_umldiagram_page: () -> @current_gui.hide_umldiagram_page()
     
@@ -173,24 +187,77 @@ class GUI
             
     # Update and show the "Export JSON String" section.
     show_export_json: () ->
-         @current_gui.show_export_json()
+        @exportjsonwidget.set_jsonstr(@current_gui.diag_to_json())
+        $(".exportjson_details").collapsible("expand")
+        this.change_to_details_page()
 
     # Refresh the content of the "Export JSON String" section.
     #
     # No need to show it.
     refresh_export_json: () ->
-        @current_gui.refresh_export_json()
-        
+        @exportjsonwidget.set_jsonstr(@current_gui.diag_to_json())
 
-    on_cell_clicked: (cellview, event, x, y) -> @current_gui.on_cell_clicked(cellview,event,x,y)
-    
-    import_json: (json_obj) -> @current_gui.import_json(json_obj)
+    # Show the "Insert OWLlink" section.
+    show_insert_owllink: () ->
+        this.change_to_details_page()
 
-    import_jsonstr: (data) -> @current_gui.import_jsonstr(data)
-    
-    show_import_json: () -> @current_gui.show_import_json()
-    
-    reset_all: () -> @current_gui.reset_all()
+    change_to_details_page: () ->
+        $.mobile.changePage("#details-page", transition: "slide")
+
+    change_to_diagram_page: () ->
+        $.mobile.changePage("#diagram-page", transition: "slide", reverse: true)
+
+    # What to do when a Joint cell is clicked.
+    # 
+    # Follows the responsability to the @current_gui.
+    #
+    # @param cellview [dia.CellView] The Joint CellView that recieves the click event.
+    # @param event The event descripiton object
+    # @param x [number] X coordinate.
+    # @param y [number] Y coordinate.
+    on_cell_clicked: (cellview, event, x, y) ->
+        @current_gui.on_cell_clicked(cellview,event,x,y)
+
+    # Import a JSON object.
+    #
+    # This will not reset the current diagram, just add more elements.
+    #
+    # Same as import_jsonstr, but it accept a JSON object as parameter.
+    #
+    # @param json_obj {JSON object} A JSON object.
+    # @see import_jsonstr
+    import_json: (json_obj) ->
+        @current_gui.import_json(json_obj)
+        # Importing owllink
+        @owllinkinsert.append_owllink("\n" + json.owllink)
+
+    # Import a JSON string.
+    #
+    # This will not reset the current diagram, just add more elements.
+    #
+    # # GUIIMPL Subclasses
+    # This messages does not need to be reimplemented in GUIIMPL subclasses
+    #
+    # @param jsonstr {String} a JSON string, like the one returned by diag_to_json().
+    # @see import_json
+    import_jsonstr: (jsonstr) ->
+        json = JSON.parse(jsonstr)
+        # Importing the Diagram
+        this.import_json(json)
+
+    #
+    # Show the "Import JSON" modal dialog.
+    #
+    show_import_json: () ->
+        this.hide_toolbar()
+        @importjsonwidget.show()
+
+    # Reset all the diagram and the input forms.
+    #
+    # Reset the diagram and the "OWLlink Insert" input field.
+    reset_all: () ->
+        @owllinkinsert.set_owllink("")
+        @current_gui.reset_all()
 
     # Check if the model is satisfiable sending a POST to the server.
     check_satisfiable: () ->
@@ -210,6 +277,26 @@ class GUI
         $.mobile.loading("hide")
         @errorwidget.show(status, error)
 
+    # Set the OWLlink dara at the "Insert OWLlink" section.
+    #
+    # @param str {string} The OWLlink data.
+    set_insert_owllink: (str) ->
+        @owllinkinsert.set_owllink(str)
+
+    # Show a "done" widget on a Joint cell.
+    #
+    # @param cellid {string} The Joint cellid.
+    # @param callback {function} A callback function without parameters. 
+    show_donewidget: (cellid, callback=null) ->
+        viewpos = graph.getCell(cellid).findView(paper).getBBox()
+        top = viewpos.y + viewpos.height * 2
+        left = viewpos.x + viewpos.width/2
+
+        @donewidget.show(
+            x: left
+            y: top,
+            callback
+        )
 
 
 # Current GUI instance.
