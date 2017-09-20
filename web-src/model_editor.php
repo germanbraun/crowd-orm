@@ -45,7 +45,7 @@ require_once('template.php');
    			<li><a href="#user-page" data-transition="slide" class="ui-btn ui-icon-user ui-btn-icon-right">Profile</a></li>
 		    </ul>
 		</div> <!-- /navbar -->
-		<div id="lang_tools"></div>	
+		<div id="lang_tools"></div>
 	    </div> <!-- /header -->
 
 	    <!-- ---------------------------------------------------------------------- -->
@@ -74,6 +74,7 @@ require_once('template.php');
 		insert_template("done_widget");
 		// Language toolbars
 		insert_template("tools_uml");
+    insert_template("tools_eer")
 		?>
 
 		<div id="editclass"></div>

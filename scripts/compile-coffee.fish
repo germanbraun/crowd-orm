@@ -1,9 +1,9 @@
 #! /usr/bin/fish
 
- 
+
 # Copyright 2016 Giménez, Christian
 
-# Author: Giménez, Christian   
+# Author: Giménez, Christian
 
 # compilar-coffee.fish
 
@@ -35,16 +35,16 @@ end
 function merge_model --description="Compiles the model CoffeeScripts."
 	# set model_order diagram factories uml/umlfactory uml/umldiagram eerdiagram mymodel products server_connection uml/class uml/generalization uml/link uml/link_with_class
 	set model_order diagram factories uml/umlfactory uml/umldiagram uml/umlimporter mymodel server_connection uml/class uml/link uml/generalization uml/link_with_class eer/eerfactory eer/eerdiagram eer/entity eer/attribute eer/linkattrtoentity eer/linkisatoentity
-	
+
 	set_color --bold white
 	echo "Merging model files"
 	set_color normal
-	
+
 	echo "Removing previous output"
 	if test -f web-src/js/model.js
 		rm -v web-src/js/model.js
 	end
-	
+
 	echo "Merging."
 	for js in $model_order
 		echo "Merging web_src/js/$js.js into web-src/js/model.js"
@@ -70,7 +70,7 @@ function merge_views --description="Compiles backbone views scripts"
 	set_color --bold white
 	echo "Merging backbone_views files"
 	set_color normal
-	
+
 	echo "Removing previous output"
 	if test -f web-src/js/backbone_views.js
 		rm -v web-src/js/backbone_views.js
@@ -89,6 +89,12 @@ function merge_views --description="Compiles backbone views scripts"
     rm -v $js
   end
 
+  for js in web-src/js/views/common/*.js
+    echo "Merging $js into web-src/js/backbone_views.js"
+    cat $js >> web-src/js/backbone_views.js
+    rm -v $js
+  end
+
 	set_color red
 	echo "Files compiled but not merged:"
 	set_color white
@@ -100,7 +106,7 @@ function compile_views --description="Compile only the backbone's views and merg
 	echo "Compiling Backbone's views files into JS"
 	set_color normal
 	coffee --output web-src/js/views --compile web-src/coffee/views
-	merge_views	
+	merge_views
 end
 
 
@@ -109,7 +115,7 @@ function compile_tests --description="Compile tests scripts"
 	set_color --bold white
 	echo "Compiling tests"
 	set_color normal
-	coffee --output tests/js/js --compile tests/js/coffee	
+	coffee --output tests/js/js --compile tests/js/coffee
 end
 
 function compile_gui --description="Compile the GUI namespace"
@@ -123,11 +129,11 @@ end
 function merge_gui --description="Compiles GUI scripts"
 
 	set order gui guiimpl guiuml guieer GUIState associationstate isastate selectionstate
-	
+
 	set_color --bold white
 	echo "Merging GUI files"
 	set_color normal
-	
+
 	echo "Removing previous output"
 	if test -f web-src/js/gui.js
 		rm -v web-src/js/gui.js

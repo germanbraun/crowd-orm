@@ -42,9 +42,9 @@
     <a class="ui-btn ui-icon-plus ui-btn-icon-left ui-corner-all" type="button" id="meta_erd_button">Meta > UML</a>
     <a class="ui-btn ui-icon-plus ui-btn-icon-left ui-corner-all" type="button" id="meta_orm_button">Meta > ORM</a>
 
-    <label>New Entity</label>
+<!--    <label>New Entity</label>
     <input data-mini="true" placeholder="ClassName" type="text" id="crearclase_input"/>
-    <a class="ui-btn ui-icon-plus ui-btn-icon-left ui-corner-all" type="button" id="crearclase_button">New Entity</a>
+    <a class="ui-btn ui-icon-plus ui-btn-icon-left ui-corner-all" type="button" id="crearclase_button">New Entity</a> -->
 
     <label>Insert OWLlink data</label>
     <a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all" type="button" id="insertowllink_button">Insert OWLlink</a>

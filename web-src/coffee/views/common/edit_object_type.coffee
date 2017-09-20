@@ -1,4 +1,4 @@
-# class_options.coffee --
+# edit_class.coffee --
 # Copyright (C) 2016 Giménez, Christian
 
 # This program is free software: you can redistribute it and/or modify
@@ -16,27 +16,26 @@
 
 exports = exports ? this
 exports.views = exports.views ? this
-exports.views.eer = exports.views.eer ? this
+exports.views.common = exports.views.common ? this
 
-# @namespace views
-EntityOptionsView = Backbone.View.extend(
+
+EditObjectTypeView = Backbone.View.extend(
     initialize: () ->
         this.render()
         this.$el.hide()
 
     render: () ->
-        template = _.template( $("#template_classoptions").html() )
+        template = _.template( $("#template_editclass").html())
         this.$el.html(template({classid: @classid}))
 
     events:
-        "click a#deleteclass_button" : "delete_class",
         "click a#editclass_button" : "edit_class"
+        "click a#close_button" : "hide"
 
-    ##
-    # Set the classid of the Joint Model associated to this EditClass
-    # instance, then set the position of the template to where is the
-    # class Joint Model.
-    set_classid: (@classid) ->
+    # Set this class ID and position the form onto the
+    #
+    # Class diagram.
+    set_classid : (@classid) ->
         viewpos = graph.getCell(@classid).findView(paper).getBBox()
 
         this.$el.css(
@@ -47,24 +46,19 @@ EntityOptionsView = Backbone.View.extend(
             )
         this.$el.show()
 
-    ##
-    # Return the ClassID of the Joint.Model element associated to
-    # this EditClass instance.
-    get_classid: () ->
+    get_classid : () ->
         return @classid
 
-    delete_class: (event) ->
-        gui.gui_instance.hide_options()
-        gui.gui_instance.delete_class(@classid)
-
     edit_class: (event) ->
+        name = $("#editclass_input").val()
+        gui.gui_instance.edit_class_name(@classid, name)
+        # Hide the form.
         gui.gui_instance.hide_options()
-        gui.gui_instance.set_editclass_classid(@classid)
-        this.hide()
 
     hide: () ->
         this.$el.hide()
+
 )
 
 
-exports.views.eer.EntityOptionsView = EntityOptionsView
+exports.views.common.EditObjectTypeView = EditObjectTypeView

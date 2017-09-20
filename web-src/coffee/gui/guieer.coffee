@@ -34,15 +34,14 @@ class GUIEER extends gui.GUIIMPL
 
         @state = gui.get_state().selection_state()
 
-        @crearclase = new views.eer.CreateEntityView({el: $("#crearclase")});
-        @editclass = new views.eer.EditEntityView({el: $("#editclass")})
-        @classoptions = new views.eer.EntityOptionsView({el: $("#classoptions")})
+        @eerview = new views.eer.CreateEERView({el: $("#crearclase")});
+        @toolbar = new views.eer.ToolsEERView({el: $("#lang_tools")})
+
+        @editclass = new views.common.EditObjectTypeView({el: $("#editclass")})
+        @classoptions = new views.common.ObjectTypeOptionsView({el: $("#classoptions")})
         @relationoptions = new views.eer.RelationOptionsEERView({el: $("#relationoptions")})
-#        @isaoptions = new views.IsaOptionsView({el: $("#isaoptions")})
-#        @trafficlight = new views.TrafficLightsView({el: $("#trafficlight")})
-#        @owllinkinsert = new views.OWLlinkInsertView({el: $("#owllink_placer")})
-#        @importjsonwidget = new views.ImportJSONView({el: $("#importjsonwidget_placer")})
-#        @exportjsonwidget = new views.ExportJSONView({el: $("#exportjson_placer")})
+        @isaoptions = new views.common.SubsumptionOptionsView({el: $("#isaoptions")})
+        @trafficlight = new views.common.TrafficLightsView({el: $("#trafficlight")})
 
         @serverconn = new ServerConnection( (jqXHR, status, text) ->
             exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
