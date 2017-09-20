@@ -38,7 +38,7 @@ class UMLFactory extends model.Factory
         console.log(methods)
         params =
             position: {x: 20, y: 20}
-            size: {width: 220, height: 100}
+            size: {width: 175, height: 100}
             name: class_name
             attributes: attribs
             methods: methods

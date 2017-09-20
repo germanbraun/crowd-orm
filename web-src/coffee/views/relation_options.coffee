@@ -71,7 +71,6 @@ RelationOptionsView = Backbone.View.extend(
         roles[0] = @from_role
         roles[1] = @to_role
         name = $("#assoc_name").val()
-        @hide()
         console.log("New association without class:")
         console.log(mult)
         gui.gui_instance.set_association_state(@classid, mult, roles, name, false)

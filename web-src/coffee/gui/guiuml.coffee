@@ -41,17 +41,16 @@ class GUIUML extends gui.GUIIMPL
         @classoptions = new views.ClassOptionsView({el: $("#classoptions")})
         @relationoptions = new views.RelationOptionsView({el: $("#relationoptions")})
         @isaoptions = new views.IsaOptionsView({el: $("#isaoptions")})
+        @toolbar = new views.ToolsUML({el: $("#lang_tools")})
+        
         @trafficlight = new views.TrafficLightsView({el: $("#trafficlight")})
-        @owllinkinsert = new views.OWLlinkInsertView({el: $("#owllink_placer")})
-        @importjsonwidget = new views.ImportJSONView({el: $("#importjsonwidget_placer")})
-        @exportjsonwidget = new views.ExportJSONView({el: $("#exportjson_placer")})
 
         @serverconn = new ServerConnection( (jqXHR, status, text) ->
             exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
         )
 
         $("#diagram-page").enhanceWithin()
-        $("#details-page").enhanceWithin()
+
 
     set_urlprefix: (str) -> @urlprefix = str
 
@@ -85,7 +84,7 @@ class GUIUML extends gui.GUIIMPL
     # @see Class
     # @see Diagram#add_class
     add_object_type: (hash_data) ->
-        this.hide_toolbar()
+        gui.gui_instance.hide_toolbar()
         @diag.add_class(hash_data)
 
     add_attribute: (hash_data) ->
@@ -140,7 +139,6 @@ class GUIUML extends gui.GUIIMPL
     # @todo Support various children on parameter class_child_id.
     add_subsumption: (class_parent_id, class_child_id, disjoint=false, covering=false) ->
         @diag.add_generalization(class_parent_id, class_child_id, disjoint, covering)
-        this.set_selection_state()
 
     #
     # Put the traffic light on green.
@@ -227,7 +225,7 @@ class GUIUML extends gui.GUIIMPL
             $("#owllink_source").show()
             $("#html-output").hide()
         $.mobile.loading("hide")
-        this.change_to_details_page()
+        gui.gui_instance.change_to_details_page()
 
     update_metamodel: (data) ->
     	console.log(data)
@@ -235,7 +233,7 @@ class GUIUML extends gui.GUIIMPL
     	$("#owllink_source").show() 
     	$("#html-output").hide()
     	$.mobile.loading("hide")
-    	change_to_details_page()
+    	gui.gui_instance.change_to_details_page()
 
     # Translate the current model into a formalization.
     #
@@ -263,18 +261,6 @@ class GUIUML extends gui.GUIIMPL
         strat = @crearclase.get_translation_strategy()
         this.translate_formal(strat, format)
 
-    change_to_details_page: () ->
-        $.mobile.changePage("#details-page", transition: "slide")
-
-    change_to_diagram_page: () ->
-        $.mobile.changePage("#diagram-page", transition: "slide", reverse: true)
-    #
-    # Hide the left side "Tools" toolbar
-    #
-    hide_toolbar: () ->
-        $("#tools-panel [data-rel=close]").click()
-
-
     hide_umldiagram_page: () -> $("#diagram-page").css("display","none")
 
     show_umldiagram_page: () -> $("#diagram-page").css("display","block")
@@ -285,6 +271,7 @@ class GUIUML extends gui.GUIIMPL
     #   the starting class of the association.
     # @param mult {array} An array of two strings representing the cardinality from and to.
     set_association_state: (class_id, mult) ->
+        @hide_options()
         @state = gui.state_inst.association_state()
         @state.set_cellStarter(class_id)
         @state.set_cardinality(mult)
@@ -295,6 +282,9 @@ class GUIUML extends gui.GUIIMPL
     # @param disjoint {Boolean} optional. If the relation has the disjoint constraint.
     # @param covering {Boolean} optional. If the relation has the disjoint constraint.
     set_isa_state: (class_id, disjoint=false, covering=false) ->
+        @hide_options()
+        gui.gui_instance.show_donewidget(class_id, () =>
+            @set_selection_state())
         @state = gui.state_inst.isa_state()
         @state.set_cellStarter(class_id)
         @state.set_constraint(disjoint, covering)
@@ -303,51 +293,12 @@ class GUIUML extends gui.GUIIMPL
     set_selection_state: () ->
         @state = gui.state_inst.selection_state()
 
-    # Update and show the "Export JSON String" section.
-    show_export_json: () ->
-        @exportjsonwidget.set_jsonstr(this.diag_to_json())
-        $(".exportjson_details").collapsible("expand")
-        this.change_to_details_page()
-
-    # Refresh the content of the "Export JSON String" section.
+    # Generate a JSON string representation of the current diagram.
     #
-    # No need to show it.
-    refresh_export_json: () ->
-        @exportjsonwidget.set_jsonstr(this.diag_to_json())
-
-    #
-    # Show the "Import JSON" modal dialog.
-    #
-    show_import_json: () ->
-        this.hide_toolbar()
-        @importjsonwidget.show()
-
-    ##
-    # Show the "Insert OWLlink" section.
-    show_insert_owllink: () ->
-        this.change_to_details_page()
-
-    ##
-    # Set the OWLlink addon at the "Insert OWLlink" section.
-    set_insert_owllink: (str) ->
-        @owllinkinsert.set_owllink(str)
-
+    # @return {string} A JSON string.
     diag_to_json: () ->
         json = @diag.to_json()
-                # json.owllink = @owllinkinsert.get_owllink()
         return JSON.stringify(json)
-
-    # Import a JSON string.
-    #
-    # This will not reset the current diagram, just add more elements.
-    #
-    # @param jsonstr {String} a JSON string, like the one returned by diag_to_json().
-    import_jsonstr: (jsonstr) ->
-        json = JSON.parse(jsonstr)
-        # Importing owllink
-        @owllinkinsert.append_owllink("\n" + json.owllink)
-        # Importing the Diagram
-        this.import_json(json)
 
     # Import a JSON object.
     #
@@ -360,12 +311,9 @@ class GUIUML extends gui.GUIIMPL
         @diag.import_json(json_obj)
 
     # Reset all the diagram and the input forms.
-    #
-    # Reset the diagram and the "OWLlink Insert" input field.
     reset_all: () ->
         @diag.reset()
-        @owllinkinsert.set_owllink("")
-        this.hide_toolbar()
+        gui.gui_instance.hide_toolbar()
 
     to_metamodel: () ->
         $.mobile.loading("show", text: "Metamodelling...", textVisible: true, textonly: false)
