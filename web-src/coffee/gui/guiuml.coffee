@@ -22,8 +22,8 @@ exports.gui = exports.gui ? {}
 #
 # Central GUI *do-it-all* class...
 #
-class GUIUML extends gui.GUIIMPL
-
+class GUIUML extends gui.GUIIMPL  
+    
     # Create a GUIUML instance.
     #
     # @param {JointJS.Graph } graph The JointJS Graph used for drawing models.
@@ -33,7 +33,7 @@ class GUIUML extends gui.GUIIMPL
         @urlprefix = ""
         # @property [UMLDiagram] The user model diagram representation.
         @diag = new model.uml.UMLDiagram(@graph)
-
+        
         @state = gui.get_state().selection_state()
 
         @crearclase = new views.CreateClassView({el: $("#crearclase")});
@@ -41,6 +41,8 @@ class GUIUML extends gui.GUIIMPL
         @classoptions = new views.ClassOptionsView({el: $("#classoptions")})
         @relationoptions = new views.RelationOptionsView({el: $("#relationoptions")})
         @isaoptions = new views.IsaOptionsView({el: $("#isaoptions")})
+        @toolbar = new views.ToolsUML({el: $("#lang_tools")})
+        
         @trafficlight = new views.TrafficLightsView({el: $("#trafficlight")})
         @owllinkinsert = new views.OWLlinkInsertView({el: $("#owllink_placer")})
         @importjsonwidget = new views.ImportJSONView({el: $("#importjsonwidget_placer")})
@@ -51,7 +53,7 @@ class GUIUML extends gui.GUIIMPL
         )
 
         $("#diagram-page").enhanceWithin()
-        $("#details-page").enhanceWithin()
+
 
     set_urlprefix: (str) -> @urlprefix = str
 
@@ -85,7 +87,7 @@ class GUIUML extends gui.GUIIMPL
     # @see Class
     # @see Diagram#add_class
     add_object_type: (hash_data) ->
-        this.hide_toolbar()
+        gui.gui_instance.hide_toolbar()
         @diag.add_class(hash_data)
 
     add_attribute: (hash_data) ->
@@ -227,15 +229,15 @@ class GUIUML extends gui.GUIIMPL
             $("#owllink_source").show()
             $("#html-output").hide()
         $.mobile.loading("hide")
-        this.change_to_details_page()
+        gui.gui_instance.change_to_details_page()
 
     update_metamodel: (data) ->
     	console.log(data)
-    	$("#owllink_source").text(data)
-    	$("#owllink_source").show()
+    	$("#owllink_source").text(data) 
+    	$("#owllink_source").show() 
     	$("#html-output").hide()
     	$.mobile.loading("hide")
-    	change_to_details_page()
+    	gui.gui_instance.change_to_details_page()
 
     # Translate the current model into a formalization.
     #
@@ -250,13 +252,13 @@ class GUIUML extends gui.GUIIMPL
             textonly: false
         )
         json = JSON.stringify(@diag.to_json())
-        @serverconn.request_translation(json, syntax, strategy, (data) ->
+        @serverconn.request_translation(json, syntax, strategy, (data) -> 
             gui.gui_instance.update_translation(data)
         )
 
     # Event handler for translate diagram to OWLlink using Ajax
     # and the api/translate/berardi.php translator URL.
-    #
+    # 
     # @deprecated Use translate_formal() instead.
     translate_owllink: (gui_instance) ->
         format = @crearclase.get_translation_format()
@@ -297,6 +299,8 @@ class GUIUML extends gui.GUIIMPL
     # @param covering {Boolean} optional. If the relation has the disjoint constraint.
     set_isa_state: (class_id, disjoint=false, covering=false) ->
         @hide_options()
+        gui.gui_instance.show_donewidget(class_id, () =>
+            @set_selection_state())
         @state = gui.state_inst.isa_state()
         @state.set_cellStarter(class_id)
         @state.set_constraint(disjoint, covering)
@@ -305,35 +309,9 @@ class GUIUML extends gui.GUIIMPL
     set_selection_state: () ->
         @state = gui.state_inst.selection_state()
 
-    # Update and show the "Export JSON String" section.
-    show_export_json: () ->
-        @exportjsonwidget.set_jsonstr(this.diag_to_json())
-        $(".exportjson_details").collapsible("expand")
-        this.change_to_details_page()
-
-    # Refresh the content of the "Export JSON String" section.
+    # Generate a JSON string representation of the current diagram.
     #
-    # No need to show it.
-    refresh_export_json: () ->
-        @exportjsonwidget.set_jsonstr(this.diag_to_json())
-
-    #
-    # Show the "Import JSON" modal dialog.
-    #
-    show_import_json: () ->
-        this.hide_toolbar()
-        @importjsonwidget.show()
-
-    ##
-    # Show the "Insert OWLlink" section.
-    show_insert_owllink: () ->
-        this.change_to_details_page()
-
-    ##
-    # Set the OWLlink addon at the "Insert OWLlink" section.
-    set_insert_owllink: (str) ->
-        @owllinkinsert.set_owllink(str)
-
+    # @return {string} A JSON string.
     diag_to_json: () ->
         json = @diag.to_json()
                 # json.owllink = @owllinkinsert.get_owllink()
@@ -366,8 +344,7 @@ class GUIUML extends gui.GUIIMPL
     # Reset the diagram and the "OWLlink Insert" input field.
     reset_all: () ->
         @diag.reset()
-        @owllinkinsert.set_owllink("")
-        this.hide_toolbar()
+        gui.gui_instance.hide_toolbar()
 
     to_metamodel: () ->
         $.mobile.loading("show", text: "Metamodelling...", textVisible: true, textonly: false)

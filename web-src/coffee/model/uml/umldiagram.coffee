@@ -122,7 +122,7 @@ class UMLDiagram extends model.Diagram
     # @param class_parent {string, object} The parent class Id string or the class_parent Class object.
     # @param class_child_id {string, array of strings, array of objects, object} The child class string, an array of class Ids strings, an array of Class objects or the child object.
     #
-    add_generalization: (class_parent, class_childs, disjoint=false, covering=false) ->
+    add_generalization: (class_parent, class_childs, disjoint=false, covering=false, name = null) ->
         class_parent_obj = null
         class_child_obj = null
 
@@ -139,7 +139,7 @@ class UMLDiagram extends model.Diagram
             # class_child is an Array, add one by one...
             class_childs.forEach( (child) ->
                 # child could be a string or obj, it doesn't matter! :-)
-                this.add_generalization(class_parent, child, disjoint, covering)
+                this.add_generalization(class_parent, child, disjoint, covering, name)
             this)
         else if typeof(class_childs) == "string"
             # class_child is an Id string
@@ -149,7 +149,7 @@ class UMLDiagram extends model.Diagram
             class_child_obj = class_childs
 
         if class_child_obj? and class_parent_obj?
-            this.add_generalization_objs(class_parent_obj, class_child_obj, disjoint, covering)
+            this.add_generalization_objs(class_parent_obj, class_child_obj, disjoint, covering, name)
 
     # Add a Generalization link.
     #
@@ -159,10 +159,10 @@ class UMLDiagram extends model.Diagram
     # @param class_parent {Class instance} A Class object.
     # @param class_child {Class instance} A Class object.
     #
-    add_generalization_objs: (class_parent, class_child, disjoint=false, covering=false) ->
+    add_generalization_objs: (class_parent, class_child, disjoint=false, covering=false, name = null) ->
         gen = this.find_IsA_with_parent(class_parent)
         if (gen is undefined) || (gen is null)
-            gen = new model.uml.Generalization(class_parent, [class_child])
+            gen = new model.uml.Generalization(class_parent, [class_child], name)
             gen.set_disjoint(disjoint)
             gen.set_covering(covering)
             this.agregar_link(gen)
@@ -171,7 +171,7 @@ class UMLDiagram extends model.Diagram
             gen.create_joint(@factory, csstheme)
             @cells_nuevas.push(gen.get_joint_for_child(class_child))
             this.actualizar_graph()
-    
+   
     # @param class_a_id {string} the ID of the first class.
     # @param class_b_id {string} the ID of the second class.
     # @param name {string} optional. The name of the association.
@@ -208,10 +208,14 @@ class UMLDiagram extends model.Diagram
     # * `name`    (mandatory)
     # * `attribs` (optional)
     # * `methods` (optional)
+    # * `position` (optional)
     #
     # @example Adding a class
-    #   diagram_instance.add_class({name: "class A"})
-    #   diagram_instance.add_class({name: "class B", ["attrib1", "attrib2"], ["method1", "method2"]})
+    #
+    # ```
+    # diagram_instance.add_class({name: "class A"})
+    # diagram_instance.add_class({name: "class B", attrs: ["attrib1", "attrib2"], methods: ["method1", "method2"], position: {x: 20, y: 20}})
+    # ```
     # 
     #   
     # @param hash_data {Hash} data information for creating the new {Class} instance.
@@ -223,8 +227,17 @@ class UMLDiagram extends model.Diagram
             hash_data.attrs = []
         if ! hash_data.methods?
             hash_data.methods = []
+        if ! hash_data.position?
+            hash_data.position =
+                x: 20,
+                y: 20
         
         newclass = new model.uml.Class(hash_data.name, hash_data.attrs, hash_data.methods)
+        joints = newclass.get_joint()
+        if joints? and joints.length[0]?
+            joints[0].position(
+                hash_data.position.x,
+                hash_data.position.y)
         this.agregar_clase(newclass)
         return newclass
 
@@ -401,57 +414,8 @@ class UMLDiagram extends model.Diagram
     # 
     # @todo Better programmed it would be if we pass a JSON part to the constructor of each model class. Leaving the responsability of each MyModel class to create itself.
     import_json: (json) ->
-        json.classes.forEach(
-            (elt, index, arr) ->
-            	if elt.attrs?
-            		array = []
-            		attr = elt.attrs
-            		attr.forEach( (cv,index,attr) -> 
-            			att = "#{attr[index].name}:#{attr[index].datatype}"
-            			array.push(att)
-            			return array
-            			)
-            	elt.attrs = []
-            	elt.attrs = array
-            	c = this.add_class(elt)
-            	c.get_joint()[0].position(
-                    elt.position.x,
-                    elt.position.y)
-        this)
-        # associations
-        json.links.forEach(
-            (elt, index, arr) ->
-                if elt.type is "association"
-                    class_a = this.find_class_by_name(elt.classes[0])
-                    class_b = this.find_class_by_name(elt.classes[1])
-                    if elt.associated_class?
-                        this.add_association_class(
-                            class_a.get_classid(),
-                            class_b.get_classid(),
-                            elt.name,
-                            elt.multiplicity,
-                            elt.roles)
-                    else
-                        this.add_association(
-                            class_a.get_classid(),
-                            class_b.get_classid(),
-                            elt.name,
-                            elt.multiplicity,
-                            elt.roles)
-                if elt.type is "generalization"
-                    class_parent = this.find_class_by_name(elt.parent)
-                    classes_children = elt.classes.map(
-                        (childname) ->
-                            this.find_class_by_name(childname)
-                    this)
-                    disjoint = elt.constraint.includes("disjoint")
-                    covering = elt.constraint.includes("covering")
-                    this.add_generalization(
-                        class_parent,
-                        classes_children,
-                        disjoint, covering)
-                                
-        this)
+        importer = new model.uml.UMLImporter(this, json)
+        importer.do_import()
 
     # # Joint Graph Management
     # ---

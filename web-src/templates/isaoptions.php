@@ -33,5 +33,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<input type="checkbox" name="chk-disjoint" id="chk-disjoint" />
 	<label for="chk-disjoint">Disjoint</label>
     </fieldset>
-	</div>
+    
 </div>

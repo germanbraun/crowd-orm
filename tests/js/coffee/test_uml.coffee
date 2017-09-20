@@ -230,6 +230,48 @@ QUnit.test("UMLDiagram.import_json", (assert) ->
     assert.ok(actual.same_elts(expected), "UMLDiagram.import_json same_elts must work as it is used for comparing the expected value.")
 )
 
+# Test the import UML diagram feature.
+#
+# UMLDiagram.same_elts() function must work because is used for comparing the
+# results with the expected value.
+QUnit.test("UMLDiagram.import_json_with_IS-A", (assert) ->
+    expected = new model.uml.UMLDiagram()
+    c1 = new model.uml.Class("Person")
+    c2 = new model.uml.Class("Student")
+    expected.add_class(c1)
+    expected.add_class(c2)
+    link = new model.uml.Generalization(c1, [c2])
+    expected.agregar_link(link)
+
+    json =
+        classes: [
+            {name: "Person",
+            attrs: [],
+            methods: [],
+            position:
+                x: 20,
+                y: 20},
+            {name: "Student",
+            attrs: [],
+            methods: [],
+            position:
+                x: 20,
+                y: 20}
+            ]
+        links: [{
+            classes: ["Student"],
+            parent: "Person",
+            constraint: [],
+            multiplicity: null,
+            name: "r1",
+            type: "generalization"}]
+
+    actual = new model.uml.UMLDiagram()
+    actual.import_json(json)
+    
+    assert.ok(actual.same_elts(expected), "UMLDiagram.import_json same_elts must work as it is used for comparing the expected value.")
+)
+
 QUnit.test("UMLDiagram.to_json", ( assert ) ->
     expected =
         classes: [

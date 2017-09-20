@@ -25,8 +25,8 @@ class Generalization extends model.uml.Link
 
     # @param parent_class {Class} The parent class.
     # @param classes {Array<Class>} An array of child classes.
-    constructor: (@parent_class, @classes) ->
-        super(@classes)
+    constructor: (@parent_class, @classes, name = null) ->
+        super(@classes, name)
         @disjoint = false
         @covering = false
 
