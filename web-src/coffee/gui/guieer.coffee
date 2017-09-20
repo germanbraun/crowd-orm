@@ -48,7 +48,6 @@ class GUIEER extends gui.GUIIMPL
         )
 
         $("#diagram-page").enhanceWithin()
-        $("#details-page").enhanceWithin()
 
 
 #    switch_gui : (gui_instance) ->
@@ -158,8 +157,10 @@ class GUIEER extends gui.GUIIMPL
     # @todo Support various children on parameter class_child_id.
     add_subsumption: (class_parent_id, class_child_id, disjoint=false, covering=false) ->
         @diag.add_generalization(class_parent_id, class_child_id, disjoint, covering)
+        isa_id = @diag.get_last_isa_by_id()      
+        @diag.add_relationship_isa(class_parent_id, isa_id)
+        @diag.add_relationship_isa_inverse(isa_id, class_child_id)
         this.set_selection_state()
-
     #
     # Report an error to the user.
     #

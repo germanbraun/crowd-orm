@@ -45,7 +45,7 @@ IsaOptionsView = Backbone.View.extend(
             'z-index': 1
             )
         this.$el.show()
-        
+
     get_classid: () ->
         return @classid
 
@@ -54,6 +54,6 @@ IsaOptionsView = Backbone.View.extend(
 )
 
 
-        
+
 
 exports.views.IsaOptionsView = IsaOptionsView
