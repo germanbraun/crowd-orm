@@ -22,8 +22,8 @@ exports.gui = exports.gui ? {}
 #
 # Central GUI *do-it-all* class...
 #
-class GUIUML extends gui.GUIIMPL  
-    
+class GUIUML extends gui.GUIIMPL
+
     # Create a GUIUML instance.
     #
     # @param {JointJS.Graph } graph The JointJS Graph used for drawing models.
@@ -33,7 +33,7 @@ class GUIUML extends gui.GUIIMPL
         @urlprefix = ""
         # @property [UMLDiagram] The user model diagram representation.
         @diag = new model.uml.UMLDiagram(@graph)
-        
+
         @state = gui.get_state().selection_state()
 
         @crearclase = new views.CreateClassView({el: $("#crearclase")});
@@ -42,11 +42,8 @@ class GUIUML extends gui.GUIIMPL
         @relationoptions = new views.RelationOptionsView({el: $("#relationoptions")})
         @isaoptions = new views.IsaOptionsView({el: $("#isaoptions")})
         @toolbar = new views.ToolsUML({el: $("#lang_tools")})
-        
+
         @trafficlight = new views.TrafficLightsView({el: $("#trafficlight")})
-        @owllinkinsert = new views.OWLlinkInsertView({el: $("#owllink_placer")})
-        @importjsonwidget = new views.ImportJSONView({el: $("#importjsonwidget_placer")})
-        @exportjsonwidget = new views.ExportJSONView({el: $("#exportjson_placer")})
 
         @serverconn = new ServerConnection( (jqXHR, status, text) ->
             exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
@@ -142,7 +139,6 @@ class GUIUML extends gui.GUIIMPL
     # @todo Support various children on parameter class_child_id.
     add_subsumption: (class_parent_id, class_child_id, disjoint=false, covering=false) ->
         @diag.add_generalization(class_parent_id, class_child_id, disjoint, covering)
-        this.set_selection_state()
 
     #
     # Put the traffic light on green.
@@ -233,8 +229,8 @@ class GUIUML extends gui.GUIIMPL
 
     update_metamodel: (data) ->
     	console.log(data)
-    	$("#owllink_source").text(data) 
-    	$("#owllink_source").show() 
+    	$("#owllink_source").text(data)
+    	$("#owllink_source").show()
     	$("#html-output").hide()
     	$.mobile.loading("hide")
     	gui.gui_instance.change_to_details_page()
@@ -252,30 +248,18 @@ class GUIUML extends gui.GUIIMPL
             textonly: false
         )
         json = JSON.stringify(@diag.to_json())
-        @serverconn.request_translation(json, syntax, strategy, (data) -> 
+        @serverconn.request_translation(json, syntax, strategy, (data) ->
             gui.gui_instance.update_translation(data)
         )
 
     # Event handler for translate diagram to OWLlink using Ajax
     # and the api/translate/berardi.php translator URL.
-    # 
+    #
     # @deprecated Use translate_formal() instead.
     translate_owllink: (gui_instance) ->
         format = @crearclase.get_translation_format()
         strat = @crearclase.get_translation_strategy()
         this.translate_formal(strat, format)
-
-    change_to_details_page: () ->
-        $.mobile.changePage("#details-page", transition: "slide")
-
-    change_to_diagram_page: () ->
-        $.mobile.changePage("#diagram-page", transition: "slide", reverse: true)
-    #
-    # Hide the left side "Tools" toolbar
-    #
-    hide_toolbar: () ->
-        $("#tools-panel [data-rel=close]").click()
-
 
     hide_umldiagram_page: () -> $("#diagram-page").css("display","none")
 
@@ -314,20 +298,7 @@ class GUIUML extends gui.GUIIMPL
     # @return {string} A JSON string.
     diag_to_json: () ->
         json = @diag.to_json()
-                # json.owllink = @owllinkinsert.get_owllink()
         return JSON.stringify(json)
-
-    # Import a JSON string.
-    #
-    # This will not reset the current diagram, just add more elements.
-    #
-    # @param jsonstr {String} a JSON string, like the one returned by diag_to_json().
-    import_jsonstr: (jsonstr) ->
-        json = JSON.parse(jsonstr)
-        # Importing owllink
-        @owllinkinsert.append_owllink("\n" + json.owllink)
-        # Importing the Diagram
-        this.import_json(json)
 
     # Import a JSON object.
     #
@@ -340,8 +311,6 @@ class GUIUML extends gui.GUIIMPL
         @diag.import_json(json_obj)
 
     # Reset all the diagram and the input forms.
-    #
-    # Reset the diagram and the "OWLlink Insert" input field.
     reset_all: () ->
         @diag.reset()
         gui.gui_instance.hide_toolbar()
