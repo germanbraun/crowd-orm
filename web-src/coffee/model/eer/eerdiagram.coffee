@@ -32,6 +32,7 @@ class ERDiagram extends model.Diagram
         @clases = []
         @attributes = []
         @isa = []
+        @relationships = []
         @links = []
 
         @cells_nuevas = []
@@ -63,8 +64,31 @@ class ERDiagram extends model.Diagram
     get_isa: () ->
         return @isa
 
+    get_relationships: () ->
+        return @relationships
+
     get_last_isa_by_id: () ->
         return @isa[@isa.length - 1].get_isaid()
+
+    get_last_rel_by_id: () ->
+        return @relationships[@relationships.length - 1].get_relid()
+
+    # @todo temporal code
+    get_mult_from: (relid) ->
+        if @relationships[@relationships.length - 1].get_relid() == relid
+          return @relationships[@relationships.length - 1].mult[0]
+
+    get_mult_to: (relid) ->
+        if @relationships[@relationships.length - 1].get_relid() == relid
+          return @relationships[@relationships.length - 1].mult[1]
+
+    get_role_from: (relid) ->
+        if @relationships[@relationships.length - 1].get_relid() == relid
+          return @relationships[@relationships.length - 1].roles[0]
+
+    get_role_to: (relid) ->
+        if @relationships[@relationships.length - 1].get_relid() == relid
+          return @relationships[@relationships.length - 1].roles[1]
 
     get_clase: (nombre) ->
 
@@ -80,7 +104,6 @@ class ERDiagram extends model.Diagram
 
     find_attr_by_name: (name) ->
         return @attributes.find( (elt, index, arr) ->
-            console.log(elt)
             elt.get_name() == name
         )
 
@@ -91,7 +114,6 @@ class ERDiagram extends model.Diagram
 
     find_isa_by_name: (name) ->
         return @isa.find( (elt, index, arr) ->
-            console.log(elt)
             elt.get_name() == name
         )
 
@@ -99,6 +121,17 @@ class ERDiagram extends model.Diagram
         return @isa.find( (elt,index,arr) ->
             elt.has_isaid(isaid)
         )
+
+    find_rel_by_name: (name) ->
+        return @relationships.find( (elt, index, arr) ->
+            elt.get_name() == name
+        )
+
+    find_rel_by_relid: (relid) ->
+        return @relationships.find( (elt,index,arr) ->
+            elt.has_relid(relid)
+        )
+
 
     # Find a generalization that contains the given parent
     #
@@ -177,6 +210,12 @@ class ERDiagram extends model.Diagram
     	this.actualizar_graph()
 
 
+    add_rel: (rel) ->
+      @relationships.push(rel)
+      @cells_nuevas.push(rel.get_joint(@factory,csstheme))
+      this.actualizar_graph()
+
+
     # @param class_a_id {string} the ID of the first class.
     # @param class_b_id {string} the ID of the second class.
     # @param name {string} optional. The name of the association.
@@ -186,13 +225,9 @@ class ERDiagram extends model.Diagram
         class_a = this.find_class_by_classid(class_a_id)
         class_b = this.find_class_by_classid(class_b_id)
 
-        newassoc = new model.eer.Link([class_a, class_b], name)
-        if (mult isnt null)
-            newassoc.set_mult(mult)
-        if (roles isnt null)
-            newassoc.set_roles(roles)
+        newassoc = new model.eer.Relationship([class_a, class_b], name, mult, roles)
 
-        this.agregar_link(newassoc)
+        this.add_rel(newassoc)
 
     add_association_class: (class_a_id, class_b_id, name, mult = null, roles= null) ->
         class_a = this.find_class_by_classid(class_a_id)
@@ -250,27 +285,43 @@ class ERDiagram extends model.Diagram
 
     add_relationship_attr: (class_id, attribute_id, name) ->
         entity = this.find_class_by_classid(class_id)
-        console.log(entity)
         attr = this.find_attr_by_attrid(attribute_id)
-        console.log(attr)
         newrel = new model.eer.LinkAttrToEntity([entity, attr], name)
         this.agregar_link(newrel)
 
     add_relationship_isa: (class_id, isa_id, name) ->
         entity = this.find_class_by_classid(class_id)
-        console.log(entity)
         isa = this.find_isa_by_isaid(isa_id)
-        console.log(isa)
         newlinktoISA = new model.eer.LinkISAToEntity([entity, isa], name)
         this.agregar_link(newlinktoISA)
 
     add_relationship_isa_inverse: (isa_id, class_id, name) ->
         entity = this.find_class_by_classid(class_id)
-        console.log(entity)
         isa = this.find_isa_by_isaid(isa_id)
-        console.log(isa)
         newlinkfromISA = new model.eer.LinkISAToEntity([isa, entity], name)
         this.agregar_link(newlinkfromISA)
+
+    add_relationship_rel: (class_id, rel_id, name, mult, roles) ->
+        entity = this.find_class_by_classid(class_id)
+        rel = this.find_rel_by_relid(rel_id)
+        newlinktoRel = new model.eer.LinkRelToEntity([entity, rel], name)
+        if (mult isnt null)
+            newlinktoRel.set_mult(mult)
+        if (roles isnt null)
+            newlinktoRel.set_roles(roles)
+
+        this.agregar_link(newlinktoRel)
+
+    add_relationship_rel_inverse: (rel_id, class_id, name, mult, roles) ->
+        entity = this.find_class_by_classid(class_id)
+        rel = this.find_rel_by_relid(rel_id)
+        newlinkfromRel = new model.eer.LinkRelToEntity([rel, entity], name)
+        if (mult isnt null)
+            newlinkfromRel.set_mult(mult)
+        if (roles isnt null)
+            newlinkfromRel.set_roles(roles)
+
+        this.agregar_link(newlinkfromRel)
 
     # @param c {Class instance}.
     delete_class: (c) ->

@@ -133,18 +133,26 @@ class GUIEER extends gui.GUIIMPL
     # @param class_b_id {string}
     # @param name {string} optional. The association name.
     # @param mult {array} optional. An array of two string with the cardinality from class and to class b.
-    add_relationship: (class_a_id, class_b_id, name=null, mult=null) ->
-        @diag.add_association(class_a_id, class_b_id, name, mult)
+    add_relationship: (class_a_id, class_b_id, name=null, mult=null, roles=null) ->
+        @diag.add_association(class_a_id, class_b_id, name, mult, roles)
+        rel_id = @diag.get_last_rel_by_id()
+        mult_from = @diag.get_mult_from(rel_id)
+        console.log(mult_from)
+        role_from = @diag.get_role_from(rel_id)
+        console.log(role_from)
+        @diag.add_relationship_rel(class_a_id, rel_id, name, mult_from, role_from)
+        mult_to = @diag.get_mult_to(rel_id)
+        console.log(mult_to)
+        role_to = @diag.get_role_to(rel_id)
+        console.log(role_to)        
+        @diag.add_relationship_rel_inverse(rel_id, class_b_id, name, mult_to, role_to)
         this.set_selection_state()
-
 
     add_relationship_attr: (class_id, attribute_id, name=null)->
     	@diag.add_relationship_attr(class_id, attribute_id, name)
 
-
     add_relationship_isa: (class_id, isa_id, name) ->
     	@diag.add_relationship_isa(class_id, isa_id, name)
-
 
     add_relationship_isa_inverse: (class_id, isa_id, name=null)->
     	@diag.add_relationship_isa_inverse(isa_id, class_id, name)

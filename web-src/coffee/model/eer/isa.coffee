@@ -18,9 +18,9 @@ exports = exports ? this
 exports.model = exports.model ? {}
 exports.model.eer = exports.model.eer ? {}
 
-# A generalization link.
+# An Isa link.
 #
-# @namespace model.uml
+# @namespace model.eer
 class Isa extends model.uml.Link
 
     # @param parent_class {Class} The parent class.
