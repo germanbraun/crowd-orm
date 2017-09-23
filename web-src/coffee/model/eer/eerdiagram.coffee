@@ -225,9 +225,38 @@ class ERDiagram extends model.Diagram
         class_a = this.find_class_by_classid(class_a_id)
         class_b = this.find_class_by_classid(class_b_id)
 
-        newassoc = new model.eer.Relationship([class_a, class_b], name, mult, roles)
+        newrel = new model.eer.Relationship([class_a, class_b], name, mult, roles)
+        if (mult isnt null)
+          newrel.set_mult(mult)
+        if (roles isnt null)
+          newrel.set_roles(roles)
 
-        this.add_rel(newassoc)
+        this.add_rel(newrel)
+
+        rel_id = @get_last_rel_by_id()
+
+        mult_from = @get_mult_from(rel_id)
+        role_from = @get_role_from(rel_id)
+
+        newlinktoRel_from = new model.eer.LinkRelToEntity([class_a, newrel], role_from)
+        if (mult_from isnt null)
+            newlinktoRel_from.set_mult(mult_from)
+        if (role_from isnt null)
+            newlinktoRel_from.set_roles(role_from)
+
+        this.agregar_link(newlinktoRel_from)
+
+        mult_to = @get_mult_to(rel_id)
+        role_to = @get_role_to(rel_id)
+
+        newlinktoRel_to = new model.eer.LinkRelToEntity([class_b, newrel], role_to)
+        if (mult_to isnt null)
+            newlinktoRel_to.set_mult(mult_to)
+        if (role_to isnt null)
+            newlinktoRel_to.set_roles(role_to)
+
+        this.agregar_link(newlinktoRel_to)
+
 
     add_association_class: (class_a_id, class_b_id, name, mult = null, roles= null) ->
         class_a = this.find_class_by_classid(class_a_id)

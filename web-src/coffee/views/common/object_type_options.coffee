@@ -37,6 +37,8 @@ ObjectTypeOptionsView = Backbone.View.extend(
     # instance, then set the position of the template to where is the
     # class Joint Model.
     set_classid: (@classid) ->
+
+        console.log(@classid)
         viewpos = graph.getCell(@classid).findView(paper).getBBox()
 
         this.$el.css(

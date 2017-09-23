@@ -37,8 +37,8 @@ class GUIEER extends gui.GUIIMPL
         @eerview = new views.eer.CreateEERView({el: $("#crearclase")});
         @toolbar = new views.eer.ToolsEERView({el: $("#lang_tools")})
 
-        @editclass = new views.common.EditObjectTypeView({el: $("#editclass")})
-        @classoptions = new views.common.ObjectTypeOptionsView({el: $("#classoptions")})
+        @editclass = new views.EditClassView({el: $("#editclass")})
+        @classoptions = new views.ClassOptionsView({el: $("#classoptions")})
         @relationoptions = new views.eer.RelationOptionsEERView({el: $("#relationoptions")})
         @isaoptions = new views.common.SubsumptionOptionsView({el: $("#isaoptions")})
         @trafficlight = new views.common.TrafficLightsView({el: $("#trafficlight")})
@@ -78,6 +78,9 @@ class GUIEER extends gui.GUIIMPL
         @relationoptions.hide()
         @editclass.hide()
         @isaoptions.hide()
+
+    clear_relationship: () ->
+      @relationoptions.clear()
 
     set_editclass_classid: (model_id) ->
         # editclass = new EditClassView({el: $("#editclass")})
@@ -122,7 +125,7 @@ class GUIEER extends gui.GUIIMPL
         @diag.update_view(class_id, @paper)
 
     #
-    # Add a simple association from A to B.
+    # Add a simple relationships from A to B.
     # Then, set the selection state for restoring the interface.
     #
     # @example Getting a classid
@@ -133,20 +136,12 @@ class GUIEER extends gui.GUIIMPL
     # @param class_b_id {string}
     # @param name {string} optional. The association name.
     # @param mult {array} optional. An array of two string with the cardinality from class and to class b.
+    # @param roles {array} optional.
     add_relationship: (class_a_id, class_b_id, name=null, mult=null, roles=null) ->
         @diag.add_association(class_a_id, class_b_id, name, mult, roles)
-        rel_id = @diag.get_last_rel_by_id()
-        mult_from = @diag.get_mult_from(rel_id)
-        console.log(mult_from)
-        role_from = @diag.get_role_from(rel_id)
-        console.log(role_from)
-        @diag.add_relationship_rel(class_a_id, rel_id, name, mult_from, role_from)
-        mult_to = @diag.get_mult_to(rel_id)
-        console.log(mult_to)
-        role_to = @diag.get_role_to(rel_id)
-        console.log(role_to)        
-        @diag.add_relationship_rel_inverse(rel_id, class_b_id, name, mult_to, role_to)
         this.set_selection_state()
+        this.clear_relationship()
+        this.hide_options()
 
     add_relationship_attr: (class_id, attribute_id, name=null)->
     	@diag.add_relationship_attr(class_id, attribute_id, name)
@@ -169,6 +164,7 @@ class GUIEER extends gui.GUIIMPL
         @diag.add_relationship_isa(class_parent_id, isa_id)
         @diag.add_relationship_isa_inverse(isa_id, class_child_id)
         this.set_selection_state()
+        this.hide_options()
     #
     # Report an error to the user.
     #
@@ -305,10 +301,12 @@ class GUIEER extends gui.GUIIMPL
     # @param class_id {string} The id of the class that triggered it and thus,
     #   the starting class of the association.
     # @param mult {array} An array of two strings representing the cardinality from and to.
-    set_association_state: (class_id, mult) ->
+    set_association_state: (class_id, mult, roles, name) ->
         @state = gui.state_inst.association_state()
         @state.set_cellStarter(class_id)
         @state.set_cardinality(mult)
+        @state.set_roles(roles)
+        @state.set_name(name)
 
     # Change to the IsA GUI State so the user can select the child for the parent.
     #

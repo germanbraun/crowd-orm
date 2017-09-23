@@ -25,7 +25,7 @@ class LinkRelToEntity extends model.eer.LinkAttrToEntity
     constructor: (@classes, name=null) ->
         super(@classes, name)
         @mult = [null]
-        @roles = [null]
+        @roles = [name]
 
     get_name: () ->
     	return @name

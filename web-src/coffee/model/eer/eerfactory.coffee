@@ -91,40 +91,60 @@ class ERDFactory extends model.Factory
           })
 
         # Format the strings for the labels.
-  #      str_labels = [null, null]
-  #      if roles isnt null
-  #          if roles[0] isnt null
-  #              str_labels[0] = roles[0]
+        str_labels = [null, null]
+        if roles isnt null
+            str_labels[0] = roles
 
-  #      if mult isnt null
-  #          if mult[0] isnt null
-  #              if str_labels[0] isnt null
-  #                  str_labels[0] += "\n" + mult[0]
-  #              else
-  #                  str_labels[0] = mult[0]
+        if mult isnt null
+            str_labels[1] = mult
 
-  #      str_labels[1] = name
-
-        # Create the labels objects.
-
-  #      labels = []
-        # name
-  #      if str_labels[1] isnt null
-  #          labels[1] =
-  #              position: 0.5
-  #              attrs:
-  #                  text: {text: str_labels[1], fill: '#0000ff'}
-  #                  rect: {fill: '#ffffff'}
+        labels = ["",""]
 
         # from and to association roles and mult
-  #      if str_labels[0] isnt null
-  #          labels[0] =
-  #              position: 0.1,
-  #              attrs:
-  #                  text: {text: str_labels[0], fill: '#0000ff'},
-  #                  rect: {fill: '#ffffff'}
+        if str_labels == null
+            labels =
+                position: 0.5,
+                attrs:
+                    text: {text: "", fill: '#000000'},
+                    rect: {fill: '#f9f9f9'}
 
-  #      link.set({labels: labels})
+        else if str_labels isnt null
+          if (str_labels[0] == null) and (str_labels[1] isnt null)
+            labels[0] =
+                position: 0.9,
+                attrs:
+                    text: {text: "", fill: '#000000'},
+                    rect: {fill: '#f9f9f9'}
+            labels[1] =
+                position: 0.5,
+                attrs:
+                    text: {text: str_labels[1], fill: '#000000'},
+                    rect: {fill: '#f9f9f9'}
+
+          else if (str_labels[0] isnt null) and (str_labels[1] == null)
+            labels[0] =
+                position: 0.9,
+                attrs:
+                    text: {text: str_labels[0], fill: '#000000'},
+                    rect: {fill: '#f9f9f9'}
+            labels[1] =
+                position: 0.5,
+                attrs:
+                    text: {text: "", fill: '#000000'},
+                    rect: {fill: '#f9f9f9'}
+          else
+                  labels[0] =
+                      position: 0.9,
+                      attrs:
+                          text: {text: str_labels[0], fill: '#000000'},
+                          rect: {fill: '#f9f9f9'}
+                  labels[1] =
+                      position: 0.5,
+                      attrs:
+                          text: {text: str_labels[1], fill: '#000000'},
+                          rect: {fill: '#f9f9f9'}
+
+        link.set({labels: labels})
         return link
 
 
@@ -184,7 +204,7 @@ class ERDFactory extends model.Factory
  #				)
 
 
-    # Create an association link.
+    # Create a relationship link.
     #
     # @param mult [array] The multiplicity strings.
     # @param roles [array] An array of two strings with the roles names.
