@@ -153,6 +153,8 @@ class GUI
 
     delete_class: (class_id) -> @current_gui.delete_class(class_id)
 
+    delete_attr: (attr_id) -> @current_gui.delete_attr(attr_id)
+
     set_isa_state: (class_id, disjoint, covering) ->
         @current_gui.set_isa_state(class_id, disjoint, covering)
 

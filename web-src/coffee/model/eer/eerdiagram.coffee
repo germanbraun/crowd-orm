@@ -432,6 +432,14 @@ class ERDiagram extends model.Diagram
         c = this.find_class_by_classid(classid)
         if c != undefined then this.delete_class(c)
 
+    # Delete a class selecting by using its Joint Model
+    #
+    # @param [classid] string.
+    delete_attr_by_attrid: (attrid) ->
+        c = this.find_attr_by_attrid(attrid)
+        if c != undefined then this.delete_attribute(c)
+
+
     # Reset the current diagram to start over empty.
     #
     # Remove all classes and associations.

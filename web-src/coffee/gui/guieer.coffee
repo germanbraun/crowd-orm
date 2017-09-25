@@ -110,6 +110,13 @@ class GUIEER extends gui.GUIIMPL
     delete_class: (class_id) ->
         @diag.delete_class_by_classid(class_id)
 
+    #
+    # Delete a class from the diagram.
+    #
+    # @param class_id {string} a String with the class Id.
+    delete_attr: (attr_id) ->
+        @diag.delete_attr_by_attrid(attr_id)
+
     # Change a class name identified by its classid.
     #
     # @example Getting a classid
