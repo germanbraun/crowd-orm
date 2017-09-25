@@ -25,6 +25,7 @@
 ?>
 <div data-role="controlgroup" data-type="horizontal" data-mini="true">
     <a class="ui-btn ui-mini ui-icon-plus ui-btn-icon-left ui-corner-all" id="umlclass_button">Class</a>
-    <a class="ui-btn ui-mini ui-icon-plus ui-btn-icon-right ui-corner-all ui-state-disabled" id="umlassoc_button">Assoc</a>
-	  <a class="ui-btn ui-mini ui-icon-plus ui-btn-icon-right ui-corner-all ui-state-disabled" id="umlisa_button">IS-A</a>
+    <a class="ui-btn ui-mini ui-icon-plus ui-btn-icon-right ui-corner-all" id="umlassoc_button">Assoc</a>
+	  <a class="ui-btn ui-mini ui-icon-plus ui-btn-icon-right ui-corner-all" id="umlisa_button">IS-A</a>
+	  <a class="ui-btn ui-mini ui-icon-plus ui-btn-icon-right ui-corner-all" id="eerattr_button">Attr</a>
 <div>

@@ -143,7 +143,10 @@ RelationOptionsEERView = Backbone.View.extend(
     hide: () ->
         this.$el.hide()
 
-    clear: () -> 
+    clear: () ->
+        $("#left-rel").trigger("reset")
+        $("#name-rel").trigger("reset")
+        $("#right-rel").trigger("reset")
 )
 
 

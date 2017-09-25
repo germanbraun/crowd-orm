@@ -36,6 +36,7 @@ ToolsEERView = Backbone.View.extend(
         'click a#umlclass_button': 'umlclass_pressed'
         'click a#umlassoc_button': 'umlassoc_pressed'
         'click a#umlisa_button': 'umlisa_pressed'
+        'click a#eerattr_button': 'eerattr_pressed'
 
     umlclass_pressed: () ->
         @classnum += 1
@@ -43,11 +44,19 @@ ToolsEERView = Backbone.View.extend(
             name: "Class" + @classnum
         )
 
+    eerattr_pressed: () ->
+        @classnum += 1
+        gui.gui_instance.add_attribute(
+            name: "Attr" + @classnum
+        )
+
     umlassoc_pressed: () ->
         console.log('umlassoc')
 
     umlisa_pressed: () ->
         console.log('umlisa')
+
+
 )
 
 exports.views.eer.ToolsEERView = ToolsEERView

@@ -64,6 +64,7 @@ require_once('template.php');
 		insert_template("tools_navbar");
 		insert_template("editclass");
 		insert_template("classoptions");
+    insert_template("attroptions");
 		insert_template("relationoptions");
 		insert_template("isaoptions");
 		insert_template("trafficlight");
@@ -79,6 +80,7 @@ require_once('template.php');
 
 		<div id="editclass"></div>
 		<div id="classoptions"></div>
+    <div id="attroptions"></div>
 		<div id="relationoptions"></div>
 		<div id="isaoptions"></div>
 		<div id="donewidget"></div>

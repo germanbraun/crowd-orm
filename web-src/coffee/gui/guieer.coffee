@@ -41,6 +41,7 @@ class GUIEER extends gui.GUIIMPL
         @classoptions = new views.ClassOptionsView({el: $("#classoptions")})
         @relationoptions = new views.eer.RelationOptionsEERView({el: $("#relationoptions")})
         @isaoptions = new views.common.SubsumptionOptionsView({el: $("#isaoptions")})
+        @attroptions = new views.eer.AttrOptionsEERView({el: $("#attroptions")})
         @trafficlight = new views.common.TrafficLightsView({el: $("#trafficlight")})
 
         @serverconn = new ServerConnection( (jqXHR, status, text) ->
@@ -70,6 +71,7 @@ class GUIEER extends gui.GUIIMPL
         @relationoptions.set_classid(model_id)
         @classoptions.set_classid(model_id)
         @isaoptions.set_classid(model_id)
+        @attroptions.set_attrid(model_id)
 
     ##
     # Hide the class options GUI.
@@ -78,6 +80,7 @@ class GUIEER extends gui.GUIIMPL
         @relationoptions.hide()
         @editclass.hide()
         @isaoptions.hide()
+        @attroptions.hide()
 
     clear_relationship: () ->
       @relationoptions.clear()
