@@ -16,10 +16,10 @@
 
 exports = exports ? this
 exports.views = exports.views ? this
-exports.views.eer = exports.views.eer ? this
+exports.views.common = exports.views.common ? this
 
 
-EditEntityView = Backbone.View.extend(
+EditObjectTypeView = Backbone.View.extend(
     initialize: () ->
         this.render()
         this.$el.hide()
@@ -61,4 +61,4 @@ EditEntityView = Backbone.View.extend(
 )
 
 
-exports.views.eer.EditEntityView = EditEntityView
+exports.views.common.EditObjectTypeView = EditObjectTypeView

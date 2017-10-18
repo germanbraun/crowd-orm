@@ -37,11 +37,20 @@ RelationOptionsEERView = Backbone.View.extend(
         # from = "2..3"
         # console.log from
         from_1 = $('#cardfrom-1').val()
-        console.log(from_1)
-        from_aux = from_1.concat ".."
         from_2 = $('#cardfrom-2').val()
-        console.log(from_2)
-        @from = from_aux.concat from_2
+        if (from_1 isnt "") and (from_2 isnt "")
+           from_aux = from_1.concat ".."
+           @from = from_aux.concat from_2
+        else if (from_1 == "") and (from_2 isnt "")
+          from_1 = "0"
+          from_aux = from_1.concat ".."
+          @from = from_aux.concat from_2
+        else if (from_1 isnt "") and (from_2 == "")
+          from_2 = "*"
+          from_aux = from_1.concat ".."
+          @from = from_aux.concat from_2
+        else @from = ""
+
         @from_role = $('#role-from').val()
 
     # Retrieve the destination role and multiplicity
@@ -49,13 +58,22 @@ RelationOptionsEERView = Backbone.View.extend(
         # too = "4..8"
         # console.log too
         too_1 = $('#cardto-1').val()
-        console.log(too_1)
-        too_aux = too_1.concat ".."
         too_2 = $('#cardto-2').val()
-        console.log(too_2)
-        @too = too_aux.concat too_2
-        # console.log too
+        if (too_1 isnt "") and (too_2 isnt "")
+           too_aux = too_1.concat ".."
+           @too = too_aux.concat too_2
+        else if (too_1 == "") and (too_2 isnt "")
+          too_1 = "0"
+          too_aux = too_1.concat ".."
+          @too = too_aux.concat too_2
+        else if (too_1 isnt "") and (too_2 == "")
+          too_2 = "*"
+          too_aux = too_1.concat ".."
+          @too = too_aux.concat too_2
+        else @too = ""
+
         @to_role = $('#role-to').val()
+
 
     # Create a new relation with the information from the role, multiplicity and
     # association name input fields.
@@ -71,9 +89,10 @@ RelationOptionsEERView = Backbone.View.extend(
         roles = []
         roles[0] = @from_role
         roles[1] = @to_role
-        name = $("#assoc_name").val()
-        console.log("New association without class:")
-        console.log(mult)
+        name = null
+        if $("#assoc_name").val() isnt ""
+          name = $("#assoc_name").val()
+        @hide()
         gui.gui_instance.set_association_state(@classid, mult, roles, name, false)
 
     # Create a new relation with the information from the role, multiplicity and
@@ -92,8 +111,6 @@ RelationOptionsEERView = Backbone.View.extend(
         roles[1] = @to_role
         name = $("#assoc_name").val()
         @hide()
-        console.log("New association with class: " + name)
-        console.log(mult)
         gui.gui_instance.set_association_state(@classid, mult, roles, name, true)
 
 
@@ -126,6 +143,10 @@ RelationOptionsEERView = Backbone.View.extend(
     hide: () ->
         this.$el.hide()
 
+    clear: () ->
+        $("#left-rel").trigger("reset")
+        $("#name-rel").trigger("reset")
+        $("#right-rel").trigger("reset")
 )
 
 

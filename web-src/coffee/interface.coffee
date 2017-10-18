@@ -100,11 +100,6 @@ window.onload = () ->
 #    newlinkISA1 =  new model.eer.LinkISAToEntity(['r1', 'Student'])
 #    console.log(newlinkISA)
 #    console.log(newlinkISA1)
-    console.log(newclass)
-    console.log(newattribute)
-    console.log(newattribute2)
-    console.log(newlink)
-    console.log(newlink2)
     guiinst.add_object_type(newclass)
     guiinst.add_object_type(newclass2)
     guiinst.add_attribute(newattribute)
@@ -128,8 +123,3 @@ window.onload = () ->
     guiinst.add_relationship_attr(entity,attri4)
     guiinst.add_relationship_attr(entity2,attri5)
     guiinst.add_relationship_attr(entity2,attri6)
-#ISA
-#    guiinst.add_subsumption(newclass2,newclass)
-#    isa = graph.attributes.cells.models[14].id
-#    guiinst.add_relationship_isa(entity,isa)
-#    guiinst.add_relationship_isa_inverse(entity2,isa)

@@ -16,9 +16,10 @@
 
 exports = exports ? this
 exports.views = exports.views ? this
+exports.views.common = exports.views.common ? this
 
 
-IsaOptionsView = Backbone.View.extend(
+SubsumptionOptionsView = Backbone.View.extend(
     initialize: () ->
         this.render()
         this.$el.hide()
@@ -56,4 +57,4 @@ IsaOptionsView = Backbone.View.extend(
 
 
 
-exports.views.IsaOptionsView = IsaOptionsView
+exports.views.common.SubsumptionOptionsView = SubsumptionOptionsView
