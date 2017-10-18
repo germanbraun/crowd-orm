@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>CoffeeScript API Documentation</title>
+  <script src='../javascript/application.js'></script>
+  <script src='../javascript/search.js'></script>
+  <link rel='stylesheet' href='../stylesheets/application.css' type='text/css'>
+</head>
+  <body>
+    <div id='base' data-path='../'></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='../extra/README.md.html' title='Wicom-qdod'>
+      Wicom-qdod
+    </a>
+    &raquo;
+    <a href='../alphabetical_index.html' title='Index'>
+      Index
+    </a>
+    &raquo;
+    <span class='title'>ERDiagram</span>
+  </div>
+</div>
+    <div id='content'>
+      <h1>
+        Class:
+        ERDiagram
+      </h1>
+      <table class='box'>
+        <tr>
+          <td>Defined in:</td>
+          <td>web-src&#47;coffee&#47;model&#47;eer&#47;eerdiagram.coffee</td>
+        </tr>
+        <tr>
+          <td>Inherits:</td>
+          <td>
+            model.Diagram
+          </td>
+        </tr>
+      </table>
+      <h2>Overview</h2>
+      <div class='docstring'>
+  <p>An ER diagram representation.</p>
+</div>
+<div class='tags'>
+</div>
+      <h2>Instance Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#get_factory-dynamic'>
+        #
+(void)
+<b>get_factory</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#set_factory-dynamic'>
+        #
+(void)
+<b>set_factory</b><span>(factory)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#get_graph-dynamic'>
+        #
+(void)
+<b>get_graph</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#set_graph-dynamic'>
+        #
+(void)
+<b>set_graph</b><span>(graph)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#get_clases-dynamic'>
+        #
+(void)
+<b>get_clases</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#get_links-dynamic'>
+        #
+(void)
+<b>get_links</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#get_attributes-dynamic'>
+        #
+(void)
+<b>get_attributes</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#get_isa-dynamic'>
+        #
+(void)
+<b>get_isa</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#get_clase-dynamic'>
+        #
+(void)
+<b>get_clase</b><span>(nombre)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#find_class_by_name-dynamic'>
+        #
+(void)
+<b>find_class_by_name</b><span>(name)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#find_class_by_classid-dynamic'>
+        #
+(void)
+<b>find_class_by_classid</b><span>(classid)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#find_attr_by_name-dynamic'>
+        #
+(void)
+<b>find_attr_by_name</b><span>(name)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#find_attr_by_attrid-dynamic'>
+        #
+(void)
+<b>find_attr_by_attrid</b><span>(attrid)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#find_isa_by_name-dynamic'>
+        #
+(void)
+<b>find_isa_by_name</b><span>(name)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#find_isa_by_isaid-dynamic'>
+        #
+(void)
+<b>find_isa_by_isaid</b><span>(isaid)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#find_IsA_with_parent-dynamic'>
+        #
+(?)
+<b>find_IsA_with_parent</b><span>(parentclass)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Find a generalization that contains the given parent <code>generalization.
+</code>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#add_generalization-dynamic'>
+        #
+(void)
+<b>add_generalization</b><span>(class_parent, class_childs, disjoint = false, covering = false)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Add a Generalization link. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#add_generalization_objs-dynamic'>
+        #
+(void)
+<b>add_generalization_objs</b><span>(class_parent, class_child, disjoint = false, covering = false)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Add a Generalization link. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#agregar_isa-dynamic'>
+        #
+(void)
+<b>agregar_isa</b><span>(gen)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#add_association-dynamic'>
+        #
+(void)
+<b>add_association</b><span>(class_a_id, class_b_id, name = null, mult = null, roles = null)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#add_association_class-dynamic'>
+        #
+(void)
+<b>add_association_class</b><span>(class_a_id, class_b_id, name, mult = null, roles = null)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#add_entity-dynamic'>
+        #
+(?)
+<b>add_entity</b><span>(hash_data)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Hash Data 
+<code>name</code>    (mandatory)
+<code>attribs</code> (optional)
+<code>methods</code> (optional)
+
+
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#agregar_clase-dynamic'>
+        #
+(void)
+<b>agregar_clase</b><span>(clase)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#add_attribute-dynamic'>
+        #
+(void)
+<b>add_attribute</b><span>(hash_data)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#agregar_attribute-dynamic'>
+        #
+(void)
+<b>agregar_attribute</b><span>(attribute)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#add_relationship_attr-dynamic'>
+        #
+(void)
+<b>add_relationship_attr</b><span>(class_id, attribute_id, name)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#add_relationship_isa-dynamic'>
+        #
+(void)
+<b>add_relationship_isa</b><span>(class_id, isa_id, name)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#add_relationship_isa_inverse-dynamic'>
+        #
+(void)
+<b>add_relationship_isa_inverse</b><span>(isa_id, class_id, name)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#delete_class-dynamic'>
+        #
+(void)
+<b>delete_class</b><span>(c)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#delete_attribute-dynamic'>
+        #
+(void)
+<b>delete_attribute</b><span>(c)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#find_associated_links-dynamic'>
+        #
+(?)
+<b>find_associated_links</b><span>(c)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Search for all links associated to the given class. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#remove_associated_links-dynamic'>
+        #
+(void)
+<b>remove_associated_links</b><span>(c)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Remove all links associated to the given class. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#rename_class-dynamic'>
+        #
+(void)
+<b>rename_class</b><span>(classid, name)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#delete_link-dynamic'>
+        #
+(void)
+<b>delete_link</b><span>(link)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Remove the given link from the diagram. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#update_view-dynamic'>
+        #
+(void)
+<b>update_view</b><span>(class_id, paper)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Update the view associated to the given class&#39;s classid if it have already created its joint object.
+
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#delete_class_by_name-dynamic'>
+        #
+(void)
+<b>delete_class_by_name</b><span>(name)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Remove the class from the diagram. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#delete_class_by_classid-dynamic'>
+        #
+(void)
+<b>delete_class_by_classid</b><span>(classid)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Delete a class selecting by using its Joint Model 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#reset-dynamic'>
+        #
+(void)
+<b>reset</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Reset the current diagram to start over empty. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#agregar_link-dynamic'>
+        #
+(void)
+<b>agregar_link</b><span>(link)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Limitations If the link is a generalization it adds as a new generalization,
+not as part of another one.
+For example, if you want to add another child into an already existent
+generalization, use add_generalization(same_parent, new_child) message.
+
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#set_satisfiable-dynamic'>
+        #
+(void)
+<b>set_satisfiable</b><span>(classes_list)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Show these classes as satisifiable. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#set_class_satisfiable-dynamic'>
+        #
+(void)
+<b>set_class_satisfiable</b><span>(class_name)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Show this class as satisfiable. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#set_unsatisfiable-dynamic'>
+        #
+(void)
+<b>set_unsatisfiable</b><span>(classes_list)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Show these classes as unsatisifiable. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#set_class_unsatisfiable-dynamic'>
+        #
+(void)
+<b>set_class_unsatisfiable</b><span>(class_name)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Show this class as unsatisfiable. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#actualizar_graph-dynamic'>
+        #
+(void)
+<b>actualizar_graph</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Update a joint.Graph instance with the new cells. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#to_json-dynamic'>
+        #
+(void)
+<b>to_json</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Return a JSON representing the Diagram. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#import_json-dynamic'>
+        #
+(void)
+<b>import_json</b><span>(json)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Import all classes and associations from a JSON object. 
+    </span>
+  </li>
+</ul>
+      <h2>Constructor Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='constructor-dynamic'>
+      #
+(void)
+<b>constructor</b><span>(graph = null)</span>
+      <br>
+    </p>
+    <div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>graph</span>
+      <span class='type'>
+        (
+          <tt>joint.Graph</tt>
+        )
+      </span>
+    </li>
+  </ul>
+</div>
+  </div>
+</div>
+      <h2>Instance Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='get_factory-dynamic'>
+      #
+(void)
+<b>get_factory</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='set_factory-dynamic'>
+      #
+(void)
+<b>set_factory</b><span>(factory)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='get_graph-dynamic'>
+      #
+(void)
+<b>get_graph</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='set_graph-dynamic'>
+      #
+(void)
+<b>set_graph</b><span>(graph)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='get_clases-dynamic'>
+      #
+(void)
+<b>get_clases</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='get_links-dynamic'>
+      #
+(void)
+<b>get_links</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='get_attributes-dynamic'>
+      #
+(void)
+<b>get_attributes</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='get_isa-dynamic'>
+      #
+(void)
+<b>get_isa</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='get_clase-dynamic'>
+      #
+(void)
+<b>get_clase</b><span>(nombre)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='find_class_by_name-dynamic'>
+      #
+(void)
+<b>find_class_by_name</b><span>(name)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='find_class_by_classid-dynamic'>
+      #
+(void)
+<b>find_class_by_classid</b><span>(classid)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='find_attr_by_name-dynamic'>
+      #
+(void)
+<b>find_attr_by_name</b><span>(name)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='find_attr_by_attrid-dynamic'>
+      #
+(void)
+<b>find_attr_by_attrid</b><span>(attrid)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='find_isa_by_name-dynamic'>
+      #
+(void)
+<b>find_isa_by_name</b><span>(name)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='find_isa_by_isaid-dynamic'>
+      #
+(void)
+<b>find_isa_by_isaid</b><span>(isaid)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='find_IsA_with_parent-dynamic'>
+      #
+(?)
+<b>find_IsA_with_parent</b><span>(parentclass)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Find a generalization that contains the given parent</p><pre><code>generalization.
+</code></pre>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>parentclass</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/Class.html'>Class</a></tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>A Class instance that is the parent of the </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>?</tt>
+      )
+      &mdash;
+      <span class='desc'>null if nothing founded, a Generalization instance otherwise. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='add_generalization-dynamic'>
+      #
+(void)
+<b>add_generalization</b><span>(class_parent, class_childs, disjoint = false, covering = false)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Add a Generalization link.</p><p>If a generalziation already exists for the same parent, just add the class
+into the same Generalizatino instance. Constraints are ignored in this case.</p><p>This methods try to normalize all parameters  and then call add_generalization_objs().</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>class_parent</span>
+      <span class='type'>
+        (
+          <tt>string, object</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>The parent class Id string or the class_parent Class object. </span>
+    </li>
+    <li>
+      <span class='name'>class_child_id</span>
+      <span class='type'>
+        (
+          <tt>string, array of strings, array of objects, object</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>The child class string, an array of class Ids strings, an array of Class objects or the child object. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='add_generalization_objs-dynamic'>
+      #
+(void)
+<b>add_generalization_objs</b><span>(class_parent, class_child, disjoint = false, covering = false)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Add a Generalization link.</p><p>If a generalziation already exists for the same parent, just add the class
+into the same Generalizatino instance. Constraints are ignored in this case.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>class_parent</span>
+      <span class='type'>
+        (
+          <tt>Class instance</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>A Class object. </span>
+    </li>
+    <li>
+      <span class='name'>class_child</span>
+      <span class='type'>
+        (
+          <tt>Class instance</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>A Class object. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='agregar_isa-dynamic'>
+      #
+(void)
+<b>agregar_isa</b><span>(gen)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='add_association-dynamic'>
+      #
+(void)
+<b>add_association</b><span>(class_a_id, class_b_id, name = null, mult = null, roles = null)</span>
+      <br>
+    </p>
+    <div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>class_a_id</span>
+      <span class='type'>
+        (
+          <tt>string</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>the ID of the first class. </span>
+    </li>
+    <li>
+      <span class='name'>class_b_id</span>
+      <span class='type'>
+        (
+          <tt>string</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>the ID of the second class. </span>
+    </li>
+    <li>
+      <span class='name'>name</span>
+      <span class='type'>
+        (
+          <tt>string</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>optional. The name of the association. </span>
+    </li>
+    <li>
+      <span class='name'>mult</span>
+      <span class='type'>
+        (
+          <tt>array</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>optional. An array of two strings with the cardinality from class a and to class b. </span>
+    </li>
+    <li>
+      <span class='name'>roles</span>
+      <span class='type'>
+        (
+          <tt>array</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>optional. An array of two strings with the from and to roles. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='add_association_class-dynamic'>
+      #
+(void)
+<b>add_association_class</b><span>(class_a_id, class_b_id, name, mult = null, roles = null)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='add_entity-dynamic'>
+      #
+(?)
+<b>add_entity</b><span>(hash_data)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <h1 id="hash-data">Hash Data</h1>
+<ul>
+<li><code>name</code>    (mandatory)</li>
+<li><code>attribs</code> (optional)</li>
+<li><code>methods</code> (optional)</li>
+</ul>
+
+  <div class='examples'>
+    <h3>Examples:</h3>
+    <h4>
+      Adding a class
+    </h4>
+    <pre><code class='coffeescript'>diagram_instance.add_class({name: &quot;class A&quot;})
+diagram_instance.add_class({name: &quot;class B&quot;, [&quot;attrib1&quot;, &quot;attrib2&quot;], [&quot;method1&quot;, &quot;method2&quot;]})
+
+</code></pre>
+  </div>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>hash_data</span>
+      <span class='type'>
+        (
+          <tt>Hash</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>data information for creating the new <a href='../class/Class.html'>Class</a> instance. </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>?</tt>
+      )
+      &mdash;
+      <span class='desc'>The new class </span>
+    </li>
+  </ul>
+  <h3>See also:</h3>
+  <ul class='see'>
+    <li>
+      <a href='../class/Class.html'>Class</a>
+    </li>
+    <li>
+      <a href='GUI#add_class'>GUI#add_class</a>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='agregar_clase-dynamic'>
+      #
+(void)
+<b>agregar_clase</b><span>(clase)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='add_attribute-dynamic'>
+      #
+(void)
+<b>add_attribute</b><span>(hash_data)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='agregar_attribute-dynamic'>
+      #
+(void)
+<b>agregar_attribute</b><span>(attribute)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='add_relationship_attr-dynamic'>
+      #
+(void)
+<b>add_relationship_attr</b><span>(class_id, attribute_id, name)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='add_relationship_isa-dynamic'>
+      #
+(void)
+<b>add_relationship_isa</b><span>(class_id, isa_id, name)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='add_relationship_isa_inverse-dynamic'>
+      #
+(void)
+<b>add_relationship_isa_inverse</b><span>(isa_id, class_id, name)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='delete_class-dynamic'>
+      #
+(void)
+<b>delete_class</b><span>(c)</span>
+      <br>
+    </p>
+    <div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>c</span>
+      <span class='type'>
+        (
+          <tt>Class instance</tt>
+        )
+      </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='delete_attribute-dynamic'>
+      #
+(void)
+<b>delete_attribute</b><span>(c)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='find_associated_links-dynamic'>
+      #
+(?)
+<b>find_associated_links</b><span>(c)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Search for all links associated to the given class.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>c</span>
+      <span class='type'>
+        (
+          <tt>Class instance</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>The class. </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>?</tt>
+      )
+      &mdash;
+      <span class='desc'>Array of Links instances. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='remove_associated_links-dynamic'>
+      #
+(void)
+<b>remove_associated_links</b><span>(c)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Remove all links associated to the given class.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>c</span>
+      <span class='type'>
+        (
+          <tt>Class instance</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>The class. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='rename_class-dynamic'>
+      #
+(void)
+<b>rename_class</b><span>(classid, name)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='delete_link-dynamic'>
+      #
+(void)
+<b>delete_link</b><span>(link)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Remove the given link from the diagram.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>link</span>
+      <span class='type'>
+        (
+          <tt>Link instance</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>The link to remove. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='update_view-dynamic'>
+      #
+(void)
+<b>update_view</b><span>(class_id, paper)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Update the view associated to the given class&#39;s classid if it
+have already created its joint object. The view to be updated
+must be of the given paper</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='delete_class_by_name-dynamic'>
+      #
+(void)
+<b>delete_class_by_name</b><span>(name)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Remove the class from the diagram.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='delete_class_by_classid-dynamic'>
+      #
+(void)
+<b>delete_class_by_classid</b><span>(classid)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Delete a class selecting by using its Joint Model</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>string.</span>
+      <span class='type'>
+        (
+          <tt>classid</tt>
+        )
+      </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='reset-dynamic'>
+      #
+(void)
+<b>reset</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Reset the current diagram to start over empty.</p><p>Remove all classes and associations.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='agregar_link-dynamic'>
+      #
+(void)
+<b>agregar_link</b><span>(link)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <h1 id="limitations">Limitations</h1><p>If the link is a generalization it adds as a new generalization,
+not as part of another one.</p><p>For example, if you want to add another child into an already existent
+generalization, use add_generalization(same_parent, new_child) message.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='set_satisfiable-dynamic'>
+      #
+(void)
+<b>set_satisfiable</b><span>(classes_list)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Show these classes as satisifiable.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>classes_list</span>
+      <span class='type'>
+        (
+          <tt>Array&lt;String&gt;</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>a list of classes names. </span>
+    </li>
+  </ul>
+  <h3>See also:</h3>
+  <ul class='see'>
+    <li>
+      <a href='set_class_satisfiable'>set_class_satisfiable</a>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='set_class_satisfiable-dynamic'>
+      #
+(void)
+<b>set_class_satisfiable</b><span>(class_name)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Show this class as satisfiable.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>class_name</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>The class name. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='set_unsatisfiable-dynamic'>
+      #
+(void)
+<b>set_unsatisfiable</b><span>(classes_list)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Show these classes as unsatisifiable.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>classes_list</span>
+      <span class='type'>
+        (
+          <tt>Array&lt;String&gt;</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>a list of classes names. </span>
+    </li>
+  </ul>
+  <h3>See also:</h3>
+  <ul class='see'>
+    <li>
+      <a href='set_class_unsatisfiable'>set_class_unsatisfiable</a>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='set_class_unsatisfiable-dynamic'>
+      #
+(void)
+<b>set_class_unsatisfiable</b><span>(class_name)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Show this class as unsatisfiable.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>class_name</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>The class name. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='actualizar_graph-dynamic'>
+      #
+(void)
+<b>actualizar_graph</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Update a joint.Graph instance with the new cells.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='to_json-dynamic'>
+      #
+(void)
+<b>to_json</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Return a JSON representing the Diagram.</p><p>We want to send only some things not all the JSON the object
+has. So, we drop some things, like JointJS graph objects.</p><p>Use JSON.stringify(json_object) to translate a JSON object to
+string.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='import_json-dynamic'>
+      #
+(void)
+<b>import_json</b><span>(json)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <div class='note todo'>
+    <strong>TODO:</strong>
+    Better programmed it would be if we pass a JSON part to the constructor of each model class. Leaving the responsability of each MyModel class to create itself. 
+  </div>
+  <p>Import all classes and associations from a JSON object.</p><p>Make sure to reset() this diagram if you don&#39;t want the classes already
+on this model.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>json</span>
+      <span class='type'>
+        (
+          <tt>JSON object</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>a JSON object. Use json = JSON.parse(jsonstr) to retrieve from a string. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+</div>
+    </div>
+    <div id='footer'>
+  By
+  <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
+    Codo
+  </a>
+  2.1.2
+  &#10034;
+  Press H to see the keyboard shortcuts
+  &#10034;
+  <a href='http://twitter.com/netzpirat' target='_parent'>@netzpirat</a>
+  &#10034;
+  <a href='http://twitter.com/_inossidabile' target='_parent'>@_inossidabile</a>
+</div>
+<iframe id='search_frame'></iframe>
+<div id='fuzzySearch'>
+  <input type='text'>
+  <ol></ol>
+</div>
+<div id='help'>
+  <p>
+    Quickly fuzzy find classes, mixins, methods, file:
+  </p>
+  <ul>
+    <li>
+      <span>T</span>
+      Open fuzzy finder dialog
+    </li>
+  </ul>
+  <p>
+    Control the navigation frame:
+  </p>
+  <ul>
+    <li>
+      <span>L</span>
+      Toggle list view
+    </li>
+    <li>
+      <span>C</span>
+      Show class list
+    </li>
+    <li>
+      <span>I</span>
+      Show mixin list
+    </li>
+    <li>
+      <span>F</span>
+      Show file list
+    </li>
+    <li>
+      <span>M</span>
+      Show method list
+    </li>
+    <li>
+      <span>E</span>
+      Show extras list
+    </li>
+  </ul>
+  <p>
+    You can focus and blur the search input:
+  </p>
+  <ul>
+    <li>
+      <span>S</span>
+      Focus search input
+    </li>
+    <li>
+      <span>Esc</span>
+      Blur search input
+    </li>
+  </ul>
+</div>
+  </body>
+</html>

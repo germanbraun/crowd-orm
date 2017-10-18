@@ -34,22 +34,21 @@ class GUIEER extends gui.GUIIMPL
 
         @state = gui.get_state().selection_state()
 
-        @crearclase = new views.eer.CreateEntityView({el: $("#crearclase")});
-        @editclass = new views.eer.EditEntityView({el: $("#editclass")})
-        @classoptions = new views.eer.EntityOptionsView({el: $("#classoptions")})
+        @eerview = new views.eer.CreateEERView({el: $("#crearclase")});
+        @toolbar = new views.eer.ToolsEERView({el: $("#lang_tools")})
+
+        @editclass = new views.EditClassView({el: $("#editclass")})
+        @classoptions = new views.ClassOptionsView({el: $("#classoptions")})
         @relationoptions = new views.eer.RelationOptionsEERView({el: $("#relationoptions")})
-#        @isaoptions = new views.IsaOptionsView({el: $("#isaoptions")})
-#        @trafficlight = new views.TrafficLightsView({el: $("#trafficlight")})
-#        @owllinkinsert = new views.OWLlinkInsertView({el: $("#owllink_placer")})
-#        @importjsonwidget = new views.ImportJSONView({el: $("#importjsonwidget_placer")})
-#        @exportjsonwidget = new views.ExportJSONView({el: $("#exportjson_placer")})
+        @isaoptions = new views.common.SubsumptionOptionsView({el: $("#isaoptions")})
+        @attroptions = new views.eer.AttrOptionsEERView({el: $("#attroptions")})
+        @trafficlight = new views.common.TrafficLightsView({el: $("#trafficlight")})
 
         @serverconn = new ServerConnection( (jqXHR, status, text) ->
             exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)
         )
 
         $("#diagram-page").enhanceWithin()
-        $("#details-page").enhanceWithin()
 
 
 #    switch_gui : (gui_instance) ->
@@ -72,6 +71,7 @@ class GUIEER extends gui.GUIIMPL
         @relationoptions.set_classid(model_id)
         @classoptions.set_classid(model_id)
         @isaoptions.set_classid(model_id)
+        @attroptions.set_attrid(model_id)
 
     ##
     # Hide the class options GUI.
@@ -80,6 +80,10 @@ class GUIEER extends gui.GUIIMPL
         @relationoptions.hide()
         @editclass.hide()
         @isaoptions.hide()
+        @attroptions.hide()
+
+    clear_relationship: () ->
+      @relationoptions.clear()
 
     set_editclass_classid: (model_id) ->
         # editclass = new EditClassView({el: $("#editclass")})
@@ -106,6 +110,13 @@ class GUIEER extends gui.GUIIMPL
     delete_class: (class_id) ->
         @diag.delete_class_by_classid(class_id)
 
+    #
+    # Delete a class from the diagram.
+    #
+    # @param class_id {string} a String with the class Id.
+    delete_attr: (attr_id) ->
+        @diag.delete_attr_by_attrid(attr_id)
+
     # Change a class name identified by its classid.
     #
     # @example Getting a classid
@@ -124,7 +135,7 @@ class GUIEER extends gui.GUIIMPL
         @diag.update_view(class_id, @paper)
 
     #
-    # Add a simple association from A to B.
+    # Add a simple relationships from A to B.
     # Then, set the selection state for restoring the interface.
     #
     # @example Getting a classid
@@ -135,23 +146,23 @@ class GUIEER extends gui.GUIIMPL
     # @param class_b_id {string}
     # @param name {string} optional. The association name.
     # @param mult {array} optional. An array of two string with the cardinality from class and to class b.
-    add_relationship: (class_a_id, class_b_id, name=null, mult=null) ->
-        @diag.add_association(class_a_id, class_b_id, name, mult)
+    # @param roles {array} optional.
+    add_relationship: (class_a_id, class_b_id, name=null, mult=null, roles=null) ->
+        @diag.add_association(class_a_id, class_b_id, name, mult, roles)
         this.set_selection_state()
-
+        this.clear_relationship()
+        this.hide_options()
 
     add_relationship_attr: (class_id, attribute_id, name=null)->
     	@diag.add_relationship_attr(class_id, attribute_id, name)
 
-
     add_relationship_isa: (class_id, isa_id, name) ->
     	@diag.add_relationship_isa(class_id, isa_id, name)
-
 
     add_relationship_isa_inverse: (class_id, isa_id, name=null)->
     	@diag.add_relationship_isa_inverse(isa_id, class_id, name)
 
-    # Add a Generalization link and then set the selection state.
+    # Add Isa links and then set the selection state.
     #
     # @param class_parent_id {string} The parent class Id.
     # @param class_child_id {string} The child class Id.
@@ -159,8 +170,11 @@ class GUIEER extends gui.GUIIMPL
     # @todo Support various children on parameter class_child_id.
     add_subsumption: (class_parent_id, class_child_id, disjoint=false, covering=false) ->
         @diag.add_generalization(class_parent_id, class_child_id, disjoint, covering)
+        isa_id = @diag.get_last_isa_by_id()
+        @diag.add_relationship_isa(class_parent_id, isa_id)
+        @diag.add_relationship_isa_inverse(isa_id, class_child_id)
         this.set_selection_state()
-
+        this.hide_options()
     #
     # Report an error to the user.
     #
@@ -297,10 +311,12 @@ class GUIEER extends gui.GUIIMPL
     # @param class_id {string} The id of the class that triggered it and thus,
     #   the starting class of the association.
     # @param mult {array} An array of two strings representing the cardinality from and to.
-    set_association_state: (class_id, mult) ->
+    set_association_state: (class_id, mult, roles, name) ->
         @state = gui.state_inst.association_state()
         @state.set_cellStarter(class_id)
         @state.set_cardinality(mult)
+        @state.set_roles(roles)
+        @state.set_name(name)
 
     # Change to the IsA GUI State so the user can select the child for the parent.
     #

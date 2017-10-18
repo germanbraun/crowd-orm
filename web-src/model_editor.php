@@ -45,7 +45,7 @@ require_once('template.php');
    			<li><a href="#user-page" data-transition="slide" class="ui-btn ui-icon-user ui-btn-icon-right">Profile</a></li>
 		    </ul>
 		</div> <!-- /navbar -->
-		<div id="lang_tools"></div>	
+		<div id="lang_tools"></div>
 	    </div> <!-- /header -->
 
 	    <!-- ---------------------------------------------------------------------- -->
@@ -64,6 +64,7 @@ require_once('template.php');
 		insert_template("tools_navbar");
 		insert_template("editclass");
 		insert_template("classoptions");
+    insert_template("attroptions");
 		insert_template("relationoptions");
 		insert_template("isaoptions");
 		insert_template("trafficlight");
@@ -74,10 +75,12 @@ require_once('template.php');
 		insert_template("done_widget");
 		// Language toolbars
 		insert_template("tools_uml");
+    insert_template("tools_eer")
 		?>
 
 		<div id="editclass"></div>
 		<div id="classoptions"></div>
+    <div id="attroptions"></div>
 		<div id="relationoptions"></div>
 		<div id="isaoptions"></div>
 		<div id="donewidget"></div>

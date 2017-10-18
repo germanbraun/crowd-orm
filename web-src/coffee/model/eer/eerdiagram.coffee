@@ -27,25 +27,26 @@ exports.model.eer = exports.model.eer ? {}
 class ERDiagram extends model.Diagram
     #
     # @param [joint.Graph] graph
-    # 
+    #
     constructor: (@graph = null) ->
         @clases = []
         @attributes = []
         @isa = []
+        @relationships = []
         @links = []
-        
+
         @cells_nuevas = []
         # Cells that are listed for deletion, you have to update
         # diagram for apply.
         @cells_deleted = []
-        
+
         @factory = new model.eer.ERDFactory()
 
     get_factory: () ->
         return @factory
 
     set_factory: (@factory) ->
-        
+
     get_graph: () ->
         return @graph
 
@@ -62,7 +63,33 @@ class ERDiagram extends model.Diagram
 
     get_isa: () ->
         return @isa
-	
+
+    get_relationships: () ->
+        return @relationships
+
+    get_last_isa_by_id: () ->
+        return @isa[@isa.length - 1].get_isaid()
+
+    get_last_rel_by_id: () ->
+        return @relationships[@relationships.length - 1].get_relid()
+
+    # @todo temporal code
+    get_mult_from: (relid) ->
+        if @relationships[@relationships.length - 1].get_relid() == relid
+          return @relationships[@relationships.length - 1].mult[0]
+
+    get_mult_to: (relid) ->
+        if @relationships[@relationships.length - 1].get_relid() == relid
+          return @relationships[@relationships.length - 1].mult[1]
+
+    get_role_from: (relid) ->
+        if @relationships[@relationships.length - 1].get_relid() == relid
+          return @relationships[@relationships.length - 1].roles[0]
+
+    get_role_to: (relid) ->
+        if @relationships[@relationships.length - 1].get_relid() == relid
+          return @relationships[@relationships.length - 1].roles[1]
+
     get_clase: (nombre) ->
 
     find_class_by_name: (name) ->
@@ -77,10 +104,9 @@ class ERDiagram extends model.Diagram
 
     find_attr_by_name: (name) ->
         return @attributes.find( (elt, index, arr) ->
-            console.log(elt)
             elt.get_name() == name
         )
-        
+
     find_attr_by_attrid: (attrid) ->
         return @attributes.find( (elt,index,arr) ->
             elt.has_attrid(attrid)
@@ -88,14 +114,24 @@ class ERDiagram extends model.Diagram
 
     find_isa_by_name: (name) ->
         return @isa.find( (elt, index, arr) ->
-            console.log(elt)
             elt.get_name() == name
         )
-        
+
     find_isa_by_isaid: (isaid) ->
         return @isa.find( (elt,index,arr) ->
             elt.has_isaid(isaid)
         )
+
+    find_rel_by_name: (name) ->
+        return @relationships.find( (elt, index, arr) ->
+            elt.get_name() == name
+        )
+
+    find_rel_by_relid: (relid) ->
+        return @relationships.find( (elt,index,arr) ->
+            elt.has_relid(relid)
+        )
+
 
     # Find a generalization that contains the given parent
     #
@@ -129,7 +165,7 @@ class ERDiagram extends model.Diagram
             # class_parent is the Class instance
             class_parent_obj = class_parent
 
-        # Normalize class_childs        
+        # Normalize class_childs
         if class_childs instanceof Array
             # class_child is an Array, add one by one...
             class_childs.forEach( (child) ->
@@ -157,7 +193,7 @@ class ERDiagram extends model.Diagram
     add_generalization_objs: (class_parent, class_child, disjoint=false, covering=false) ->
         gen = this.find_IsA_with_parent(class_parent)
         if (gen is undefined) || (gen is null)
-            gen = new model.eer.Generalization(class_parent, [class_child])
+            gen = new model.eer.Isa(class_parent, [class_child])
             gen.set_disjoint(disjoint)
             gen.set_covering(covering)
             this.agregar_isa(gen)
@@ -173,7 +209,13 @@ class ERDiagram extends model.Diagram
     	@cells_nuevas.push(gen.get_joint(@factory,csstheme))
     	this.actualizar_graph()
 
-    
+
+    add_rel: (rel) ->
+      @relationships.push(rel)
+      @cells_nuevas.push(rel.get_joint(@factory,csstheme))
+      this.actualizar_graph()
+
+
     # @param class_a_id {string} the ID of the first class.
     # @param class_b_id {string} the ID of the second class.
     # @param name {string} optional. The name of the association.
@@ -182,31 +224,56 @@ class ERDiagram extends model.Diagram
     add_association: (class_a_id, class_b_id, name = null, mult = null, roles = null) ->
         class_a = this.find_class_by_classid(class_a_id)
         class_b = this.find_class_by_classid(class_b_id)
-        
-        newassoc = new model.eer.Link([class_a, class_b], name)
+
+        newrel = new model.eer.Relationship([class_a, class_b], name, mult, roles)
         if (mult isnt null)
-            newassoc.set_mult(mult)
+          newrel.set_mult(mult)
         if (roles isnt null)
-            newassoc.set_roles(roles)
-        
-        this.agregar_link(newassoc)
+          newrel.set_roles(roles)
+
+        this.add_rel(newrel)
+
+        rel_id = @get_last_rel_by_id()
+
+        mult_from = @get_mult_from(rel_id)
+        role_from = @get_role_from(rel_id)
+
+        newlinktoRel_from = new model.eer.LinkRelToEntity([class_a, newrel], role_from)
+        if (mult_from isnt null)
+            newlinktoRel_from.set_mult(mult_from)
+        if (role_from isnt null)
+            newlinktoRel_from.set_roles(role_from)
+
+        this.agregar_link(newlinktoRel_from)
+
+        mult_to = @get_mult_to(rel_id)
+        role_to = @get_role_to(rel_id)
+
+        newlinktoRel_to = new model.eer.LinkRelToEntity([class_b, newrel], role_to)
+        if (mult_to isnt null)
+            newlinktoRel_to.set_mult(mult_to)
+        if (role_to isnt null)
+            newlinktoRel_to.set_roles(role_to)
+
+        this.agregar_link(newlinktoRel_to)
+
 
     add_association_class: (class_a_id, class_b_id, name, mult = null, roles= null) ->
         class_a = this.find_class_by_classid(class_a_id)
         class_b = this.find_class_by_classid(class_b_id)
-        
+
         newassoc = new model.eer.LinkWithClass([class_a, class_b], name)
         if (mult isnt null)
             newassoc.set_mult(mult)
         if (roles isnt null)
             newassoc.set_roles(roles)
-        
+
         this.agregar_link(newassoc)
         newassoc.update_position()
 
     #
     # # Hash Data
-    # 
+    #
     # * `name`    (mandatory)
     # * `attribs` (optional)
     # * `methods` (optional)
@@ -214,8 +281,8 @@ class ERDiagram extends model.Diagram
     # @example Adding a class
     #   diagram_instance.add_class({name: "class A"})
     #   diagram_instance.add_class({name: "class B", ["attrib1", "attrib2"], ["method1", "method2"]})
-    # 
-    #   
+    #
+    #
     # @param hash_data {Hash} data information for creating the new {Class} instance.
     # @return The new class
     # @see Class
@@ -247,36 +314,52 @@ class ERDiagram extends model.Diagram
 
     add_relationship_attr: (class_id, attribute_id, name) ->
         entity = this.find_class_by_classid(class_id)
-        console.log(entity)
         attr = this.find_attr_by_attrid(attribute_id)
-        console.log(attr)
         newrel = new model.eer.LinkAttrToEntity([entity, attr], name)
-        this.agregar_link(newrel)   	
+        this.agregar_link(newrel)
 
     add_relationship_isa: (class_id, isa_id, name) ->
         entity = this.find_class_by_classid(class_id)
-        console.log(entity)
         isa = this.find_isa_by_isaid(isa_id)
-        console.log(isa)
         newlinktoISA = new model.eer.LinkISAToEntity([entity, isa], name)
         this.agregar_link(newlinktoISA)
 
     add_relationship_isa_inverse: (isa_id, class_id, name) ->
         entity = this.find_class_by_classid(class_id)
-        console.log(entity)
         isa = this.find_isa_by_isaid(isa_id)
-        console.log(isa)
         newlinkfromISA = new model.eer.LinkISAToEntity([isa, entity], name)
-        this.agregar_link(newlinkfromISA) 
-        
-    # @param c {Class instance}. 
+        this.agregar_link(newlinkfromISA)
+
+    add_relationship_rel: (class_id, rel_id, name, mult, roles) ->
+        entity = this.find_class_by_classid(class_id)
+        rel = this.find_rel_by_relid(rel_id)
+        newlinktoRel = new model.eer.LinkRelToEntity([entity, rel], name)
+        if (mult isnt null)
+            newlinktoRel.set_mult(mult)
+        if (roles isnt null)
+            newlinktoRel.set_roles(roles)
+
+        this.agregar_link(newlinktoRel)
+
+    add_relationship_rel_inverse: (rel_id, class_id, name, mult, roles) ->
+        entity = this.find_class_by_classid(class_id)
+        rel = this.find_rel_by_relid(rel_id)
+        newlinkfromRel = new model.eer.LinkRelToEntity([rel, entity], name)
+        if (mult isnt null)
+            newlinkfromRel.set_mult(mult)
+        if (roles isnt null)
+            newlinkfromRel.set_roles(roles)
+
+        this.agregar_link(newlinkfromRel)
+
+    # @param c {Class instance}.
     delete_class: (c) ->
         @clases = @clases.filter( (elt, index, arr) ->
             elt != c
         )
 
         this.remove_associated_links(c)
-        
+
         @cells_deleted = @cells_deleted.concat(c.get_joint())
         this.actualizar_graph()
 
@@ -287,21 +370,21 @@ class ERDiagram extends model.Diagram
         )
 
         this.remove_associated_links(c)
-        
+
         @cells_deleted = @cells_deleted.concat(c.get_joint())
         this.actualizar_graph()
-        
+
     # Search for all links associated to the given class.
     #
     # @param c {Class instance} The class.
-    # 
+    #
     # @return Array of Links instances.
     find_associated_links: (c) ->
         @links.filter( (link, indx, arr) ->
             link.is_associated(c)
         this)
-        
-    
+
+
     # Remove all links associated to the given class.
     #
     # @param c {Class instance} The class.
@@ -317,17 +400,17 @@ class ERDiagram extends model.Diagram
             c.set_name(name)
 
     # Remove the given link from the diagram.
-    # 
+    #
     # @param link {Link instance} The link to remove.
     delete_link: (link) ->
         @links = @links.filter( (elt, index, arr) ->
             elt != link
         )
-       
+
         @cells_deleted = @cells_deleted.concat(link.get_joint())
         this.actualizar_graph()
 
-    
+
     # Update the view associated to the given class's classid if it
     # have already created its joint object. The view to be updated
     # must be of the given paper
@@ -335,19 +418,27 @@ class ERDiagram extends model.Diagram
         class_obj = this.find_class_by_classid(class_id)
         if class_obj != null
             class_obj.update_view(paper)
-                
+
     # Remove the class from the diagram.
     delete_class_by_name: (name) ->
         c = this.find_class_by_name(name)
         if c != undefined then this.delete_class(c)
 
-    
+
     # Delete a class selecting by using its Joint Model
-    # 
-    # @param [classid] string. 
+    #
+    # @param [classid] string.
     delete_class_by_classid: (classid) ->
         c = this.find_class_by_classid(classid)
         if c != undefined then this.delete_class(c)
+
+    # Delete a class selecting by using its Joint Model
+    #
+    # @param [classid] string.
+    delete_attr_by_attrid: (attrid) ->
+        c = this.find_attr_by_attrid(attrid)
+        if c != undefined then this.delete_attribute(c)
+
 
     # Reset the current diagram to start over empty.
     #
@@ -364,7 +455,7 @@ class ERDiagram extends model.Diagram
             this.delete_link(l)
         this)
         this.actualizar_graph()
-        
+
 
     # # Limitations
     # If the link is a generalization it adds as a new generalization,
@@ -373,7 +464,7 @@ class ERDiagram extends model.Diagram
     # For example, if you want to add another child into an already existent
     # generalization, use add_generalization(same_parent, new_child) message.
     agregar_link: (link) ->
-        @links.push(link)       
+        @links.push(link)
         @cells_nuevas.push(link.get_joint(@factory, csstheme));
         this.actualizar_graph()
 
@@ -421,10 +512,10 @@ class ERDiagram extends model.Diagram
             @cells_deleted.forEach(
                 (elt,index,arr) ->
                     elt.remove()
-            )                    
+            )
         @cells_deleted = []
         @cells_nuevas = []
-        
+
 
     # Return a JSON representing the Diagram.
     #
@@ -436,24 +527,24 @@ class ERDiagram extends model.Diagram
     to_json : () ->
         classes_json = $.map @clases, (myclass) ->
             myclass.to_json()
-            
+
         attributes_json = $.map @attributes, (myattr) ->
             myattr.to_json()
-            
+
         links_json = $.map @links, (mylink) ->
             mylink.to_json()
 
         classes: classes_json
         attributes: attributes_json
         links: links_json
-                
+
     # Import all classes and associations from a JSON object.
     #
     # Make sure to reset() this diagram if you don't want the classes already
     # on this model.
-    # 
+    #
     # @param json {JSON object} a JSON object. Use json = JSON.parse(jsonstr) to retrieve from a string.
-    # 
+    #
     # @todo Better programmed it would be if we pass a JSON part to the constructor of each model class. Leaving the responsability of each MyModel class to create itself.
     import_json: (json) ->
         json.classes.forEach(
@@ -464,7 +555,7 @@ class ERDiagram extends model.Diagram
 #                    elt.position.x,
 #                    elt.position.y)
         this)
-        
+
         #attributes
         json.attributes.forEach(
             (elt, index, arr) ->
@@ -473,8 +564,8 @@ class ERDiagram extends model.Diagram
 #                	c.get_joint()[0].position(
 #                    elt.position.x,
 #                    elt.position.y)
-        this)        
-        
+        this)
+
         # relationships
         json.links.forEach(
             (elt, index, arr) ->
@@ -513,8 +604,8 @@ class ERDiagram extends model.Diagram
                     this.add_relationship_attr(
                             class_a.get_classid(),
                             attr_a.get_attributeid(),
-                            elt.name)                
-                                
+                            elt.name)
+
         this)
 
 

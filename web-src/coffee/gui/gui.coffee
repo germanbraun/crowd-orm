@@ -134,8 +134,8 @@ class GUI
     add_attribute: (name) ->
         @current_gui.add_attribute(name)
 
-    add_relationship: (class_a_id, class_b_id, name, mult) ->
-        @current_gui.add_relationship(class_a_id, class_b_id, name, mult)
+    add_relationship: (class_a_id, class_b_id, name, mult, roles) ->
+        @current_gui.add_relationship(class_a_id, class_b_id, name, mult, roles)
 
     add_relationship_attr: (class_id, attribute_id, name) ->
         @current_gui.add_relationship_attr(class_id, attribute_id, name)
@@ -153,16 +153,22 @@ class GUI
 
     delete_class: (class_id) -> @current_gui.delete_class(class_id)
 
+    delete_attr: (attr_id) -> @current_gui.delete_attr(attr_id)
+
     set_isa_state: (class_id, disjoint, covering) ->
         @current_gui.set_isa_state(class_id, disjoint, covering)
 
     set_options_classid: (model_id) ->
         @current_gui.set_options_classid(model_id)
 
-    set_association_state: (class_id, mult) -> @current_gui.set_association_state(class_id, mult)
+    set_association_state: (class_id, mult, roles, name) -> @current_gui.set_association_state(class_id, mult, roles, name)
 
     hide_options: () ->
         @current_gui.hide_options()
+
+    clear_relationship: () ->
+      @current_gui.clear_relationship()
+
 
     #
     # Hide the left side "Tools" toolbar

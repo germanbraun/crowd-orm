@@ -45,7 +45,7 @@ class GUIIMPL
     switch_to_erd: () ->
 
     to_erd: () ->
-		
+
     update_translation: (data) ->
 
     update_metamodel: (data) ->
@@ -64,6 +64,8 @@ class GUIIMPL
     # Hide the class options GUI.
     hide_options: () ->
 
+    # Clear inputs from relationships form.
+    clear_relationship: () ->
 
     set_editclass_classid: (model_id) ->
 
@@ -268,7 +270,7 @@ class GUIIMPL
     #
     # # Subclasses
     # This message doesn't need to be reimplemented.
-    # 
+    #
     # @param jsonstr {String} a JSON string, like the one returned by diag_to_json().
     # @see GUI#import_jsonstr
     import_jsonstr: (jsonstr) ->
@@ -297,6 +299,5 @@ class GUIIMPL
     reset_all: () ->
 
 
-        
-exports.gui.GUIIMPL = GUIIMPL
 
+exports.gui.GUIIMPL = GUIIMPL
