@@ -14,8 +14,12 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+exports = exports ? this
+exports.model = exports.model ? {}
 
 # Abastract class for diagrams.
+#
+# @namespace model
 class Diagram
 
     #
@@ -77,7 +81,4 @@ class Diagram
     # @param json [object] A JSON object.
     import_json: (json) ->
 
-
-exports = exports ? this
-
-exports.Diagram = Diagram
+exports.model.Diagram = Diagram

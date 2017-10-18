@@ -24,10 +24,17 @@
 ?>
 <div data-role="navbar">
     <label>Translate</label>
+    <select data-mini="true" data-inline="true" data-native-menu="false" id="strategy_select">
+	<option value="berardi" selected="true">Berardi</option>
+	<option value="crowd">Crowd's Metamodelling</option>
+    </select>
     <select data-mini="true" data-inline="true" data-native-menu="false" id="format_select">
 	<option value="owllink" selected="true">OWLlink</option>
-	<option value="owllinkCROWD" selected="true">OWLlinkCROWD</option>
-	<option value="html">HTML</option>
+	<option value="owl">OWL 2</option>
+	<option value="html">DL in HTML (Human Readable)</option>
+	<option value="rdfxml">RDF in XML</option>
+	<option value="rdfturtle">RDF in Turtle</option>
+	<option value="rdfmanchester">RDF in Manchester</option>
     </select>
     <a class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all" type="button" id="translate_button">Translate</a>
     

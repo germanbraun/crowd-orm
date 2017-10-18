@@ -37,7 +37,7 @@ class WicomTest extends PHPUnit_Framework_TestCase
        { 
            "satisfiable": {
                "kb" : true,
-               "classes" : ["#Hi World"]
+               "classes" : ["Hi World"]
            },
            "unsatisfiable": {
               	"classes" : []

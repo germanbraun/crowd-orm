@@ -41,13 +41,15 @@ class ServerConnection
         
     # Send to the server a translation Request.
     #
-    # @param json {string} 
+    # @param json {string}
+    # @param strategy {String} "berardi", "crowd" or other strategy.
+    #   Remember that a strategy cannot be applied to other visual languages.
     # @param format {string} "owllink", "html" or any supported
     #   translation format by the server.
     # @param callback_function A functino to use as a callback when
     #   the response is recieved.
-    request_translation: (json, format, callback_function) ->
-        url = @urlprefix + "api/translate/crowd.php"
+    request_translation: (json, format, strategy, callback_function) ->
+        url = @urlprefix + "api/translate/" + strategy + ".php"
         console.log("Requesting at " + url)
         $.ajax(
             type: "POST",

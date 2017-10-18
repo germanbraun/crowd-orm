@@ -31,6 +31,13 @@ use Wicom\Translator\Strategies\QAPackages\AnswerAnalizers\BerardiAnalizer;
 class BerardiAnalizerTest extends PHPUnit_Framework_TestCase
 {
 
+    /**
+       Filtering the XML must remove the rest of XML tags and leave the
+       important one with the desired data.
+
+       Classes names are still IRI's suffix. For that reason we still leave the
+       numeral char.
+    */
     public function testFilterXML(){
         $query_input = <<<'EOT'
 <?xml version="1.0" encoding="UTF-8"?>

@@ -1,22 +1,22 @@
-<?php 
-/* 
+<?php
+/*
 
    Copyright 2016 Giménez, Christian
-   
-   Author: Giménez, Christian   
+
+   Author: Giménez, Christian
 
    owllinkdocument.php
-   
+
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
-   
+
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
-   
+
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -37,25 +37,25 @@ use \XMLWriter;
    $d = new OWLlinkDocument();
    $d->insert_startdocument();
    $d->insert_request();
-   
+
    // ...
 
    $d->end_document();
 
    $d->to_string();
    @endcode
-   
+
  */
 class OWLlinkDocument extends Document{
     protected $content = null;
 
     /**
        The current KB URI as \i. of String.
-       
 
-       This can be changed by creating a new KB 
+
+       This can be changed by creating a new KB
        (see insert_create_kb()) or by using the setter.
-              
+
      */
     protected $actual_kb = null;
 
@@ -63,7 +63,7 @@ class OWLlinkDocument extends Document{
        I'm inserting Tell's queries?
     */
     protected $in_tell = false;
-    
+
     protected $owllink_text = "";
 
     public function set_actual_kb($kb_uri){
@@ -81,12 +81,12 @@ class OWLlinkDocument extends Document{
        @name Starting and Ending the document
     */
     ///@{
-    
+
     public function insert_startdocument(){
         $this->content->startDocument("1.0", "UTF-8");
     }
 
-    public function insert_request(){        
+    public function insert_request(){
         $this->content->startElement("RequestMessage");
         $this->content->writeAttribute("xmlns", "http://www.owllink.org/owllink#");
         $this->content->writeAttribute("xmlns:owl", "http://www.w3.org/2002/07/owl#" );
@@ -106,7 +106,7 @@ class OWLlinkDocument extends Document{
         $this->insert_startdocument();
         $this->insert_request();
     }
-    
+
     public function end_document(){
         if ($this->in_tell) {
             $this->end_tell();
@@ -115,7 +115,7 @@ class OWLlinkDocument extends Document{
     }
 
     ///@}
-    // Starting and ending the document 
+    // Starting and ending the document
 
     public function insert_prefix($uri){
     }
@@ -123,13 +123,13 @@ class OWLlinkDocument extends Document{
     /**
        @name KB Management Messages
 
-       These messages is used for insert OWLlink's primitives for 
+       These messages is used for insert OWLlink's primitives for
        manage Knowldege Bases.
     */
     //@{
 
     /**
-       Insert a "CreateKB" OWLlink primitive. After that, set the 
+       Insert a "CreateKB" OWLlink primitive. After that, set the
        actual_kb to the given URI.
 
        @param uri String. The name or the URI of the KB.
@@ -139,16 +139,16 @@ class OWLlinkDocument extends Document{
         $this->content->writeAttribute("kb",$uri);
         //$this->content->text("");
         $this->content->endElement();
-        
+
         $this->actual_kb = $uri;
     }
 
     /**
-       Insert a "ReleaseKB" OWLlink primitive. 
+       Insert a "ReleaseKB" OWLlink primitive.
 
        If the URI corresponds to the actual_kb one, set it to null.
-       
-       @param uri String (Optional). The name or the URI of the 
+
+       @param uri String (Optional). The name or the URI of the
        database to release. If not given, use the actual_kb one.
      */
     public function insert_release_kb($uri=null){
@@ -167,7 +167,7 @@ class OWLlinkDocument extends Document{
         if ($uri == $this->actual_kb) {
             $this->actual_kb = null;
         }
-        
+
     }
 
     ///@}
@@ -176,21 +176,21 @@ class OWLlinkDocument extends Document{
     /**
        @name Tell
 
-       Messages for adding Tell queries into the OWLlink document.       
+       Messages for adding Tell queries into the OWLlink document.
     */
     ///@{
-    
+
     public function get_in_tell(){
         return $this->in_tell;
     }
-    
+
     /**
        Open e Tell query.
 
        The KB is setted according to actual_kb.
 
        Example:
-       
+
        @code{.php}
        $owllink_document->start_tell();
        $owllink_document->insert_concept("Person");
@@ -203,28 +203,28 @@ class OWLlinkDocument extends Document{
         $this->content->writeAttribute("kb", $this->actual_kb);
         $this->in_tell = true;
     }
-    
+
     public function end_tell(){
         if ($this->in_tell){
             $this->content->endElement();
             $this->in_tell = false;
         }
     }
-    
+
 
     /**
-       Insert a DL subclass-of operator. 
-       
+       Insert a DL subclass-of operator.
+
        Abbreviated IRIs are recognized automatically.
 
        @param child_class A String with the child's name class.
-       @param father_class Same as $child_class parameter but for 
+       @param father_class Same as $child_class parameter but for
        the $father_class.
        @param child_abbrev If true, force the abbreviated IRI for the
-       child class; if false, force the (not abbreviated) IRI; if 
+       child class; if false, force the (not abbreviated) IRI; if
        null check it automatically.
-       @param father_abbrev same as $child_abbrev but for the 
-       $father_class. 
+       @param father_abbrev same as $child_abbrev but for the
+       $father_class.
      */
     public function insert_subclassof($child_class, $father_class, $child_abbrev=false, $father_abbrev=false){
         if (! $this->in_tell){
@@ -247,14 +247,14 @@ class OWLlinkDocument extends Document{
     */
     protected function name_has_namespace($name){
         $ns_regexp = '/.*:.*/';        // Namespace Regexp.
-        
+
         if (preg_match($ns_regexp, $name) > 0){
             return true;
         }else{
             return false;
         }
     }
-  
+
     /**
        Add a class DL element.
 
@@ -274,19 +274,19 @@ class OWLlinkDocument extends Document{
             // presence...
             $is_abbreviated = $this->name_has_namespace($name);
         }
-        
+
         $this->content->startElement("owl:Class");
         if ($is_abbreviated){
             $this->content->writeAttribute("abbreviatedIRI", $name);
         }else{
-            $this->content->writeAttribute("IRI", "#".$name);
+            $this->content->writeAttribute("IRI", $name);
         }
         $this->content->endElement();
     }
 
     public function insert_objectproperty($name){
-        $this->content->startElement("owl:ObjectProperty");        
-        $this->content->writeAttribute("IRI", "#".$name);
+        $this->content->startElement("owl:ObjectProperty");
+        $this->content->writeAttribute("IRI", $name);
         $this->content->endElement();
     }
 
@@ -322,7 +322,7 @@ class OWLlinkDocument extends Document{
     public function end_complementof(){
         $this->content->EndElement();
     }
-    
+
     public function begin_somevaluesfrom(){
         $this->content->startElement("owl:ObjectSomeValuesFrom");
     }
@@ -336,7 +336,7 @@ class OWLlinkDocument extends Document{
     public function end_allvaluesfrom(){
         $this->content->EndElement();
     }
-    
+
     public function begin_mincardinality($cardinality){
         $this->content->startElement("owl:ObjectMinCardinality");
         $this->content->writeAttribute("cardinality", $cardinality);
@@ -353,25 +353,25 @@ class OWLlinkDocument extends Document{
     }
 
 	public function begin_objectpropertydomain(){
-		$this->content->startElement("owl:ObjectPropertyDomain");        
+		$this->content->startElement("owl:ObjectPropertyDomain");
 	}
-        
+
    	public function end_objectpropertydomain(){
         $this->content->EndElement();
 	}
 
 	public function begin_objectpropertyrange(){
-		$this->content->startElement("owl:ObjectPropertyRange");        
+		$this->content->startElement("owl:ObjectPropertyRange");
 	}
-        
+
    	public function end_objectpropertyrange(){
         $this->content->EndElement();
 	}
 
 	public function begin_equivalentclasses(){
-		$this->content->startElement("owl:EquivalentClasses");        
+		$this->content->startElement("owl:EquivalentClasses");
 	}
-        
+
    	public function end_equivalentclasses(){
         $this->content->EndElement();
 	}
@@ -379,12 +379,12 @@ class OWLlinkDocument extends Document{
     // Tell group.
 
     /**
-       @name Ask 
+       @name Ask
 
        Messages for the Ask section.
      */
     ///@{
-    
+
     public function insert_satisfiable(){
         $this->content->startElement("IsKBSatisfiable");
         $this->content->writeAttribute("kb", $this->actual_kb);
@@ -392,43 +392,43 @@ class OWLlinkDocument extends Document{
     }
 
     public function insert_satisfiable_class($classname){
-        $this->content->startElement("IsClassSatisfiable");        
+        $this->content->startElement("IsClassSatisfiable");
         $this->content->writeAttribute("kb", $this->actual_kb);
-        
+
         $this->content->startElement("owl:Class");
-        $this->content->writeAttribute("IRI", "#".$classname);
+        $this->content->writeAttribute("IRI", $classname);
         $this->content->endElement();
-        
+
         $this->content->endElement();
     }
 
     /**
-       Insert an ASK query denominated IsEntailedDirect for all the classes in the array.
+       Insert an ASK query denominated IsEntailed for all the classes in the array.
 
        @param $array An array of Strings with classnames.
      */
     public function insert_equivalent_class_query($array){
-        $this->content->startElement("IsEntailedDirect");
+        $this->content->startElement("IsEntailed");
         $this->content->writeAttribute("kb", $this->actual_kb);
 
         $this->content->startelement("owl:EquivalentClasses");
         foreach ($array as $classname){
             $this->content->startElement("owl:Class");
-            $this->content->writeAttribute("IRI", "#" . $classname);
+            $this->content->writeAttribute("IRI", $classname);
             $this->content->endElement();
         }
-        $this->content->endElement();        
-        
+        $this->content->endElement();
+
         $this->content->endElement();
     }
-    
+
     ///@}
     // Ask group.
 
     public function insert_owllink($text){
         // $this->owllink_text = $text;
         $this->content->writeRaw($text);
-        
+
     }
 
     public function to_string(){

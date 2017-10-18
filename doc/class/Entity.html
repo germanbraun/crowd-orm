@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>CoffeeScript API Documentation</title>
+  <script src='../javascript/application.js'></script>
+  <script src='../javascript/search.js'></script>
+  <link rel='stylesheet' href='../stylesheets/application.css' type='text/css'>
+</head>
+  <body>
+    <div id='base' data-path='../'></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='../extra/README.md.html' title='Wicom-qdod'>
+      Wicom-qdod
+    </a>
+    &raquo;
+    <a href='../alphabetical_index.html' title='Index'>
+      Index
+    </a>
+    &raquo;
+    <span class='title'>Entity</span>
+  </div>
+</div>
+    <div id='content'>
+      <h1>
+        Class:
+        Entity
+      </h1>
+      <table class='box'>
+        <tr>
+          <td>Defined in:</td>
+          <td>web-src&#47;coffee&#47;model&#47;eer&#47;entity.coffee</td>
+        </tr>
+        <tr>
+          <td>Inherits:</td>
+          <td>
+            model.MyModel
+          </td>
+        </tr>
+      </table>
+      <h2>Overview</h2>
+      <div class='docstring'>
+  <p>An Entity from our model ERD diagram.</p>
+</div>
+<div class='tags'>
+</div>
+      <h2>Instance Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#get_name-dynamic'>
+        #
+(void)
+<b>get_name</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#set_name-dynamic'>
+        #
+(void)
+<b>set_name</b><span>(name)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#get_attrs-dynamic'>
+        #
+(void)
+<b>get_attrs</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#set_unsatisfiable-dynamic'>
+        #
+(void)
+<b>set_unsatisfiable</b><span>(bool, csstheme = null)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Set if this class is unsatisfiable. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#set_theme-dynamic'>
+        #
+(void)
+<b>set_theme</b><span>(csstheme)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Set the csstheme to the joint class. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#create_joint-dynamic'>
+        #
+(void)
+<b>create_joint</b><span>(factory, csstheme = null)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      If the joint model wasn&#39;t created, make it. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#to_json-dynamic'>
+        #
+(void)
+<b>to_json</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#attach_my_event_handlers-dynamic'>
+        #
+(void)
+<b>attach_my_event_handlers</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      I attach myself and my event handlers into the joint model for answering myself whenever some important changes happens.
+
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#attach_on_change_position-dynamic'>
+        #
+(void)
+<b>attach_on_change_position</b><span>(object)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Attach an object for notifying whenever the class changes position. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#notify_change_position-dynamic'>
+        #
+(void)
+<b>notify_change_position</b><span>(model)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      <strong>Event handler</strong> for notifying all objects attached that the position has been changed. 
+    </span>
+  </li>
+</ul>
+      <h2>Constructor Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='constructor-dynamic'>
+      #
+(void)
+<b>constructor</b><span>(name, attrs = null)</span>
+      <br>
+    </p>
+    <div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>name</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+    </li>
+    <li>
+      <span class='name'>attrs</span>
+      <span class='type'>
+        (
+          <tt>Array&lt;String&gt;</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Array representing the attributes names. </span>
+    </li>
+    <li>
+      <span class='name'>methods</span>
+      <span class='type'>
+        (
+          <tt>Array&lt;Strings&gt;</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Array representing the methods names. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+</div>
+      <h2>Instance Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='get_name-dynamic'>
+      #
+(void)
+<b>get_name</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='set_name-dynamic'>
+      #
+(void)
+<b>set_name</b><span>(name)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='get_attrs-dynamic'>
+      #
+(void)
+<b>get_attrs</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='set_unsatisfiable-dynamic'>
+      #
+(void)
+<b>set_unsatisfiable</b><span>(bool, csstheme = null)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Set if this class is unsatisfiable. Changing its appearance if <code>csstheme</code>
+is given.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>bool</span>
+      <span class='type'>
+        (
+          <tt>Boolean</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>If it is unsatisfiable or not. </span>
+    </li>
+    <li>
+      <span class='name'>csstheme</span>
+      <span class='type'>
+        (
+          <tt>CSSTheme</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>optional. A csstheme object that if given, will set the appearance of this class depending if it is unsatisfiable. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='set_theme-dynamic'>
+      #
+(void)
+<b>set_theme</b><span>(csstheme)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Set the csstheme to the joint class.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='create_joint-dynamic'>
+      #
+(void)
+<b>create_joint</b><span>(factory, csstheme = null)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>If the joint model wasn&#39;t created, make it.</p>
+</div>
+<div class='tags'>
+  <h3>See also:</h3>
+  <ul class='see'>
+    <li>
+      <a href='../class/MyModel.html#create_joint-dynamic'>MyModel#create_joint</a>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='to_json-dynamic'>
+      #
+(void)
+<b>to_json</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='attach_my_event_handlers-dynamic'>
+      #
+(void)
+<b>attach_my_event_handlers</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>I attach myself and my event handlers into the joint model
+for answering myself whenever some important changes happens.</p><p>If I have already attached, I don&#39;t attach again.</p><p>This will attach for:</p><ul>
+<li>change:position : <a href='../class/Class.html#notify_change_position-dynamic'>Class#notify_change_position</a></li>
+</ul>
+
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='attach_on_change_position-dynamic'>
+      #
+(void)
+<b>attach_on_change_position</b><span>(object)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Attach an object for notifying whenever the class changes position.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>object</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/MyModel.html'>MyModel</a></tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>has to answer to <a href='../class/MyModel.html#update_position-dynamic'>MyModel#update_position</a>. </span>
+    </li>
+  </ul>
+  <h3>See also:</h3>
+  <ul class='see'>
+    <li>
+      <a href='#notify_change_position'>#notify_change_position</a>
+    </li>
+    <li>
+      <a href='../class/MyModel.html#update_position-dynamic'>MyModel#update_position</a>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='notify_change_position-dynamic'>
+      #
+(void)
+<b>notify_change_position</b><span>(model)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p><strong>Event handler</strong> for notifying all objects attached that the position has been changed.</p><p>It will call update_position() to all objects attached.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>model</span>
+      <span class='type'>
+        (
+          <tt>joint.dia.Element</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>The Joint element that has recieved the event. </span>
+    </li>
+  </ul>
+  <h3>See also:</h3>
+  <ul class='see'>
+    <li>
+      <a href='../class/MyModel.html#update_position-dynamic'>MyModel#update_position</a>
+    </li>
+  </ul>
+</div>
+  </div>
+</div>
+    </div>
+    <div id='footer'>
+  By
+  <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
+    Codo
+  </a>
+  2.1.2
+  &#10034;
+  Press H to see the keyboard shortcuts
+  &#10034;
+  <a href='http://twitter.com/netzpirat' target='_parent'>@netzpirat</a>
+  &#10034;
+  <a href='http://twitter.com/_inossidabile' target='_parent'>@_inossidabile</a>
+</div>
+<iframe id='search_frame'></iframe>
+<div id='fuzzySearch'>
+  <input type='text'>
+  <ol></ol>
+</div>
+<div id='help'>
+  <p>
+    Quickly fuzzy find classes, mixins, methods, file:
+  </p>
+  <ul>
+    <li>
+      <span>T</span>
+      Open fuzzy finder dialog
+    </li>
+  </ul>
+  <p>
+    Control the navigation frame:
+  </p>
+  <ul>
+    <li>
+      <span>L</span>
+      Toggle list view
+    </li>
+    <li>
+      <span>C</span>
+      Show class list
+    </li>
+    <li>
+      <span>I</span>
+      Show mixin list
+    </li>
+    <li>
+      <span>F</span>
+      Show file list
+    </li>
+    <li>
+      <span>M</span>
+      Show method list
+    </li>
+    <li>
+      <span>E</span>
+      Show extras list
+    </li>
+  </ul>
+  <p>
+    You can focus and blur the search input:
+  </p>
+  <ul>
+    <li>
+      <span>S</span>
+      Focus search input
+    </li>
+    <li>
+      <span>Esc</span>
+      Blur search input
+    </li>
+  </ul>
+</div>
+  </body>
+</html>

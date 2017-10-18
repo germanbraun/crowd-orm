@@ -14,7 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
+exports = exports ? this
+exports.views = exports.views ? this
 
 
 RelationOptionsView = Backbone.View.extend(
@@ -27,12 +28,11 @@ RelationOptionsView = Backbone.View.extend(
         this.$el.html(template({classid: @classid}))
 
     events:
-        "click a#cardfrom_accept" : "cardfrom",
-        "click a#cardto_accept" : "cardto",
         "click a#association_button" : "new_relation",
         "click a#assoc_class_button" : "new_assoc_class"
-    	
-    cardfrom: (from) ->
+
+    # Retrieve the source role and multiplicity information.
+    cardfrom: () ->
         # from = "2..3"
         # console.log from
         from_1 = $('#cardfrom-1').val()
@@ -42,8 +42,9 @@ RelationOptionsView = Backbone.View.extend(
         console.log(from_2)
         @from = from_aux.concat from_2
         @from_role = $('#role-from').val()
-    
-    cardto: (too) ->
+
+    # Retrieve the destination role and multiplicity
+    cardto: () ->
         # too = "4..8"
         # console.log too
         too_1 = $('#cardto-1').val()
@@ -54,8 +55,15 @@ RelationOptionsView = Backbone.View.extend(
         @too = too_aux.concat too_2
         # console.log too
         @to_role = $('#role-to').val()
-    		
-    new_relation: (from, too) ->
+
+    # Create a new relation with the information from the role, multiplicity and
+    # association name input fields.
+    #
+    # Callback, used when the user clicks on the association button.
+    new_relation: () ->
+        this.cardfrom()
+        this.cardto()
+
         mult = []
         mult[0] = @from
         mult[1] = @too
@@ -67,7 +75,14 @@ RelationOptionsView = Backbone.View.extend(
         console.log(mult)
         gui.gui_instance.set_association_state(@classid, mult, roles, name, false)
 
+    # Create a new relation with the information from the role, multiplicity and
+    # association name input fields. *Use an association class in the middle.*
+    #
+    # Callback, used when the user clicks on the create association class button.
     new_assoc_class: (from, too) ->
+        this.cardfrom()
+        this.cardto()
+
         mult = []
         mult[0] = @from
         mult[1] = @too
@@ -75,10 +90,11 @@ RelationOptionsView = Backbone.View.extend(
         roles[0] = @from_role
         roles[1] = @to_role
         name = $("#assoc_name").val()
+        @hide()
         console.log("New association with class: " + name)
         console.log(mult)
         gui.gui_instance.set_association_state(@classid, mult, roles, name, true)
-        
+
 
     # Map the Option value to multiplicity string.
     #
@@ -96,23 +112,22 @@ RelationOptionsView = Backbone.View.extend(
         viewpos = graph.getCell(@classid).findView(paper).getBBox()
 
         this.$el.css(
-            top: viewpos.y,
-            left: viewpos.x + viewpos.width,
+            top: viewpos.y + 50,
+            left: viewpos.x + 100,
             position: 'absolute',
             'z-index': 1
             )
         this.$el.show()
-        
+
     get_classid: () ->
         return @classid
 
     hide: () ->
         this.$el.hide()
-        
+
 )
 
 
-        
 
-exports = exports ? this
-exports.RelationOptionsView = RelationOptionsView
+
+exports.views.RelationOptionsView = RelationOptionsView
