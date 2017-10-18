@@ -21,7 +21,7 @@ exports.views.eer = exports.views.eer ? this
 
 # Provides elements and events needed for displaying the interface for
 # creating a new class.
-CreateEntityView = Backbone.View.extend(
+CreateEERView = Backbone.View.extend(
         initialize: () ->
         	this.render()
 
@@ -96,4 +96,4 @@ CreateEntityView = Backbone.View.extend(
 
 
 
-exports.views.eer.CreateEntityView = CreateEntityView
+exports.views.eer.CreateEERView = CreateEERView

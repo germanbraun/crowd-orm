@@ -16,10 +16,10 @@
 
 exports = exports ? this
 exports.views = exports.views ? this
-exports.views.eer = exports.views.eer ? this
+exports.views.common = exports.views.common ? this
 
 # @namespace views
-EntityOptionsView = Backbone.View.extend(
+ObjectTypeOptionsView = Backbone.View.extend(
     initialize: () ->
         this.render()
         this.$el.hide()
@@ -37,6 +37,8 @@ EntityOptionsView = Backbone.View.extend(
     # instance, then set the position of the template to where is the
     # class Joint Model.
     set_classid: (@classid) ->
+
+        console.log(@classid)
         viewpos = graph.getCell(@classid).findView(paper).getBBox()
 
         this.$el.css(
@@ -67,4 +69,4 @@ EntityOptionsView = Backbone.View.extend(
 )
 
 
-exports.views.eer.EntityOptionsView = EntityOptionsView
+exports.views.common.ObjectTypeOptionsView = ObjectTypeOptionsView

@@ -16,16 +16,16 @@
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
-   
+
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 
 ?>
-<div class="classOptions" data-role="controlgroup" data-mini="true"
+<div class="attrOptions" data-role="controlgroup" data-mini="true"
      data-type="vertical" style="visible:false, z-index:1, position:absolute" >
-    <input type="hidden" id="cassoptions_classid" name="classid" value="<%= classid %>" />
-    <a class="ui-btn ui-corner-all ui-icon-edit ui-btn-icon-notext" type="button" id="editclass_button">Edit</a>
-    <a class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext" type="button" id="deleteclass_button">Delete</a>
+    <input type="hidden" id="attroptions_attrid" name="attrid" value="<%= attrid %>" />
+    <a class="ui-btn ui-corner-all ui-icon-edit ui-btn-icon-notext" type="button" id="editattr_button">Edit</a>
+    <a class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext" type="button" id="deleteattr_button">Delete</a>
 </div>

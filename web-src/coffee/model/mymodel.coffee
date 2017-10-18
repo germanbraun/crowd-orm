@@ -17,7 +17,7 @@
 
 # This *abstract* superclass represent the common behaviour
 # of all of our model's diagram elements.
-# 
+#
 # Each element from our diagram should be represented
 # extending this class.
 
@@ -27,9 +27,9 @@ exports = exports ? this
 exports.model = exports.model ? {}
 
 #
-# 
+#
 # # On subclass
-# 
+#
 # Re-implement this functions:
 # - constructor
 # - create_joint
@@ -56,7 +56,7 @@ class MyModel
     # The first element is used for get_classid, representing it as the JointJS
     # visual element of this instance. If this instance has more than one
     # JointJS cells, the first one is the most important.
-    # 
+    #
     # @note Please redefine this method in the subclass.
     # @param factory {Factory subclass} A concrete Factory for creating the
     #   view instance.
@@ -73,7 +73,7 @@ class MyModel
                 v = elt.findView(paper)
                 v.update()
             this)
-       
+
     #
     # @return {boolean} true if this Joint Model has the given classid string.
     has_classid: (classid) ->
@@ -86,10 +86,14 @@ class MyModel
     # @return {boolean} true if this Joint Model has the given isaid string.
     has_isaid: (isaid) ->
         this.get_isaid() == isaid
-        
+
+    # @return {boolean} true if this Joint Model has the given relid string.
+    has_relid: (isaid) ->
+        this.get_relid() == isaid
+
     # Return the classid value of the associated JointJS View object.
     # Use {MyModel#create_joint} for creating a JointJS object.
-    # 
+    #
     # @return {string} A string for the JointJS object or false if it wasn't initialized.
     get_classid: () ->
         if @joint == null
@@ -110,6 +114,12 @@ class MyModel
     	else
     		return @joint[0].id
 
+    get_relid: () ->
+    	if @joint == null
+    		return false
+    	else
+    		return @joint[0].id
+
     #
     # Return a JSON object representation with only the information.
     #
@@ -125,7 +135,7 @@ class MyModel
     # JointJS Object or any associated MyModel/Joint object to update the
     # position of this object accordingly to them. So, this is also an
     # **event handler** .
-    # 
+    #
     # Redefine this function if necessary.
     update_position: () ->
 
@@ -133,5 +143,5 @@ class MyModel
         other.name == @name
 
 
-       
+
 exports.model.MyModel = MyModel

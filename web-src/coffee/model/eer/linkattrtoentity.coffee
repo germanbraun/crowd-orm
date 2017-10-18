@@ -24,15 +24,15 @@ exports.model.eer = exports.model.eer ? {}
 #
 # @namespace model.eer
 class LinkAttrToEntity extends model.uml.Link
-	
+
     constructor: (@classes, name=null) ->
         super(@classes, name)
-            
+
     get_name: () ->
     	return @name
-    	            
+
     # @see MyModel#create_joint
-    create_joint: (factory, csstheme = null) ->        
+    create_joint: (factory, csstheme = null) ->
         if @joint == null
             @joint = []
             if csstheme != null
@@ -48,7 +48,7 @@ class LinkAttrToEntity extends model.uml.Link
                     @classes[1].get_attributeid(),
                     @name
                     null
-                    ))    
+                    ))
 
 
     to_json: () ->
