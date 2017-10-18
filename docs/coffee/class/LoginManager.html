@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>CoffeeScript API Documentation</title>
+  <script src='../javascript/application.js'></script>
+  <script src='../javascript/search.js'></script>
+  <link rel='stylesheet' href='../stylesheets/application.css' type='text/css'>
+</head>
+  <body>
+    <div id='base' data-path='../'></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='../extra/README.md.html' title='Wicom-qdod'>
+      Wicom-qdod
+    </a>
+    &raquo;
+    <a href='../alphabetical_index.html' title='Index'>
+      Index
+    </a>
+    &raquo;
+    <span class='title'>LoginManager</span>
+  </div>
+</div>
+    <div id='content'>
+      <h1>
+        Class:
+        LoginManager
+      </h1>
+      <table class='box'>
+        <tr>
+          <td>Defined in:</td>
+          <td>web-src&#47;coffee&#47;login.coffee</td>
+        </tr>
+      </table>
+      <h2>Overview</h2>
+      <div class='docstring'>
+  <p>Class to manage the login and widgets.</p><p>Main class for the login and save-load features and its widgets.</p>
+</div>
+<div class='tags'>
+</div>
+      <h2>Variables Summary</h2>
+      <dl class='constants'>
+  <dt id='current-variable'>
+    current
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>null</code></pre>
+    
+  </dd>
+  <dt id='loginconn-variable'>
+    loginconn
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>null</code></pre>
+    
+  </dd>
+</dl>
+      <h2>Instance Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#new_login-dynamic'>
+        #
+(void)
+<b>new_login</b><span>(username, current = true)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Create a new login and make it current. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#show_login-dynamic'>
+        #
+(void)
+<b>show_login</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Show the login popup. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#hide_login-dynamic'>
+        #
+(void)
+<b>hide_login</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Hide the login popup. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#change_to_user_page-dynamic'>
+        #
+(void)
+<b>change_to_user_page</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#update_login-dynamic'>
+        #
+(void)
+<b>update_login</b><span>(data)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Callback for the LoginRequests Update the interface according to a succesful login.
+
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#set_logged_in-dynamic'>
+        #
+(void)
+<b>set_logged_in</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      According to the information about @current, update the interface. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#update_logout-dynamic'>
+        #
+(void)
+<b>update_logout</b><span>(data)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Callback for the Loginrequests. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#show_save_json-dynamic'>
+        #
+(void)
+<b>show_save_json</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Display the saveloadjson Popup in the save state. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#show_load_json-dynamic'>
+        #
+(void)
+<b>show_load_json</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Display the saveloadjson Popup in the load state. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#show_load_json_with_list-dynamic'>
+        #
+(void)
+<b>show_load_json_with_list</b><span>(list)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Display the loadjson but without retrieving the model list. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#hide_saveloadjson-dynamic'>
+        #
+(void)
+<b>hide_saveloadjson</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Hide the saveloadjson Popup. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#update_saveloadjsonwidget-dynamic'>
+        #
+(void)
+<b>update_saveloadjsonwidget</b><span>(data)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Callback for LoginRequests.request_model_list(). 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#model_sended-dynamic'>
+        #
+(void)
+<b>model_sended</b><span>(data)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+</ul>
+      <h2>Constructor Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='constructor-dynamic'>
+      #
+(void)
+<b>constructor</b><span>(loginwidget_id = &quot;#loginwidget_placer&quot;, saveloadwidget_id = &quot;#saveloadjson_placer&quot;)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Create a LoginWidget</p><p>@param widget_id The login widget id. Example: &quot;#loginwidget_placer&quot;</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+</div>
+      <h2>Instance Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='new_login-dynamic'>
+      #
+(void)
+<b>new_login</b><span>(username, current = true)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Create a new login and make it current.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>current</span>
+      <span class='type'>
+        (
+          <tt>boolean</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Optional. Make it current? By default is true. </span>
+    </li>
+    <li>
+      <span class='name'>username</span>
+      <span class='type'>
+        (
+          <tt>string</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>The username of the login. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='show_login-dynamic'>
+      #
+(void)
+<b>show_login</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Show the login popup.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='hide_login-dynamic'>
+      #
+(void)
+<b>hide_login</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Hide the login popup.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='change_to_user_page-dynamic'>
+      #
+(void)
+<b>change_to_user_page</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='update_login-dynamic'>
+      #
+(void)
+<b>update_login</b><span>(data)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Callback for the LoginRequests</p><p>Update the interface according to a succesful login.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>data</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>The information about the login answer in JSON format. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='set_logged_in-dynamic'>
+      #
+(void)
+<b>set_logged_in</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>According to the information about @current, update the interface.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='update_logout-dynamic'>
+      #
+(void)
+<b>update_logout</b><span>(data)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Callback for the Loginrequests.</p><p>Update the interface and JS as if the user has recently logged out.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>data</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>The information returned from the server. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='show_save_json-dynamic'>
+      #
+(void)
+<b>show_save_json</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Display the saveloadjson Popup in the save state.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='show_load_json-dynamic'>
+      #
+(void)
+<b>show_load_json</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Display the saveloadjson Popup in the load state.</p><p>But first, we must retrieve the model list.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='show_load_json_with_list-dynamic'>
+      #
+(void)
+<b>show_load_json_with_list</b><span>(list)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Display the loadjson but without retrieving the model list.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>list</span>
+      <span class='type'>
+        (
+          <tt>Array</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>A list of Strings with the names of the models. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='hide_saveloadjson-dynamic'>
+      #
+(void)
+<b>hide_saveloadjson</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Hide the saveloadjson Popup.</p><p>Maybe the user canceled?</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='update_saveloadjsonwidget-dynamic'>
+      #
+(void)
+<b>update_saveloadjsonwidget</b><span>(data)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Callback for LoginRequests.request_model_list().</p><p>Retrive the JSON string data and update the load model list.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>data</span>
+      <span class='type'>
+        (
+          <tt>string</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>The JSON string. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='model_sended-dynamic'>
+      #
+(void)
+<b>model_sended</b><span>(data)</span>
+      <br>
+    </p>
+    
+  </div>
+</div>
+    </div>
+    <div id='footer'>
+  By
+  <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
+    Codo
+  </a>
+  2.1.2
+  &#10034;
+  Press H to see the keyboard shortcuts
+  &#10034;
+  <a href='http://twitter.com/netzpirat' target='_parent'>@netzpirat</a>
+  &#10034;
+  <a href='http://twitter.com/_inossidabile' target='_parent'>@_inossidabile</a>
+</div>
+<iframe id='search_frame'></iframe>
+<div id='fuzzySearch'>
+  <input type='text'>
+  <ol></ol>
+</div>
+<div id='help'>
+  <p>
+    Quickly fuzzy find classes, mixins, methods, file:
+  </p>
+  <ul>
+    <li>
+      <span>T</span>
+      Open fuzzy finder dialog
+    </li>
+  </ul>
+  <p>
+    Control the navigation frame:
+  </p>
+  <ul>
+    <li>
+      <span>L</span>
+      Toggle list view
+    </li>
+    <li>
+      <span>C</span>
+      Show class list
+    </li>
+    <li>
+      <span>I</span>
+      Show mixin list
+    </li>
+    <li>
+      <span>F</span>
+      Show file list
+    </li>
+    <li>
+      <span>M</span>
+      Show method list
+    </li>
+    <li>
+      <span>E</span>
+      Show extras list
+    </li>
+  </ul>
+  <p>
+    You can focus and blur the search input:
+  </p>
+  <ul>
+    <li>
+      <span>S</span>
+      Focus search input
+    </li>
+    <li>
+      <span>Esc</span>
+      Blur search input
+    </li>
+  </ul>
+</div>
+  </body>
+</html>

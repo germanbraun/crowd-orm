@@ -19,7 +19,7 @@ $GLOBALS['environment']='devel';
    Remember: Apache (represented as httpd, apache or www-data user in 
    some systems) should have write perms there.
  */
-$GLOBALS['config']['temporal_path'] = '/var/www/html/wicom/run/';
+$GLOBALS['config']['temporal_path'] = '/var/www/html/wicom-qdod/run/';
 
 /**
    Where is the Racer program?
@@ -29,5 +29,39 @@ $GLOBALS['config']['temporal_path'] = '/var/www/html/wicom/run/';
    have to set this value with the path.
  */
 $GLOBALS['config']['racer_path'] = $GLOBALS['config']['temporal_path'];
+
+/**
+   @name Database Configuration.
+*/
+//@{
+/**
+   Database host.
+
+   For specify the port use "HOST:PORT".
+   
+   Example: `localhost:3000`
+
+   @see http://php.net/manual/en/mysqli.construct.php
+*/
+$GLOBALS['config']['db']['host'] = 'localhost';
+
+/**
+   Database user name.
+ */
+
+$GLOBALS['config']['db']['user'] = 'DB username';
+
+/**
+   Database password
+ */
+$GLOBALS['config']['db']['password'] = 'DB password here';
+
+/**
+   Database name.
+ */
+$GLOBALS['config']['db']['database'] = 'crowd';
+
+$GLOBALS['config']['db']['charset'] = 'utf8';
+//@}
 
 ?>
