@@ -37,9 +37,9 @@ window.onload = () ->
     gui.set_current_instance(guiinst)
 
     # We add available GUIs. The last will be the current one.
-    guiinst.add_gui('eer', new gui.GUIEER())
+    guiinst.add_gui('eer', new gui.GUIUML())
 #    gui.gui_instance.add_gui('uml', new gui.GUIUML())
-    gui.gui_instance.add_gui('eer', new gui.GUIEER())
+    gui.gui_instance.add_gui('eer', new gui.GUIUML())
 
     # Interface
 
@@ -72,54 +72,8 @@ window.onload = () ->
     # Create a first example class
 
     #UML mode
-    #newclass = new model.uml.Class('Person',["dni : String","firstname : String", "surname : String", "birthdate : Date"],[])
-    #newclass1 = new model.uml.Class('Student',["id : String", "enrolldate : Date"],[])
-    #console.log(newclass)
-    #gui.gui_instance.add_object_type(newclass)
-    #gui.gui_instance.add_object_type(newclass1)
- #ERD mode
-
-    newattribute = new model.eer.Attribute('dni','normal')
-    newattribute2 = new model.eer.Attribute('firstname','normal')
-    newattribute3 = new model.eer.Attribute('surname','normal')
-    newattribute4 = new model.eer.Attribute('birthdate','normal')
-    newattribute5 = new model.eer.Attribute('id','normal')
-    newattribute6 = new model.eer.Attribute('enrolldate','normal')
-
-    newclass = new model.eer.Entity('Person',[newattribute,newattribute2,newattribute3,newattribute4])
-    newclass2 = new model.eer.Entity('Student',[newattribute5,newattribute6])
-    newlink = new model.eer.LinkAttrToEntity(['Person', 'dni'])
-    newlink2 = new model.eer.LinkAttrToEntity(['Person', 'firstname'])
-    newlink3 = new model.eer.LinkAttrToEntity(['Person', 'surname'])
-    newlink4 = new model.eer.LinkAttrToEntity(['Person', 'birthdate'])
-    newlink5 = new model.eer.LinkAttrToEntity(['Student', 'id'])
-    newlink6 = new model.eer.LinkAttrToEntity(['Student', 'enrolldate'])
-#    newISA = new Generalization(newclass2,newclass)
-#    console.log(newISA)
-#    newlinkISA =  new model.eer.LinkISAToEntity(['Person', 'r1'])
-#    newlinkISA1 =  new model.eer.LinkISAToEntity(['r1', 'Student'])
-#    console.log(newlinkISA)
-#    console.log(newlinkISA1)
-    guiinst.add_object_type(newclass)
-    guiinst.add_object_type(newclass2)
-    guiinst.add_attribute(newattribute)
-    guiinst.add_attribute(newattribute2)
-    guiinst.add_attribute(newattribute3)
-    guiinst.add_attribute(newattribute4)
-    guiinst.add_attribute(newattribute5)
-    guiinst.add_attribute(newattribute6)
-
-    entity = graph.attributes.cells.models[0].id
-    entity2 = graph.attributes.cells.models[1].id
-    attri = graph.attributes.cells.models[2].id
-    attri2 = graph.attributes.cells.models[3].id
-    attri3 = graph.attributes.cells.models[4].id
-    attri4 = graph.attributes.cells.models[5].id
-    attri5 = graph.attributes.cells.models[6].id
-    attri6 = graph.attributes.cells.models[7].id
-    guiinst.add_relationship_attr(entity,attri)
-    guiinst.add_relationship_attr(entity,attri2)
-    guiinst.add_relationship_attr(entity,attri3)
-    guiinst.add_relationship_attr(entity,attri4)
-    guiinst.add_relationship_attr(entity2,attri5)
-    guiinst.add_relationship_attr(entity2,attri6)
+    newclass = new model.uml.Class('Person',["dni : String","firstname : String", "surname : String", "birthdate : Date"],[])
+    newclass1 = new model.uml.Class('Student',["id : String", "enrolldate : Date"],[])
+    console.log(newclass)
+    gui.gui_instance.add_object_type(newclass)
+    gui.gui_instance.add_object_type(newclass1)
