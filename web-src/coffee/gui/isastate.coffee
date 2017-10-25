@@ -34,7 +34,7 @@ class IsAState extends gui.State
 
     # Set the parent Cell Id.
     #
-    # @param cell_starter {string} the parent Cell Id. 
+    # @param cell_starter {string} the parent Cell Id.
     set_cellStarter: (@cell_starter) ->
 
     # Set the constraints of the generalization.
@@ -45,7 +45,7 @@ class IsAState extends gui.State
     set_disjoint: (@disjoint) ->
     set_covering: (@covering) ->
 
-    on_cell_clicked: (cell_view, event, x, y, gui_instance) ->
-        gui_instance.add_subsumption(@cell_starter, cell_view.model.id, @disjoint, @covering)
-                  
+    on_cell_clicked: (cellView, event, x, y, gui_instance) ->
+        gui_instance.add_subsumption(@cell_starter, cellView.model.id, @disjoint, @covering)
+
 exports.gui.IsAState = IsAState

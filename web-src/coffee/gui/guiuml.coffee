@@ -28,7 +28,7 @@ class GUIUML extends gui.GUIIMPL
     #
     # @param {JointJS.Graph } graph The JointJS Graph used for drawing models.
     # @param {JointJS.Paper} paper The JointJS Paper used for drawing views.
-    constructor: (@graph = null, @paper = null) ->
+    constructor: (@graph, @paper) ->
         # @property [String] The URL prefix.
         @urlprefix = ""
         # @property [UMLDiagram] The user model diagram representation.

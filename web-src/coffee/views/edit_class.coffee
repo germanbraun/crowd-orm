@@ -32,9 +32,12 @@ EditClassView = Backbone.View.extend(
         "click a#close_button" : "hide"
 
     # Set this class ID and position the form onto the
-    # 
+    #
     # Class diagram.
     set_classid : (@classid) ->
+
+        console.log("estoy en set_classid de edit class")
+        console.log(@classid)
         viewpos = graph.getCell(@classid).findView(paper).getBBox()
 
         this.$el.css(
@@ -47,7 +50,7 @@ EditClassView = Backbone.View.extend(
 
     get_classid : () ->
         return @classid
-    
+
     edit_class: (event) ->
         name = $("#editclass_input").val()
         gui.gui_instance.edit_class_name(@classid, name)
@@ -58,7 +61,6 @@ EditClassView = Backbone.View.extend(
         this.$el.hide()
 
 )
-        
+
 
 exports.views.EditClassView = EditClassView
-

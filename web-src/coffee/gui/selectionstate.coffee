@@ -23,19 +23,20 @@ exports.gui = exports.gui ? {}
 # @namespace gui
 class SelectionState extends gui.State
     constructor: () ->
-        
+
     on_cell_clicked: (cellView, event, x, y, gui_instance) ->
-        if (cellView.highlighted == undefined or cellView.highlighted == false) 
+        if (cellView.highlighted == undefined or cellView.highlighted == false)
             cellView.highlight()
             cellView.highlighted = true
 
             # classoptions = new ClassOptionsView({el: $("#classoptions")})
+            console.log(cellView.model.id)
             gui_instance.set_options_classid(cellView.model.id)
 
         else
             cellView.unhighlight()
             cellView.highlighted = false
             gui_instance.hide_options()
-            
+
 
 exports.gui.SelectionState = SelectionState

@@ -36,9 +36,12 @@ class RacerConnector extends Connector{
     /**
        The Racer command to execute with all its parameters.
      */
-    const PROGRAM_CMD = "Racer";
-    const PROGRAM_PARAMS = "-- -silent -owllink ";
+//    const PROGRAM_CMD = "Racer";
+//    const PROGRAM_PARAMS = "-- -silent -owllink ";
       
+    const PROGRAM_CMD = "Konclude";
+    const PROGRAM_PARAMS = " owllinkfile -i ";
+
     /**
        Execute Racer with the given $document as input.
      */
