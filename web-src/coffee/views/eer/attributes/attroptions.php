@@ -26,6 +26,6 @@
 <div class="attrOptions" data-role="controlgroup" data-mini="true"
      data-type="vertical" style="visible:false, z-index:1, position:absolute" >
     <input type="hidden" id="attroptions_attrid" name="attrid" value="<%= attrid %>" />
-    <a class="ui-btn ui-corner-all ui-icon-edit ui-btn-icon-notext" type="button" id="editattr_button">Edit</a>
-    <a class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext" type="button" id="deleteattr_button">Delete</a>
+    <a class="ui-btn ui-corner-all ui-icon-edit ui-btn-icon-notext" type="button" id="eereditattr_button">Edit</a>
+    <a class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext" type="button" id="eerdeleteattr_button">Delete</a>
 </div>

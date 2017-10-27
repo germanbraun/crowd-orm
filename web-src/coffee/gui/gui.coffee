@@ -239,6 +239,11 @@ class GUI
         # Importing the Diagram
         this.import_json(json)
 
+
+    import_json: (json) ->
+      @current_gui.import_json(json)
+
+
     #
     # Show the "Import JSON" modal dialog.
     #

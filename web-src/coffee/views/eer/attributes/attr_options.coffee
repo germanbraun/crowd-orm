@@ -30,8 +30,8 @@ AttrOptionsView = Backbone.View.extend(
         this.$el.html(template({attrid: @attrid}))
 
     events:
-        "click a#deleteattr_button" : "delete_attr",
-        "click a#editattr_button" : "edit_attr"
+        "click a#eerdeleteattr_button" : "delete_attr",
+        "click a#eereditattr_button" : "edit_attr"
 
     ##
     # Set the classid of the Joint Model associated to this EditClass

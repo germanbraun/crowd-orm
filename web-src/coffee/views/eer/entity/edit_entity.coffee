@@ -30,8 +30,8 @@ EditEntityView = Backbone.View.extend(
         this.$el.html(template({classid: @classid}))
 
     events:
-        "click a#editclass_button" : "edit_class"
-        "click a#close_button" : "hide"
+        "click a#eereditclass_button" : "edit_class"
+        "click a#eerclose_button" : "hide"
 
     # Set this class ID and position the form onto the
     #
