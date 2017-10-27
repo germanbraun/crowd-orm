@@ -16,6 +16,7 @@
 
 exports = exports ? this
 exports.views = exports.views ? this
+exports.views.common = exports.views.common ? this
 
 
 ErrorWidgetView = Backbone.View.extend(
@@ -39,6 +40,6 @@ ErrorWidgetView = Backbone.View.extend(
         $(".error-popup").popup("close")
 )
 
-        
 
-exports.views.ErrorWidgetView = ErrorWidgetView
+
+exports.views.common.ErrorWidgetView = ErrorWidgetView

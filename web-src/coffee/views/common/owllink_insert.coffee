@@ -16,6 +16,7 @@
 
 exports = exports ? this
 exports.views = exports.views ? this
+exports.views.common = exports.views.common ? this
 
 
 ##
@@ -24,7 +25,7 @@ OWLlinkInsertView = Backbone.View.extend(
     initialize: () ->
         this.render()
         @textarea = this.$el.find("#insert_owllink_input")
-        
+
     render: () ->
         template = _.template( $("#template_insertowllink").html() )
         this.$el.html( template() )
@@ -34,7 +35,7 @@ OWLlinkInsertView = Backbone.View.extend(
 
     get_owllink: () ->
         return @textarea[0].value
-        
+
     set_owllink: (str) ->
         @textarea[0].value = str
 
@@ -45,6 +46,6 @@ OWLlinkInsertView = Backbone.View.extend(
         this.append_owllink("<owl:Class IRI=\"CLASSNAME\" />")
 )
 
-        
 
-exports.views.OWLlinkInsertView = OWLlinkInsertView
+
+exports.views.common.OWLlinkInsertView = OWLlinkInsertView

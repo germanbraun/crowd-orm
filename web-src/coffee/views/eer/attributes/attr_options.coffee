@@ -17,9 +17,10 @@
 exports = exports ? this
 exports.views = exports.views ? this
 exports.views.eer = exports.views.eer ? this
+exports.views.eer.attributes = exports.views.eer.attributes ? this
 
 # @namespace views
-AttrOptionsEERView = Backbone.View.extend(
+AttrOptionsView = Backbone.View.extend(
     initialize: () ->
         this.render()
         this.$el.hide()
@@ -67,4 +68,4 @@ AttrOptionsEERView = Backbone.View.extend(
 )
 
 
-exports.views.eer.AttrOptionsEERView = AttrOptionsEERView
+exports.views.eer.attributes.AttrOptionsView = AttrOptionsView

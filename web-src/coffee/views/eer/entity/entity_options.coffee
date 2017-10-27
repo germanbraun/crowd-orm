@@ -1,5 +1,5 @@
-# isa.coffee --
-# Copyright (C) 2016 GILIA
+# class_options.coffee --
+# Copyright (C) 2016 Giménez, Christian
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -16,44 +16,58 @@
 
 exports = exports ? this
 exports.views = exports.views ? this
+exports.views.eer = exports.views.eer ? this
+exports.views.eer.entity = exports.views.eer.entity ? this
 
-
-IsaOptionsView = Backbone.View.extend(
+# @namespace views
+EntityOptionsView = Backbone.View.extend(
     initialize: () ->
         this.render()
         this.$el.hide()
 
     render: () ->
-        template = _.template( $("#template_isaoptions").html() )
+        template = _.template( $("#template_entityoptions").html() )
         this.$el.html(template({classid: @classid}))
 
     events:
-        'click a#isa_button' : 'new_isa'
+        "click a#deleteclass_button" : "delete_class",
+        "click a#editclass_button" : "edit_class"
 
-    new_isa: () ->
-        disjoint = $("#chk-disjoint").prop("checked")
-        covering = $("#chk-covering").prop("checked")
-        guiinst.set_isa_state(@classid, disjoint, covering)
-
+    ##
+    # Set the classid of the Joint Model associated to this EditClass
+    # instance, then set the position of the template to where is the
+    # class Joint Model.
     set_classid: (@classid) ->
+
+        console.log(@classid)
         viewpos = graph.getCell(@classid).findView(paper).getBBox()
 
         this.$el.css(
-            top: viewpos.y + 150,
+            top: viewpos.y + 50,
             left: viewpos.x,
             position: 'absolute',
             'z-index': 1
             )
         this.$el.show()
 
+    ##
+    # Return the ClassID of the Joint.Model element associated to
+    # this EditClass instance.
     get_classid: () ->
         return @classid
+
+    delete_class: (event) ->
+        gui.gui_instance.hide_options()
+        gui.gui_instance.delete_class(@classid)
+
+    edit_class: (event) ->
+        gui.gui_instance.hide_options()
+        gui.gui_instance.set_editclass_classid(@classid)
+        this.hide()
 
     hide: () ->
         this.$el.hide()
 )
 
 
-
-
-exports.views.IsaOptionsView = IsaOptionsView
+exports.views.eer.entity.EntityOptionsView = EntityOptionsView

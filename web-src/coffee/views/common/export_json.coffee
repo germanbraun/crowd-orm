@@ -16,7 +16,7 @@
 
 exports = exports ? this
 exports.views = exports.views ? this
-
+exports.views.common = exports.views.common ? this
 
 ExportJSONView = Backbone.View.extend(
     initialize: () ->
@@ -38,8 +38,7 @@ ExportJSONView = Backbone.View.extend(
         this.render()
 )
 
-        
 
 
-exports.views.ExportJSONView = ExportJSONView
 
+exports.views.common.ExportJSONView = ExportJSONView

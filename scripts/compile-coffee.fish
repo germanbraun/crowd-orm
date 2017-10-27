@@ -77,23 +77,11 @@ function merge_views --description="Compiles backbone views scripts"
 	end
 
 	echo "Merging"
-	for js in web-src/js/views/*.js
+	for js in (find web-src/js/views/ -name '*.js')
 		echo "Merging $js into web-src/js/backbone_views.js"
 		cat $js >> web-src/js/backbone_views.js
 		rm -v $js
 	end
-
-  for js in web-src/js/views/eer/*.js
-    echo "Merging $js into web-src/js/backbone_views.js"
-    cat $js >> web-src/js/backbone_views.js
-    rm -v $js
-  end
-
-  for js in web-src/js/views/common/*.js
-    echo "Merging $js into web-src/js/backbone_views.js"
-    cat $js >> web-src/js/backbone_views.js
-    rm -v $js
-  end
 
 	set_color red
 	echo "Files compiled but not merged:"

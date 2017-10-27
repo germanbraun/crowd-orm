@@ -16,6 +16,7 @@
 
 exports = exports ? this
 exports.views = exports.views ? this
+exports.views.common = exports.views.common ? this
 
 
 # View widget for the "Import JSON".
@@ -41,6 +42,6 @@ ImportJSONView = Backbone.View.extend(
         guiinst.import_jsonstr(jsonstr)
 )
 
-        
 
-exports.views.ImportJSONView = ImportJSONView
+
+exports.views.common.ImportJSONView = ImportJSONView

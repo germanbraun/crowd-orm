@@ -16,7 +16,7 @@
 
 exports = exports ? this
 exports.views = exports.views ? {}
-
+exports.views.common = exports.views.common ? this
 
 # Widget with a "done" button.
 DoneWidget = Backbone.View.extend(
@@ -80,4 +80,4 @@ DoneWidget = Backbone.View.extend(
 )
 
 
-exports.views.DoneWidget = DoneWidget
+exports.views.common.DoneWidget = DoneWidget

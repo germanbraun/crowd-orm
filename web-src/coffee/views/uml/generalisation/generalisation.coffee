@@ -16,20 +16,20 @@
 
 exports = exports ? this
 exports.views = exports.views ? this
-exports.views.common = exports.views.common ? this
+exports.views.uml = exports.views.uml ? this
+exports.views.uml.generalisation = exports.views.uml.generalisation ? this
 
-
-SubsumptionOptionsView = Backbone.View.extend(
+GeneralisationOptionsView = Backbone.View.extend(
     initialize: () ->
         this.render()
         this.$el.hide()
 
     render: () ->
-        template = _.template( $("#template_isaoptions").html() )
+        template = _.template( $("#template_generalisationoptions").html() )
         this.$el.html(template({classid: @classid}))
 
     events:
-        'click a#isa_button' : 'new_isa'
+        'click a#umlisa_button' : 'new_isa'
 
     new_isa: () ->
         disjoint = $("#chk-disjoint").prop("checked")
@@ -57,4 +57,4 @@ SubsumptionOptionsView = Backbone.View.extend(
 
 
 
-exports.views.common.SubsumptionOptionsView = SubsumptionOptionsView
+exports.views.uml.generalisation.GeneralisationOptionsView = GeneralisationOptionsView

@@ -17,9 +17,10 @@
 exports = exports ? this
 exports.views = exports.views ? this
 exports.views.eer = exports.views.eer ? this
+exports.views.eer.relationship = exports.views.eer.relationship ? this
 
 
-RelationOptionsEERView = Backbone.View.extend(
+RelationOptionsView = Backbone.View.extend(
     initialize: () ->
         this.render()
         this.$el.hide()
@@ -152,4 +153,4 @@ RelationOptionsEERView = Backbone.View.extend(
 
 
 
-exports.views.eer.RelationOptionsEERView = RelationOptionsEERView
+exports.views.eer.relationship.RelationOptionsView = RelationOptionsView

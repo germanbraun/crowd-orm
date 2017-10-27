@@ -60,22 +60,29 @@ require_once('template.php');
 		<!-- ---------------------------------------------------------------------- -->
 		<!-- Templates -->
 		<?php
-		insert_template("errorwidget");
-		insert_template("tools_navbar");
-		insert_template("editclass");
-		insert_template("classoptions");
-    insert_template("attroptions");
-		insert_template("relationoptions");
-		insert_template("isaoptions");
-		insert_template("trafficlight");
-		insert_template("insertowllink");
-		insert_template("importjson");
-		insert_template("exportjson");
-		insert_template("tools_navbar_erd");
-		insert_template("done_widget");
-		// Language toolbars
-		insert_template("tools_uml");
-    insert_template("tools_eer")
+		insert_template("errorwidget","common");
+    insert_template("trafficlight","common");
+		insert_template("insertowllink","common");
+		insert_template("importjson","common");
+		insert_template("exportjson","common");
+		insert_template("done_widget","common");
+
+		insert_template("tools_navbar","uml/classes");
+    insert_template("editclass","uml/classes");
+		insert_template("classoptions","uml/classes");
+		insert_template("associationoptions","uml/association");
+    insert_template("generalisationoptions","uml/generalisation");
+
+    insert_template("tools_uml","uml");
+
+    insert_template("tools_navbar_erd","eer/entity");
+    insert_template("editentity","eer/entity");
+		insert_template("entityoptions","eer/entity");
+		insert_template("relationoptions","eer/relationship");
+		insert_template("isaoptions","eer/isa");
+    insert_template("attroptions","eer/attributes");
+
+    insert_template("tools_eer","eer")
 		?>
 
 		<div id="editclass"></div>

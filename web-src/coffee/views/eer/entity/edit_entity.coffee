@@ -16,15 +16,17 @@
 
 exports = exports ? this
 exports.views = exports.views ? this
+exports.views.eer = exports.views.eer ? this
+exports.views.eer.entity = exports.views.eer.entity ? this
 
 
-EditClassView = Backbone.View.extend(
+EditEntityView = Backbone.View.extend(
     initialize: () ->
         this.render()
         this.$el.hide()
 
     render: () ->
-        template = _.template( $("#template_editclass").html())
+        template = _.template( $("#template_editentity").html())
         this.$el.html(template({classid: @classid}))
 
     events:
@@ -35,9 +37,6 @@ EditClassView = Backbone.View.extend(
     #
     # Class diagram.
     set_classid : (@classid) ->
-
-        console.log("estoy en set_classid de edit class")
-        console.log(@classid)
         viewpos = graph.getCell(@classid).findView(paper).getBBox()
 
         this.$el.css(
@@ -63,4 +62,4 @@ EditClassView = Backbone.View.extend(
 )
 
 
-exports.views.EditClassView = EditClassView
+exports.views.eer.entity.EditEntityView = EditEntityView

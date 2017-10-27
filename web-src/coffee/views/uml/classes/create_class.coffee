@@ -16,21 +16,22 @@
 
 exports = exports ? this
 exports.views = exports.views ? this
-exports.views.eer = exports.views.eer ? this
+exports.views.uml = exports.views.uml ? this
+exports.views.uml.classes = exports.views.uml.classes ? this
 
 
 # Provides elements and events needed for displaying the interface for
 # creating a new class.
-CreateEERView = Backbone.View.extend(
+CreateClassView = Backbone.View.extend(
         initialize: () ->
         	this.render()
 
         render: () ->
-            template = _.template( $("#template_tools_navbar_erd").html(), {} )
+            template = _.template( $("#template_tools_navbar").html(), {} )
             this.$el.html(template)
 
         events:
-        	"click a#crearclase_button" :
+        	"click a#umlcrearclase_button" :
                 "create_class"
             "click a#translate_button" :
                 "translate_owllink"
@@ -96,4 +97,4 @@ CreateEERView = Backbone.View.extend(
 
 
 
-exports.views.eer.CreateEERView = CreateEERView
+exports.views.uml.classes.CreateClassView = CreateClassView

@@ -16,19 +16,21 @@
 
 exports = exports ? this
 exports.views = exports.views ? this
+exports.views.eer = exports.views.eer ? this
+exports.views.eer.entity = exports.views.eer.entity ? this
 
 
 # Provides elements and events needed for displaying the interface for
 # creating a new class.
-CreateClassView = Backbone.View.extend(    
+CreateEntityView = Backbone.View.extend(
         initialize: () ->
         	this.render()
-    
+
         render: () ->
-            template = _.template( $("#template_tools_navbar").html(), {} )
+            template = _.template( $("#template_tools_navbar_erd").html(), {} )
             this.$el.html(template)
 
-        events: 
+        events:
         	"click a#crearclase_button" :
                 "create_class"
             "click a#translate_button" :
@@ -47,12 +49,12 @@ CreateClassView = Backbone.View.extend(
             "click a#loadjson":
                 "load_json"
 
-        
-        meta_to_erd: (event) -> 
-        	console.log(event) 
+
+        meta_to_erd: (event) ->
+        	console.log(event)
         	guiinst.to_erd()
-        
-        
+
+
         create_class: (event) ->
             guiinst.add_object_type(
                 name: $("#crearclase_input").val()
@@ -73,7 +75,7 @@ CreateClassView = Backbone.View.extend(
             $("#format_select")[0].value
 
         # Which is the current strategy the user selected?
-        # 
+        #
         # @return {String} "berardi", "crowd", etc.
         get_translation_strategy: () ->
             $("#strategy_select")[0].value
@@ -90,9 +92,9 @@ CreateClassView = Backbone.View.extend(
             gui.gui_instance.show_save_json()
         load_json: () ->
             gui.gui_instance.show_load_json()
-                
+
 );
 
-        
 
-exports.views.CreateClassView = CreateClassView
+
+exports.views.eer.entity.CreateEntityView = CreateEntityView

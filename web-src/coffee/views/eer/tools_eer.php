@@ -1,11 +1,11 @@
 <?php
 /*
 
-   Copyright 2016 Giménez, Christian
+   Copyright 2017 Giménez, Christian
 
    Author: Giménez, Christian
 
-   template.php
+   tools_uml.php
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -21,16 +21,11 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
-   Insert the named widget template.
-
-   Insert the <script> tag and then include the file with the same name under
-   the templates directory.
- */
-function insert_template($name, $dir){
-    echo "<script type=\"text/template\" id=\"template_$name\">";
-    include "coffee/views/$dir/$name.php";
-    echo "</script>";
-}
 
 ?>
+<div data-role="controlgroup" data-type="horizontal" data-mini="true">
+    <a class="ui-btn ui-mini ui-icon-plus ui-btn-icon-left ui-corner-all" id="eerclass_button">Class</a>
+    <a class="ui-btn ui-mini ui-icon-plus ui-btn-icon-right ui-corner-all" id="eerassoc_button">Assoc</a>
+	  <a class="ui-btn ui-mini ui-icon-plus ui-btn-icon-right ui-corner-all" id="eerisa_button">IS-A</a>
+	  <a class="ui-btn ui-mini ui-icon-plus ui-btn-icon-right ui-corner-all" id="eerattr_button">Attr</a>
+<div>

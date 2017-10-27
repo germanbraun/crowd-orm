@@ -17,6 +17,7 @@
 
 exports = exports ? this
 exports.views = exports.views ? {}
+exports.views.uml = exports.views.uml ? this
 
 
 # UML Toolbar.
@@ -34,7 +35,7 @@ ToolsUMLView = Backbone.View.extend(
     events:
         'click a#umlclass_button': 'umlclass_pressed'
         'click a#umlassoc_button': 'umlassoc_pressed'
-        'click a#umlisa_button': 'umlisa_pressed'        
+        'click a#umlisa_button': 'umlisa_pressed'
 
     umlclass_pressed: () ->
         @classnum += 1
@@ -49,4 +50,4 @@ ToolsUMLView = Backbone.View.extend(
         console.log('umlisa')
 )
 
-exports.views.ToolsUML = ToolsUMLView
+exports.views.uml.ToolsUML = ToolsUMLView
