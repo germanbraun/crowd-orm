@@ -26,35 +26,35 @@
 
 
 <div class="relationOptions" style="visible:false, z-index:1, position:absolute">
-    <input type="hidden" id="relationoptions_classid"  name="classid"  value="<%= classid %>" />
+    <input type="hidden" id="umlrelationoptions_classid"  name="classid"  value="<%= classid %>" />
     <div data-role="controlgroup" data-mini="true" data-type="horizontal" style="float: left">
 	     <form id="left-rel">
-    	    <input type="hidden" id="relationoptions_classid" name="classid" value="<%= classid %>" />
-    	    <input data-mini="true" placeholder="0" type="text" id="cardfrom-1" size="2" maxlength="4" />
-    	    <input type="hidden" id="relationoptions_classid" name="classid" value="<%= classid %>" />
-    	    <input data-mini="true" placeholder="*" type="text" id="cardfrom-2" size="2" maxlength="4" />
-	        <input data-mini="true" placeholder="role1" type="text" id="role-from" size="2" maxlength="4" />
+    	    <input type="hidden" id="umlrelationoptions_classid" name="classid" value="<%= classid %>" />
+    	    <input data-mini="true" placeholder="0" type="text" id="umlcardfrom-1" size="2" maxlength="4" />
+    	    <input type="hidden" id="umlrelationoptions_classid" name="classid" value="<%= classid %>" />
+    	    <input data-mini="true" placeholder="*" type="text" id="umlcardfrom-2" size="2" maxlength="4" />
+	        <input data-mini="true" placeholder="role1" type="text" id="umlrole-from" size="2" maxlength="4" />
 	    </form>
     </div>
 
     <div data-role="controlgroup" data-mini="true" data-type="horizontal" style="float: left">
 	     <form id="name-rel">
-	        <input data-mini="true" placeholder="name" type="text" size="4" maxlength="10" id="assoc_name" />
+	        <input data-mini="true" placeholder="name" type="text" size="4" maxlength="10" id="umlassoc_name" />
 	        <div data-role="controlgroup" data-mini="true" data-type="horizontal">
-		          <a class="ui-btn ui-corner-all ui-icon-arrow-r ui-btn-icon-notext" type="button" id="association_button">Association</a>
-		          <a class="ui-btn ui-corner-all ui-btn-icon-notext" type="button" id="assoc_class_button">Association Class</a>
+		          <a class="ui-btn ui-corner-all ui-icon-arrow-r ui-btn-icon-notext" type="button" id="umlassociation_button">Association</a>
+		          <a class="ui-btn ui-corner-all ui-btn-icon-notext" type="button" id="umlassoc_class_button">Association Class</a>
 	        </div>
 	     </form>
     </div>
 
-    <input type="hidden" id="relationoptions_classid"  name="classid"  value="<%= classid %>" />
+    <input type="hidden" id="umlrelationoptions_classid"  name="classid"  value="<%= classid %>" />
     <div data-role="controlgroup" data-mini="true" data-type="horizontal" style="float: right">
 	     <form id="right-rel">
-    	    <input type="hidden" id="relationoptions_classid" name="classid" value="<%= classid %>" />
-    	    <input data-mini="true" placeholder="0" type="text" id="cardto-1" size="2" maxlength="4" />
-    	    <input type="hidden" id="relationoptions_classid" name="classid" value="<%= classid %>" />
-    	    <input data-mini="true" placeholder="*" type="text" id="cardto-2" size="2" maxlength="4" />
-	        <input data-mini="true" placeholder="role2" type="text" id="role-to" size="2" maxlength="4" />
+    	    <input type="hidden" id="umlrelationoptions_classid" name="classid" value="<%= classid %>" />
+    	    <input data-mini="true" placeholder="0" type="text" id="umlcardto-1" size="2" maxlength="4" />
+    	    <input type="hidden" id="umlrelationoptions_classid" name="classid" value="<%= classid %>" />
+    	    <input data-mini="true" placeholder="*" type="text" id="umlcardto-2" size="2" maxlength="4" />
+	        <input data-mini="true" placeholder="role2" type="text" id="umlrole-to" size="2" maxlength="4" />
 	     </form>
     </div>
 </div>
