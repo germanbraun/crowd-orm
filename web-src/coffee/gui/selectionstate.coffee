@@ -30,7 +30,6 @@ class SelectionState extends gui.State
             cellView.highlighted = true
 
             # classoptions = new ClassOptionsView({el: $("#classoptions")})
-            console.log(cellView.model.id)
             gui_instance.set_options_classid(cellView.model.id)
 
         else

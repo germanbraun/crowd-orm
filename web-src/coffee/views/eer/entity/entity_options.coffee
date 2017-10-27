@@ -39,7 +39,6 @@ EntityOptionsView = Backbone.View.extend(
     # class Joint Model.
     set_classid: (@classid) ->
 
-        console.log(@classid)
         viewpos = graph.getCell(@classid).findView(paper).getBBox()
 
         this.$el.css(
