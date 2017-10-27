@@ -1,11 +1,11 @@
 <?php 
 /* 
 
-   Copyright 2016 Giménez, Christian
+   Copyright 2017 Giménez, Christian
    
    Author: Giménez, Christian   
 
-   racerconnector.php
+   koncludeconnector.php
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -28,23 +28,26 @@ load("config.php", "../../config/");
 
 use Wicom\Reasoner\Connector;
 
-class RacerConnector extends Connector{
+class KoncludeConnector extends Connector{
 
 
     //TODO: Change PROGRAM_CMD and FILES_PATH into configuration variables.
     
     /**
-       The Racer command to execute with all its parameters.
+       The Konclude command to execute with all its parameters.
      */
-    const PROGRAM_CMD = "Racer";
-    const PROGRAM_PARAMS = "-- -silent -owllink ";
+//    const PROGRAM_CMD = "Racer";
+//    const PROGRAM_PARAMS = "-- -silent -owllink ";
       
+    const PROGRAM_CMD = "Konclude";
+    const PROGRAM_PARAMS = " owllinkfile -i ";
+
     /**
-       Execute Racer with the given $document as input.
+       Execute Konclude with the given $document as input.
      */
     function run($input_string){
         $temporal_path = $GLOBALS['config']['temporal_path'];
-        $racer_path = $GLOBALS['config']['racer_path'];
+        $konclude_path = $GLOBALS['config']['konclude_path'];
 
         /*
         print("\n\nWriting on $temporal_path/input-file.owllink\n");
@@ -54,10 +57,10 @@ class RacerConnector extends Connector{
         
         $temporal_path = realpath($temporal_path) . "/";
         $file_path = $temporal_path . "input-file.owllink";
-        $racer_path .= RacerConnector::PROGRAM_CMD;
-        $commandline = $racer_path . " " . RacerConnector::PROGRAM_PARAMS . $file_path;
+        $konclude_path .= KoncludeConnector::PROGRAM_CMD;
+        $commandline = $konclude_path . " " . KoncludeConnector::PROGRAM_PARAMS . $file_path;
 
-        $this->check_files($temporal_path, $racer_path, $file_path);
+        $this->check_files($temporal_path, $konclude_path, $file_path);
         
         $owllink_file = fopen($file_path, "w");
         
@@ -80,7 +83,7 @@ Is the path '$file_path' correct?");
        @return true always
        @exception Exception with proper message if any problem is founded.
     */
-    function check_files($temporal_path, $racer_path, $file_path){
+    function check_files($temporal_path, $konclude_path, $file_path){
         if (! is_dir($temporal_path)){
             throw new \Exception("Temporal path desn't exists!
 Are you sure about this path? 
@@ -101,18 +104,17 @@ Please set the write and read permissions for '$file_path'");
 Check the permissions on '${file_path}'.");
         }
         
-        if (!file_exists($racer_path)){
-            throw new \Exception("The Racer program has not been founded...
-You told me that '$racer_path' is the Racer program, is this right? check your 'web-src/config/config.php' configuration file.");
+        if (!file_exists($konclude_path)){
+            throw new \Exception("The Konclude program has not been founded...
+You told me that '$konclude_path' is the Konclude program, is this right? check your 'web-src/config/config.php' configuration file.");
         }
         
-        if (!is_executable($racer_path)){
-            throw new \Exception("The Racer program is not executable... 
-Is the path '$racer_path' right? Is the permissions setted properly?");
+        if (!is_executable($konclude_path)){
+            throw new \Exception("The Konclude program is not executable... 
+Is the path '$konclude_path' right? Is the permissions setted properly?");
         }
 
         return true;
     }
 }
-
 ?>

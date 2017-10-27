@@ -33,7 +33,11 @@ $wicom = new Wicom\Wicom();
 
 if (array_key_exists('json', $_POST)){
     try{
-        $answer = $wicom->is_satisfiable($_POST['json']);
+        $reasoner = 'Konclude';
+        if (array_key_exists('reasoner', $_POST)){
+            $reasoner = $_POST['reasoner'];
+        }
+        $answer = $wicom->is_satisfiable($_POST['json'], $reasoner);
         echo $answer->to_json();
     }catch(Exception $e){
         http_response_code(500);

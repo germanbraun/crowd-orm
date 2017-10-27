@@ -61,28 +61,28 @@ require_once('template.php');
 		<!-- Templates -->
 		<?php
 		insert_template("errorwidget","common");
-    insert_template("trafficlight","common");
+		insert_template("trafficlight","common");
 		insert_template("insertowllink","common");
 		insert_template("importjson","common");
 		insert_template("exportjson","common");
 		insert_template("done_widget","common");
 
 		insert_template("tools_navbar","uml/classes");
-    insert_template("editclass","uml/classes");
+		insert_template("editclass","uml/classes");
 		insert_template("classoptions","uml/classes");
 		insert_template("associationoptions","uml/association");
-    insert_template("generalisationoptions","uml/generalisation");
+		insert_template("generalisationoptions","uml/generalisation");
 
-    insert_template("tools_uml","uml");
+		insert_template("tools_uml","uml");
 
-    insert_template("tools_navbar_erd","eer/entity");
-    insert_template("editentity","eer/entity");
+		insert_template("tools_navbar_erd","eer/entity");
+		insert_template("editentity","eer/entity");
 		insert_template("entityoptions","eer/entity");
 		insert_template("relationoptions","eer/relationship");
 		insert_template("isaoptions","eer/isa");
-    insert_template("attroptions","eer/attributes");
+		insert_template("attroptions","eer/attributes");
 
-    insert_template("tools_eer","eer")
+		insert_template("tools_eer","eer")
 		?>
 
 		<div id="editclass"></div>
@@ -205,14 +205,14 @@ require_once('template.php');
 
 		<div data-role="navbar"></div>
 
-        <div id="loginwidget_placer"></div>
+		<div id="loginwidget_placer"></div>
 		<div id="saveloadjson_placer"></div>
 
-        <!-- Templates -->
-        <?php
-        insert_template("loginwidget");
-        insert_template("saveloadjsonwidget");
-        ?>
+		<!-- Templates -->
+		<?php
+		insert_template("loginwidget", "common");
+		insert_template("saveloadjsonwidget", "common");
+		?>
 
 	    </div> <!-- /main -->
 

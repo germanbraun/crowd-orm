@@ -37,6 +37,7 @@ use Wicom\Translator\Builders\OWLlinkBuilder;
 
 use Wicom\Reasoner\Runner;
 use Wicom\Reasoner\RacerConnector;
+use Wicom\Reasoner\KoncludeConnector;
 
 # use Wicom\Answers\OWLlinkAnalizer;
 
@@ -49,16 +50,26 @@ class Wicom{
        satisfiability.
        
        @param $json_str A String with the diagram in JSON format.
+       @param $reasoner A String with the reasoner name. We support two: Konclude and Racer.
+
        @return Wicom\Translator\Strategies\QAPackages\AnswerAnalizers\Answer an answer object.
      */
-    function is_satisfiable($json_str){
+    function is_satisfiable($json_str, $reasoner = 'Konclude'){
         // Translate using a strategy
         $strategy = new UMLcrowd();
         $trans = new Translator($strategy, new OWLlinkBuilder());
         $owllink_str = $trans->to_owllink($json_str);
 
-        // Execute the reasoner
-        $runner = new Runner(new RacerConnector());
+        // Execute the reasoner        
+        $reasonerconn = null;
+        if ($reasoner == 'Racer'){
+            // User select the Racer reasoner.
+            $reasonerconn = new RacerConnector();
+        }else{
+            $reasonerconn = new KoncludeConnector();
+        } 
+        
+        $runner = new Runner($reasonerconn);
         $runner->run($owllink_str);
         $owllink_answer = $runner->get_last_answer();
 
