@@ -132,4 +132,4 @@ AssociationOptionsView = Backbone.View.extend(
 
 
 
-exports.views.uml.association.AssociationOptionsView = RelationOptionsView
+exports.views.uml.association.AssociationOptionsView = AssociationOptionsView
