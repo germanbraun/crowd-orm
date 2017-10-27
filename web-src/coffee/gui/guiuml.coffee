@@ -126,8 +126,8 @@ class GUIUML extends gui.GUIIMPL
     # @param class_b_id {string}
     # @param name {string} optional. The association name.
     # @param mult {array} optional. An array of two string with the cardinality from class and to class b.
-    add_relationship: (class_a_id, class_b_id, name=null, mult=null) ->
-        @diag.add_association(class_a_id, class_b_id, name, mult)
+    add_relationship: (class_a_id, class_b_id, name=null, mult=null, roles=null) ->
+        @diag.add_association(class_a_id, class_b_id, name, mult, roles)
         this.set_selection_state()
 
     add_relationship_attr: () ->
@@ -271,11 +271,13 @@ class GUIUML extends gui.GUIIMPL
     # @param class_id {string} The id of the class that triggered it and thus,
     #   the starting class of the association.
     # @param mult {array} An array of two strings representing the cardinality from and to.
-    set_association_state: (class_id, mult) ->
+    set_association_state: (class_id, mult, roles, name) ->
         @hide_options()
         @state = gui.state_inst.association_state()
         @state.set_cellStarter(class_id)
         @state.set_cardinality(mult)
+        @state.set_roles(roles)
+        @state.set_name(name)
 
     # Change to the IsA GUI State so the user can select the child for the parent.
     #

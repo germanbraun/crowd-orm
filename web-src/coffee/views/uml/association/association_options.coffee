@@ -1,4 +1,4 @@
-# relation_options.coffee --
+# association_options.coffee --
 # Copyright (C) 2016 Giménez, Christian
 
 # This program is free software: you can redistribute it and/or modify
@@ -30,33 +30,33 @@ AssociationOptionsView = Backbone.View.extend(
         this.$el.html(template({classid: @classid}))
 
     events:
-        "click a#association_button" : "new_relation",
-        "click a#assoc_class_button" : "new_assoc_class"
+        "click a#umlassociation_button" : "new_relation",
+        "click a#umlassoc_class_button" : "new_assoc_class"
 
     # Retrieve the source role and multiplicity information.
     cardfrom: () ->
         # from = "2..3"
         # console.log from
-        from_1 = $('#cardfrom-1').val()
+        from_1 = $('#umlcardfrom-1').val()
         console.log(from_1)
         from_aux = from_1.concat ".."
-        from_2 = $('#cardfrom-2').val()
+        from_2 = $('#umlcardfrom-2').val()
         console.log(from_2)
         @from = from_aux.concat from_2
-        @from_role = $('#role-from').val()
+        @from_role = $('#umlrole-from').val()
 
     # Retrieve the destination role and multiplicity
     cardto: () ->
         # too = "4..8"
         # console.log too
-        too_1 = $('#cardto-1').val()
+        too_1 = $('#umlcardto-1').val()
         console.log(too_1)
         too_aux = too_1.concat ".."
-        too_2 = $('#cardto-2').val()
+        too_2 = $('#umlcardto-2').val()
         console.log(too_2)
         @too = too_aux.concat too_2
         # console.log too
-        @to_role = $('#role-to').val()
+        @to_role = $('#umlrole-to').val()
 
     # Create a new relation with the information from the role, multiplicity and
     # association name input fields.
@@ -72,7 +72,7 @@ AssociationOptionsView = Backbone.View.extend(
         roles = []
         roles[0] = @from_role
         roles[1] = @to_role
-        name = $("#assoc_name").val()
+        name = $("#umlassoc_name").val()
         console.log("New association without class:")
         console.log(mult)
         gui.gui_instance.set_association_state(@classid, mult, roles, name, false)
@@ -91,7 +91,7 @@ AssociationOptionsView = Backbone.View.extend(
         roles = []
         roles[0] = @from_role
         roles[1] = @to_role
-        name = $("#assoc_name").val()
+        name = $("#umlassoc_name").val()
         @hide()
         console.log("New association with class: " + name)
         console.log(mult)

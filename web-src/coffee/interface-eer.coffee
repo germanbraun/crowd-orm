@@ -1,4 +1,4 @@
-# interface.coffee --
+# interface-eer.coffee --
 # Copyright (C) 2016 Giménez, Christian
 
 # This program is free software: you can redistribute it and/or modify
@@ -80,8 +80,8 @@ window.onload = () ->
 
 
 
- #ERD mode
-
+    #ERD mode
+    
     newattribute = new model.eer.Attribute('dni','normal')
     newattribute2 = new model.eer.Attribute('firstname','normal')
     newattribute3 = new model.eer.Attribute('surname','normal')
