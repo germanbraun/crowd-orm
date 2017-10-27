@@ -8,11 +8,12 @@ include './config/config.php'
 if ($environment == 'production'){
 ?>
     <link rel="stylesheet" href="./css/joint.min.css" />
-    <!-- jquery-mobile -->
+    <!-- jquery-mobile css -->
     <link rel="stylesheet" href="./css/CROWD-theme.min.css" />
     <link rel="stylesheet" href="./css/jquery.mobile.icons.min.css" />
     <link rel="stylesheet" href="./css/jquery.mobile.structure-1.4.5.min.css" />
-    
+
+    <!-- jquery-mobile js -->
     <script src="./js/libs/jquery.min.js"></script>
     <script src="./js/libs/jquery.mobile-1.4.5.min.js"></script>
     <script src="./js/libs/lodash.min.js"></script>
@@ -21,6 +22,7 @@ if ($environment == 'production'){
     <script src="./js/libs/joint.shapes.erd.min.js"></script>
     <script src="./js/libs/joint.shapes.uml.min.js"></script>
     <script src="./js/libs/joint.shapes.orm.min.js"></script>
+
 <?php
 }else{
 ?>
@@ -29,7 +31,7 @@ if ($environment == 'production'){
     <link rel="stylesheet" href="./css/CROWD-theme.css" />
     <link rel="stylesheet" href="./css/jquery.mobile.icons.min.css" />
     <link rel="stylesheet" href="./css/jquery.mobile.structure-1.4.5.css" />
-
+    <!-- jquery-mobile js -->
     <script src="./js/libs/jquery.js"></script>
     <script src="./js/libs/jquery.mobile-1.4.5.js"></script>
     <script src="./js/libs/lodash.min.js"></script>
@@ -38,7 +40,9 @@ if ($environment == 'production'){
     <script src="./js/libs/joint.shapes.erd.js"></script>
     <script src="./js/libs/joint.shapes.uml.js"></script>
     <script src="./js/libs/joint.shapes.orm.js"></script>
-<?php 
+
+
+<?php
 }
 
 // include "_modelinclude.php";
