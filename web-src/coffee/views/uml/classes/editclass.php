@@ -5,7 +5,7 @@
 
    Author: Giménez, Christian
 
-   template.php
+   editclass.php
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -21,16 +21,13 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
-   Insert the named widget template.
-
-   Insert the <script> tag and then include the file with the same name under
-   the templates directory.
- */
-function insert_template($name, $dir){
-    echo "<script type=\"text/template\" id=\"template_$name\">";
-    include "coffee/views/$dir/$name.php";
-    echo "</script>";
-}
 
 ?>
+<form>
+    <input type="hidden" id="editclass_classid" name="classid" value="<%= classid %>" />
+    <input data-mini="true" placeholder="ClassName" type="text" id="editclass_input"  />
+    <div data-role="controlgroup" data-mini="true" data-type="horizontal">
+	<a class="ui-btn ui-corner-all ui-icon-check ui-btn-icon-notext" type="button" id="uml_editclass_button">Accept</a>
+	<a class="ui-btn ui-corner-all ui-icon-back ui-btn-icon-notext" type="button" id="uml_close_button">Close</a>
+    </div>
+</form>

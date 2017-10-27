@@ -36,14 +36,15 @@ class GUIUML extends gui.GUIIMPL
 
         @state = gui.get_state().selection_state()
 
-        @crearclase = new views.CreateClassView({el: $("#crearclase")});
-        @editclass = new views.EditClassView({el: $("#editclass")})
-        @classoptions = new views.ClassOptionsView({el: $("#classoptions")})
-        @relationoptions = new views.RelationOptionsView({el: $("#relationoptions")})
-        @isaoptions = new views.IsaOptionsView({el: $("#isaoptions")})
-        @toolbar = new views.ToolsUML({el: $("#lang_tools")})
+        @crearclase = new views.uml.classes.CreateClassView({el: $("#crearclase")});
+        @toolbar = new views.uml.ToolsUML({el: $("#lang_tools")})
 
-        @trafficlight = new views.TrafficLightsView({el: $("#trafficlight")})
+        @editclass = new views.uml.classes.EditClassView({el: $("#editclass")})
+        @classoptions = new views.uml.classes.ClassOptionsView({el: $("#classoptions")})
+        @relationoptions = new views.uml.association.AssociationOptionsView({el: $("#relationoptions")})
+        @isaoptions = new views.uml.generalisation.GeneralisationOptionsView({el: $("#isaoptions")})
+
+        @trafficlight = new views.common.TrafficLightsView({el: $("#trafficlight")})
 
         @serverconn = new ServerConnection( (jqXHR, status, text) ->
             exports.gui.gui_instance.show_error(status + ": " + text , jqXHR.responseText)

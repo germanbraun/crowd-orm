@@ -34,14 +34,14 @@ class GUIEER extends gui.GUIIMPL
 
         @state = gui.get_state().selection_state()
 
-        @eerview = new views.eer.CreateEERView({el: $("#crearclase")});
+        @eerview = new views.eer.entity.CreateEntityView({el: $("#crearclase")});
         @toolbar = new views.eer.ToolsEERView({el: $("#lang_tools")})
 
-        @editclass = new views.EditClassView({el: $("#editclass")})
-        @classoptions = new views.ClassOptionsView({el: $("#classoptions")})
-        @relationoptions = new views.eer.RelationOptionsEERView({el: $("#relationoptions")})
-        @isaoptions = new views.common.SubsumptionOptionsView({el: $("#isaoptions")})
-        @attroptions = new views.eer.AttrOptionsEERView({el: $("#attroptions")})
+        @editclass = new views.eer.entity.EditEntityView({el: $("#editclass")})
+        @classoptions = new views.eer.entity.EntityOptionsView({el: $("#classoptions")})
+        @relationoptions = new views.eer.relationship.RelationOptionsView({el: $("#relationoptions")})
+        @isaoptions = new views.eer.isa.IsaOptionsView({el: $("#isaoptions")})
+        @attroptions = new views.eer.attributes.AttrOptionsView({el: $("#attroptions")})
         @trafficlight = new views.common.TrafficLightsView({el: $("#trafficlight")})
 
         @serverconn = new ServerConnection( (jqXHR, status, text) ->

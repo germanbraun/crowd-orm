@@ -16,15 +16,17 @@
 
 exports = exports ? this
 exports.views = exports.views ? this
+exports.views.uml = exports.views.uml ? this
+exports.views.uml.association = exports.views.uml.association ? this
 
 
-RelationOptionsView = Backbone.View.extend(
+AssociationOptionsView = Backbone.View.extend(
     initialize: () ->
         this.render()
         this.$el.hide()
 
     render: () ->
-        template = _.template( $("#template_relationoptions").html() )
+        template = _.template( $("#template_associationoptions").html() )
         this.$el.html(template({classid: @classid}))
 
     events:
@@ -130,4 +132,4 @@ RelationOptionsView = Backbone.View.extend(
 
 
 
-exports.views.RelationOptionsView = RelationOptionsView
+exports.views.uml.association.AssociationOptionsView = RelationOptionsView

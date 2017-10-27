@@ -1,4 +1,4 @@
-# export_json.coffee --
+# owllink_insert.coffee --
 # Copyright (C) 2016 Giménez, Christian
 
 # This program is free software: you can redistribute it and/or modify
@@ -16,30 +16,36 @@
 
 exports = exports ? this
 exports.views = exports.views ? this
+exports.views.common = exports.views.common ? this
 
 
-ExportJSONView = Backbone.View.extend(
+##
+# A view for inserting and editing OWLlink text.
+OWLlinkInsertView = Backbone.View.extend(
     initialize: () ->
-        @jsonstr = ""
         this.render()
+        @textarea = this.$el.find("#insert_owllink_input")
+
     render: () ->
-        template = _.template( $("#template_exportjson").html() )
-        this.$el.html(template({jsonstr: @jsonstr}))
-        this.$el.enhanceWithin() # Have pretty JQueryMobile buttons and textarea again.
+        template = _.template( $("#template_insertowllink").html() )
+        this.$el.html( template() )
+
     events:
-        "click a#exportjson_copybtn" : "copy_jsonstr"
-        "click a#exportjson_refreshbtn" : "refresh"
-    copy_jsonstr: () ->
-        console.log("Copying: " + @jsonstr)
-        document.execCommand("copy", false, @jsonstr)
-    refresh: () ->
-        guiinst.refresh_export_json()
-    set_jsonstr: (@jsonstr) ->
-        this.render()
+        "click a#insert_owlclass" : "insert_class"
+
+    get_owllink: () ->
+        return @textarea[0].value
+
+    set_owllink: (str) ->
+        @textarea[0].value = str
+
+    append_owllink: (str) ->
+        @textarea[0].value = @textarea[0].value + str
+
+    insert_class: () ->
+        this.append_owllink("<owl:Class IRI=\"CLASSNAME\" />")
 )
 
-        
 
 
-exports.views.ExportJSONView = ExportJSONView
-
+exports.views.common.OWLlinkInsertView = OWLlinkInsertView

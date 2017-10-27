@@ -1,4 +1,4 @@
-# import_json.coffee --
+# error_widget.coffee --
 # Copyright (C) 2016 Giménez, Christian
 
 # This program is free software: you can redistribute it and/or modify
@@ -16,31 +16,30 @@
 
 exports = exports ? this
 exports.views = exports.views ? this
+exports.views.common = exports.views.common ? this
 
 
-# View widget for the "Import JSON".
-ImportJSONView = Backbone.View.extend(
+ErrorWidgetView = Backbone.View.extend(
     initialize: () ->
         this.render()
-        this.$el.find(".importjson-popup").popup()
-        # For some reason, backboneJS doesn't process the given event.
-        # Maybe a bug or some incompatibility with JQueryMobile?
-        $("#importjson_importbtn").on('click', this.do_import)
+        # We need to initialize the error-popup div because
+        # jquery-mobile.js script is loaded before this script.
+        this.$el.find(".error-popup").popup()
+        #this.$el.hide()
     render: () ->
-        template = _.template( $("#template_importjson").html() )
+        template = _.template( $("#template_errorwidget").html() )
         this.$el.html( template() )
-    show: () ->
-        $(".importjson-popup").popup("open")
-        # this.delegateEvents()
+    show: (status, message) ->
+        $(".error-popup").popup("open")
+        $("#errorstatus_text").html(status)
+        $("#errormsg_text").html(message)
+        console.log(status + " - " + message)
     events:
-        "click a#importjson_importbtn" : "do_import"
-    do_import: () ->
-        console.log("Doing import now!")
-        $(".importjson-popup").popup("close")
-        jsonstr = $("#importjson_input").val()
-        guiinst.import_jsonstr(jsonstr)
+        "click a#errorwidget_hide_btn" : "hide"
+    hide: () ->
+        $(".error-popup").popup("close")
 )
 
-        
 
-exports.views.ImportJSONView = ImportJSONView
+
+exports.views.common.ErrorWidgetView = ErrorWidgetView

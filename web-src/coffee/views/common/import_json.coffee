@@ -1,4 +1,4 @@
-# owllink_insert.coffee --
+# import_json.coffee --
 # Copyright (C) 2016 Giménez, Christian
 
 # This program is free software: you can redistribute it and/or modify
@@ -16,35 +16,32 @@
 
 exports = exports ? this
 exports.views = exports.views ? this
+exports.views.common = exports.views.common ? this
 
 
-##
-# A view for inserting and editing OWLlink text.
-OWLlinkInsertView = Backbone.View.extend(
+# View widget for the "Import JSON".
+ImportJSONView = Backbone.View.extend(
     initialize: () ->
         this.render()
-        @textarea = this.$el.find("#insert_owllink_input")
-        
+        this.$el.find(".importjson-popup").popup()
+        # For some reason, backboneJS doesn't process the given event.
+        # Maybe a bug or some incompatibility with JQueryMobile?
+        $("#importjson_importbtn").on('click', this.do_import)
     render: () ->
-        template = _.template( $("#template_insertowllink").html() )
+        template = _.template( $("#template_importjson").html() )
         this.$el.html( template() )
-
+    show: () ->
+        $(".importjson-popup").popup("open")
+        # this.delegateEvents()
     events:
-        "click a#insert_owlclass" : "insert_class"
-
-    get_owllink: () ->
-        return @textarea[0].value
-        
-    set_owllink: (str) ->
-        @textarea[0].value = str
-
-    append_owllink: (str) ->
-        @textarea[0].value = @textarea[0].value + str
-
-    insert_class: () ->
-        this.append_owllink("<owl:Class IRI=\"CLASSNAME\" />")
+        "click a#importjson_importbtn" : "do_import"
+    do_import: () ->
+        console.log("Doing import now!")
+        $(".importjson-popup").popup("close")
+        jsonstr = $("#importjson_input").val()
+        guiinst.import_jsonstr(jsonstr)
 )
 
-        
 
-exports.views.OWLlinkInsertView = OWLlinkInsertView
+
+exports.views.common.ImportJSONView = ImportJSONView

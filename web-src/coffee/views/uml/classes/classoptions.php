@@ -1,11 +1,11 @@
 <?php
 /*
 
-   Copyright 2017 Giménez, Christian
+   Copyright 2016 Giménez, Christian
 
    Author: Giménez, Christian
 
-   tools_uml.php
+   classoptions.php
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -23,9 +23,9 @@
 
 
 ?>
-<div data-role="controlgroup" data-type="horizontal" data-mini="true">
-    <a class="ui-btn ui-mini ui-icon-plus ui-btn-icon-left ui-corner-all" id="umlclass_button">Class</a>
-    <a class="ui-btn ui-mini ui-icon-plus ui-btn-icon-right ui-corner-all" id="umlassoc_button">Assoc</a>
-	  <a class="ui-btn ui-mini ui-icon-plus ui-btn-icon-right ui-corner-all" id="umlisa_button">IS-A</a>
-	  <a class="ui-btn ui-mini ui-icon-plus ui-btn-icon-right ui-corner-all" id="eerattr_button">Attr</a>
-<div>
+<div class="classOptions" data-role="controlgroup" data-mini="true"
+     data-type="vertical" style="visible:false, z-index:1, position:absolute" >
+    <input type="hidden" id="cassoptions_classid" name="classid" value="<%= classid %>" />
+    <a class="ui-btn ui-corner-all ui-icon-edit ui-btn-icon-notext" type="button" id="umleditclass_button">Edit</a>
+    <a class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext" type="button" id="umldeleteclass_button">Delete</a>
+</div>

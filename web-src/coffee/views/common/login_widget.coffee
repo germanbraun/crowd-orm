@@ -16,6 +16,8 @@
 
 # @namespace login
 # Widget for login.
+
+
 LoginWidgetView = Backbone.View.extend(
     initialize: () ->
         @doing_login = true

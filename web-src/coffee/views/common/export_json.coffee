@@ -1,4 +1,4 @@
-# error_widget.coffee --
+# export_json.coffee --
 # Copyright (C) 2016 Giménez, Christian
 
 # This program is free software: you can redistribute it and/or modify
@@ -16,29 +16,29 @@
 
 exports = exports ? this
 exports.views = exports.views ? this
+exports.views.common = exports.views.common ? this
 
-
-ErrorWidgetView = Backbone.View.extend(
+ExportJSONView = Backbone.View.extend(
     initialize: () ->
+        @jsonstr = ""
         this.render()
-        # We need to initialize the error-popup div because
-        # jquery-mobile.js script is loaded before this script.
-        this.$el.find(".error-popup").popup()
-        #this.$el.hide()
     render: () ->
-        template = _.template( $("#template_errorwidget").html() )
-        this.$el.html( template() )
-    show: (status, message) ->
-        $(".error-popup").popup("open")
-        $("#errorstatus_text").html(status)
-        $("#errormsg_text").html(message)
-        console.log(status + " - " + message)
+        template = _.template( $("#template_exportjson").html() )
+        this.$el.html(template({jsonstr: @jsonstr}))
+        this.$el.enhanceWithin() # Have pretty JQueryMobile buttons and textarea again.
     events:
-        "click a#errorwidget_hide_btn" : "hide"
-    hide: () ->
-        $(".error-popup").popup("close")
+        "click a#exportjson_copybtn" : "copy_jsonstr"
+        "click a#exportjson_refreshbtn" : "refresh"
+    copy_jsonstr: () ->
+        console.log("Copying: " + @jsonstr)
+        document.execCommand("copy", false, @jsonstr)
+    refresh: () ->
+        guiinst.refresh_export_json()
+    set_jsonstr: (@jsonstr) ->
+        this.render()
 )
 
-        
 
-exports.views.ErrorWidgetView = ErrorWidgetView
+
+
+exports.views.common.ExportJSONView = ExportJSONView

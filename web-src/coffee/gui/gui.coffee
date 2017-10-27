@@ -37,14 +37,14 @@ class GUI
         @loginwidget = new login.LoginWidgetView({el: $("#loginwidget_placer")})
         # Save-Load
         # Error reporting widget
-        @errorwidget = new views.ErrorWidgetView({el: $("#errorwidget_placer")})
+        @errorwidget = new views.common.ErrorWidgetView({el: $("#errorwidget_placer")})
 
         # Details page elements
-        @owllinkinsert = new views.OWLlinkInsertView({el: $("#owllink_placer")})
-        @exportjsonwidget = new views.ExportJSONView({el: $("#exportjson_placer")})
-        @importjsonwidget = new views.ImportJSONView({el: $("#importjsonwidget_placer")})
+        @owllinkinsert = new views.common.OWLlinkInsertView({el: $("#owllink_placer")})
+        @exportjsonwidget = new views.common.ExportJSONView({el: $("#exportjson_placer")})
+        @importjsonwidget = new views.common.ImportJSONView({el: $("#importjsonwidget_placer")})
 
-        @donewidget = new views.DoneWidget({el: $("#donewidget")})
+        @donewidget = new views.common.DoneWidget({el: $("#donewidget")})
 
         $("#details-page").enhanceWithin()
 

@@ -33,9 +33,9 @@ ToolsEERView = Backbone.View.extend(
         this.$el.html(template)
 
     events:
-        'click a#umlclass_button': 'umlclass_pressed'
-        'click a#umlassoc_button': 'umlassoc_pressed'
-        'click a#umlisa_button': 'umlisa_pressed'
+        'click a#eerclass_button': 'umlclass_pressed'
+        'click a#eerassoc_button': 'umlassoc_pressed'
+        'click a#eerisa_button': 'umlisa_pressed'
         'click a#eerattr_button': 'eerattr_pressed'
 
     umlclass_pressed: () ->
