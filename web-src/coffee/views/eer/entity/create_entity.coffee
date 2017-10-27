@@ -31,7 +31,7 @@ CreateEntityView = Backbone.View.extend(
             this.$el.html(template)
 
         events:
-        	"click a#crearclase_button" :
+        	"click a#eercrearclase_button" :
                 "create_class"
             "click a#translate_button" :
                 "translate_owllink"

@@ -41,8 +41,8 @@
 	     <form id="name-rel">
 	        <input data-mini="true" placeholder="name" type="text" size="4" maxlength="10" id="assoc_name" />
 	        <div data-role="controlgroup" data-mini="true" data-type="horizontal">
-		          <a class="ui-btn ui-corner-all ui-icon-arrow-r ui-btn-icon-notext" type="button" id="association_button">Association</a>
-		          <a class="ui-btn ui-corner-all ui-btn-icon-notext" type="button" id="assoc_class_button">Association Class</a>
+		          <a class="ui-btn ui-corner-all ui-icon-arrow-r ui-btn-icon-notext" type="button" id="eerassociation_button">Association</a>
+		          <a class="ui-btn ui-corner-all ui-btn-icon-notext" type="button" id="eerassoc_class_button">Association Class</a>
 	        </div>
 	     </form>
     </div>

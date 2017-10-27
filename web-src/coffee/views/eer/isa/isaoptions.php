@@ -26,7 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <div class="isaOptions" style="visible:false, z-index:1, position:absolute">
     <input type="hidden" id="relationoptions_classid"  name="classid"  value="<%= classid %>" />
-    <a class="ui-btn ui-corner-all ui-icon-arrow-u ui-btn-icon-notext" type="button" id="isa_button">Is A</a>
+    <a class="ui-btn ui-corner-all ui-icon-arrow-u ui-btn-icon-notext" type="button" id="eerisa_button">Is A</a>
     <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
 	<input type="checkbox" name="chk-covering" id="chk-covering"/>
 	<label for="chk-covering">Covering</label>

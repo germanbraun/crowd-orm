@@ -30,8 +30,8 @@ EntityOptionsView = Backbone.View.extend(
         this.$el.html(template({classid: @classid}))
 
     events:
-        "click a#deleteclass_button" : "delete_class",
-        "click a#editclass_button" : "edit_class"
+        "click a#eerdeleteclass_button" : "delete_class",
+        "click a#eereditclass_button" : "edit_class"
 
     ##
     # Set the classid of the Joint Model associated to this EditClass

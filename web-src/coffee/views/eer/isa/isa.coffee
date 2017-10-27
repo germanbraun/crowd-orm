@@ -30,7 +30,7 @@ IsaOptionsView = Backbone.View.extend(
         this.$el.html(template({classid: @classid}))
 
     events:
-        'click a#isa_button' : 'new_isa'
+        'click a#eerisa_button' : 'new_isa'
 
     new_isa: () ->
         disjoint = $("#chk-disjoint").prop("checked")

@@ -30,8 +30,8 @@ RelationOptionsView = Backbone.View.extend(
         this.$el.html(template({classid: @classid}))
 
     events:
-        "click a#association_button" : "new_relation",
-        "click a#assoc_class_button" : "new_assoc_class"
+        "click a#eerassociation_button" : "new_relation",
+        "click a#eerassoc_class_button" : "new_assoc_class"
 
     # Retrieve the source role and multiplicity information.
     cardfrom: () ->
