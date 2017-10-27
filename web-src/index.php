@@ -4,23 +4,30 @@
 	<?php
 	include '_headincludes.php'
 	?>
-	<title>Inicio</title>
+	<title>crowd</title>
+	
+	<link rel="stylesheet"  href="./css/interfaz.css" />
     </head>
 
     <body>
 	<div data-role="page">
 	    <div data-role="header">		
-		<h1>WICOM</h1>
+		<h1 class="crowd-header">c r o w d</h1>
 	    </div><!-- /header -->
 
 	    <div role="main" class="ui-content">
-		<div data-role="controlgroup" data-type="vertical">
-		    <a class="ui-btn ui-icon-gear ui-btn-icon-left" data-ajax="false"
-		       href="./racer-test.php">Test the Racer Conection</a>
-		    <a class="ui-btn ui-icon-edit ui-btn-icon-left" data-ajax="false"
-		       href="./model_editor.php">Model Editor</a>
+		<div data-role="controlgroup" data-type="horizotal">
+		    <a class="ui-btn ui-icon-edit ui-btn-icon-top" data-ajax="false"
+		       href="./model_editor.php?type=UML">UML</a>
+		    <a class="ui-btn ui-icon-edit ui-btn-icon-top"  data-ajax="false"
+		       href="./model_editor.php?type=EER">EER</a>
 		</div>
 	    </div> <!-- /main -->
+
+	    
+	    <!-- a class="ui-btn ui-icon-gear ui-btn-icon-left" data-ajax="false"
+	       href="./racer-test.php">Test the Racer Conection</a -->
+	    
 	    
 	    <div data-role="footer">	
 		<address>

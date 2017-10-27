@@ -12,7 +12,15 @@ require_once('template.php');
 	<script src="./js/csstheme.js"></script>
 	<script src="./js/backbone_views.js"></script>
 	<script src="./js/model.js"></script>
-	<script src="./js/interface.js"></script>
+	<?php if ($_GET['type'] == 'UML'){ ?>
+	    <script src="./js/interface-uml.js"></script>
+        <?php } elseif ($_GET['type'] == 'EER') { ?>
+		<script src="./js/interface-eer.js"></script>
+	<?php } else {
+	    die('No interface selected');
+	}
+	?>
+	    
   <script src="./js/login.js"></script>
   <script src="./js/gui.js"></script>
 
