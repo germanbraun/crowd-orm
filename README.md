@@ -9,6 +9,7 @@ After reading this Readme, see `./web-src/coffee/Readme.md` for more information
 * Install Apache o Nginx web server with PHP5 module support.
 * [Fish shell](http://fishshell.com).
 * nodejs, npm and [coffee-script](http://coffeescript.org/) (see below for installation of the latter using npm).
+* mysqli library for PHP.
 
 # Installation
 

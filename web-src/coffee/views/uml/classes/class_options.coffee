@@ -31,7 +31,8 @@ ClassOptionsView = Backbone.View.extend(
 
     events:
         "click a#umldeleteclass_button" : "delete_class",
-        "click a#umleditclass_button" : "edit_class"
+        "click a#umleditclass_button" : "edit_class",
+        "click a#umlattrs" : "edit_attributes"
 
     ##
     # Set the classid of the Joint Model associated to this EditClass
@@ -61,6 +62,11 @@ ClassOptionsView = Backbone.View.extend(
     edit_class: (event) ->
         gui.gui_instance.hide_options()
         gui.gui_instance.set_editclass_classid(@classid)
+        this.hide()
+
+    edit_attributes: (event) ->
+        gui.gui_instance.hide_options()
+        gui.gui_instance.set_editattribute_classid(@classid)
         this.hide()
 
     hide: () ->

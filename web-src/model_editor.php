@@ -78,6 +78,7 @@ require_once('template.php');
 		insert_template("tools_navbar","uml/classes");
 		insert_template("editclass","uml/classes");
 		insert_template("classoptions","uml/classes");
+		insert_template("edit_attributes", "uml/classes");
 		insert_template("associationoptions","uml/association");
 		insert_template("generalisationoptions","uml/generalisation");
 
@@ -95,7 +96,8 @@ require_once('template.php');
 
 		<div id="editclass"></div>
 		<div id="classoptions"></div>
-    <div id="attroptions"></div>
+		<div id="uml_editattr_placer"></div>
+		<div id="attroptions"></div>
 		<div id="relationoptions"></div>
 		<div id="isaoptions"></div>
 		<div id="donewidget"></div>

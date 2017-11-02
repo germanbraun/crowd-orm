@@ -40,6 +40,7 @@ class GUIUML extends gui.GUIIMPL
         @toolbar = new views.uml.ToolsUML({el: $("#lang_tools")})
 
         @editclass = new views.uml.classes.EditClassView({el: $("#editclass")})
+        @editattr = new views.uml.classes.EditAttributes({el: $("#uml_editattr_placer")})
         @classoptions = new views.uml.classes.ClassOptionsView({el: $("#classoptions")})
         @relationoptions = new views.uml.association.AssociationOptionsView({el: $("#relationoptions")})
         @isaoptions = new views.uml.generalisation.GeneralisationOptionsView({el: $("#isaoptions")})
@@ -77,6 +78,12 @@ class GUIUML extends gui.GUIIMPL
     set_editclass_classid: (model_id) ->
         # editclass = new EditClassView({el: $("#editclass")})
         @editclass.set_classid(model_id)
+
+    # Tell the editattr widget which class it should edit.
+    # 
+    # @param model_id [string] The model (class primitive) to edit.
+    set_editattribute_classid: (model_id) ->
+        @editattribute.set_classid(model_id)
 
     #
     # Add a class to the diagram.

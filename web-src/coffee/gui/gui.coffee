@@ -188,6 +188,9 @@ class GUI
     set_editclass_classid: (model_id) ->
         @current_gui.set_editclass_classid(model_id)
 
+    set_editattribute_classid: (model_id) ->
+        @current_gui.set_editattribute_classid(model_id)
+
     set_selection_state: () ->
         @current_gui.set_selection_state()
 
