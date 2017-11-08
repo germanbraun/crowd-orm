@@ -1,0 +1,1489 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>CoffeeScript API Documentation</title>
+  <script src='../javascript/application.js'></script>
+  <script src='../javascript/search.js'></script>
+  <link rel='stylesheet' href='../stylesheets/application.css' type='text/css'>
+</head>
+  <body>
+    <div id='base' data-path='../'></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='../extra/README.md.html' title='Wicom-qdod'>
+      Wicom-qdod
+    </a>
+    &raquo;
+    <a href='../alphabetical_index.html' title='Index'>
+      Index
+    </a>
+    &raquo;
+    <span class='title'>GUIUML</span>
+  </div>
+</div>
+    <div id='content'>
+      <h1>
+        Class:
+        GUIUML
+      </h1>
+      <table class='box'>
+        <tr>
+          <td>Defined in:</td>
+          <td>web-src&#47;coffee&#47;gui&#47;guiuml.coffee</td>
+        </tr>
+        <tr>
+          <td>Inherits:</td>
+          <td>
+            gui.GUIIMPL
+          </td>
+        </tr>
+      </table>
+      <h2>Overview</h2>
+      <div class='docstring'>
+  <p>Central GUI <em>do-it-all</em> class...</p>
+</div>
+<div class='tags'>
+</div>
+      <h2>Instance Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#set_urlprefix-dynamic'>
+        #
+(void)
+<b>set_urlprefix</b><span>(str)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#on_cell_clicked-dynamic'>
+        #
+(void)
+<b>on_cell_clicked</b><span>(cellview, event, x, y)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      What to do when the user clicked on a cellView. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#set_options_classid-dynamic'>
+        #
+(void)
+<b>set_options_classid</b><span>(model_id)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      # Set the class Id of the class options GUI.
+
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#hide_options-dynamic'>
+        #
+(void)
+<b>hide_options</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      # Hide the class options GUI.
+
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#set_editclass_classid-dynamic'>
+        #
+(void)
+<b>set_editclass_classid</b><span>(model_id)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#add_object_type-dynamic'>
+        #
+(void)
+<b>add_object_type</b><span>(hash_data)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Add a class to the diagram. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#add_attribute-dynamic'>
+        #
+(void)
+<b>add_attribute</b><span>(hash_data)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#delete_class-dynamic'>
+        #
+(void)
+<b>delete_class</b><span>(class_id)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Delete a class from the diagram. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#edit_class_name-dynamic'>
+        #
+(void)
+<b>edit_class_name</b><span>(class_id, name)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Change a class name identified by its classid. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#add_relationship-dynamic'>
+        #
+(void)
+<b>add_relationship</b><span>(class_a_id, class_b_id, name = null, mult = null)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Add a simple association from A to B. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#add_relationship_attr-dynamic'>
+        #
+(void)
+<b>add_relationship_attr</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#add_subsumption-dynamic'>
+        #
+(void)
+<b>add_subsumption</b><span>(class_parent_id, class_child_id, disjoint = false, covering = false)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Add a Generalization link and then set the selection state. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#traffic_light_green-dynamic'>
+        #
+(void)
+<b>traffic_light_green</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Put the traffic light on green. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#traffic_light_red-dynamic'>
+        #
+(void)
+<b>traffic_light_red</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Put the traffic light on red. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#update_satisfiable-dynamic'>
+        #
+(void)
+<b>update_satisfiable</b><span>(data)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Update the interface with satisfiable information. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#set_trafficlight-dynamic'>
+        #
+(void)
+<b>set_trafficlight</b><span>(obj)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Set the traffic-light according to the JSON object recived by the server. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#set_unsatisfiable-dynamic'>
+        #
+(void)
+<b>set_unsatisfiable</b><span>(classes_list)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Show these classes as unsatisifable. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#set_satisfiable-dynamic'>
+        #
+(void)
+<b>set_satisfiable</b><span>(classes_list)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Show these classes as satisifable. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#check_satisfiable-dynamic'>
+        #
+(void)
+<b>check_satisfiable</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Send a POST to the server for checking if the diagram is satisfiable.
+
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#update_translation-dynamic'>
+        #
+(void)
+<b>update_translation</b><span>(data)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Update the translation information on the GUI and show it to the user.
+
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#update_metamodel-dynamic'>
+        #
+(void)
+<b>update_metamodel</b><span>(data)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#translate_formal-dynamic'>
+        #
+(void)
+<b>translate_formal</b><span>(strategy, syntax)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Translate the current model into a formalization. 
+    </span>
+  </li>
+  <li deprecated>
+    <span class='signature'>
+      <a href='#translate_owllink-dynamic'>
+        #
+(void)
+<b>translate_owllink</b><span>(gui_instance)</span>
+      </a>
+    </span>
+    <span class='deprecated note title'>Deprecated</span>
+    <span class='desc'>
+      <strong>Deprecated.</strong>
+      Use translate_formal() instead. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#change_to_details_page-dynamic'>
+        #
+(void)
+<b>change_to_details_page</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#change_to_diagram_page-dynamic'>
+        #
+(void)
+<b>change_to_diagram_page</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#hide_toolbar-dynamic'>
+        #
+(void)
+<b>hide_toolbar</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Hide the left side &quot;Tools&quot; toolbar 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#hide_umldiagram_page-dynamic'>
+        #
+(void)
+<b>hide_umldiagram_page</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#show_umldiagram_page-dynamic'>
+        #
+(void)
+<b>show_umldiagram_page</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#set_association_state-dynamic'>
+        #
+(void)
+<b>set_association_state</b><span>(class_id, mult)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Change the interface into a &quot;new association&quot; state. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#set_isa_state-dynamic'>
+        #
+(void)
+<b>set_isa_state</b><span>(class_id, disjoint = false, covering = false)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Change to the IsA GUI State so the user can select the child for the parent. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#set_selection_state-dynamic'>
+        #
+(void)
+<b>set_selection_state</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Change the interface into a &quot;selection&quot; state. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#show_export_json-dynamic'>
+        #
+(void)
+<b>show_export_json</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Update and show the &quot;Export JSON String&quot; section. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#refresh_export_json-dynamic'>
+        #
+(void)
+<b>refresh_export_json</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Refresh the content of the &quot;Export JSON String&quot; section. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#show_import_json-dynamic'>
+        #
+(void)
+<b>show_import_json</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Show the &quot;Import JSON&quot; modal dialog. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#show_insert_owllink-dynamic'>
+        #
+(void)
+<b>show_insert_owllink</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      # Show the &quot;Insert OWLlink&quot; section.
+
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#set_insert_owllink-dynamic'>
+        #
+(void)
+<b>set_insert_owllink</b><span>(str)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      # Set the OWLlink addon at the &quot;Insert OWLlink&quot; section.
+
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#diag_to_json-dynamic'>
+        #
+(void)
+<b>diag_to_json</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#import_jsonstr-dynamic'>
+        #
+(void)
+<b>import_jsonstr</b><span>(jsonstr)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Import a JSON string. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#import_json-dynamic'>
+        #
+(void)
+<b>import_json</b><span>(json_obj)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Import a JSON object. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#reset_all-dynamic'>
+        #
+(void)
+<b>reset_all</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Reset all the diagram and the input forms. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#to_metamodel-dynamic'>
+        #
+(void)
+<b>to_metamodel</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#to_erd-dynamic'>
+        #
+(void)
+<b>to_erd</b><span>(gui_instance)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+</ul>
+      <h2>Constructor Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='constructor-dynamic'>
+      #
+(void)
+<b>constructor</b><span>(graph, paper)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Create a GUIUML instance.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>graph</span>
+      <span class='type'>
+        (
+          <tt>JointJS.Graph</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>The JointJS Graph used for drawing models. </span>
+    </li>
+    <li>
+      <span class='name'>paper</span>
+      <span class='type'>
+        (
+          <tt>JointJS.Paper</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>The JointJS Paper used for drawing views. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+</div>
+      <h2>Instance Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='set_urlprefix-dynamic'>
+      #
+(void)
+<b>set_urlprefix</b><span>(str)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='on_cell_clicked-dynamic'>
+      #
+(void)
+<b>on_cell_clicked</b><span>(cellview, event, x, y)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>What to do when the user clicked on a cellView.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='set_options_classid-dynamic'>
+      #
+(void)
+<b>set_options_classid</b><span>(model_id)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>#
+Set the class Id of the class options GUI.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='hide_options-dynamic'>
+      #
+(void)
+<b>hide_options</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>#
+Hide the class options GUI.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='set_editclass_classid-dynamic'>
+      #
+(void)
+<b>set_editclass_classid</b><span>(model_id)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='add_object_type-dynamic'>
+      #
+(void)
+<b>add_object_type</b><span>(hash_data)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Add a class to the diagram.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>hash_data</span>
+      <span class='type'>
+        (
+          <tt>Hash</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>data information for creating the Class. Use <code>name</code>, <code>attribs</code> and <code>methods</code> keys. </span>
+    </li>
+  </ul>
+  <h3>See also:</h3>
+  <ul class='see'>
+    <li>
+      <a href='../class/Class.html'>Class</a>
+    </li>
+    <li>
+      <a href='Diagram#add_class'>Diagram#add_class</a>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='add_attribute-dynamic'>
+      #
+(void)
+<b>add_attribute</b><span>(hash_data)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='delete_class-dynamic'>
+      #
+(void)
+<b>delete_class</b><span>(class_id)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Delete a class from the diagram.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>class_id</span>
+      <span class='type'>
+        (
+          <tt>string</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>a String with the class Id. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='edit_class_name-dynamic'>
+      #
+(void)
+<b>edit_class_name</b><span>(class_id, name)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Change a class name identified by its classid.</p>
+  <div class='examples'>
+    <h3>Examples:</h3>
+    <h4>
+      Getting a classid
+    </h4>
+    <pre><code class='coffeescript'>&lt; graph.getCells()[0].id
+&gt; &quot;5777cd89-45b6-407e-9994-5d681c0717c1&quot;</code></pre>
+  </div>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>class_id</span>
+      <span class='type'>
+        (
+          <tt>string</tt>
+        )
+      </span>
+    </li>
+    <li>
+      <span class='name'>name</span>
+      <span class='type'>
+        (
+          <tt>string</tt>
+        )
+      </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='add_relationship-dynamic'>
+      #
+(void)
+<b>add_relationship</b><span>(class_a_id, class_b_id, name = null, mult = null)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Add a simple association from A to B.
+Then, set the selection state for restoring the interface.</p>
+  <div class='examples'>
+    <h3>Examples:</h3>
+    <h4>
+      Getting a classid
+    </h4>
+    <pre><code class='coffeescript'>&lt; graph.getCells()[0].id
+&gt; &quot;5777cd89-45b6-407e-9994-5d681c0717c1&quot;</code></pre>
+  </div>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>class_a_id</span>
+      <span class='type'>
+        (
+          <tt>string</tt>
+        )
+      </span>
+    </li>
+    <li>
+      <span class='name'>class_b_id</span>
+      <span class='type'>
+        (
+          <tt>string</tt>
+        )
+      </span>
+    </li>
+    <li>
+      <span class='name'>name</span>
+      <span class='type'>
+        (
+          <tt>string</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>optional. The association name. </span>
+    </li>
+    <li>
+      <span class='name'>mult</span>
+      <span class='type'>
+        (
+          <tt>array</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>optional. An array of two string with the cardinality from class and to class b. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='add_relationship_attr-dynamic'>
+      #
+(void)
+<b>add_relationship_attr</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='add_subsumption-dynamic'>
+      #
+(void)
+<b>add_subsumption</b><span>(class_parent_id, class_child_id, disjoint = false, covering = false)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <div class='note todo'>
+    <strong>TODO:</strong>
+    Support various children on parameter class_child_id. 
+  </div>
+  <p>Add a Generalization link and then set the selection state.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>class_parent_id</span>
+      <span class='type'>
+        (
+          <tt>string</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>The parent class Id. </span>
+    </li>
+    <li>
+      <span class='name'>class_child_id</span>
+      <span class='type'>
+        (
+          <tt>string</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>The child class Id. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='traffic_light_green-dynamic'>
+      #
+(void)
+<b>traffic_light_green</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Put the traffic light on green.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='traffic_light_red-dynamic'>
+      #
+(void)
+<b>traffic_light_red</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Put the traffic light on red.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='update_satisfiable-dynamic'>
+      #
+(void)
+<b>update_satisfiable</b><span>(data)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Update the interface with satisfiable information.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>data</span>
+      <span class='type'>
+        (
+          <tt>string</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>is a JSON string with the server response. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='set_trafficlight-dynamic'>
+      #
+(void)
+<b>set_trafficlight</b><span>(obj)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Set the traffic-light according to the JSON object recived by the server.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>obj</span>
+      <span class='type'>
+        (
+          <tt>JSON</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>The JSON object parsed from the recieved data. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='set_unsatisfiable-dynamic'>
+      #
+(void)
+<b>set_unsatisfiable</b><span>(classes_list)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Show these classes as unsatisifable.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>classes_list</span>
+      <span class='type'>
+        (
+          <tt>Array&lt;String&gt;</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>a list of classes names. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='set_satisfiable-dynamic'>
+      #
+(void)
+<b>set_satisfiable</b><span>(classes_list)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Show these classes as satisifable.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>classes_list</span>
+      <span class='type'>
+        (
+          <tt>Array&lt;String&gt;</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>a list of classes names. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='check_satisfiable-dynamic'>
+      #
+(void)
+<b>check_satisfiable</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Send a POST to the server for checking if the diagram is
+satisfiable.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='update_translation-dynamic'>
+      #
+(void)
+<b>update_translation</b><span>(data)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Update the translation information on the GUI and show it to the
+user.</p><p>Depending on the format selected by the user show it as HTML or
+inside a textarea tag.</p><p>string.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>data</span>
+      <span class='type'>
+        (
+          <tt>string</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>The HTML, OWLlink or the translation </span>
+    </li>
+  </ul>
+  <h3>See also:</h3>
+  <ul class='see'>
+    <li>
+      <a href='CreateClassView#get_translation_format'>CreateClassView#get_translation_format</a>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='update_metamodel-dynamic'>
+      #
+(void)
+<b>update_metamodel</b><span>(data)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='translate_formal-dynamic'>
+      #
+(void)
+<b>translate_formal</b><span>(strategy, syntax)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Translate the current model into a formalization.</p><p>Show the user a &quot;wait&quot; message while the server process the model.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>strategy</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>The strategy name to use for formalize the model. </span>
+    </li>
+    <li>
+      <span class='name'>syntax</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>The output sintax format. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='translate_owllink-dynamic'>
+      #
+(void)
+<b>translate_owllink</b><span>(gui_instance)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <div class='deprecated note'>
+    <strong>Deprecated.</strong>
+    Use translate_formal() instead. 
+  </div>
+  <p>Event handler for translate diagram to OWLlink using Ajax
+and the api/translate/berardi.php translator URL.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='change_to_details_page-dynamic'>
+      #
+(void)
+<b>change_to_details_page</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='change_to_diagram_page-dynamic'>
+      #
+(void)
+<b>change_to_diagram_page</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='hide_toolbar-dynamic'>
+      #
+(void)
+<b>hide_toolbar</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Hide the left side &quot;Tools&quot; toolbar</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='hide_umldiagram_page-dynamic'>
+      #
+(void)
+<b>hide_umldiagram_page</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='show_umldiagram_page-dynamic'>
+      #
+(void)
+<b>show_umldiagram_page</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='set_association_state-dynamic'>
+      #
+(void)
+<b>set_association_state</b><span>(class_id, mult)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Change the interface into a &quot;new association&quot; state.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>class_id</span>
+      <span class='type'>
+        (
+          <tt>string</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>The id of the class that triggered it and thus, the starting class of the association. </span>
+    </li>
+    <li>
+      <span class='name'>mult</span>
+      <span class='type'>
+        (
+          <tt>array</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>An array of two strings representing the cardinality from and to. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='set_isa_state-dynamic'>
+      #
+(void)
+<b>set_isa_state</b><span>(class_id, disjoint = false, covering = false)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Change to the IsA GUI State so the user can select the child for the parent.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>class_id</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>The JointJS.Cell id for the parent class. </span>
+    </li>
+    <li>
+      <span class='name'>disjoint</span>
+      <span class='type'>
+        (
+          <tt>Boolean</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>optional. If the relation has the disjoint constraint. </span>
+    </li>
+    <li>
+      <span class='name'>covering</span>
+      <span class='type'>
+        (
+          <tt>Boolean</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>optional. If the relation has the disjoint constraint. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='set_selection_state-dynamic'>
+      #
+(void)
+<b>set_selection_state</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Change the interface into a &quot;selection&quot; state.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='show_export_json-dynamic'>
+      #
+(void)
+<b>show_export_json</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Update and show the &quot;Export JSON String&quot; section.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='refresh_export_json-dynamic'>
+      #
+(void)
+<b>refresh_export_json</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Refresh the content of the &quot;Export JSON String&quot; section.</p><p>No need to show it.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='show_import_json-dynamic'>
+      #
+(void)
+<b>show_import_json</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Show the &quot;Import JSON&quot; modal dialog.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='show_insert_owllink-dynamic'>
+      #
+(void)
+<b>show_insert_owllink</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>#
+Show the &quot;Insert OWLlink&quot; section.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='set_insert_owllink-dynamic'>
+      #
+(void)
+<b>set_insert_owllink</b><span>(str)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>#
+Set the OWLlink addon at the &quot;Insert OWLlink&quot; section.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='diag_to_json-dynamic'>
+      #
+(void)
+<b>diag_to_json</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='import_jsonstr-dynamic'>
+      #
+(void)
+<b>import_jsonstr</b><span>(jsonstr)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Import a JSON string.</p><p>This will not reset the current diagram, just add more elements.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>jsonstr</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>a JSON string, like the one returned by diag_to_json(). </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='import_json-dynamic'>
+      #
+(void)
+<b>import_json</b><span>(json_obj)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Import a JSON object.</p><p>This will not reset the current diagram, just add more elements.</p><p>Same as import_jsonstr, but it accept a JSON object as parameter.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>json_obj</span>
+      <span class='type'>
+        (
+          <tt>JSON object</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>A JSON object. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='reset_all-dynamic'>
+      #
+(void)
+<b>reset_all</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Reset all the diagram and the input forms.</p><p>Reset the diagram and the &quot;OWLlink Insert&quot; input field.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='to_metamodel-dynamic'>
+      #
+(void)
+<b>to_metamodel</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='to_erd-dynamic'>
+      #
+(void)
+<b>to_erd</b><span>(gui_instance)</span>
+      <br>
+    </p>
+    
+  </div>
+</div>
+    </div>
+    <div id='footer'>
+  By
+  <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
+    Codo
+  </a>
+  2.1.2
+  &#10034;
+  Press H to see the keyboard shortcuts
+  &#10034;
+  <a href='http://twitter.com/netzpirat' target='_parent'>@netzpirat</a>
+  &#10034;
+  <a href='http://twitter.com/_inossidabile' target='_parent'>@_inossidabile</a>
+</div>
+<iframe id='search_frame'></iframe>
+<div id='fuzzySearch'>
+  <input type='text'>
+  <ol></ol>
+</div>
+<div id='help'>
+  <p>
+    Quickly fuzzy find classes, mixins, methods, file:
+  </p>
+  <ul>
+    <li>
+      <span>T</span>
+      Open fuzzy finder dialog
+    </li>
+  </ul>
+  <p>
+    Control the navigation frame:
+  </p>
+  <ul>
+    <li>
+      <span>L</span>
+      Toggle list view
+    </li>
+    <li>
+      <span>C</span>
+      Show class list
+    </li>
+    <li>
+      <span>I</span>
+      Show mixin list
+    </li>
+    <li>
+      <span>F</span>
+      Show file list
+    </li>
+    <li>
+      <span>M</span>
+      Show method list
+    </li>
+    <li>
+      <span>E</span>
+      Show extras list
+    </li>
+  </ul>
+  <p>
+    You can focus and blur the search input:
+  </p>
+  <ul>
+    <li>
+      <span>S</span>
+      Focus search input
+    </li>
+    <li>
+      <span>Esc</span>
+      Blur search input
+    </li>
+  </ul>
+</div>
+  </body>
+</html>

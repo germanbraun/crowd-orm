@@ -1,0 +1,67 @@
+<?php
+$GLOBALS['config'] = [];
+
+/**
+   What kind of environment is this?
+   * 'devel' : Development. Non-minimal CSS and JS libraries and PHP
+   code with information return.
+   * 'prod' : Production. Minimal CSS and JS libraries and PHP
+   without development output.
+ */
+$GLOBALS['environment']='devel';
+
+/**
+   Where I can store temporary files?
+
+   For executing Racer, I need to store the OWLlink file, where I 
+   should do this?
+
+   Remember: Apache (represented as httpd, apache or www-data user in 
+   some systems) should have write perms there.
+ */
+$GLOBALS['config']['temporal_path'] = '/var/www/html/wicom-qdod/run/';
+
+/**
+   Where is the Racer program?
+
+   By default we provide a Racer program inside the temporal_path 
+   (at wicom/run/Racer), but if you want to use another program you 
+   have to set this value with the path.
+ */
+$GLOBALS['config']['racer_path'] = $GLOBALS['config']['temporal_path'];
+
+/**
+   @name Database Configuration.
+*/
+//@{
+/**
+   Database host.
+
+   For specify the port use "HOST:PORT".
+   
+   Example: `localhost:3000`
+
+   @see http://php.net/manual/en/mysqli.construct.php
+*/
+$GLOBALS['config']['db']['host'] = 'localhost';
+
+/**
+   Database user name.
+ */
+
+$GLOBALS['config']['db']['user'] = 'DB username';
+
+/**
+   Database password
+ */
+$GLOBALS['config']['db']['password'] = 'DB password here';
+
+/**
+   Database name.
+ */
+$GLOBALS['config']['db']['database'] = 'crowd';
+
+$GLOBALS['config']['db']['charset'] = 'utf8';
+//@}
+
+?>
